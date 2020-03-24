@@ -1,0 +1,35 @@
+{
+  "manifest": {
+    "js": "js/manifest.js"
+  },
+  "app": {
+    "js": "js/app.js"
+  },
+  "aurelia": {
+    "js": "js/aurelia.js"
+  },
+  "fontawesome": {
+    "css": "css/fontawesome.css",
+    "js": "js/fontawesome.js"
+  },
+  "jsoneditor": {
+    "css": "css/jsoneditor.css",
+    "js": "js/jsoneditor.js"
+  },
+  "main": {
+    "css": "css/main.css",
+    "js": "js/main.js"
+  },
+  "vendor": {
+    "js": "js/vendor.js"
+  },
+  "": {
+    "gz": "js/vendor.js.gz",
+    "svg": "webfonts/fa-solid-900.svg",
+    "jpg": "img/login.jpg",
+    "eot": "webfonts/fa-solid-900.eot",
+    "ttf": "webfonts/fa-solid-900.ttf",
+    "woff": "webfonts/fa-solid-900.woff",
+    "woff2": "webfonts/fa-solid-900.woff2"
+  }
+}

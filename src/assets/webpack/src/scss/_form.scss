@@ -1,0 +1,69 @@
+.form {
+  @apply w-full px-6 py-6;
+  .bloc {
+    @apply flex flex-wrap mb-6;
+    &-title {
+      @apply w-full px-0 mx-3 mb-6 border-b border-gray-300;
+      @screen md {
+        @apply mb-0;
+      }
+      .title {
+        @apply uppercase tracking-wide text-gray-900 text-sm font-light mb-1;
+      }
+    }
+    &-fieldset {
+      @apply  px-3 mb-6;
+      @screen md {
+        @apply mb-0;
+      }
+      .label {
+        @apply block uppercase tracking-wide text-gray-700 text-xs font-light mb-1;
+      }
+      .checkbox {
+        @apply mr-2 leading-tight;
+      }
+      .textfield {
+        @apply appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-300 rounded py-3 px-4 mb-3 leading-tight;
+        &:focus {
+          @apply outline-none bg-white;
+        }
+        &.error {
+          @apply border-red-500;
+        }
+      }
+    }
+  }
+  .dropdown {
+    @apply relative;
+    select {
+      @apply block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 mb-3 rounded leading-tight;
+      &:focus {
+        @apply outline-none bg-white border-gray-500;
+      }
+    }
+    .arrow {
+      @apply pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700;
+      svg {
+        @apply fill-current h-4 w-4;
+      }
+    }
+  }
+  .buttons {
+    @apply flex items-center justify-end;
+    .button-cancel, .button-submit {
+      @apply px-4 py-1 font-light tracking-wider rounded mx-3;
+      &:hover {
+        @apply bg-blue-800;
+      }
+    }
+    .button-cancel {
+      @apply text-gray-900 bg-gray-200;
+      &:hover {
+        @apply text-white;
+      }
+    }
+    .button-submit {
+      @apply text-white bg-gray-700;
+    }
+  }
+}

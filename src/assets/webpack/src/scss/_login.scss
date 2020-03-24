@@ -1,0 +1,33 @@
+.login {
+  background: url('../img/login.jpg');
+  .form {
+    @apply mx-auto h-full flex flex-1 justify-center items-center;
+    .title {
+      @apply text-gray-800 font-medium text-center text-lg font-bold;
+    }
+    .label {
+      @apply block text-sm text-gray-600;
+    }
+    .field {
+      @apply w-full px-5 py-1 text-gray-700 bg-gray-200 rounded;
+      &.error {
+        @apply border border-red-800;
+      }
+    }
+    .buttons {
+      @apply flex mt-4 items-center justify-between;
+      .link {
+        @apply inline-block right-0 align-baseline  font-bold text-sm;
+        &:hover {
+          @apply text-blue-800;
+        }
+      }
+      .submit-btn {
+        @apply px-4 py-1 text-white font-light tracking-wider bg-gray-900 rounded;
+        &:hover {
+          @apply bg-blue-800;
+        }
+      }
+    }
+  }
+}

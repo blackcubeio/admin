@@ -1,0 +1,33 @@
+/*
+  Table of Content
+==================================================
+@@toc
+
+*/
+/* space */
+@import "tailwindcss/base";
+
+@import "tailwindcss/components";
+
+@import "loader";
+@import "login";
+@import "form";
+
+.tooltip {
+  .tooltip-text {
+    visibility: hidden;
+    text-align: center;
+    padding: 2px 6px;
+    position: absolute;
+    z-index: 100;
+  }
+  &:hover {
+    .tooltip-text {
+      visibility: visible;
+    }
+  }
+}
+
+@import "tailwindcss/utilities";
+
+
