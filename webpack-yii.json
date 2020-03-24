@@ -1,0 +1,25 @@
+{
+    "sourceDir": "./src/assets/webpack",
+    "entry": {
+        "main": "./scss/style.scss",
+        "jsoneditor": "./scss/jsoneditor.scss",
+        "fontawesome": "./scss/fontawesome.scss",
+        "app": ["./boot.ts", "./app.ts"]
+    },
+    "commonBundles": [
+        "manifest"
+    ],
+    "externals": {
+    },
+    "alias": {
+    },
+    "subDirectories": {
+        "sources": "src",
+        "dist": "build"
+    },
+    "assets": {
+        "styles": "css",
+        "scripts": "js"
+    },
+    "catalog": "assets-catalog.json"
+}
