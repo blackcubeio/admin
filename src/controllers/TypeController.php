@@ -53,11 +53,24 @@ class TypeController extends Controller
             $type->load(Yii::$app->request->bodyParams);
             Model::loadMultiple($typeBlocTypes, Yii::$app->request->bodyParams);
             if ($type->validate() === true && Model::validateMultiple($typeBlocTypes)) {
-                if ($type->save()) {
-                    foreach($typeBlocTypes as $typeBlocType) {
-                        $typeBlocType->save();
+                $transaction = Yii::$app->db->beginTransaction();
+                try {
+                    $typeStatus = $type->save();
+                    if ($typeStatus === true) {
+                        $status = true;
+                        foreach ($typeBlocTypes as $typeBlocType) {
+                            $typeBlocType->setScenario(TypeBlocType::SCENARIO_DEFAULT);
+                            $typeBlocType->typeId = $type->id;
+                            $status = $status && $typeBlocType->save();
+                        }
+                        if ($typeStatus && $status) {
+                            $transaction->commit();
+                            return $this->redirect(['type/index']);
+                        }
                     }
-                    return $this->redirect(['type/index']);
+                    $transaction->rollBack();
+                } catch (\Exception $e) {
+                    $transaction->rollBack();
                 }
             }
         }
@@ -87,7 +100,7 @@ class TypeController extends Controller
             Model::loadMultiple($typeBlocTypes, Yii::$app->request->bodyParams);
             if ($type->validate() === true && Model::validateMultiple($typeBlocTypes)) {
                 if ($type->save()) {
-                    foreach($typeBlocTypes as $typeBlocType) {
+                    foreach ($typeBlocTypes as $typeBlocType) {
                         $typeBlocType->save();
                     }
                     return $this->redirect(['type/index']);
@@ -110,20 +123,20 @@ class TypeController extends Controller
      */
     public function actionDelete($id)
     {
-        $tag = Tag::findOne(['id' => $id]);
-        if ($tag === null) {
+        $type = Type::findOne(['id' => $id]);
+        if ($type === null) {
             throw new NotFoundHttpException();
         }
         if (Yii::$app->request->isPost) {
-            $slug = $tag->getSlug()->one();
-            if ($slug !== null) {
-                $slug->delete();
-            }
-            $tag->delete();
+            $type->delete();
         }
-        return $this->redirect(['tag/index']);
+        return $this->redirect(['type/index']);
     }
 
+    /**
+     * @param integer|null $id
+     * @return TypeBlocType[]
+     */
     protected function getTypeBlocTypes($id = null)
     {
         $blocTypesQuery = BlocType::find()->orderBy(['name' => SORT_ASC]);
@@ -136,6 +149,9 @@ class TypeController extends Controller
             }
             if ($typeBlocType === null) {
                 $typeBlocType = new TypeBlocType();
+                if ($id === null) {
+                    $typeBlocType->setScenario(TypeBlocType::SCENARIO_PRE_VALIDATE_BLOCTYPE);
+                }
                 $typeBlocType->typeId = $id;
                 $typeBlocType->blocTypeId = $blocType->id;
                 $typeBlocType->allowed = false;

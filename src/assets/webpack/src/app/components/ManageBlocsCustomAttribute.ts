@@ -29,23 +29,54 @@ class ManageBlocsCustomAttribute implements ComponentCreated, ComponentBind, Com
     public attached(): void {
         this.logger.debug('Attached');
         this.logger.debug(this.url);
+        this.form = <HTMLFormElement>this.element.closest('form');
+        this.attachEventHandler();
+        // let formData = new FormData(this.form);
+        // this.ajaxService.getBlocs(this.url, formData);
+    }
+
+    protected attachEventHandler() {
         this.subButtons = this.element.querySelectorAll('button[type=button]');
         this.subButtons.forEach((button:HTMLButtonElement, key:number, parent:NodeList) => {
             button.addEventListener('click', this.onClick);
         });
-        this.form = <HTMLFormElement>this.element.closest('form');
-        let formData = new FormData(this.form);
-        this.ajaxService.getBlocs(this.url, formData);
+    }
+
+    protected detachEventHandler() {
+        this.subButtons.forEach((button:HTMLButtonElement, key:number, parent:NodeList) => {
+            button.removeEventListener('click', this.onClick);
+        });
     }
 
     protected onClick = (evt:Event) => {
+        let currentTarget = <HTMLElement>evt.currentTarget;
         this.logger.debug('Click button');
-        let button = <HTMLButtonElement>evt.currentTarget;
+        let button = <HTMLButtonElement>currentTarget;
         if (button.name) {
             let formData = new FormData(this.form);
-            formData.append(button.name, '1');
-            this.ajaxService.getBlocs(this.url, formData);
+            formData.append(button.name, button.value);
+            this.detachEventHandler();
+            this.ajaxService.getBlocs(this.url, formData)
+                .then(response => {
+                    if (response.status == 200) {
+                        response.text().then((text:string) => {
+                            let target = <HTMLDivElement>this.element.querySelector('.target');
+                            if (target) {
+                                target.innerHTML = text;
+                            } else {
+                                this.logger.debug('Error target', text);
+                            }
+                        })
+                    }
+                    setTimeout(() => {
+                        this.attachEventHandler();
+                    }, 0);
+                })
+                .catch(reason => {
+                    this.attachEventHandler();
+                })
         }
+
     };
 
     public detached(): void {

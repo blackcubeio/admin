@@ -28,8 +28,6 @@ class AjaxService {
             method: 'post',
             body: formData,
         });
-
-
     }
 }
 

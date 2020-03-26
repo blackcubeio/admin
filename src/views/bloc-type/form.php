@@ -32,20 +32,20 @@ use blackcube\admin\helpers\Html;
             </div>
         <div class="bloc">
             <div class="bloc-title">
-                <span class="title">Types</span>
+                <span class="title">Types associés</span>
             </div>
         </div>
 
         <div class="bloc">
-            <?php foreach ($typeBlocTypes as $i => $typeBlocType): ?>
+        <?php foreach ($typeBlocTypes as $i => $typeBlocType): ?>
                 <div class="w-full bloc-fieldset md:w-2/12">
-                    <?php echo Html::activeLabel($typeBlocType, '['.$i.']allowed', ['class' => 'label', 'label' => $typeBlocType->type->name]); ?>
                     <?php echo Html::activeCheckbox($typeBlocType, '['.$i.']allowed', ['label' => false, 'class' => 'checkbox']); ?>
+                    <?php echo Html::activeLabel($typeBlocType, '['.$i.']allowed', ['class' => 'label', 'style' => 'display:inline-block;', 'label' => $typeBlocType->type->name]); ?>
                     <?php echo Html::activeHiddenInput($typeBlocType, '['.$i.']typeId'); ?>
                     <?php echo Html::activeHiddenInput($typeBlocType, '['.$i.']blocTypeId'); ?>
                 </div>
-            <?php endforeach; ?>
-        </div>
+        <?php endforeach; ?>
+                </div>
 
         <div class="buttons">
             <?php echo Html::a(Yii::t('blackcube.admin', 'Cancel'), ['bloc-type/index'], [

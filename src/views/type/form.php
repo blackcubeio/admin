@@ -52,15 +52,15 @@ use yii\helpers\Url;
 
             <div class="bloc">
                 <div class="bloc-title">
-                    <span class="title">Types de blocs</span>
+                    <span class="title">Types de blocs autorisés</span>
                 </div>
             </div>
 
             <div class="bloc">
                 <?php foreach ($typeBlocTypes as $i => $typeBlocType): ?>
                     <div class="w-full bloc-fieldset md:w-2/12">
-                        <?php echo Html::activeLabel($typeBlocType, '['.$i.']allowed', ['class' => 'label', 'label' => $typeBlocType->blocType->name]); ?>
                         <?php echo Html::activeCheckbox($typeBlocType, '['.$i.']allowed', ['label' => false, 'class' => 'checkbox']); ?>
+                        <?php echo Html::activeLabel($typeBlocType, '['.$i.']allowed', ['class' => 'label', 'style' => 'display:inline-block;', 'label' => $typeBlocType->blocType->name]); ?>
                         <?php echo Html::activeHiddenInput($typeBlocType, '['.$i.']typeId'); ?>
                         <?php echo Html::activeHiddenInput($typeBlocType, '['.$i.']blocTypeId'); ?>
                     </div>

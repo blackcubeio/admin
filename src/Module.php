@@ -39,9 +39,14 @@ class Module extends BaseModule implements BootstrapInterface
 {
 
     /**
-     * @inheritdoc}
+     * {@inheritdoc}
      */
     public $controllerNamespace = 'blackcube\admin\controllers';
+
+    /**
+     * @var string alias of the directory where we can find bloc templates for admin display
+     */
+    public $adminTemplatesAlias;
 
     /**
      * @inheritdoc

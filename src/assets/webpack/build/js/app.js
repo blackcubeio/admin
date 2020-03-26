@@ -279,12 +279,33 @@ var ManageBlocsCustomAttribute = /** @class */ (function () {
         var _this = this;
         this.logger = aurelia_framework_1.LogManager.getLogger('components.ManageBlocs');
         this.onClick = function (evt) {
+            var currentTarget = evt.currentTarget;
             _this.logger.debug('Click button');
-            var button = evt.currentTarget;
+            var button = currentTarget;
             if (button.name) {
                 var formData = new FormData(_this.form);
-                formData.append(button.name, '1');
-                _this.ajaxService.getBlocs(_this.url, formData);
+                formData.append(button.name, button.value);
+                _this.detachEventHandler();
+                _this.ajaxService.getBlocs(_this.url, formData)
+                    .then(function (response) {
+                    if (response.status == 200) {
+                        response.text().then(function (text) {
+                            var target = _this.element.querySelector('.target');
+                            if (target) {
+                                target.innerHTML = text;
+                            }
+                            else {
+                                _this.logger.debug('Error target', text);
+                            }
+                        });
+                    }
+                    setTimeout(function () {
+                        _this.attachEventHandler();
+                    }, 0);
+                })
+                    .catch(function (reason) {
+                    _this.attachEventHandler();
+                });
             }
         };
         this.element = element;
@@ -298,16 +319,25 @@ var ManageBlocsCustomAttribute = /** @class */ (function () {
         this.logger.debug('Bind');
     };
     ManageBlocsCustomAttribute.prototype.attached = function () {
-        var _this = this;
         this.logger.debug('Attached');
         this.logger.debug(this.url);
+        this.form = this.element.closest('form');
+        this.attachEventHandler();
+        // let formData = new FormData(this.form);
+        // this.ajaxService.getBlocs(this.url, formData);
+    };
+    ManageBlocsCustomAttribute.prototype.attachEventHandler = function () {
+        var _this = this;
         this.subButtons = this.element.querySelectorAll('button[type=button]');
         this.subButtons.forEach(function (button, key, parent) {
             button.addEventListener('click', _this.onClick);
         });
-        this.form = this.element.closest('form');
-        var formData = new FormData(this.form);
-        this.ajaxService.getBlocs(this.url, formData);
+    };
+    ManageBlocsCustomAttribute.prototype.detachEventHandler = function () {
+        var _this = this;
+        this.subButtons.forEach(function (button, key, parent) {
+            button.removeEventListener('click', _this.onClick);
+        });
     };
     ManageBlocsCustomAttribute.prototype.detached = function () {
         var _this = this;

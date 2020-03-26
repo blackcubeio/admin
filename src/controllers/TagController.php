@@ -4,12 +4,15 @@ namespace blackcube\admin\controllers;
 
 use blackcube\admin\models\SlugForm;
 use blackcube\admin\models\TagManager;
+use blackcube\admin\actions\BlocAction;
 use blackcube\core\interfaces\ElementInterface;
+use blackcube\core\models\Bloc;
 use blackcube\core\models\Category;
 use blackcube\core\models\Slug;
 use blackcube\core\models\Tag;
 use blackcube\core\models\Type;
 use yii\base\ErrorException;
+use yii\base\Model;
 use yii\helpers\Json;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -18,6 +21,19 @@ use yii\web\Response;
 
 class TagController extends Controller
 {
+
+    /**
+     * {@inheritDoc}
+     */
+    public function actions()
+    {
+        $actions = parent::actions();
+        $actions['blocs'] = [
+            'class' => BlocAction::class,
+            'elementClass' => Tag::class
+        ];
+        return $actions;
+    }
 
     /**
      * @param string|null $id
@@ -52,7 +68,7 @@ class TagController extends Controller
         $tag = new Tag();
         $result = $this->handleElement($tag);
         if ($result === true) {
-            return $this->redirect(['tag/index']);
+            return $this->redirect(['tag/edit', 'id' => $tag->id]);
         } else {
             list($tag, $slugForm) = $result;
         }
@@ -81,9 +97,9 @@ class TagController extends Controller
         }
         $result = $this->handleElement($tag);
         if ($result === true) {
-            return $this->redirect(['tag/index']);
+            return $this->redirect(['tag/edit', 'id' => $tag->id]);
         } else {
-            list($tag, $slugForm) = $result;
+            list($tag, $slugForm, $blocs) = $result;
         }
         $categoriesQuery = Category::find()->orderBy(['name' => SORT_ASC]);
         $typesQuery = Type::find()->orderBy(['name' => SORT_ASC]);
@@ -92,6 +108,7 @@ class TagController extends Controller
             'slugForm' => $slugForm,
             'categoriesQuery' => $categoriesQuery,
             'typesQuery' => $typesQuery,
+            'blocs' => $blocs,
         ]);
     }
 
@@ -109,30 +126,25 @@ class TagController extends Controller
             throw new NotFoundHttpException();
         }
         if (Yii::$app->request->isPost) {
-            $slug = $tag->getSlug()->one();
-            if ($slug !== null) {
-                $slug->delete();
+            $transaction = Yii::$app->db->beginTransaction();
+            try {
+                $slug = $tag->getSlug()->one();
+                if ($slug !== null) {
+                    $slug->delete();
+                }
+                $blocsQuery = $tag->getBlocs();
+                foreach($blocsQuery->each() as $bloc) {
+                    $bloc->delete();
+                }
+                $tag->delete();
+                $transaction->commit();
+            } catch (\Exception $e) {
+                $transaction->rollBack();
             }
-            $tag->delete();
         }
         return $this->redirect(['tag/index']);
     }
 
-    public function actionBlocs($id = null)
-    {
-        $params = Yii::$app->request->bodyParams;
-        if (Yii::$app->request->isAjax && Yii::$app->request->isPost) {
-            if ($id !== null) {
-                $tag = Tag::findOne(['id' => $id]);
-                if ($tag === null) {
-                    throw new NotFoundHttpException();
-                }
-            } else {
-                $tag = new Tag();
-            }
-            $tag->load(Yii::$app->request->bodyParams);
-        }
-    }
     /**
      * @param ElementInterface $element
      * @return array|bool
@@ -142,14 +154,22 @@ class TagController extends Controller
     protected function handleElement(ElementInterface $element)
     {
         $slugForm = new SlugForm(['element' => $element]);
+        $blocs = $element->getBlocs()->all();
         if (Yii::$app->request->isPost) {
+            Model::loadMultiple($blocs, Yii::$app->request->bodyParams);
             $element->load(Yii::$app->request->bodyParams);
             $slugForm->multiLoad(Yii::$app->request->bodyParams);
-            if ($element->validate() && $slugForm->preValidate()) {
+
+            if ($element->validate() && $slugForm->preValidate() && Model::validateMultiple($blocs)) {
                 $transaction = Yii::$app->getDb()->beginTransaction();
                 $slugFormStatus = $slugForm->save();
                 $tagStatus = $element->save();
-                if ($slugFormStatus && $tagStatus) {
+                $blocStatus = true;
+                foreach($blocs as $bloc) {
+                    $bloc->active = true;
+                    $blocStatus = $blocStatus && $bloc->save();
+                }
+                if ($slugFormStatus && $tagStatus && $blocStatus) {
                     if ($slugForm->hasSlug) {
                         $element->attachSlug($slugForm->getSlug());
                     } else {
@@ -163,6 +183,7 @@ class TagController extends Controller
                 }
             }
         }
-        return [$element, $slugForm];
+        return [$element, $slugForm, $blocs];
     }
+
 }

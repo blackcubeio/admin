@@ -42,16 +42,16 @@ $formatter = Yii::$app->formatter;
                         <span class="inline-flex mx-0">
                             <?php echo Html::tag('span',
                                 'T' . Html::tag('span', 'Status du Tag', ['class' => 'tooltip-text text-sm text-white p-3 bg-blue-800 p-3 -mt-6 -ml-6 rounded']), [
-                                'class' => 'tooltip cursor-pointer font-hairline text-white rounded-l-full text-xs px-1 mr-0 '.($tag->active ? 'bg-green-700':'bg-red-700'),
+                                'class' => 'tooltip cursor-pointer font-hairline text-white rounded-l-full text-xs px-2 mr-0 '.($tag->active ? 'bg-green-700':'bg-red-700'),
                             ]); ?>
                             <?php echo Html::tag('span', 'U' . Html::tag('span', 'Status de l\'URL', ['class' => 'tooltip-text text-sm text-white p-3 bg-blue-800 p-3 -mt-6 -ml-6 rounded']), [
-                                'class' => 'tooltip cursor-pointer font-hairline text-white text-xs px-1 mx-0 '.(($tag->slug && $tag->slug->active) ? 'bg-green-700':'bg-red-700'),
+                                'class' => 'tooltip cursor-pointer font-hairline text-white text-xs px-2 mx-0 '.(($tag->slug && $tag->slug->active) ? 'bg-green-700':'bg-red-700'),
                             ]); ?>
                             <?php echo Html::tag('span', 'S' . Html::tag('span', 'Intégration Sitemap', ['class' => 'tooltip-text text-sm text-white p-3 bg-blue-800 p-3 -mt-6 -ml-6 rounded']), [
-                                'class' => 'tooltip cursor-pointer font-hairline text-white text-xs px-1 mx-0 '.(($tag->slug && $tag->slug->sitemap && $tag->slug->sitemap->active) ? 'bg-green-700':'bg-red-700'),
+                                'class' => 'tooltip cursor-pointer font-hairline text-white text-xs px-2 mx-0 '.(($tag->slug && $tag->slug->sitemap && $tag->slug->sitemap->active) ? 'bg-green-700':'bg-red-700'),
                             ]); ?>
                             <?php echo Html::tag('span', 'G' . Html::tag('span', 'Mise en place SEO', ['class' => 'tooltip-text text-sm text-white p-3 bg-blue-800 p-3 -mt-6 -ml-6 rounded']), [
-                                'class' => 'tooltip cursor-pointer font-hairline text-white rounded-r-full text-xs px-1 mx-0 '.(($tag->slug && $tag->slug->seo && $tag->slug->seo->active) ? 'bg-green-700':'bg-red-700'),
+                                'class' => 'tooltip cursor-pointer font-hairline text-white rounded-r-full text-xs px-2 mx-0 '.(($tag->slug && $tag->slug->seo && $tag->slug->seo->active) ? 'bg-green-700':'bg-red-700'),
                             ]); ?>
                         </span>
                         <!-- p class="text-gray-900 whitespace-no-wrap">
