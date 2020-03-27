@@ -66,11 +66,11 @@ class TagController extends Controller
     public function actionCreate()
     {
         $tag = new Tag();
-        $result = $this->handleElement($tag);
+        $slugForm = new SlugForm(['element' => $tag]);
+        $blocs = $tag->getBlocs()->all();
+        $result = $this->saveElement($tag, $blocs, $slugForm);
         if ($result === true) {
             return $this->redirect(['tag/edit', 'id' => $tag->id]);
-        } else {
-            list($tag, $slugForm) = $result;
         }
         $categoriesQuery = Category::find()->orderBy(['name' => SORT_ASC]);
         $typesQuery = Type::find()->orderBy(['name' => SORT_ASC]);
@@ -95,11 +95,11 @@ class TagController extends Controller
         if ($tag === null) {
             throw new NotFoundHttpException();
         }
-        $result = $this->handleElement($tag);
+        $slugForm = new SlugForm(['element' => $tag]);
+        $blocs = $tag->getBlocs()->all();
+        $result = $this->saveElement($tag, $blocs, $slugForm);
         if ($result === true) {
             return $this->redirect(['tag/edit', 'id' => $tag->id]);
-        } else {
-            list($tag, $slugForm, $blocs) = $result;
         }
         $categoriesQuery = Category::find()->orderBy(['name' => SORT_ASC]);
         $typesQuery = Type::find()->orderBy(['name' => SORT_ASC]);
@@ -147,14 +147,17 @@ class TagController extends Controller
 
     /**
      * @param ElementInterface $element
-     * @return array|bool
+     * @param Bloc[] $blocs
+     * @param SlugForm $slugForm
+     * @return bool
      * @throws ErrorException
      * @throws \yii\db\Exception
      */
-    protected function handleElement(ElementInterface $element)
+    protected function saveElement(ElementInterface &$element, &$blocs, SlugForm &$slugForm)
     {
-        $slugForm = new SlugForm(['element' => $element]);
-        $blocs = $element->getBlocs()->all();
+        $saveStatus = false;
+        // $slugForm = new SlugForm(['element' => $element]);
+        // $blocs = $element->getBlocs()->all();
         if (Yii::$app->request->isPost) {
             Model::loadMultiple($blocs, Yii::$app->request->bodyParams);
             $element->load(Yii::$app->request->bodyParams);
@@ -163,27 +166,28 @@ class TagController extends Controller
             if ($element->validate() && $slugForm->preValidate() && Model::validateMultiple($blocs)) {
                 $transaction = Yii::$app->getDb()->beginTransaction();
                 $slugFormStatus = $slugForm->save();
-                $tagStatus = $element->save();
+                $elementStatus = $element->save();
                 $blocStatus = true;
                 foreach($blocs as $bloc) {
                     $bloc->active = true;
                     $blocStatus = $blocStatus && $bloc->save();
                 }
-                if ($slugFormStatus && $tagStatus && $blocStatus) {
+                if ($slugFormStatus && $elementStatus && $blocStatus) {
                     if ($slugForm->hasSlug) {
                         $element->attachSlug($slugForm->getSlug());
                     } else {
                         $element->detachSlug();
                     }
                     $transaction->commit();
-                    return true;
+                    $saveStatus = true;
                 } else {
                     $transaction->rollBack();
                     throw new ErrorException();
                 }
             }
         }
-        return [$element, $slugForm, $blocs];
+        return $saveStatus;
+        // return [$element, $slugForm, $blocs];
     }
 
 }

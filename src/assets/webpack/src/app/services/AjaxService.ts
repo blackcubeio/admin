@@ -29,6 +29,31 @@ class AjaxService {
             body: formData,
         });
     }
+
+    private modal:any = null;
+    public getModal()
+    {
+        this.logger.debug('getModal');
+        if (this.modal === null) {
+            this.modal =  this.httpClient.fetch('/admin/ajax/modal', {
+                method: 'get'
+            }).then((response:Response) => {
+                return response.text();
+            });
+        }
+        return this.modal;
+    }
+    public getDetailModal(type:string, id:string)
+    {
+        this.logger.debug('getDetailModal');
+        this.modal =  this.httpClient.fetch('/admin/ajax/modal?id='+id+'&type='+type, {
+            method: 'get'
+        }).then((response:Response) => {
+            return response.text();
+        });
+        return this.modal;
+
+    }
 }
 
 export {AjaxService}

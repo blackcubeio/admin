@@ -14,11 +14,13 @@ class Parameter
             ->orderBy(['name' => SORT_ASC])
             ->asArray()
             ->all();
-        return array_map(function($item) {
+        $allowedHosts = array_map(function($item) {
             return [
                 'id' => $item['value'] === '*' ? '' : $item['value'],
                 'value' => $item['value'],
             ];
         }, $parameters);
+        array_unshift($allowedHosts, ['id' => '', 'value' => '*']);
+        return $allowedHosts;
     }
 }

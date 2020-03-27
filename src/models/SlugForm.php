@@ -11,6 +11,7 @@ use yii\base\Model;
 class SlugForm extends Model
 {
     public $hasSlug;
+    public $openedSlug = 0;
 
     private $_element;
     /**

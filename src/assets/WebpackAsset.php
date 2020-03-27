@@ -18,6 +18,7 @@ use yii\caching\Cache;
 use yii\caching\FileDependency;
 use yii\di\Instance;
 use yii\helpers\Json;
+use yii\helpers\Url;
 use yii\web\AssetBundle;
 use yii\web\View;
 use Exception;
@@ -131,6 +132,8 @@ class WebpackAsset extends AssetBundle
         $bundle = parent::register($view);
         $wp = 'var webpackBaseUrl = \'' .$bundle->baseUrl.'/\';';
         $view->registerJs($wp, View::POS_HEAD);
+        $ajaxUrl = 'var ajaxBaseUrl = \''.Url::to(['ajax/']).'\';';
+        $view->registerJs($ajaxUrl, View::POS_HEAD);
         return $bundle;
     }
 

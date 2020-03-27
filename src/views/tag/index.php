@@ -59,8 +59,8 @@ $formatter = Yii::$app->formatter;
                         </p -->
                     </td>
                     <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                            <?php echo Html::beginForm(['tag/delete', 'id' => $tag->id]); ?>
-                            <button class="bg-gray-300 hover:bg-red-600 hover:text-white text-gray-800 font-bold py-2 px-2 rounded inline-flex items-center">
+                            <?php echo Html::beginForm(['tag/delete', 'id' => $tag->id], 'post', ['attach-modal' => 'type.bind: "tag"; id.bind: "'.$tag->id.'"']); ?>
+                            <button class="bg-gray-300 hover:bg-red-600 hover:text-white text-gray-800 font-bold py-2 px-2 rounded inline-flex items-center outline-none focus:outline-none">
                                 <i class="fa fa-trash-alt"></i>
                             </button>
                             <?php echo Html::endForm(); ?>

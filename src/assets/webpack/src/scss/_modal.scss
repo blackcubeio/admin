@@ -1,0 +1,63 @@
+.modal {
+  &-backdrop {
+    @apply flex opacity-50 fixed inset-0 z-40 bg-black
+  }
+  @apply flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none justify-center items-center;
+  &:focus {
+    @apply outline-none;
+  }
+  .inner {
+    @apply relative w-auto my-6 mx-auto max-w-sm;
+    .info {
+      @apply border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none;
+      &:focus {
+        @apply outline-none;
+      }
+      .header {
+        @apply flex items-start justify-between p-3 border-b border-solid border-gray-300 rounded-t;
+        h3 {
+          @apply text-xl font-semibold;
+          button {
+            @apply p-1 ml-auto bg-transparent border-0 text-black opacity-25 float-right text-3xl leading-none font-semibold outline-none;
+            &:focus {
+              @apply outline-none;
+            }
+            span {
+              @apply bg-transparent text-black opacity-25 h-6 w-6 text-2xl block outline-none;
+            }
+            &:focus {
+              @apply outline-none;
+            }
+          }
+        }
+      }
+      .body {
+        @apply relative p-3 flex-auto;
+        p {
+          @apply my-4 text-gray-700 text-sm leading-relaxed;
+        }
+      }
+      .footer {
+        @apply flex items-center justify-end p-3 border-t border-solid border-gray-300 rounded-b;
+        .close {
+          @apply bg-gray-600 text-white uppercase px-2 py-1 text-sm rounded outline-none mr-1 mb-1;
+          &:focus {
+            @apply outline-none;
+          }
+          &:hover {
+            @apply bg-blue-800;
+          }
+        }
+        .run {
+          @apply bg-red-800 text-white uppercase text-sm px-2 py-1 rounded outline-none mr-1 mb-1;
+          &:focus {
+            @apply outline-none;
+          }
+          &:hover {
+            @apply bg-red-600;
+          }
+        }
+      }
+    }
+  }
+}

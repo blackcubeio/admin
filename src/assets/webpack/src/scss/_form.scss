@@ -36,7 +36,7 @@
   .dropdown {
     @apply relative;
     select {
-      @apply block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 mb-3 rounded leading-tight;
+      @apply block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 pl-4 pr-6 mb-3 rounded leading-tight;
       &:focus {
         @apply outline-none bg-white border-gray-500;
       }

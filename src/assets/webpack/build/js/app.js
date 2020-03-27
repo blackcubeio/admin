@@ -75,6 +75,7 @@ var aurelia_fetch_client_1 = __webpack_require__(/*! aurelia-fetch-client */ "..
 var AjaxService = /** @class */ (function () {
     function AjaxService(httpClient) {
         this.logger = aurelia_framework_1.LogManager.getLogger('services.AjaxService');
+        this.modal = null;
         this.httpClient = httpClient;
         this.httpClient.configure(function (config) {
             config
@@ -94,12 +95,69 @@ var AjaxService = /** @class */ (function () {
             body: formData,
         });
     };
+    AjaxService.prototype.getModal = function () {
+        this.logger.debug('getModal');
+        if (this.modal === null) {
+            this.modal = this.httpClient.fetch('/admin/ajax/modal', {
+                method: 'get'
+            }).then(function (response) {
+                return response.text();
+            });
+        }
+        return this.modal;
+    };
+    AjaxService.prototype.getDetailModal = function (type, id) {
+        this.logger.debug('getDetailModal');
+        this.modal = this.httpClient.fetch('/admin/ajax/modal?id=' + id + '&type=' + type, {
+            method: 'get'
+        }).then(function (response) {
+            return response.text();
+        });
+        return this.modal;
+    };
     AjaxService = __decorate([
         aurelia_framework_1.inject(aurelia_fetch_client_1.HttpClient)
     ], AjaxService);
     return AjaxService;
 }());
 exports.AjaxService = AjaxService;
+
+
+/***/ }),
+
+/***/ "./app/services/StorageService.ts":
+/*!****************************************!*\
+  !*** ./app/services/StorageService.ts ***!
+  \****************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var StorageService = /** @class */ (function () {
+    function StorageService() {
+    }
+    StorageService.prototype.getElementSlugOpened = function (elementId) {
+        if (elementId !== '') {
+            var storageStatus = localStorage.getItem('admin:element:' + elementId + ':slug:opened');
+            return storageStatus === '1';
+        }
+        return false;
+    };
+    StorageService.prototype.setElementSlugOpened = function (elementId) {
+        if (elementId !== '') {
+            localStorage.setItem('admin:element:' + elementId + ':slug:opened', '1');
+        }
+    };
+    StorageService.prototype.setElementSlugClosed = function (elementId) {
+        if (elementId !== '') {
+            localStorage.removeItem('admin:element:' + elementId + ':slug:opened');
+        }
+    };
+    return StorageService;
+}());
+exports.StorageService = StorageService;
 
 
 /***/ }),
@@ -140,6 +198,138 @@ module.exports = __webpack_require__(/*! ./app.ts */"./app.ts");
 /***/ (function(module, exports) {
 
 /* (ignored) */
+
+/***/ }),
+
+/***/ "components/AttachModalCustomAttribute":
+/*!******************************************************!*\
+  !*** ./app/components/AttachModalCustomAttribute.ts ***!
+  \******************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var aurelia_framework_1 = __webpack_require__(/*! aurelia-framework */ "aurelia-framework");
+var AjaxService_1 = __webpack_require__(/*! ../services/AjaxService */ "./app/services/AjaxService.ts");
+var AttachModalCustomAttribute = /** @class */ (function () {
+    function AttachModalCustomAttribute(element, ajaxService) {
+        var _this = this;
+        this.logger = aurelia_framework_1.LogManager.getLogger('components.AttachModal');
+        this.ready = false;
+        this.readyCount = 0;
+        this.linkElement = function () {
+            _this.element.addEventListener('submit', _this.onSubmit);
+        };
+        this.onSubmit = function (evt) {
+            var form = evt.currentTarget;
+            if (_this.id && _this.type) {
+                _this.ajaxService.getDetailModal(_this.type, _this.id)
+                    .then(function (modal) {
+                    _this.modalView = modal;
+                    _this.runStuff();
+                });
+            }
+            else {
+                _this.ajaxService.getModal()
+                    .then(function (modal) {
+                    _this.modalView = modal;
+                    _this.runStuff();
+                });
+            }
+            evt.preventDefault();
+        };
+        this.onSubmitOk = function (evt) {
+            if (_this.modalCross) {
+                _this.modalCross.removeEventListener('click', _this.onClose);
+            }
+            if (_this.modalClose) {
+                _this.modalClose.removeEventListener('click', _this.onClose);
+            }
+            if (_this.modal) {
+                _this.modal.remove();
+            }
+            if (_this.backdrop) {
+                _this.backdrop.remove();
+            }
+            _this.element.submit();
+        };
+        this.onClose = function (evt) {
+            if (_this.modalCross) {
+                _this.modalCross.removeEventListener('click', _this.onClose);
+            }
+            if (_this.modalClose) {
+                _this.modalClose.removeEventListener('click', _this.onClose);
+            }
+            if (_this.modal) {
+                _this.modal.remove();
+            }
+            if (_this.backdrop) {
+                _this.backdrop.remove();
+            }
+        };
+        this.element = element;
+        this.logger.debug('Constructor');
+        this.ajaxService = ajaxService;
+        /*/
+        this.ajaxService.getModal()
+            .then((modal:string) => {
+                this.modalView = modal;
+                this.ready= true;
+            });
+
+        /**/
+    }
+    AttachModalCustomAttribute.prototype.created = function (owningView, myView) {
+        this.logger.debug('Created');
+    };
+    AttachModalCustomAttribute.prototype.bind = function (bindingContext, overrideContext) {
+        this.logger.debug('Bind');
+    };
+    AttachModalCustomAttribute.prototype.attached = function () {
+        this.logger.debug('Type', this.type);
+        this.logger.debug('ID', this.id);
+        this.logger.debug('Attached');
+        this.linkElement();
+    };
+    AttachModalCustomAttribute.prototype.detached = function () {
+        this.element.removeEventListener('submit', this.onSubmit);
+        this.logger.debug('Detached');
+    };
+    AttachModalCustomAttribute.prototype.runStuff = function () {
+        document.body.insertAdjacentHTML('afterbegin', this.modalView);
+        this.modal = document.querySelector('#modal-delete');
+        this.backdrop = document.querySelector('#modal-delete-backdrop');
+        this.modalCross = this.modal.querySelector('#modal-delete-cross');
+        this.modalClose = this.modal.querySelector('#modal-delete-close');
+        this.modalOk = this.modal.querySelector('#modal-delete-ok');
+        this.modalClose.addEventListener('click', this.onClose);
+        this.modalCross.addEventListener('click', this.onClose);
+        this.modalOk.addEventListener('click', this.onSubmitOk);
+    };
+    AttachModalCustomAttribute.prototype.unbind = function () {
+        this.logger.debug('Unbind');
+    };
+    __decorate([
+        aurelia_framework_1.bindable({ primaryProperty: true })
+    ], AttachModalCustomAttribute.prototype, "type", void 0);
+    __decorate([
+        aurelia_framework_1.bindable()
+    ], AttachModalCustomAttribute.prototype, "id", void 0);
+    AttachModalCustomAttribute = __decorate([
+        aurelia_framework_1.inject(aurelia_framework_1.DOM.Element, AjaxService_1.AjaxService)
+    ], AttachModalCustomAttribute);
+    return AttachModalCustomAttribute;
+}());
+exports.AttachModalCustomAttribute = AttachModalCustomAttribute;
+
 
 /***/ }),
 
@@ -476,9 +666,9 @@ module.exports = "<template>\n    <input type=\"hidden\" />\n    <div></div>\n</
 
 /***/ }),
 
-/***/ "components/ToggleBlocCustomAttribute":
+/***/ "components/ToggleSlugCustomAttribute":
 /*!*****************************************************!*\
-  !*** ./app/components/ToggleBlocCustomAttribute.ts ***!
+  !*** ./app/components/ToggleSlugCustomAttribute.ts ***!
   \*****************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
@@ -494,18 +684,21 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 Object.defineProperty(exports, "__esModule", { value: true });
 var aurelia_framework_1 = __webpack_require__(/*! aurelia-framework */ "aurelia-framework");
 var aurelia_event_aggregator_1 = __webpack_require__(/*! aurelia-event-aggregator */ "aurelia-event-aggregator");
-var ToggleBlocCustomAttribute = /** @class */ (function () {
-    function ToggleBlocCustomAttribute(element, eventAggregator) {
+var StorageService_1 = __webpack_require__(/*! ../services/StorageService */ "./app/services/StorageService.ts");
+var ToggleSlugCustomAttribute = /** @class */ (function () {
+    function ToggleSlugCustomAttribute(element, eventAggregator, storageService) {
         var _this = this;
-        this.logger = aurelia_framework_1.LogManager.getLogger('components.ToggleBloc');
+        this.logger = aurelia_framework_1.LogManager.getLogger('components.ToggleSlug');
         this.toggleBlocInitialDisplay = 'inherit';
         this.onToggle = function () {
             if (_this.toggleBloc) {
                 if (_this.toggleBloc.style.display === 'none') {
                     _this.toggleBloc.style.display = _this.toggleBlocInitialDisplay;
+                    _this.storageService.setElementSlugOpened(_this.elementId);
                 }
                 else {
                     _this.toggleBloc.style.display = 'none';
+                    _this.storageService.setElementSlugClosed(_this.elementId);
                 }
             }
         };
@@ -513,29 +706,39 @@ var ToggleBlocCustomAttribute = /** @class */ (function () {
             if (_this.toggleBloc && _this.toggleCheckbox) {
                 if (_this.toggleCheckbox.checked) {
                     _this.toggleBloc.style.display = _this.toggleBlocInitialDisplay;
+                    _this.storageService.setElementSlugOpened(_this.elementId);
                 }
                 else {
                     _this.toggleBloc.style.display = 'none';
+                    _this.storageService.setElementSlugClosed(_this.elementId);
                 }
             }
         };
         this.element = element;
         this.eventAggregator = eventAggregator;
+        this.storageService = storageService;
         this.logger.debug('Constructor');
     }
-    ToggleBlocCustomAttribute.prototype.created = function (owningView, myView) {
+    ToggleSlugCustomAttribute.prototype.created = function (owningView, myView) {
         this.logger.debug('Created');
     };
-    ToggleBlocCustomAttribute.prototype.bind = function (bindingContext, overrideContext) {
+    ToggleSlugCustomAttribute.prototype.bind = function (bindingContext, overrideContext) {
         this.logger.debug('Bind');
     };
-    ToggleBlocCustomAttribute.prototype.attached = function () {
+    ToggleSlugCustomAttribute.prototype.attached = function () {
+        this.logger.debug('Current ID', this.elementId);
+        var opened = this.storageService.getElementSlugOpened(this.elementId);
         this.toggleCheckbox = this.element.querySelector('.toggle');
         this.toggleBloc = this.element.querySelector('.toggle-target');
         this.titleBloc = this.element.firstElementChild;
         if (this.toggleBloc) {
             this.toggleBlocInitialDisplay = this.toggleBloc.style.display;
-            this.toggleBloc.style.display = 'none';
+            if (this.elementId === '' && this.toggleCheckbox) {
+                opened = this.toggleCheckbox.checked;
+            }
+            if (opened === false) {
+                this.toggleBloc.style.display = 'none';
+            }
         }
         if (this.toggleCheckbox) {
             this.toggleCheckbox.addEventListener('change', this.onChange);
@@ -546,18 +749,21 @@ var ToggleBlocCustomAttribute = /** @class */ (function () {
         this.eventAggregator.publish('RemoveLoader', {});
         this.logger.debug('Attached');
     };
-    ToggleBlocCustomAttribute.prototype.detached = function () {
+    ToggleSlugCustomAttribute.prototype.detached = function () {
         this.logger.debug('Detached');
     };
-    ToggleBlocCustomAttribute.prototype.unbind = function () {
+    ToggleSlugCustomAttribute.prototype.unbind = function () {
         this.logger.debug('Unbind');
     };
-    ToggleBlocCustomAttribute = __decorate([
-        aurelia_framework_1.inject(aurelia_framework_1.DOM.Element, aurelia_event_aggregator_1.EventAggregator)
-    ], ToggleBlocCustomAttribute);
-    return ToggleBlocCustomAttribute;
+    __decorate([
+        aurelia_framework_1.bindable({ primaryProperty: true })
+    ], ToggleSlugCustomAttribute.prototype, "elementId", void 0);
+    ToggleSlugCustomAttribute = __decorate([
+        aurelia_framework_1.inject(aurelia_framework_1.DOM.Element, aurelia_event_aggregator_1.EventAggregator, StorageService_1.StorageService)
+    ], ToggleSlugCustomAttribute);
+    return ToggleSlugCustomAttribute;
 }());
-exports.ToggleBlocCustomAttribute = ToggleBlocCustomAttribute;
+exports.ToggleSlugCustomAttribute = ToggleSlugCustomAttribute;
 
 
 /***/ }),
@@ -576,10 +782,11 @@ var aurelia_framework_1 = __webpack_require__(/*! aurelia-framework */ "aurelia-
 function configure(configure) {
     configure.globalResources([
         'components/SchemaEditorCustomElement',
-        'components/ToggleBlocCustomAttribute',
+        'components/ToggleSlugCustomAttribute',
         'components/HtmlLoaderCustomAttribute',
         'components/LoaderDoneCustomAttribute',
-        'components/ManageBlocsCustomAttribute'
+        'components/ManageBlocsCustomAttribute',
+        'components/AttachModalCustomAttribute'
     ]);
 }
 exports.configure = configure;

@@ -9,7 +9,7 @@ use blackcube\admin\helpers\Html;
 use yii\helpers\ArrayHelper;
 use blackcube\admin\helpers\Parameter;
 ?>
-<div toggle-bloc="">
+<?php echo Html::beginTag('div', ['toggle-slug' => ($slugForm->getElement()->id === null)?'':$slugForm->getElement()->id]); ?>
     <div class="bloc mb-2">
         <div class="bloc-title">
             <?php echo Html::activeCheckbox($slugForm, 'hasSlug', ['class' => 'mr-2 toggle', 'label' => false]); ?>
@@ -17,6 +17,7 @@ use blackcube\admin\helpers\Parameter;
         </div>
     </div>
     <div class="toggle-target">
+        <?php echo Html::activeHiddenInput($slugForm, 'openedSlug', ['class' => 'slug-status']); ?>
         <div class="bloc">
             <div class="w-full bloc-fieldset md:w-1/12">
                 <?php echo Html::activeLabel($slug, 'active', ['class' => 'label']); ?>
@@ -86,7 +87,7 @@ use blackcube\admin\helpers\Parameter;
             </div>
         </div>
         <div class="bloc ml-4 justify-end">
-            <div class="w-full bloc-fieldset md:w-2/12">
+            <div class="w-full bloc-fieldset md:w-4/12">
                     <label class="w-full flex flex-col items-center px-4 py-4 bg-white text-gray-600 rounded-lg text-sm tracking-wide uppercase border border-gray-400 cursor-pointer hover:bg-gray-100 hover:text-gray-800">
                         <svg class="w-8 h-8" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
                             <path d="M16.88 9.1A4 4 0 0 1 16 17H5a5 5 0 0 1-1-9.9V7a3 3 0 0 1 4.52-2.59A4.98 4.98 0 0 1 17 8c0 .38-.04.74-.12 1.1zM11 11h3l-4-4-4 4h3v3h2v-3z" />
@@ -95,7 +96,7 @@ use blackcube\admin\helpers\Parameter;
                         <input type='file' class="hidden" />
                     </label>
             </div>
-            <div class="w-full bloc-fieldset md:w-9/12">
+            <div class="w-full bloc-fieldset md:w-7/12">
                 Image place Holder
             </div>
         </div>
@@ -128,4 +129,4 @@ use blackcube\admin\helpers\Parameter;
             </div>
         </div>
     </div>
-</div>
+<?php echo Html::endTag('div'); ?>
