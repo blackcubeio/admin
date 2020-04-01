@@ -30,14 +30,34 @@ class BlocTypeController extends Controller
     {
         $blocType = new BlocType();
         $blocType->template = '{"type": "object", "properties": {"text": {"type": "string"}}, "required": []}';
+        $typeBlocTypes = $this->getTypeBlocTypes();
         if (Yii::$app->request->isPost) {
             $blocType->load(Yii::$app->request->bodyParams);
-            if ($blocType->save()) {
-                return $this->redirect(['bloc-type/index']);
+            foreach($typeBlocTypes as $typeBlocType) {
+                $typeBlocType->setScenario(TypeBlocType::SCENARIO_PRE_VALIDATE_TYPE);
+            }
+            Model::loadMultiple($typeBlocTypes, Yii::$app->request->bodyParams);
+            if ($blocType->validate() === true && Model::validateMultiple($typeBlocTypes)) {
+                $transaction = Yii::$app->db->beginTransaction();
+                try {
+                    if ($blocType->save()) {
+                        foreach($typeBlocTypes as $typeBlocType) {
+                            $typeBlocType->blocTypeId = $blocType->id;
+                            $typeBlocType->save();
+                        }
+                        $transaction->commit();
+                        return $this->redirect(['bloc-type/index']);
+                    }
+                    $transaction->rollBack();
+                } catch (\Exception $e) {
+                    $transaction->rollBack();
+                    throw $e;
+                }
             }
         }
         return $this->render('form', [
-            'blocType' => $blocType
+            'blocType' => $blocType,
+            'typeBlocTypes' => $typeBlocTypes,
         ]);
     }
 

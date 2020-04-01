@@ -7,8 +7,7 @@ import {AjaxService} from "../services/AjaxService";
 @inject(DOM.Element, AjaxService)
 class AttachModalCustomAttribute implements ComponentCreated, ComponentBind, ComponentAttached, ComponentDetached, ComponentUnbind {
     private element:HTMLFormElement;
-    @bindable({ primaryProperty: true }) type: string;
-    @bindable() id: string;
+    @bindable({ primaryProperty: true }) url: string;
     private logger:Logger = LogManager.getLogger('components.AttachModal');
     private ajaxService:AjaxService;
     private ready:boolean = false;
@@ -19,18 +18,11 @@ class AttachModalCustomAttribute implements ComponentCreated, ComponentBind, Com
     private modalOk:HTMLButtonElement;
     private modalClose:HTMLButtonElement;
     private modalView:string;
+    private currentForm:HTMLFormElement;
     public constructor(element:HTMLFormElement, ajaxService:AjaxService) {
         this.element = element;
         this.logger.debug('Constructor');
         this.ajaxService = ajaxService;
-        /*/
-        this.ajaxService.getModal()
-            .then((modal:string) => {
-                this.modalView = modal;
-                this.ready= true;
-            });
-
-        /**/
     }
     public created(owningView: View, myView: View): void {
         this.logger.debug('Created');
@@ -42,25 +34,32 @@ class AttachModalCustomAttribute implements ComponentCreated, ComponentBind, Com
 
     public attached(): void {
         this.logger.debug('Attached');
-        this.element.addEventListener('submit', this.onSubmit);
+        this.element.addEventListener('submit', this.onDelegateSubmit);
     }
 
     public detached(): void {
-        this.element.removeEventListener('submit', this.onSubmit);
+        this.element.removeEventListener('submit', this.onDelegateSubmit);
         this.logger.debug('Detached');
     }
 
-    protected onSubmit = (evt:Event) => {
-        let form = <HTMLFormElement>evt.currentTarget;
-        if (this.id && this.type) {
-            this.ajaxService.getDetailModal(this.type, this.id)
-                .then((modal:string) => {
-                    this.modalView = modal;
-                    this.attachModal();
-                });
+    protected onDelegateSubmit = (evt:Event) => {
+        if (evt.target) {
+            //@ts-ignore
+            this.currentForm = <HTMLFormElement>evt.target.closest('form[data-ajax-modal]');
+            if (this.currentForm && this.element.contains(this.currentForm)) {
+                evt.preventDefault();
+                let url = this.currentForm.dataset.ajaxModal;
+                if (url) {
+                    this.ajaxService.getRequest(url)
+                        .then((modal:string) => {
+                            this.modalView = modal;
+                            this.attachModal();
+                        });
+                }
+            }
         }
-        evt.preventDefault();
     };
+
     protected attachModal() {
         document.body.insertAdjacentHTML('afterbegin', this.modalView);
         this.modal = <HTMLDivElement>document.querySelector('#modal-delete');
@@ -70,38 +69,35 @@ class AttachModalCustomAttribute implements ComponentCreated, ComponentBind, Com
         this.modalOk = <HTMLButtonElement>this.modal.querySelector('#modal-delete-ok');
         this.modalClose.addEventListener('click', this.onClose);
         this.modalCross.addEventListener('click', this.onClose);
+        this.modal.addEventListener('click', this.onClose);
         this.modalOk.addEventListener('click', this.onSubmitOk);
     }
 
-    protected onSubmitOk = (evt:Event) => {
-        if (this.modalCross) {
-            this.modalCross.removeEventListener('click', this.onClose);
-        }
+    protected detachModal() {
         if (this.modalClose) {
             this.modalClose.removeEventListener('click', this.onClose);
         }
+        if (this.modalCross) {
+            this.modalCross.removeEventListener('click', this.onClose);
+        }
+        if (this.modalOk) {
+            this.modalOk.removeEventListener('click', this.onSubmitOk);
+        }
         if (this.modal) {
+            this.modal.removeEventListener('click', this.onClose);
             this.modal.remove();
         }
         if (this.backdrop) {
             this.backdrop.remove();
         }
-        this.element.submit();
+    }
+    protected onSubmitOk = (evt:Event) => {
+        this.detachModal();
+        this.currentForm.submit();
 
     };
     protected onClose = (evt:Event) => {
-        if (this.modalCross) {
-            this.modalCross.removeEventListener('click', this.onClose);
-        }
-        if (this.modalClose) {
-            this.modalClose.removeEventListener('click', this.onClose);
-        }
-        if (this.modal) {
-            this.modal.remove();
-        }
-        if (this.backdrop) {
-            this.backdrop.remove();
-        }
+        this.detachModal();
     };
     public unbind(): void {
         this.logger.debug('Unbind');

@@ -9,8 +9,8 @@ class ManageBlocsCustomAttribute implements ComponentCreated, ComponentBind, Com
     @bindable({ primaryProperty: true }) url: string;
     private logger:Logger = LogManager.getLogger('components.ManageBlocs');
     private ajaxService:AjaxService;
-    private subButtons:NodeList;
     private form:HTMLFormElement;
+    private ajaxTarget:HTMLElement;
 
     public constructor(element:HTMLElement, ajaxService:AjaxService) {
         this.element = element;
@@ -30,60 +30,38 @@ class ManageBlocsCustomAttribute implements ComponentCreated, ComponentBind, Com
         this.logger.debug('Attached');
         this.logger.debug(this.url);
         this.form = <HTMLFormElement>this.element.closest('form');
-        this.attachEventHandler();
-        // let formData = new FormData(this.form);
-        // this.ajaxService.getBlocs(this.url, formData);
-    }
-
-    protected attachEventHandler() {
-        this.subButtons = this.element.querySelectorAll('button[type=button]');
-        this.subButtons.forEach((button:HTMLButtonElement, key:number, parent:NodeList) => {
-            button.addEventListener('click', this.onClick);
-        });
-    }
-
-    protected detachEventHandler() {
-        this.subButtons.forEach((button:HTMLButtonElement, key:number, parent:NodeList) => {
-            button.removeEventListener('click', this.onClick);
-        });
-    }
-
-    protected onClick = (evt:Event) => {
-        let currentTarget = <HTMLElement>evt.currentTarget;
-        this.logger.debug('Click button');
-        let button = <HTMLButtonElement>currentTarget;
-        if (button.name) {
-            let formData = new FormData(this.form);
-            formData.append(button.name, button.value);
-            this.detachEventHandler();
-            this.ajaxService.getBlocs(this.url, formData)
-                .then(response => {
-                    if (response.status == 200) {
-                        response.text().then((text:string) => {
-                            let target = <HTMLDivElement>this.element.querySelector('.target');
-                            if (target) {
-                                target.innerHTML = text;
-                            } else {
-                                this.logger.debug('Error target', text);
-                            }
-                        })
-                    }
-                    setTimeout(() => {
-                        this.attachEventHandler();
-                    }, 0);
-                })
-                .catch(reason => {
-                    this.attachEventHandler();
-                })
+        this.ajaxTarget = <HTMLElement>this.element.querySelector('[data-ajax-target]');
+        if (this.ajaxTarget === null) {
+            this.ajaxTarget = this.element;
         }
+        this.element.addEventListener('click', this.onDelegateClick);
+    }
 
+    protected onDelegateClick = (evt:Event) => {
+        if (evt.target) {
+            //@ts-ignore
+            let currentButton = <HTMLButtonElement>evt.target.closest('button[type=button]');
+            if (currentButton && this.element.contains(currentButton)) {
+                this.logger.debug('delegateClick');
+                if (currentButton.name) {
+                    let formData = new FormData(this.form);
+                    formData.append(currentButton.name, currentButton.value);
+                    this.ajaxService.getBlocs(this.url, formData)
+                        .then(response => {
+                            if (response.status == 200) {
+                                response.text().then((text:string) => {
+                                    this.ajaxTarget.innerHTML = text;
+                                })
+                            }
+                        });
+                }
+            }
+        }
     };
 
     public detached(): void {
         this.logger.debug('Detached');
-        this.subButtons.forEach((button:HTMLButtonElement, key:number, parent:NodeList) => {
-            button.removeEventListener('click', this.onClick);
-        });
+        this.element.removeEventListener('click', this.onDelegateClick);
     }
 
     public unbind(): void {

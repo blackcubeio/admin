@@ -45,7 +45,7 @@ class BlocAction extends Action
                 $element->moveBlocDown($bloc);
             }
             $blocs = $element->getBlocs()->all();
-            return $this->controller->renderPartial('_blocs', ['blocs' => $blocs]);
+            return $this->controller->renderPartial('_blocs', ['blocs' => $blocs, 'element' => $element]);
         }
 
     }

@@ -4,18 +4,13 @@
  * @var $type string
  */
 
-if ($name === null) {
-    $name = 'sélectionné';
-} else {
-    $name = '"'.$name.'"';
-}
 switch($type)
 {
-    case 'tag':
+    case \blackcube\core\models\Tag::TYPE:
         $type = 'le tag';
         break;
     default:
-        $type = 'l\'élément';
+        $type = 'l\'élément sélectionné';
         break;
 }
 ?>
@@ -28,8 +23,12 @@ switch($type)
             </div>
             <div class="body">
                 <p>
-                    Attention, vous allez supprimer <br/>
-                    <strong><?php echo $type; ?> <?php echo $name; ?></strong>.<br/>
+                    Attention, vous allez supprimer <?php echo $type; ?>
+                </p>
+                <?php if ($name !== null): ?>
+                    <strong class="uppercase text-sm"><?php echo $name; ?></strong>
+                <?php endif; ?>
+                <p>
                     Etes vous certain de vouloir continuer ?
                 </p>
             </div>

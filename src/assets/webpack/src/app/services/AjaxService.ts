@@ -54,6 +54,19 @@ class AjaxService {
         return this.modal;
 
     }
+    public getRequest(url:string)
+    {
+        this.logger.debug('getRequest');
+        return this.httpClient.fetch(url, { method: 'get'})
+            .then((response:Response) => {
+                return response.text();
+            });
+    }
+    public deleteRequest(url:string, csrf:string = '')
+    {
+        this.logger.debug('deleteRequest');
+        return this.httpClient.fetch(url, { method: 'delete', headers: {'X-CSRF-Token': csrf}});
+    }
 }
 
 export {AjaxService}

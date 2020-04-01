@@ -12,6 +12,7 @@ use blackcube\core\models\Category;
 use blackcube\core\models\Slug;
 use blackcube\core\models\Tag;
 use blackcube\core\models\Type;
+use blackcube\core\web\controllers\BlackcubeController;
 use yii\base\ErrorException;
 use yii\base\Model;
 use yii\helpers\Json;
@@ -176,7 +177,7 @@ class TypeController extends Controller
                 if ($matches[2] !== 'Blackcube') {
                     $targetClass = $controllerNamespace.'\\'.$matches[1];
                     $ref = new \ReflectionClass($targetClass);
-                    if ($ref->isSubclassOf(\blackcube\core\web\BlackcubeController::class)) {
+                    if ($ref->isSubclassOf(BlackcubeController::class)) {
                         $controllers[] = [
                             'id' => $matches[2],
                             'name' => $matches[2],

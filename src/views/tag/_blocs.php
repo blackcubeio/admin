@@ -2,6 +2,7 @@
 /**
  * @var $blocs \blackcube\core\models\Bloc[]
  * @var $this \yii\web\View
+ * @var $element \blackcube\core\models\Tag
  */
 use blackcube\admin\helpers\Html;
 use yii\helpers\ArrayHelper;
@@ -13,7 +14,7 @@ $pathAlias = \blackcube\admin\Module::getInstance()->adminTemplatesAlias;
 <?php foreach($blocs as $i => $bloc): ?>
     <?php if (($adminTemplate = $bloc->getAdminView($pathAlias)) !== false): ?>
         <?php echo Html::activeHiddenInput($bloc, '['.$i.']id'); ?>
-        <?php echo $this->render($adminTemplate, ['i' => $i, 'bloc' => $bloc]); ?>
+        <?php echo $this->render($adminTemplate, ['i' => $i, 'bloc' => $bloc, 'element' => $element]); ?>
     <?php else: ?>
 
         <?php echo Html::beginTag('div', ['class' => 'bloc'.($bloc->active ? '': ' inactive')]); ?>
@@ -22,8 +23,11 @@ $pathAlias = \blackcube\admin\Module::getInstance()->adminTemplatesAlias;
                 <div class="w-full bloc-fieldset">
                     <?php echo Html::activeLabel($bloc, '['.$i.']'.$id, ['class' => 'label']); ?>
                     <?php // echo Html::activeTextInput($bloc, '['.$i.']'.$id, ['class' => 'textfield'.($bloc->hasErrors($id)?' error':'')]); ?>
-                    <?php echo Html::activeElasticField($bloc, '['.$i.']'.$id); ?>
-                    <?php echo $bloc->structure[$id]['field']; ?>
+                    <?php echo Html::activeElasticField($bloc, '['.$i.']'.$id, [
+                        'upload-url' => Url::to(['upload']),
+                        'preview-url' => Url::to(['preview', 'name' => '__name__']),
+                        'delete-url' => Url::to(['delete', 'name' => '__name__'])
+                    ]); ?>
                 </div>
             <?php endforeach; ?>
             <!-- AJAX TARGET TO SET THE BLOCS -->

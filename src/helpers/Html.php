@@ -3,6 +3,7 @@
 namespace blackcube\admin\helpers;
 
 use yii\base\InvalidArgumentException;
+use yii\base\InvalidConfigException;
 use yii\base\Model;
 use blackcube\core\models\Bloc;
 
@@ -28,15 +29,87 @@ class Html extends \yii\helpers\Html
         return $tag;
     }
 
+    public static function activeUpload(Model $model, $attribute, $options = [])
+    {
+        if (isset($options['upload-url']) === false) {
+            throw new InvalidConfigException();
+        }
+        $selfId = static::getInputId($model, $attribute);
+        $selfName = static::getInputName($model, $attribute);
+        $options = array_merge([
+            'id' => $selfId,
+            'name' => $selfName,
+            'multiple' => true,
+        ], $options);
+        return static::tag('resumable-file', '', $options);
+    }
+
     public static function activeElasticField(Bloc $bloc, $attribute, $options = [])
     {
         if (!preg_match(static::$attributeRegex, $attribute, $matches)) {
             throw new InvalidArgumentException('Attribute name must contain word characters only.');
         }
         $realAttibute = $matches[2];
-
+        if (isset($options['upload-url']) === true) {
+            $uploadUrl = $options['upload-url'];
+            unset($options['upload-url']);
+        } else {
+            $uploadUrl = null;
+        }
+        if (isset($options['preview-url']) === true) {
+            $previewUrl = $options['preview-url'];
+            unset($options['preview-url']);
+        } else {
+            $previewUrl = null;
+        }
+        if (isset($options['delete-url']) === true) {
+            $deleteUrl = $options['delete-url'];
+            unset($options['delete-url']);
+        } else {
+            $deleteUrl = null;
+        }
         $structure = $bloc->structure[$realAttibute];
         switch ($structure['field']) {
+            case 'image':
+                $finalOptions = $options;
+                if ($uploadUrl !== null) {
+                    $finalOptions['upload-url'] = $uploadUrl;
+                }
+                if ($previewUrl !== null) {
+                    $finalOptions['preview-url'] = $previewUrl;
+                }
+                if ($deleteUrl !== null) {
+                    $finalOptions['delete-url'] = $deleteUrl;
+                }
+                $finalOptions['multiple'] = false;
+                if (isset($options['value'])) {
+                    $finalOptions['value'] = $options['value'];
+                } else {
+                    $finalOptions['value'] = static::getAttributeValue($bloc, $attribute);
+                }
+
+                $result = static::activeUpload($bloc, $attribute, $finalOptions);
+                break;
+            case 'images':
+                $finalOptions = $options;
+                if ($uploadUrl !== null) {
+                    $finalOptions['upload-url'] = $uploadUrl;
+                }
+                if ($previewUrl !== null) {
+                    $finalOptions['preview-url'] = $previewUrl;
+                }
+                if ($deleteUrl !== null) {
+                    $finalOptions['delete-url'] = $deleteUrl;
+                }
+                $finalOptions['multiple'] = true;
+                if (isset($options['value'])) {
+                    $finalOptions['value'] = $options['value'];
+                } else {
+                    $finalOptions['value'] = static::getAttributeValue($bloc, $attribute);
+                }
+
+                $result = static::activeUpload($bloc, $attribute, $finalOptions);
+                break;
             case 'dropdownlist':
                 $mappedField = 'activeDropDownList';
                 break;

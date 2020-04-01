@@ -115,6 +115,18 @@ var AjaxService = /** @class */ (function () {
         });
         return this.modal;
     };
+    AjaxService.prototype.getRequest = function (url) {
+        this.logger.debug('getRequest');
+        return this.httpClient.fetch(url, { method: 'get' })
+            .then(function (response) {
+            return response.text();
+        });
+    };
+    AjaxService.prototype.deleteRequest = function (url, csrf) {
+        if (csrf === void 0) { csrf = ''; }
+        this.logger.debug('deleteRequest');
+        return this.httpClient.fetch(url, { method: 'delete', headers: { 'X-CSRF-Token': csrf } });
+    };
     AjaxService = __decorate([
         aurelia_framework_1.inject(aurelia_fetch_client_1.HttpClient)
     ], AjaxService);
@@ -201,6 +213,74 @@ module.exports = __webpack_require__(/*! ./app.ts */"./app.ts");
 
 /***/ }),
 
+/***/ "components/AjaxLinkManagerCustomAttribute":
+/*!**********************************************************!*\
+  !*** ./app/components/AjaxLinkManagerCustomAttribute.ts ***!
+  \**********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var aurelia_framework_1 = __webpack_require__(/*! aurelia-framework */ "aurelia-framework");
+var AjaxService_1 = __webpack_require__(/*! ../services/AjaxService */ "./app/services/AjaxService.ts");
+var AjaxLinkManagerCustomAttribute = /** @class */ (function () {
+    function AjaxLinkManagerCustomAttribute(element, ajaxService) {
+        var _this = this;
+        this.logger = aurelia_framework_1.LogManager.getLogger('components.AjaxLinkManager');
+        this.onDelegateClick = function (evt) {
+            if (evt.target) {
+                //@ts-ignore
+                var currentLink = evt.target.closest('a[data-ajax]');
+                if (currentLink && _this.element.contains(currentLink)) {
+                    evt.preventDefault();
+                    _this.logger.debug('delegateClick');
+                    var url = currentLink.href;
+                    _this.ajaxService.getRequest(url)
+                        .then(function (html) {
+                        _this.element.innerHTML = html;
+                    });
+                }
+            }
+        };
+        this.element = element;
+        this.ajaxService = ajaxService;
+        this.logger.debug('Constructor');
+    }
+    AjaxLinkManagerCustomAttribute.prototype.created = function (owningView, myView) {
+        this.logger.debug('Created');
+    };
+    AjaxLinkManagerCustomAttribute.prototype.bind = function (bindingContext, overrideContext) {
+        this.logger.debug('Bind');
+    };
+    AjaxLinkManagerCustomAttribute.prototype.attached = function () {
+        this.logger.debug('Attached');
+        this.element.addEventListener('click', this.onDelegateClick);
+    };
+    AjaxLinkManagerCustomAttribute.prototype.detached = function () {
+        this.logger.debug('Detached');
+        this.element.removeEventListener('click', this.onDelegateClick);
+    };
+    AjaxLinkManagerCustomAttribute.prototype.unbind = function () {
+        this.logger.debug('Unbind');
+    };
+    AjaxLinkManagerCustomAttribute = __decorate([
+        aurelia_framework_1.inject(aurelia_framework_1.DOM.Element, AjaxService_1.AjaxService)
+    ], AjaxLinkManagerCustomAttribute);
+    return AjaxLinkManagerCustomAttribute;
+}());
+exports.AjaxLinkManagerCustomAttribute = AjaxLinkManagerCustomAttribute;
+
+
+/***/ }),
+
 /***/ "components/AttachModalCustomAttribute":
 /*!******************************************************!*\
   !*** ./app/components/AttachModalCustomAttribute.ts ***!
@@ -225,67 +305,33 @@ var AttachModalCustomAttribute = /** @class */ (function () {
         this.logger = aurelia_framework_1.LogManager.getLogger('components.AttachModal');
         this.ready = false;
         this.readyCount = 0;
-        this.linkElement = function () {
-            _this.element.addEventListener('submit', _this.onSubmit);
-        };
-        this.onSubmit = function (evt) {
-            var form = evt.currentTarget;
-            if (_this.id && _this.type) {
-                _this.ajaxService.getDetailModal(_this.type, _this.id)
-                    .then(function (modal) {
-                    _this.modalView = modal;
-                    _this.runStuff();
-                });
+        this.onDelegateSubmit = function (evt) {
+            if (evt.target) {
+                //@ts-ignore
+                _this.currentForm = evt.target.closest('form[data-ajax-modal]');
+                if (_this.currentForm && _this.element.contains(_this.currentForm)) {
+                    evt.preventDefault();
+                    var url = _this.currentForm.dataset.ajaxModal;
+                    if (url) {
+                        _this.ajaxService.getRequest(url)
+                            .then(function (modal) {
+                            _this.modalView = modal;
+                            _this.attachModal();
+                        });
+                    }
+                }
             }
-            else {
-                _this.ajaxService.getModal()
-                    .then(function (modal) {
-                    _this.modalView = modal;
-                    _this.runStuff();
-                });
-            }
-            evt.preventDefault();
         };
         this.onSubmitOk = function (evt) {
-            if (_this.modalCross) {
-                _this.modalCross.removeEventListener('click', _this.onClose);
-            }
-            if (_this.modalClose) {
-                _this.modalClose.removeEventListener('click', _this.onClose);
-            }
-            if (_this.modal) {
-                _this.modal.remove();
-            }
-            if (_this.backdrop) {
-                _this.backdrop.remove();
-            }
-            _this.element.submit();
+            _this.detachModal();
+            _this.currentForm.submit();
         };
         this.onClose = function (evt) {
-            if (_this.modalCross) {
-                _this.modalCross.removeEventListener('click', _this.onClose);
-            }
-            if (_this.modalClose) {
-                _this.modalClose.removeEventListener('click', _this.onClose);
-            }
-            if (_this.modal) {
-                _this.modal.remove();
-            }
-            if (_this.backdrop) {
-                _this.backdrop.remove();
-            }
+            _this.detachModal();
         };
         this.element = element;
         this.logger.debug('Constructor');
         this.ajaxService = ajaxService;
-        /*/
-        this.ajaxService.getModal()
-            .then((modal:string) => {
-                this.modalView = modal;
-                this.ready= true;
-            });
-
-        /**/
     }
     AttachModalCustomAttribute.prototype.created = function (owningView, myView) {
         this.logger.debug('Created');
@@ -294,16 +340,14 @@ var AttachModalCustomAttribute = /** @class */ (function () {
         this.logger.debug('Bind');
     };
     AttachModalCustomAttribute.prototype.attached = function () {
-        this.logger.debug('Type', this.type);
-        this.logger.debug('ID', this.id);
         this.logger.debug('Attached');
-        this.linkElement();
+        this.element.addEventListener('submit', this.onDelegateSubmit);
     };
     AttachModalCustomAttribute.prototype.detached = function () {
-        this.element.removeEventListener('submit', this.onSubmit);
+        this.element.removeEventListener('submit', this.onDelegateSubmit);
         this.logger.debug('Detached');
     };
-    AttachModalCustomAttribute.prototype.runStuff = function () {
+    AttachModalCustomAttribute.prototype.attachModal = function () {
         document.body.insertAdjacentHTML('afterbegin', this.modalView);
         this.modal = document.querySelector('#modal-delete');
         this.backdrop = document.querySelector('#modal-delete-backdrop');
@@ -312,17 +356,33 @@ var AttachModalCustomAttribute = /** @class */ (function () {
         this.modalOk = this.modal.querySelector('#modal-delete-ok');
         this.modalClose.addEventListener('click', this.onClose);
         this.modalCross.addEventListener('click', this.onClose);
+        this.modal.addEventListener('click', this.onClose);
         this.modalOk.addEventListener('click', this.onSubmitOk);
+    };
+    AttachModalCustomAttribute.prototype.detachModal = function () {
+        if (this.modalClose) {
+            this.modalClose.removeEventListener('click', this.onClose);
+        }
+        if (this.modalCross) {
+            this.modalCross.removeEventListener('click', this.onClose);
+        }
+        if (this.modalOk) {
+            this.modalOk.removeEventListener('click', this.onSubmitOk);
+        }
+        if (this.modal) {
+            this.modal.removeEventListener('click', this.onClose);
+            this.modal.remove();
+        }
+        if (this.backdrop) {
+            this.backdrop.remove();
+        }
     };
     AttachModalCustomAttribute.prototype.unbind = function () {
         this.logger.debug('Unbind');
     };
     __decorate([
         aurelia_framework_1.bindable({ primaryProperty: true })
-    ], AttachModalCustomAttribute.prototype, "type", void 0);
-    __decorate([
-        aurelia_framework_1.bindable()
-    ], AttachModalCustomAttribute.prototype, "id", void 0);
+    ], AttachModalCustomAttribute.prototype, "url", void 0);
     AttachModalCustomAttribute = __decorate([
         aurelia_framework_1.inject(aurelia_framework_1.DOM.Element, AjaxService_1.AjaxService)
     ], AttachModalCustomAttribute);
@@ -468,34 +528,25 @@ var ManageBlocsCustomAttribute = /** @class */ (function () {
     function ManageBlocsCustomAttribute(element, ajaxService) {
         var _this = this;
         this.logger = aurelia_framework_1.LogManager.getLogger('components.ManageBlocs');
-        this.onClick = function (evt) {
-            var currentTarget = evt.currentTarget;
-            _this.logger.debug('Click button');
-            var button = currentTarget;
-            if (button.name) {
-                var formData = new FormData(_this.form);
-                formData.append(button.name, button.value);
-                _this.detachEventHandler();
-                _this.ajaxService.getBlocs(_this.url, formData)
-                    .then(function (response) {
-                    if (response.status == 200) {
-                        response.text().then(function (text) {
-                            var target = _this.element.querySelector('.target');
-                            if (target) {
-                                target.innerHTML = text;
-                            }
-                            else {
-                                _this.logger.debug('Error target', text);
+        this.onDelegateClick = function (evt) {
+            if (evt.target) {
+                //@ts-ignore
+                var currentButton = evt.target.closest('button[type=button]');
+                if (currentButton && _this.element.contains(currentButton)) {
+                    _this.logger.debug('delegateClick');
+                    if (currentButton.name) {
+                        var formData = new FormData(_this.form);
+                        formData.append(currentButton.name, currentButton.value);
+                        _this.ajaxService.getBlocs(_this.url, formData)
+                            .then(function (response) {
+                            if (response.status == 200) {
+                                response.text().then(function (text) {
+                                    _this.ajaxTarget.innerHTML = text;
+                                });
                             }
                         });
                     }
-                    setTimeout(function () {
-                        _this.attachEventHandler();
-                    }, 0);
-                })
-                    .catch(function (reason) {
-                    _this.attachEventHandler();
-                });
+                }
             }
         };
         this.element = element;
@@ -512,29 +563,15 @@ var ManageBlocsCustomAttribute = /** @class */ (function () {
         this.logger.debug('Attached');
         this.logger.debug(this.url);
         this.form = this.element.closest('form');
-        this.attachEventHandler();
-        // let formData = new FormData(this.form);
-        // this.ajaxService.getBlocs(this.url, formData);
-    };
-    ManageBlocsCustomAttribute.prototype.attachEventHandler = function () {
-        var _this = this;
-        this.subButtons = this.element.querySelectorAll('button[type=button]');
-        this.subButtons.forEach(function (button, key, parent) {
-            button.addEventListener('click', _this.onClick);
-        });
-    };
-    ManageBlocsCustomAttribute.prototype.detachEventHandler = function () {
-        var _this = this;
-        this.subButtons.forEach(function (button, key, parent) {
-            button.removeEventListener('click', _this.onClick);
-        });
+        this.ajaxTarget = this.element.querySelector('[data-ajax-target]');
+        if (this.ajaxTarget === null) {
+            this.ajaxTarget = this.element;
+        }
+        this.element.addEventListener('click', this.onDelegateClick);
     };
     ManageBlocsCustomAttribute.prototype.detached = function () {
-        var _this = this;
         this.logger.debug('Detached');
-        this.subButtons.forEach(function (button, key, parent) {
-            button.removeEventListener('click', _this.onClick);
-        });
+        this.element.removeEventListener('click', this.onDelegateClick);
     };
     ManageBlocsCustomAttribute.prototype.unbind = function () {
         this.logger.debug('Unbind');
@@ -549,6 +586,282 @@ var ManageBlocsCustomAttribute = /** @class */ (function () {
 }());
 exports.ManageBlocsCustomAttribute = ManageBlocsCustomAttribute;
 
+
+/***/ }),
+
+/***/ "components/ResumableFileCustomElement":
+/*!******************************************************!*\
+  !*** ./app/components/ResumableFileCustomElement.ts ***!
+  \******************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var aurelia_framework_1 = __webpack_require__(/*! aurelia-framework */ "aurelia-framework");
+var AjaxService_1 = __webpack_require__(/*! ../services/AjaxService */ "./app/services/AjaxService.ts");
+var resumablejs_1 = __importDefault(__webpack_require__(/*! resumablejs */ "../../../../node_modules/resumablejs/resumable.js"));
+var ResumableFileCustomElement = /** @class */ (function () {
+    function ResumableFileCustomElement(element, ajaxService) {
+        var _this = this;
+        this.logger = aurelia_framework_1.LogManager.getLogger('components.ResumableFile');
+        this.multiple = false;
+        this.value = '';
+        this.onDragEnter = function (evt) {
+            evt.preventDefault();
+            var el = evt.currentTarget;
+            var dt = evt.dataTransfer;
+            if (dt && dt.types.indexOf('Files') >= 0) {
+                evt.stopPropagation();
+                dt.dropEffect = 'copy';
+                dt.effectAllowed = 'copy';
+                el.classList.add('dragover');
+            }
+            else if (dt) {
+                dt.dropEffect = 'none';
+                dt.effectAllowed = 'none';
+            }
+        };
+        this.onDragLeave = function (evt) {
+            var el = evt.currentTarget;
+            el.classList.remove('dragover');
+        };
+        this.onFileAdded = function (file, event) {
+            _this.logger.debug('onFileAdded', file, event);
+            _this.resumable.upload();
+        };
+        // File upload completed
+        this.onFileSuccess = function (file, serverMessage) {
+            var response = JSON.parse(serverMessage);
+            if (_this.multiple === false) {
+                _this.setFiles('@blackcubetmp/' + response.finalFilename, file);
+            }
+            else {
+                _this.appendFile('@blackcubetmp/' + response.finalFilename, file);
+            }
+            _this.hiddenField.value = _this.getFilesValue();
+            _this.logger.debug('onFileSuccess', file, serverMessage);
+        };
+        // File upload progress
+        this.onFileProgress = function (file, serverMessage) {
+            _this.logger.debug('onFileProgress', file, serverMessage);
+        };
+        this.onFilesAdded = function (filesAdded, filesSkipped) {
+            _this.logger.debug('onFilesAdded', filesAdded, filesSkipped);
+        };
+        this.onFileRetry = function (file) {
+            _this.logger.debug('onFileRetry', file);
+        };
+        this.onFileError = function (file, serverMessage) {
+            _this.logger.debug('onFileError', file, serverMessage);
+        };
+        this.onUploadStart = function () {
+            _this.logger.debug('onUploadStart');
+        };
+        this.onComplete = function () {
+            _this.logger.debug('onComplete');
+        };
+        this.onProgress = function () {
+            _this.logger.debug('onProgress');
+        };
+        this.onError = function (serverMessage, file) {
+            _this.logger.debug('onError', file, serverMessage);
+        };
+        this.onPause = function () {
+            _this.logger.debug('onPause');
+        };
+        this.onBeforeCancel = function () {
+            _this.logger.debug('onBeforeCancel');
+        };
+        this.onCancel = function () {
+            _this.logger.debug('onCancel');
+        };
+        this.onChunkingStart = function (file) {
+            _this.logger.debug('onChunkingStart', file);
+        };
+        this.onChunkingProgress = function (file, ratio) {
+            _this.logger.debug('onChunkingProgressd', file, ratio);
+        };
+        this.onChunkingComplete = function (file) {
+            _this.logger.debug('onChunkingComplete', file);
+        };
+        this.element = element;
+        this.ajaxService = ajaxService;
+        this.logger.debug('Constructor');
+    }
+    ResumableFileCustomElement.prototype.created = function (owningView, myView) {
+        this.logger.debug('Created');
+    };
+    ResumableFileCustomElement.prototype.bind = function (bindingContext, overrideContext) {
+        this.logger.debug('Bind');
+    };
+    ResumableFileCustomElement.prototype.setFiles = function (value) {
+        var _this = this;
+        var files = value.split(/\s*,\s*/);
+        this.handledFiles = files.filter(function (value, index) {
+            return value.trim() !== '';
+        }).map(function (value, index) {
+            return {
+                name: value,
+                shortname: value.split(/.*[\/|\\]/).pop(),
+                previewUrl: _this.generatePreviewUrl(name),
+                deleteUrl: _this.generateDeleteUrl(name)
+            };
+        });
+    };
+    ResumableFileCustomElement.prototype.generatePreviewUrl = function (name) {
+        return this.previewUrl.replace('__name__', name);
+    };
+    ResumableFileCustomElement.prototype.generateDeleteUrl = function (name) {
+        return this.deleteUrl.replace('__name__', name);
+    };
+    ResumableFileCustomElement.prototype.appendFile = function (name, file) {
+        if (file === void 0) { file = null; }
+        this.handledFiles.push({
+            name: name,
+            shortname: name.split(/.*[\/|\\]/).pop(),
+            previewUrl: this.generatePreviewUrl(name),
+            deleteUrl: this.generateDeleteUrl(name),
+            file: file
+        });
+    };
+    ResumableFileCustomElement.prototype.getFilesValue = function () {
+        return this.handledFiles.map(function (uploadedFile, index) {
+            return uploadedFile.name;
+        }).join(', ');
+    };
+    ResumableFileCustomElement.prototype.onRemove = function (handledFile) {
+        this.logger.debug('Should remove file', handledFile);
+        var fileIndex = null;
+        this.handledFiles.forEach(function (file, index) {
+            if (handledFile.name === file.name) {
+                fileIndex = index;
+            }
+        });
+        if (fileIndex !== null && fileIndex >= 0) {
+            if (handledFile.file && handledFile.file !== null) {
+                this.resumable.removeFile(handledFile.file);
+            }
+            this.handledFiles.splice(fileIndex, 1);
+            this.ajaxService.deleteRequest(this.generateDeleteUrl(handledFile.name), this.csfr.value);
+            // should call WS delete
+        }
+    };
+    ResumableFileCustomElement.prototype.attached = function () {
+        this.parentForm = this.element.closest('form');
+        this.logger.debug('Multiple', this.multiple);
+        var resumableConfig = {
+            target: this.uploadUrl
+        };
+        if (this.parentForm) {
+            var csrfField = this.parentForm.querySelector('input[name=_csrf]');
+            this.csfr = {
+                name: csrfField.name,
+                value: csrfField.value
+            };
+            resumableConfig.query = {};
+            resumableConfig.query[this.csfr.name] = this.csfr.value;
+            this.logger.debug('CSRF : ', csrfField.value);
+        }
+        this.setFiles(this.value);
+        this.hiddenField = document.createElement('input');
+        this.hiddenField.type = 'hidden';
+        this.hiddenField.name = this.name;
+        this.hiddenField.value = this.getFilesValue();
+        this.element.appendChild(this.hiddenField);
+        this.resumable = new resumablejs_1.default(resumableConfig);
+        if (this.resumable.support) {
+            this.logger.debug('Resume js supported', this.browseButton);
+            this.resumable.assignBrowse(this.browseButton, false);
+            this.resumable.assignDrop(this.browseButton);
+            this.browseButton.addEventListener('dragover', this.onDragEnter);
+            this.browseButton.addEventListener('dragenter', this.onDragEnter);
+            this.browseButton.addEventListener('dragleave', this.onDragLeave);
+            this.browseButton.addEventListener('drop', this.onDragLeave);
+            // this.resumable.assignDrop(this.dropTarget);
+            this.resumable.on('fileAdded', this.onFileAdded);
+            this.resumable.on('fileSuccess', this.onFileSuccess);
+            this.resumable.on('fileProgress', this.onFileProgress);
+            this.resumable.on('filesAdded', this.onFilesAdded);
+            this.resumable.on('fileRetry', this.onFileRetry);
+            this.resumable.on('fileError', this.onFileError);
+            this.resumable.on('uploadStart', this.onUploadStart);
+            this.resumable.on('complete', this.onComplete);
+            this.resumable.on('progress', this.onProgress);
+            this.resumable.on('error', this.onError);
+            this.resumable.on('pause', this.onPause);
+            this.resumable.on('beforeCancel', this.onBeforeCancel);
+            this.resumable.on('cancel', this.onCancel);
+            this.resumable.on('chunkingStart', this.onChunkingStart);
+            this.resumable.on('chunkingProgress', this.onChunkingProgress);
+            this.resumable.on('chunkingComplete', this.onChunkingComplete);
+        }
+        this.logger.debug('Attached');
+    };
+    Object.defineProperty(ResumableFileCustomElement.prototype, "getFiles", {
+        get: function () {
+            if (this.resumable.support) {
+                return this.resumable.files.map(function (file, index) {
+                    return file.fileName;
+                });
+            }
+            return [];
+        },
+        enumerable: true,
+        configurable: true
+    });
+    ResumableFileCustomElement.prototype.detached = function () {
+        this.logger.debug('Detached');
+    };
+    ResumableFileCustomElement.prototype.unbind = function () {
+        this.logger.debug('Unbind');
+    };
+    __decorate([
+        aurelia_framework_1.bindable({ defaultBindingMode: aurelia_framework_1.bindingMode.fromView })
+    ], ResumableFileCustomElement.prototype, "uploadUrl", void 0);
+    __decorate([
+        aurelia_framework_1.bindable({ defaultBindingMode: aurelia_framework_1.bindingMode.fromView })
+    ], ResumableFileCustomElement.prototype, "previewUrl", void 0);
+    __decorate([
+        aurelia_framework_1.bindable({ defaultBindingMode: aurelia_framework_1.bindingMode.fromView })
+    ], ResumableFileCustomElement.prototype, "deleteUrl", void 0);
+    __decorate([
+        aurelia_framework_1.bindable({ defaultBindingMode: aurelia_framework_1.bindingMode.fromView })
+    ], ResumableFileCustomElement.prototype, "name", void 0);
+    __decorate([
+        aurelia_framework_1.bindable({ defaultBindingMode: aurelia_framework_1.bindingMode.fromView })
+    ], ResumableFileCustomElement.prototype, "multiple", void 0);
+    __decorate([
+        aurelia_framework_1.bindable({ defaultBindingMode: aurelia_framework_1.bindingMode.fromView })
+    ], ResumableFileCustomElement.prototype, "value", void 0);
+    ResumableFileCustomElement = __decorate([
+        aurelia_framework_1.inject(aurelia_framework_1.DOM.Element, AjaxService_1.AjaxService)
+    ], ResumableFileCustomElement);
+    return ResumableFileCustomElement;
+}());
+exports.ResumableFileCustomElement = ResumableFileCustomElement;
+
+
+/***/ }),
+
+/***/ "components/ResumableFileCustomElement.html":
+/*!********************************************************!*\
+  !*** ./app/components/ResumableFileCustomElement.html ***!
+  \********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "<template>\n    <!-- div ref=\"dropTarget\" style=\"border:1px solid red; width:200px; height:200px;\"></div -->\n    <button type=\"button\" ref=\"browseButton\" class=\"uploader\">\n        <i class=\"fa fa-cloud-upload-alt\"></i>\n    </button>\n    <ul class=\"w-full\">\n        <li class=\"inline-block text-gray-600 text-center p-2 relative\" repeat.for=\"handledFile of handledFiles\">\n            <button click.delegate=\"onRemove(handledFile)\" class=\"absolute top-0 right-0 rounded-full p-1 text-center bg-white border-gray-600 border h-6 w-6 flex items-center justify-center text-xs\">\n                <i class=\"fa fa-trash-alt\"></i>\n            </button>\n            <img class=\"object-contain h-24\" src.bind=\"handledFile.previewUrl\" title.bind=\"handledFile.shortname\">\n        </li>\n    </ul>\n</template>\n";
 
 /***/ }),
 
@@ -786,7 +1099,9 @@ function configure(configure) {
         'components/HtmlLoaderCustomAttribute',
         'components/LoaderDoneCustomAttribute',
         'components/ManageBlocsCustomAttribute',
-        'components/AttachModalCustomAttribute'
+        'components/AttachModalCustomAttribute',
+        'components/AjaxLinkManagerCustomAttribute',
+        'components/ResumableFileCustomElement'
     ]);
 }
 exports.configure = configure;

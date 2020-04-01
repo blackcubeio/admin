@@ -33,11 +33,11 @@ $this->beginPage(); ?><!DOCTYPE html>
     </head>
     <body>
         <?php $this->beginBody(); ?>
-        <div class="loader" html-loader="">
+        <!-- div class="loader" html-loader="">
             <span>
                 <i class="fas fa-circle-notch fa-spin fa-5x"></i>
             </span>
-        </div>
+        </div -->
         <!--Container -->
         <div class="mx-auto">
             <!--Screen-->

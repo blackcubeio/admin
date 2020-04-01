@@ -7,6 +7,8 @@ export function configure(configure: FrameworkConfiguration) {
         PLATFORM.moduleName('components/HtmlLoaderCustomAttribute'),
         PLATFORM.moduleName('components/LoaderDoneCustomAttribute'),
         PLATFORM.moduleName('components/ManageBlocsCustomAttribute'),
-        PLATFORM.moduleName('components/AttachModalCustomAttribute')
+        PLATFORM.moduleName('components/AttachModalCustomAttribute'),
+        PLATFORM.moduleName('components/AjaxLinkManagerCustomAttribute'),
+        PLATFORM.moduleName('components/ResumableFileCustomElement')
     ]);
 }

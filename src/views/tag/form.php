@@ -14,10 +14,10 @@ use yii\helpers\Url;
 ?>
 <div class="flex flex-1">
     <?php echo \blackcube\admin\widgets\Sidebar::widget(); ?>
-    <main class="bg-white flex-1 p-3">
-        <ul class="flex px-6 mx-3">
+    <main>
+        <ul class="header">
             <li class="">
-                <?php echo Html::a('<i class="fa fa-angle-left mr-2"></i> Back', ['index'], ['class' => 'inline-block border border-gray-700 rounded py-2 px-4 bg-gray-700 hover:bg-blue-800 text-white w-full']); ?>
+                <?php echo Html::a('<i class="fa fa-angle-left mr-2"></i> Back', ['index'], ['class' => 'button']); ?>
             </li>
         </ul>
         <?php echo Html::beginForm('', 'post', ['class' => 'form']); ?>
@@ -75,18 +75,18 @@ use yii\helpers\Url;
                         <span class="title">Contenu</span>
                     </div>
                 </div>
-                <div class="target">
-                <?php echo $this->render('_blocs', ['blocs' => $blocs]); ?>
+                <div data-ajax-target="">
+                    <?php echo $this->render('_blocs', ['blocs' => $blocs, 'element' => $tag]); ?>
                 </div>
                 <?php if ($tag->type && $tag->type->getBlocTypes()->count() > 0): ?>
-                <div class="bloc mb-4 justify-end">
-                    <div class="relative border border-gray-200 rounded-l bg-gray-200">
-                        <?php echo Html::dropDownList('blocTypeId', null, ArrayHelper::map($tag->type->blocTypes, 'id', 'name'), ['class' => 'block font-light appearance-none w-full bg-gray-200 text-gray-700 py-1 pl-4 pr-8 focus:outline-none leading-tight']); ?>
-                        <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                <div class="bloc bloc-tools">
+                    <div class="dropdown-tool">
+                        <?php echo Html::dropDownList('blocTypeId', null, ArrayHelper::map($tag->type->blocTypes, 'id', 'name'), []); ?>
+                        <div class="dropdown-tool-arrow">
                             <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
                         </div>
                     </div>
-                    <button type="button" name="blocAdd" class="p-1 font-light hover:text-white hover:bg-blue-800 tracking-wider rounded-r mr-3 text-gray-700 bg-gray-200 focus:outline-none">
+                    <button type="button" name="blocAdd" class="button">
                         <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" >
                             <path d="M5 3h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5c0-1.1.9-2 2-2zm0 2v14h14V5H5zm8 6h2a1 1 0 0 1 0 2h-2v2a1 1 0 0 1-2 0v-2H9a1 1 0 0 1 0-2h2V9a1 1 0 0 1 2 0v2z"/>
                         </svg>
