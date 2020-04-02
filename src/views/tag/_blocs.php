@@ -16,8 +16,10 @@ $pathAlias = \blackcube\admin\Module::getInstance()->adminTemplatesAlias;
         <?php echo Html::activeHiddenInput($bloc, '['.$i.']id'); ?>
         <?php echo $this->render($adminTemplate, ['i' => $i, 'bloc' => $bloc, 'element' => $element]); ?>
     <?php else: ?>
-
         <?php echo Html::beginTag('div', ['class' => 'bloc'.($bloc->active ? '': ' inactive')]); ?>
+        <div class="bloc-title">
+            <label class="title italic"><?php echo $bloc->blocType->name; ?></label>
+        </div>
             <?php echo Html::activeHiddenInput($bloc, '['.$i.']id'); ?>
             <?php foreach($bloc->elasticAttributes as $id => $attribute): ?>
                 <div class="w-full bloc-fieldset">
@@ -33,18 +35,18 @@ $pathAlias = \blackcube\admin\Module::getInstance()->adminTemplatesAlias;
             <!-- AJAX TARGET TO SET THE BLOCS -->
         <?php echo Html::endTag('div'); ?>
     <?php endif; ?>
-    <div class="bloc justify-end pr-4">
+    <div class="bloc justify-end mx-3 pb-2 border-b border-gray-200">
             <?php echo Html::beginTag('button', [
                 'type' => 'button',
                 'name' => 'blocDelete',
                 'value' => $bloc->id,
-                'class' => 'bg-gray-300 hover:bg-red-600 hover:text-white text-gray-800 font-bold p-2 mr-4 rounded inline-flex items-center  focus:outline-none'
+                'class' => 'bg-gray-300 hover:bg-red-600 hover:text-white text-xs text-gray-800 font-bold p-1 mr-4 rounded inline-flex items-center  focus:outline-none'
             ]); ?>
                 <i class="fa fa-trash-alt"></i>
             <?php echo Html::endTag('button'); ?>
             <?php if ($i === 0): ?>
                 <?php echo Html::beginTag('span', [
-                    'class' => 'p-2 font-light tracking-wider rounded-l ml-2 text-gray-700 bg-gray-200 focus:outline-none opacity-25'
+                    'class' => 'p-1 font-light tracking-wider rounded-l ml-2 text-xs text-gray-700 bg-gray-200 focus:outline-none opacity-25'
                 ]); ?>
                 <i class="fa fa-angle-up"></i>
                 <?php echo Html::endTag('span'); ?>
@@ -53,14 +55,14 @@ $pathAlias = \blackcube\admin\Module::getInstance()->adminTemplatesAlias;
                     'type' => 'button',
                     'name' => 'blocUp',
                     'value' => $bloc->id,
-                    'class' => 'p-2 font-light hover:text-white hover:bg-blue-800 tracking-wider rounded-l ml-2 text-gray-700 bg-gray-200 focus:outline-none'
+                    'class' => 'p-1 font-light hover:text-white hover:bg-blue-800 text-xs tracking-wider rounded-l ml-2 text-gray-700 bg-gray-200 focus:outline-none'
                 ]); ?>
                 <i class="fa fa-angle-up"></i>
                 <?php echo Html::endTag('button'); ?>
             <?php endif; ?>
             <?php if ($i >= ($blocsCount - 1)): ?>
                 <?php echo Html::beginTag('span', [
-                    'class' => 'p-2 font-light tracking-wider rounded-r mr-0 text-gray-700 bg-gray-200 focus:outline-none opacity-25'
+                    'class' => 'p-1 font-light tracking-wider rounded-r mr-0 text-xs text-gray-700 bg-gray-200 focus:outline-none opacity-25'
                 ]); ?>
                 <i class="fa fa-angle-down"></i>
                 <?php echo Html::endTag('span'); ?>
@@ -69,7 +71,7 @@ $pathAlias = \blackcube\admin\Module::getInstance()->adminTemplatesAlias;
                     'type' => 'button',
                     'name' => 'blocDown',
                     'value' => $bloc->id,
-                    'class' => 'p-2 font-light hover:text-white hover:bg-blue-800 tracking-wider rounded-r mr-0 text-gray-700 bg-gray-200 focus:outline-none'
+                    'class' => 'p-1 font-light hover:text-white hover:bg-blue-800 text-xs tracking-wider rounded-r mr-0 text-gray-700 bg-gray-200 focus:outline-none'
                 ]); ?>
                     <i class="fa fa-angle-down"></i>
                 <?php echo Html::endTag('button'); ?>

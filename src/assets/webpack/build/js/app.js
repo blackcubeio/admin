@@ -232,7 +232,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var aurelia_framework_1 = __webpack_require__(/*! aurelia-framework */ "aurelia-framework");
 var AjaxService_1 = __webpack_require__(/*! ../services/AjaxService */ "./app/services/AjaxService.ts");
 var AjaxLinkManagerCustomAttribute = /** @class */ (function () {
-    function AjaxLinkManagerCustomAttribute(element, ajaxService) {
+    function AjaxLinkManagerCustomAttribute(element, templatingEngine, ajaxService) {
         var _this = this;
         this.logger = aurelia_framework_1.LogManager.getLogger('components.AjaxLinkManager');
         this.onDelegateClick = function (evt) {
@@ -246,11 +246,18 @@ var AjaxLinkManagerCustomAttribute = /** @class */ (function () {
                     _this.ajaxService.getRequest(url)
                         .then(function (html) {
                         _this.element.innerHTML = html;
+                        /*/
+                        this.templatingEngine.enhance({
+                            element:this.element,
+                            bindingContext: this
+                        })
+                        /*/
                     });
                 }
             }
         };
         this.element = element;
+        this.templatingEngine = templatingEngine;
         this.ajaxService = ajaxService;
         this.logger.debug('Constructor');
     }
@@ -272,7 +279,7 @@ var AjaxLinkManagerCustomAttribute = /** @class */ (function () {
         this.logger.debug('Unbind');
     };
     AjaxLinkManagerCustomAttribute = __decorate([
-        aurelia_framework_1.inject(aurelia_framework_1.DOM.Element, AjaxService_1.AjaxService)
+        aurelia_framework_1.inject(aurelia_framework_1.DOM.Element, aurelia_framework_1.TemplatingEngine, AjaxService_1.AjaxService)
     ], AjaxLinkManagerCustomAttribute);
     return AjaxLinkManagerCustomAttribute;
 }());
@@ -525,7 +532,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var aurelia_framework_1 = __webpack_require__(/*! aurelia-framework */ "aurelia-framework");
 var AjaxService_1 = __webpack_require__(/*! ../services/AjaxService */ "./app/services/AjaxService.ts");
 var ManageBlocsCustomAttribute = /** @class */ (function () {
-    function ManageBlocsCustomAttribute(element, ajaxService) {
+    function ManageBlocsCustomAttribute(element, templatingEngine, ajaxService) {
         var _this = this;
         this.logger = aurelia_framework_1.LogManager.getLogger('components.ManageBlocs');
         this.onDelegateClick = function (evt) {
@@ -542,6 +549,10 @@ var ManageBlocsCustomAttribute = /** @class */ (function () {
                             if (response.status == 200) {
                                 response.text().then(function (text) {
                                     _this.ajaxTarget.innerHTML = text;
+                                    _this.templatingEngine.enhance({
+                                        element: _this.ajaxTarget,
+                                        bindingContext: _this
+                                    });
                                 });
                             }
                         });
@@ -550,6 +561,7 @@ var ManageBlocsCustomAttribute = /** @class */ (function () {
             }
         };
         this.element = element;
+        this.templatingEngine = templatingEngine;
         this.ajaxService = ajaxService;
         this.logger.debug('Constructor');
     }
@@ -580,7 +592,7 @@ var ManageBlocsCustomAttribute = /** @class */ (function () {
         aurelia_framework_1.bindable({ primaryProperty: true })
     ], ManageBlocsCustomAttribute.prototype, "url", void 0);
     ManageBlocsCustomAttribute = __decorate([
-        aurelia_framework_1.inject(aurelia_framework_1.DOM.Element, AjaxService_1.AjaxService)
+        aurelia_framework_1.inject(aurelia_framework_1.DOM.Element, aurelia_framework_1.TemplatingEngine, AjaxService_1.AjaxService)
     ], ManageBlocsCustomAttribute);
     return ManageBlocsCustomAttribute;
 }());
@@ -617,6 +629,25 @@ var ResumableFileCustomElement = /** @class */ (function () {
         this.logger = aurelia_framework_1.LogManager.getLogger('components.ResumableFile');
         this.multiple = false;
         this.value = '';
+        this.onRemove = function (handledFile) {
+            _this.logger.debug('Should remove file', handledFile);
+            var fileIndex = null;
+            _this.handledFiles.forEach(function (file, index) {
+                if (handledFile.name === file.name) {
+                    fileIndex = index;
+                }
+            });
+            if (fileIndex !== null && fileIndex >= 0) {
+                if (handledFile.file && handledFile.file !== null) {
+                    _this.resumable.removeFile(handledFile.file);
+                }
+                _this.handledFiles.splice(fileIndex, 1);
+                _this.ajaxService.deleteRequest(handledFile.deleteUrl, _this.csfr.value);
+                // should call WS delete
+            }
+            var fieldValue = _this.getFilesValue();
+            _this.hiddenField.value = fieldValue;
+        };
         this.onDragEnter = function (evt) {
             evt.preventDefault();
             var el = evt.currentTarget;
@@ -644,12 +675,11 @@ var ResumableFileCustomElement = /** @class */ (function () {
         this.onFileSuccess = function (file, serverMessage) {
             var response = JSON.parse(serverMessage);
             if (_this.multiple === false) {
-                _this.setFiles('@blackcubetmp/' + response.finalFilename, file);
+                _this.setFile('@blackcubetmp/' + response.finalFilename, file);
             }
             else {
                 _this.appendFile('@blackcubetmp/' + response.finalFilename, file);
             }
-            _this.hiddenField.value = _this.getFilesValue();
             _this.logger.debug('onFileSuccess', file, serverMessage);
         };
         // File upload progress
@@ -705,6 +735,12 @@ var ResumableFileCustomElement = /** @class */ (function () {
     ResumableFileCustomElement.prototype.bind = function (bindingContext, overrideContext) {
         this.logger.debug('Bind');
     };
+    ResumableFileCustomElement.prototype.generatePreviewUrl = function (name) {
+        return this.previewUrl.replace('__name__', name);
+    };
+    ResumableFileCustomElement.prototype.generateDeleteUrl = function (name) {
+        return this.deleteUrl.replace('__name__', name);
+    };
     ResumableFileCustomElement.prototype.setFiles = function (value) {
         var _this = this;
         var files = value.split(/\s*,\s*/);
@@ -714,16 +750,31 @@ var ResumableFileCustomElement = /** @class */ (function () {
             return {
                 name: value,
                 shortname: value.split(/.*[\/|\\]/).pop(),
-                previewUrl: _this.generatePreviewUrl(name),
-                deleteUrl: _this.generateDeleteUrl(name)
+                previewUrl: _this.generatePreviewUrl(value),
+                deleteUrl: _this.generateDeleteUrl(value)
             };
         });
+        this.hiddenField.value = this.getFilesValue();
     };
-    ResumableFileCustomElement.prototype.generatePreviewUrl = function (name) {
-        return this.previewUrl.replace('__name__', name);
-    };
-    ResumableFileCustomElement.prototype.generateDeleteUrl = function (name) {
-        return this.deleteUrl.replace('__name__', name);
+    ResumableFileCustomElement.prototype.setFile = function (name, file) {
+        var _this = this;
+        if (file === void 0) { file = null; }
+        this.handledFiles.forEach(function (handledFile, index) {
+            if (handledFile.file && handledFile.file !== null) {
+                _this.resumable.removeFile(handledFile.file);
+            }
+            _this.ajaxService.deleteRequest(handledFile.deleteUrl, _this.csfr.value);
+        });
+        this.handledFiles = [
+            {
+                name: name,
+                shortname: name.split(/.*[\/|\\]/).pop(),
+                previewUrl: this.generatePreviewUrl(name),
+                deleteUrl: this.generateDeleteUrl(name),
+                file: file
+            }
+        ];
+        this.hiddenField.value = this.getFilesValue();
     };
     ResumableFileCustomElement.prototype.appendFile = function (name, file) {
         if (file === void 0) { file = null; }
@@ -734,28 +785,13 @@ var ResumableFileCustomElement = /** @class */ (function () {
             deleteUrl: this.generateDeleteUrl(name),
             file: file
         });
+        this.hiddenField.value = this.getFilesValue();
     };
     ResumableFileCustomElement.prototype.getFilesValue = function () {
-        return this.handledFiles.map(function (uploadedFile, index) {
+        var mapped = this.handledFiles.map(function (uploadedFile, index) {
             return uploadedFile.name;
         }).join(', ');
-    };
-    ResumableFileCustomElement.prototype.onRemove = function (handledFile) {
-        this.logger.debug('Should remove file', handledFile);
-        var fileIndex = null;
-        this.handledFiles.forEach(function (file, index) {
-            if (handledFile.name === file.name) {
-                fileIndex = index;
-            }
-        });
-        if (fileIndex !== null && fileIndex >= 0) {
-            if (handledFile.file && handledFile.file !== null) {
-                this.resumable.removeFile(handledFile.file);
-            }
-            this.handledFiles.splice(fileIndex, 1);
-            this.ajaxService.deleteRequest(this.generateDeleteUrl(handledFile.name), this.csfr.value);
-            // should call WS delete
-        }
+        return (typeof mapped === 'string') ? mapped : '';
     };
     ResumableFileCustomElement.prototype.attached = function () {
         this.parentForm = this.element.closest('form');
@@ -773,12 +809,11 @@ var ResumableFileCustomElement = /** @class */ (function () {
             resumableConfig.query[this.csfr.name] = this.csfr.value;
             this.logger.debug('CSRF : ', csrfField.value);
         }
-        this.setFiles(this.value);
         this.hiddenField = document.createElement('input');
         this.hiddenField.type = 'hidden';
         this.hiddenField.name = this.name;
-        this.hiddenField.value = this.getFilesValue();
         this.element.appendChild(this.hiddenField);
+        this.setFiles(this.value);
         this.resumable = new resumablejs_1.default(resumableConfig);
         if (this.resumable.support) {
             this.logger.debug('Resume js supported', this.browseButton);

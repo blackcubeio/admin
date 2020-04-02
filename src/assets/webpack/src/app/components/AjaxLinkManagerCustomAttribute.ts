@@ -1,17 +1,19 @@
 
-import {DOM, inject, noView, bindable, bindingMode, LogManager, ComponentCreated, ComponentBind, ComponentAttached, ComponentDetached, ComponentUnbind, View} from 'aurelia-framework';
+import {DOM, inject, noView, bindable, bindingMode, TemplatingEngine, LogManager, ComponentCreated, ComponentBind, ComponentAttached, ComponentDetached, ComponentUnbind, View} from 'aurelia-framework';
 import {Logger} from "aurelia-logging";
 import {AjaxService} from "../services/AjaxService";
 
-@inject(DOM.Element, AjaxService)
+@inject(DOM.Element, TemplatingEngine, AjaxService)
 class AjaxLinkManagerCustomAttribute implements ComponentCreated, ComponentBind, ComponentAttached, ComponentDetached, ComponentUnbind {
     private element:HTMLElement;
     private logger:Logger = LogManager.getLogger('components.AjaxLinkManager');
     private ajaxService:AjaxService;
+    private templatingEngine:TemplatingEngine;
     private form:HTMLFormElement;
 
-    public constructor(element:HTMLElement, ajaxService:AjaxService) {
+    public constructor(element:HTMLElement, templatingEngine:TemplatingEngine, ajaxService:AjaxService) {
         this.element = element;
+        this.templatingEngine = templatingEngine;
         this.ajaxService = ajaxService;
         this.logger.debug('Constructor');
     }
@@ -40,6 +42,12 @@ class AjaxLinkManagerCustomAttribute implements ComponentCreated, ComponentBind,
                 this.ajaxService.getRequest(url)
                     .then((html:string) => {
                         this.element.innerHTML = html;
+                        /*/
+                        this.templatingEngine.enhance({
+                            element:this.element,
+                            bindingContext: this
+                        })
+                        /*/
                     });
             }
         }

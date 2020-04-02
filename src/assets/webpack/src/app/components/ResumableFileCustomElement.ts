@@ -23,7 +23,7 @@ class ResumableFileCustomElement implements ComponentCreated, ComponentBind, Com
     public browseButton:HTMLButtonElement;
     public dropTarget:HTMLElement;
     private parentForm:HTMLFormElement;
-    private hiddenField:HTMLInputElement;
+    public hiddenField:HTMLInputElement;
     private handledFiles:UploadedFile[];
     private ajaxService:AjaxService;
     private csfr:Csrf;
@@ -50,20 +50,6 @@ class ResumableFileCustomElement implements ComponentCreated, ComponentBind, Com
         this.logger.debug('Bind');
     }
 
-    private setFiles(value:string)
-    {
-        let files = value.split(/\s*,\s*/);
-        this.handledFiles = files.filter((value:string, index:number) => {
-            return value.trim() !== '';
-        }).map((value:string, index:number) => {
-            return {
-                name: value,
-                shortname: value.split(/.*[\/|\\]/).pop(),
-                previewUrl: this.generatePreviewUrl(name),
-                deleteUrl: this.generateDeleteUrl(name)
-            }
-        });
-    }
 
     private generatePreviewUrl(name:string)
     {
@@ -74,6 +60,45 @@ class ResumableFileCustomElement implements ComponentCreated, ComponentBind, Com
     {
         return this.deleteUrl.replace('__name__', name);
     }
+
+    private setFiles(value:string)
+    {
+        let files = value.split(/\s*,\s*/);
+        this.handledFiles = files.filter((value:string, index:number) => {
+            return value.trim() !== '';
+        }).map((value:string, index:number) => {
+            return {
+                name: value,
+                shortname: value.split(/.*[\/|\\]/).pop(),
+                previewUrl: this.generatePreviewUrl(value),
+                deleteUrl: this.generateDeleteUrl(value)
+            }
+        });
+        this.hiddenField.value = this.getFilesValue();
+
+    }
+
+    private setFile(name:string, file:Resumable.ResumableFile|null = null)
+    {
+        this.handledFiles.forEach((handledFile:UploadedFile, index:number) => {
+            if (handledFile.file && handledFile.file !== null) {
+                this.resumable.removeFile(handledFile.file);
+            }
+            this.ajaxService.deleteRequest(handledFile.deleteUrl, this.csfr.value);
+        });
+        this.handledFiles = [
+            {
+                name: name,
+                shortname: name.split(/.*[\/|\\]/).pop(),
+                previewUrl: this.generatePreviewUrl(name),
+                deleteUrl: this.generateDeleteUrl(name),
+                file: file
+            }
+        ];
+        this.hiddenField.value = this.getFilesValue();
+
+    }
+
     private appendFile(name:string, file:Resumable.ResumableFile|null = null)
     {
         this.handledFiles.push({
@@ -83,15 +108,18 @@ class ResumableFileCustomElement implements ComponentCreated, ComponentBind, Com
             deleteUrl: this.generateDeleteUrl(name),
             file: file
         });
+        this.hiddenField.value = this.getFilesValue();
+
     }
-    private getFilesValue()
+    protected getFilesValue()
     {
-        return this.handledFiles.map((uploadedFile: UploadedFile, index:number) => {
+        let mapped = this.handledFiles.map((uploadedFile: UploadedFile, index:number) => {
             return uploadedFile.name;
         }).join(', ');
+        return (typeof mapped === 'string') ? mapped : '';
     }
 
-    public onRemove(handledFile:UploadedFile)
+    public onRemove = (handledFile:UploadedFile) =>
     {
         this.logger.debug('Should remove file', handledFile);
         let fileIndex:number|null = null;
@@ -105,11 +133,13 @@ class ResumableFileCustomElement implements ComponentCreated, ComponentBind, Com
                 this.resumable.removeFile(handledFile.file);
             }
             this.handledFiles.splice(fileIndex, 1);
-            this.ajaxService.deleteRequest(this.generateDeleteUrl(handledFile.name), this.csfr.value);
+            this.ajaxService.deleteRequest(handledFile.deleteUrl, this.csfr.value);
             // should call WS delete
         }
+        let fieldValue = this.getFilesValue();
+        this.hiddenField.value = fieldValue;
 
-    }
+    };
 
     public attached(): void {
         this.parentForm = <HTMLFormElement>this.element.closest('form');
@@ -127,12 +157,11 @@ class ResumableFileCustomElement implements ComponentCreated, ComponentBind, Com
             resumableConfig.query[this.csfr.name] = this.csfr.value;
             this.logger.debug('CSRF : ', csrfField.value);
         }
-        this.setFiles(this.value);
         this.hiddenField = document.createElement('input');
         this.hiddenField.type = 'hidden';
         this.hiddenField.name = this.name;
-        this.hiddenField.value = this.getFilesValue();
         this.element.appendChild(this.hiddenField);
+        this.setFiles(this.value);
         this.resumable = new Resumable(resumableConfig);
         if (this.resumable.support) {
             this.logger.debug('Resume js supported', this.browseButton);
@@ -189,11 +218,10 @@ class ResumableFileCustomElement implements ComponentCreated, ComponentBind, Com
     protected onFileSuccess = (file:Resumable.ResumableFile, serverMessage:string) => {
         const response = JSON.parse(serverMessage);
         if (this.multiple === false) {
-            this.setFiles('@blackcubetmp/' + response.finalFilename, file);
+            this.setFile('@blackcubetmp/' + response.finalFilename, file);
         } else {
             this.appendFile('@blackcubetmp/' + response.finalFilename, file);
         }
-        this.hiddenField.value = this.getFilesValue();
         this.logger.debug('onFileSuccess', file, serverMessage);
     };
     // File upload progress

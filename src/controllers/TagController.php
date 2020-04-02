@@ -5,15 +5,16 @@ namespace blackcube\admin\controllers;
 use blackcube\admin\models\SlugForm;
 use blackcube\admin\models\TagManager;
 use blackcube\admin\actions\BlocAction;
+use blackcube\admin\Module;
 use blackcube\core\interfaces\ElementInterface;
 use blackcube\core\models\Bloc;
 use blackcube\core\models\Category;
 use blackcube\core\models\Slug;
 use blackcube\core\models\Tag;
 use blackcube\core\models\Type;
-use blackcube\admin\actions\ResumableUploadAction;
-use blackcube\admin\actions\ResumablePreviewAction;
-use blackcube\admin\actions\ResumableDeleteAction;
+use blackcube\core\actions\ResumableUploadAction;
+use blackcube\core\actions\ResumablePreviewAction;
+use blackcube\core\actions\ResumableDeleteAction;
 use yii\base\ErrorException;
 use yii\base\Event;
 use yii\base\Model;
@@ -203,7 +204,7 @@ class TagController extends Controller
             throw new NotFoundHttpException();
         }
         if (Yii::$app->request->isPost) {
-            $transaction = Yii::$app->db->beginTransaction();
+            $transaction = Module::getInstance()->db->beginTransaction();
             try {
                 $slug = $tag->getSlug()->one();
                 if ($slug !== null) {
@@ -241,7 +242,7 @@ class TagController extends Controller
             $slugForm->multiLoad(Yii::$app->request->bodyParams);
 
             if ($element->validate() && $slugForm->preValidate() && Model::validateMultiple($blocs)) {
-                $transaction = Yii::$app->getDb()->beginTransaction();
+                $transaction = Module::getInstance()->db->beginTransaction();
                 $slugFormStatus = $slugForm->save();
                 $elementStatus = $element->save();
                 $blocStatus = true;

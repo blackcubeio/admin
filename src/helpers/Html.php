@@ -6,6 +6,7 @@ use yii\base\InvalidArgumentException;
 use yii\base\InvalidConfigException;
 use yii\base\Model;
 use blackcube\core\models\Bloc;
+use yii\base\NotSupportedException;
 
 class Html extends \yii\helpers\Html
 {
@@ -36,11 +37,16 @@ class Html extends \yii\helpers\Html
         }
         $selfId = static::getInputId($model, $attribute);
         $selfName = static::getInputName($model, $attribute);
+
         $options = array_merge([
             'id' => $selfId,
             'name' => $selfName,
-            'multiple' => true,
+            'multiple' => false,
         ], $options);
+        if (isset($options['value']) === false) {
+            $options['value'] = static::getAttributeValue($model, $attribute);
+        }
+
         return static::tag('resumable-file', '', $options);
     }
 
@@ -70,7 +76,7 @@ class Html extends \yii\helpers\Html
         }
         $structure = $bloc->structure[$realAttibute];
         switch ($structure['field']) {
-            case 'image':
+            case 'file':
                 $finalOptions = $options;
                 if ($uploadUrl !== null) {
                     $finalOptions['upload-url'] = $uploadUrl;
@@ -82,15 +88,10 @@ class Html extends \yii\helpers\Html
                     $finalOptions['delete-url'] = $deleteUrl;
                 }
                 $finalOptions['multiple'] = false;
-                if (isset($options['value'])) {
-                    $finalOptions['value'] = $options['value'];
-                } else {
-                    $finalOptions['value'] = static::getAttributeValue($bloc, $attribute);
-                }
-
+                $finalOptions['class'] = ($bloc->hasErrors($realAttibute)?' error':'');
                 $result = static::activeUpload($bloc, $attribute, $finalOptions);
                 break;
-            case 'images':
+            case 'files':
                 $finalOptions = $options;
                 if ($uploadUrl !== null) {
                     $finalOptions['upload-url'] = $uploadUrl;
@@ -107,11 +108,12 @@ class Html extends \yii\helpers\Html
                 } else {
                     $finalOptions['value'] = static::getAttributeValue($bloc, $attribute);
                 }
+                $finalOptions['class'] = ($bloc->hasErrors($realAttibute)?' error':'');
 
                 $result = static::activeUpload($bloc, $attribute, $finalOptions);
                 break;
             case 'dropdownlist':
-                $mappedField = 'activeDropDownList';
+                throw new NotSupportedException();
                 break;
             case 'password':
                 $result = static::activePasswordInput($bloc, $attribute, ['class' => 'textfield'.($bloc->hasErrors($realAttibute)?' error':'')]);
@@ -121,15 +123,16 @@ class Html extends \yii\helpers\Html
                 break;
             case 'checkboxlist':
                 $mappedField = 'activeCheckboxList';
+                throw new NotSupportedException();
                 break;
             case 'radio':
                 $result = static::activeRadio($bloc, $attribute, ['label' => false, 'class' => 'checkbox'.($bloc->hasErrors($realAttibute)?' error':'')]);
                 break;
             case 'radiolist':
                 $mappedField = 'activeRadioList';
+                throw new NotSupportedException();
                 break;
             case 'textarea':
-                $mappedField = 'activeTextarea';
                 $result = static::activeTextArea($bloc, $attribute, ['class' => 'textfield'.($bloc->hasErrors($realAttibute)?' error':'')]);
                 break;
             case 'text':

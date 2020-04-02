@@ -18,6 +18,8 @@ use blackcube\admin\commands\AdministratorController;
 use blackcube\admin\commands\IconsController;
 use yii\base\BootstrapInterface;
 use yii\base\Module as BaseModule;
+use yii\db\Connection;
+use yii\di\Instance;
 use yii\web\Application as WebApplication;
 use yii\console\Application as ConsoleApplication;
 use Exception;
@@ -49,12 +51,19 @@ class Module extends BaseModule implements BootstrapInterface
     public $adminTemplatesAlias;
 
     /**
+     * @var Connection|array|string database access
+     */
+    public $db = 'db';
+
+
+    /**
      * @inheritdoc
      */
     public function init()
     {
         $this->layout = 'main';
         parent::init();
+        $this->db = Instance::ensure($this->db, Connection::class);
     }
 
     /**

@@ -2,6 +2,7 @@
 
 namespace blackcube\admin\controllers;
 
+use blackcube\admin\Module;
 use blackcube\core\models\BlocType;
 use blackcube\core\models\Type;
 use blackcube\core\models\TypeBlocType;
@@ -38,7 +39,7 @@ class BlocTypeController extends Controller
             }
             Model::loadMultiple($typeBlocTypes, Yii::$app->request->bodyParams);
             if ($blocType->validate() === true && Model::validateMultiple($typeBlocTypes)) {
-                $transaction = Yii::$app->db->beginTransaction();
+                $transaction = Module::getInstance()->db->beginTransaction();
                 try {
                     if ($blocType->save()) {
                         foreach($typeBlocTypes as $typeBlocType) {

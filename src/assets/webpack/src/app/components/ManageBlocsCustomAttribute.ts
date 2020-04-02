@@ -1,19 +1,21 @@
 
-import {DOM, inject, noView, bindable, bindingMode, LogManager, ComponentCreated, ComponentBind, ComponentAttached, ComponentDetached, ComponentUnbind, View} from 'aurelia-framework';
+import {DOM, inject, noView, bindable, TemplatingEngine, bindingMode, LogManager, ComponentCreated, ComponentBind, ComponentAttached, ComponentDetached, ComponentUnbind, View} from 'aurelia-framework';
 import {Logger} from "aurelia-logging";
 import {AjaxService} from "../services/AjaxService";
 
-@inject(DOM.Element, AjaxService)
+@inject(DOM.Element, TemplatingEngine, AjaxService)
 class ManageBlocsCustomAttribute implements ComponentCreated, ComponentBind, ComponentAttached, ComponentDetached, ComponentUnbind {
     private element:HTMLElement;
     @bindable({ primaryProperty: true }) url: string;
     private logger:Logger = LogManager.getLogger('components.ManageBlocs');
+    private templatingEngine:TemplatingEngine;
     private ajaxService:AjaxService;
     private form:HTMLFormElement;
     private ajaxTarget:HTMLElement;
 
-    public constructor(element:HTMLElement, ajaxService:AjaxService) {
+    public constructor(element:HTMLElement, templatingEngine:TemplatingEngine, ajaxService:AjaxService) {
         this.element = element;
+        this.templatingEngine = templatingEngine;
         this.ajaxService = ajaxService;
         this.logger.debug('Constructor');
     }
@@ -51,6 +53,10 @@ class ManageBlocsCustomAttribute implements ComponentCreated, ComponentBind, Com
                             if (response.status == 200) {
                                 response.text().then((text:string) => {
                                     this.ajaxTarget.innerHTML = text;
+                                    this.templatingEngine.enhance({
+                                        element: this.ajaxTarget,
+                                        bindingContext: this
+                                    })
                                 })
                             }
                         });

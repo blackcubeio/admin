@@ -4,6 +4,7 @@ namespace blackcube\admin\controllers;
 
 use blackcube\admin\models\SlugForm;
 use blackcube\admin\models\TagManager;
+use blackcube\admin\Module;
 use blackcube\core\models\BlocType;
 use blackcube\core\models\TypeBlocType;
 use blackcube\core\Module as CoreModule;
@@ -54,7 +55,7 @@ class TypeController extends Controller
             $type->load(Yii::$app->request->bodyParams);
             Model::loadMultiple($typeBlocTypes, Yii::$app->request->bodyParams);
             if ($type->validate() === true && Model::validateMultiple($typeBlocTypes)) {
-                $transaction = Yii::$app->db->beginTransaction();
+                $transaction = Module::getInstance()->db->beginTransaction();
                 try {
                     $typeStatus = $type->save();
                     if ($typeStatus === true) {

@@ -743,7 +743,7 @@ video {
 .form .bloc {
   display: flex;
   flex-wrap: wrap;
-  margin-bottom: 1.5rem;
+  margin-bottom: 0.5rem;
 }
 
 .form .bloc-title {
@@ -752,15 +752,10 @@ video {
   padding-right: 0;
   margin-left: 0.75rem;
   margin-right: 0.75rem;
-  margin-bottom: 1.5rem;
+  margin-bottom: 0.25rem;
   border-bottom-width: 1px;
   border-color: #e2e8f0;
-}
-
-@media (min-width: 768px) {
-  .form .bloc-title {
-    margin-bottom: 0;
-  }
+  background-color: #f7fafc;
 }
 
 .form .bloc-title .title {
@@ -1391,6 +1386,10 @@ resumable-file {
   display: block;
   padding: 0.5rem;
   padding-bottom: 1rem;
+}
+
+resumable-file.error button {
+  border-color: #f56565;
 }
 
 .sr-only {
