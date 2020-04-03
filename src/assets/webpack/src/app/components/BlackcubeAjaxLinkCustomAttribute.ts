@@ -4,9 +4,9 @@ import {Logger} from "aurelia-logging";
 import {AjaxService} from "../services/AjaxService";
 
 @inject(DOM.Element, TemplatingEngine, AjaxService)
-class AjaxLinkManagerCustomAttribute implements ComponentCreated, ComponentBind, ComponentAttached, ComponentDetached, ComponentUnbind {
+class BlackcubeAjaxLinkCustomAttribute implements ComponentCreated, ComponentBind, ComponentAttached, ComponentDetached, ComponentUnbind {
     private element:HTMLElement;
-    private logger:Logger = LogManager.getLogger('components.AjaxLinkManager');
+    private logger:Logger = LogManager.getLogger('components.BlackcubeAjaxLinkCustomAttribute');
     private ajaxService:AjaxService;
     private templatingEngine:TemplatingEngine;
     private form:HTMLFormElement;
@@ -63,4 +63,4 @@ class AjaxLinkManagerCustomAttribute implements ComponentCreated, ComponentBind,
     }
 }
 
-export {AjaxLinkManagerCustomAttribute}
+export {BlackcubeAjaxLinkCustomAttribute}

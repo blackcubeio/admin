@@ -6,6 +6,7 @@ use yii\base\InvalidArgumentException;
 use yii\base\InvalidConfigException;
 use yii\base\Model;
 use blackcube\core\models\Bloc;
+use blackcube\core\interfaces\ElasticInterface;
 use yii\base\NotSupportedException;
 
 class Html extends \yii\helpers\Html
@@ -26,7 +27,7 @@ class Html extends \yii\helpers\Html
             'field-name' => $selfName,
             'schema' => $model->{$attribute}
         ], $options);
-        $tag = static::tag('schema-editor', '', $options);
+        $tag = static::tag('blackcube-schema-editor', '', $options);
         return $tag;
     }
 
@@ -43,101 +44,71 @@ class Html extends \yii\helpers\Html
             'name' => $selfName,
             'multiple' => false,
         ], $options);
+
         if (isset($options['value']) === false) {
             $options['value'] = static::getAttributeValue($model, $attribute);
         }
 
-        return static::tag('resumable-file', '', $options);
+        return static::tag('blackcube-file', '', $options);
     }
 
-    public static function activeElasticField(Bloc $bloc, $attribute, $options = [])
+    private static function filterElasticOptions($structure, $options = [])
+    {
+        if ($structure['field'] !== 'file' && $structure['field'] !== 'files') {
+            unset($options['upload-url'], $options['preview-url'], $options['delete-url'], $options['file-type']);
+        } elseif (($structure['field'] === 'file' || $structure['field'] === 'files') && isset($structure['fileType']) && isset($options['file-type']) === false) {
+            $options['file-type'] = $structure['fileType'];
+        }
+        if ($structure['field'] === 'file') {
+            $options['multiple'] = false;
+        } elseif ($structure['field'] === 'files') {
+            $options['multiple'] = true;
+        }
+        return $options;
+    }
+
+    public static function activeElasticField(ElasticInterface $elastic, $attribute, $options = [])
     {
         if (!preg_match(static::$attributeRegex, $attribute, $matches)) {
             throw new InvalidArgumentException('Attribute name must contain word characters only.');
         }
         $realAttibute = $matches[2];
-        if (isset($options['upload-url']) === true) {
-            $uploadUrl = $options['upload-url'];
-            unset($options['upload-url']);
-        } else {
-            $uploadUrl = null;
-        }
-        if (isset($options['preview-url']) === true) {
-            $previewUrl = $options['preview-url'];
-            unset($options['preview-url']);
-        } else {
-            $previewUrl = null;
-        }
-        if (isset($options['delete-url']) === true) {
-            $deleteUrl = $options['delete-url'];
-            unset($options['delete-url']);
-        } else {
-            $deleteUrl = null;
-        }
-        $structure = $bloc->structure[$realAttibute];
-        switch ($structure['field']) {
-            case 'file':
-                $finalOptions = $options;
-                if ($uploadUrl !== null) {
-                    $finalOptions['upload-url'] = $uploadUrl;
-                }
-                if ($previewUrl !== null) {
-                    $finalOptions['preview-url'] = $previewUrl;
-                }
-                if ($deleteUrl !== null) {
-                    $finalOptions['delete-url'] = $deleteUrl;
-                }
-                $finalOptions['multiple'] = false;
-                $finalOptions['class'] = ($bloc->hasErrors($realAttibute)?' error':'');
-                $result = static::activeUpload($bloc, $attribute, $finalOptions);
-                break;
-            case 'files':
-                $finalOptions = $options;
-                if ($uploadUrl !== null) {
-                    $finalOptions['upload-url'] = $uploadUrl;
-                }
-                if ($previewUrl !== null) {
-                    $finalOptions['preview-url'] = $previewUrl;
-                }
-                if ($deleteUrl !== null) {
-                    $finalOptions['delete-url'] = $deleteUrl;
-                }
-                $finalOptions['multiple'] = true;
-                if (isset($options['value'])) {
-                    $finalOptions['value'] = $options['value'];
-                } else {
-                    $finalOptions['value'] = static::getAttributeValue($bloc, $attribute);
-                }
-                $finalOptions['class'] = ($bloc->hasErrors($realAttibute)?' error':'');
+        $structure = $elastic->structure[$realAttibute];
+        $options = static::filterElasticOptions($structure, $options);
 
-                $result = static::activeUpload($bloc, $attribute, $finalOptions);
+        switch ($structure['field']) {
+            //TODO: make better stuff using schemas properties min / max
+            case 'file':
+            case 'files':
+                $options['class'] = ($elastic->hasErrors($realAttibute)?' error':'');
+                $result = static::activeUpload($elastic, $attribute, $options);
                 break;
             case 'dropdownlist':
                 throw new NotSupportedException();
                 break;
             case 'password':
-                $result = static::activePasswordInput($bloc, $attribute, ['class' => 'textfield'.($bloc->hasErrors($realAttibute)?' error':'')]);
+                $result = static::activePasswordInput($elastic, $attribute, ['class' => 'textfield'.($elastic->hasErrors($realAttibute)?' error':'')]);
                 break;
             case 'checkbox':
-                $result = static::activeCheckbox($bloc, $attribute, ['label' => false, 'class' => 'checkbox'.($bloc->hasErrors($realAttibute)?' error':'')]);
+                $result = static::activeCheckbox($elastic, $attribute, ['label' => false, 'class' => 'checkbox'.($elastic->hasErrors($realAttibute)?' error':'')]);
                 break;
             case 'checkboxlist':
                 $mappedField = 'activeCheckboxList';
                 throw new NotSupportedException();
                 break;
             case 'radio':
-                $result = static::activeRadio($bloc, $attribute, ['label' => false, 'class' => 'checkbox'.($bloc->hasErrors($realAttibute)?' error':'')]);
+                $result = static::activeRadio($elastic, $attribute, ['label' => false, 'class' => 'checkbox'.($elastic->hasErrors($realAttibute)?' error':'')]);
                 break;
             case 'radiolist':
                 $mappedField = 'activeRadioList';
                 throw new NotSupportedException();
                 break;
             case 'textarea':
-                $result = static::activeTextArea($bloc, $attribute, ['class' => 'textfield'.($bloc->hasErrors($realAttibute)?' error':'')]);
+                $result = static::activeTextArea($elastic, $attribute, ['class' => 'textfield'.($elastic->hasErrors($realAttibute)?' error':'')]);
                 break;
             case 'text':
             default:
-                $result = static::activeTextInput($bloc, $attribute, ['class' => 'textfield'.($bloc->hasErrors($realAttibute)?' error':'')]);
+                $result = static::activeTextInput($elastic, $attribute, ['class' => 'textfield'.($elastic->hasErrors($realAttibute)?' error':'')]);
                 break;
         }
         return $result;

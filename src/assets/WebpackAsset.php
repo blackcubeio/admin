@@ -77,6 +77,7 @@ class WebpackAsset extends AssetBundle
         'aurelia',
         'jsoneditor',
         'fontawesome',
+        'chartist',
         'main',
         'app'
     ];
@@ -88,6 +89,7 @@ class WebpackAsset extends AssetBundle
         'main',
         'jsoneditor',
         'fontawesome',
+        'chartist',
     ];
 
     /**

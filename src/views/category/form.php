@@ -1,9 +1,9 @@
 <?php
 /**
- * @var $tag \blackcube\core\models\Tag
+ * @var $category \blackcube\core\models\Category
  * @var $slugForm \blackcube\admin\models\SlugForm
- * @var $categoriesQuery \blackcube\core\models\FilterActiveQuery
  * @var $typesQuery \blackcube\core\models\FilterActiveQuery
+ * @var $languagesQuery \blackcube\core\models\FilterActiveQuery
  * @var $tagBlocs \blackcube\core\models\TagBloc[]
  * @var $blocs \blackcube\core\models\Bloc[]
  * @var $this \yii\web\View
@@ -22,7 +22,7 @@ use yii\helpers\Url;
         </ul>
         <?php echo Html::beginForm('', 'post', ['class' => 'form']); ?>
             <?php echo \blackcube\admin\widgets\SlugForm::widget([
-                'element' => $tag,
+                'element' => $category,
                 'slugForm' => $slugForm,
             ]); ?>
             <div class="bloc">
@@ -32,16 +32,16 @@ use yii\helpers\Url;
             </div>
             <div class="bloc">
                 <div class="w-full bloc-fieldset md:w-1/12">
-                    <?php echo Html::activeLabel($tag, 'active', ['class' => 'label']); ?>
-                    <?php echo Html::activeCheckbox($tag, 'active', ['label' => false, 'class' => 'checkbox']); ?>
+                    <?php echo Html::activeLabel($category, 'active', ['class' => 'label']); ?>
+                    <?php echo Html::activeCheckbox($category, 'active', ['label' => false, 'class' => 'checkbox']); ?>
                 </div>
                 <div class="w-full bloc-fieldset md:w-6/12">
-                    <?php echo Html::activeLabel($tag, 'categoryId', ['class' => 'label']); ?>
+                    <?php echo Html::activeLabel($category, 'languageId', ['class' => 'label']); ?>
                     <?php /*/ echo Html::activeDropDownList($tag, 'categoryId', ArrayHelper::map($categoriesQuery->select(['id', 'name'])->asArray()->all(), 'id', 'name'), [
                         'blackcube-choices' => ''
                     ]); /**/?>
                     <div class="dropdown">
-                        <?php echo Html::activeDropDownList($tag, 'categoryId', ArrayHelper::map($categoriesQuery->select(['id', 'name'])->asArray()->all(), 'id', 'name'), [
+                        <?php echo Html::activeDropDownList($category, 'languageId', ArrayHelper::map($languagesQuery->select(['id', 'name'])->asArray()->all(), 'id', 'name'), [
                         ]); ?>
                         <div class="arrow">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
@@ -49,9 +49,9 @@ use yii\helpers\Url;
                     </div>
                 </div>
                 <div class="w-full bloc-fieldset md:w-5/12">
-                    <?php echo Html::activeLabel($tag, 'typeId', ['class' => 'label']); ?>
+                    <?php echo Html::activeLabel($category, 'typeId', ['class' => 'label']); ?>
                     <div class="dropdown">
-                        <?php echo Html::activeDropDownList($tag, 'typeId', ArrayHelper::map($typesQuery->select(['id', 'name'])->asArray()->all(), 'id', 'name'), [
+                        <?php echo Html::activeDropDownList($category, 'typeId', ArrayHelper::map($typesQuery->select(['id', 'name'])->asArray()->all(), 'id', 'name'), [
                             'prompt' => 'No Type',
                         ]); ?>
                         <div class="arrow">
@@ -63,14 +63,14 @@ use yii\helpers\Url;
 
             <div class="bloc">
                 <div class="w-full bloc-fieldset">
-                    <?php echo Html::activeLabel($tag, 'name', ['class' => 'label']); ?>
-                    <?php echo Html::activeTextInput($tag, 'name', ['class' => 'textfield'.($tag->hasErrors('name')?' error':'')]); ?>
+                    <?php echo Html::activeLabel($category, 'name', ['class' => 'label']); ?>
+                    <?php echo Html::activeTextInput($category, 'name', ['class' => 'textfield'.($category->hasErrors('name')?' error':'')]); ?>
                 </div>
             </div>
 
-            <?php if ($tag->id !== null && $tag->type !== null): ?>
+            <?php if ($category->id !== null && $category->type !== null): ?>
             <?php echo Html::beginTag('div', [
-                'blackcube-blocs' => Url::to(['tag/blocs', 'id' => $tag->id])
+                'blackcube-blocs' => Url::to(['category/blocs', 'id' => $category->id])
             ]); ?>
                 <div class="bloc">
                     <div class="bloc-title">
@@ -78,12 +78,12 @@ use yii\helpers\Url;
                     </div>
                 </div>
                 <div data-ajax-target="">
-                    <?php echo $this->render('_blocs', ['blocs' => $blocs, 'element' => $tag]); ?>
+                    <?php echo $this->render('_blocs', ['blocs' => $blocs, 'element' => $category]); ?>
                 </div>
-                <?php if ($tag->type && $tag->type->getBlocTypes()->count() > 0): ?>
+                <?php if ($category->type && $category->type->getBlocTypes()->count() > 0): ?>
                 <div class="bloc bloc-tools">
                     <div class="dropdown-tool">
-                        <?php echo Html::dropDownList('blocTypeId', null, ArrayHelper::map($tag->type->blocTypes, 'id', 'name'), []); ?>
+                        <?php echo Html::dropDownList('blocTypeId', null, ArrayHelper::map($category->type->blocTypes, 'id', 'name'), []); ?>
                         <div class="dropdown-tool-arrow">
                             <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
                         </div>

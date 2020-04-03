@@ -8,6 +8,10 @@
   "aurelia": {
     "js": "js/aurelia.js"
   },
+  "chartist": {
+    "css": "css/chartist.css",
+    "js": "js/chartist.js"
+  },
   "fontawesome": {
     "css": "css/fontawesome.css",
     "js": "js/fontawesome.js"

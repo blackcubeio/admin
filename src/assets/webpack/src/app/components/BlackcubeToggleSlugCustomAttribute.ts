@@ -5,7 +5,7 @@ import {EventAggregator} from 'aurelia-event-aggregator';
 import {StorageService} from "../services/StorageService";
 
 @inject(DOM.Element, EventAggregator, StorageService)
-class ToggleSlugCustomAttribute implements ComponentCreated, ComponentBind, ComponentAttached, ComponentDetached, ComponentUnbind {
+class BlackcubeToggleSlugCustomAttribute implements ComponentCreated, ComponentBind, ComponentAttached, ComponentDetached, ComponentUnbind {
     private element:HTMLElement;
     @bindable({ primaryProperty: true }) elementId: string;
     private eventAggregator:EventAggregator;
@@ -44,7 +44,10 @@ class ToggleSlugCustomAttribute implements ComponentCreated, ComponentBind, Comp
                 opened = this.toggleCheckbox.checked;
             }
             if (opened === false) {
-                this.toggleBloc.style.display = 'none';
+                this.toggleBloc.classList.add('hidden');
+                // this.toggleBloc.style.display = 'none';
+            } else {
+                this.toggleBloc.classList.remove('hidden');
             }
         }
         if (this.toggleCheckbox) {
@@ -66,6 +69,12 @@ class ToggleSlugCustomAttribute implements ComponentCreated, ComponentBind, Comp
     }
     protected onToggle = () => {
         if (this.toggleBloc) {
+            if (this.toggleBloc.classList.contains('hidden')) {
+                this.toggleBloc.classList.remove('hidden')
+            } else {
+                this.toggleBloc.classList.add('hidden')
+            }
+            /*/
             if (this.toggleBloc.style.display === 'none') {
                 this.toggleBloc.style.display = this.toggleBlocInitialDisplay;
                 this.storageService.setElementSlugOpened(this.elementId);
@@ -73,19 +82,23 @@ class ToggleSlugCustomAttribute implements ComponentCreated, ComponentBind, Comp
                 this.toggleBloc.style.display = 'none';
                 this.storageService.setElementSlugClosed(this.elementId);
             }
+            /**/
         }
-    }
+    };
+
     protected onChange = () => {
         if (this.toggleBloc && this.toggleCheckbox) {
             if (this.toggleCheckbox.checked) {
-                this.toggleBloc.style.display = this.toggleBlocInitialDisplay;
+                this.toggleBloc.classList.remove('hidden');
+                // this.toggleBloc.style.display = this.toggleBlocInitialDisplay;
                 this.storageService.setElementSlugOpened(this.elementId);
             } else {
-                this.toggleBloc.style.display = 'none';
+                this.toggleBloc.classList.add('hidden');
+                // this.toggleBloc.style.display = 'none';
                 this.storageService.setElementSlugClosed(this.elementId);
             }
         }
     }
 }
 
-export {ToggleSlugCustomAttribute}
+export {BlackcubeToggleSlugCustomAttribute}

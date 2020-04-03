@@ -4,6 +4,7 @@
         "main": "./scss/style.scss",
         "jsoneditor": "./scss/jsoneditor.scss",
         "fontawesome": "./scss/fontawesome.scss",
+        "chartist": "./scss/chartist.scss",
         "app": ["./boot.ts", "./app.ts"]
     },
     "commonBundles": [

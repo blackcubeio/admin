@@ -5,7 +5,7 @@ use blackcube\admin\helpers\Html;
 <header class="bg-blue-900">
     <div class="flex justify-between">
         <div class="p-1 mx-3 inline-flex">
-            <i class="fas fa-bars p-3 text-white"></i>
+            <!-- i class="fas fa-bars p-3 text-white"></i -->
             <span class="text-white text-lg p-2">Blackcube</span>
         </div>
         <div class="p-1 flex flex-row">

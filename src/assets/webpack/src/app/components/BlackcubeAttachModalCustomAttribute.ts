@@ -5,7 +5,7 @@ import {StorageService} from "../services/StorageService";
 import {AjaxService} from "../services/AjaxService";
 
 @inject(DOM.Element, AjaxService)
-class AttachModalCustomAttribute implements ComponentCreated, ComponentBind, ComponentAttached, ComponentDetached, ComponentUnbind {
+class BlackcubeAttachModalCustomAttribute implements ComponentCreated, ComponentBind, ComponentAttached, ComponentDetached, ComponentUnbind {
     private element:HTMLFormElement;
     @bindable({ primaryProperty: true }) url: string;
     private logger:Logger = LogManager.getLogger('components.AttachModal');
@@ -104,4 +104,4 @@ class AttachModalCustomAttribute implements ComponentCreated, ComponentBind, Com
     }
 }
 
-export {AttachModalCustomAttribute}
+export {BlackcubeAttachModalCustomAttribute}

@@ -4,7 +4,7 @@ import {Logger} from "aurelia-logging";
 import JSONEditor from 'jsoneditor';
 
 @inject(DOM.Element)
-class SchemaEditorCustomElement implements ComponentCreated, ComponentBind, ComponentAttached, ComponentDetached, ComponentUnbind {
+class BlackcubeSchemaEditorCustomElement implements ComponentCreated, ComponentBind, ComponentAttached, ComponentDetached, ComponentUnbind {
     private element:HTMLElement;
     private jsonEditorElement:HTMLElement|null;
     private logger:Logger = LogManager.getLogger('components.SchemaEditor');
@@ -84,4 +84,4 @@ class SchemaEditorCustomElement implements ComponentCreated, ComponentBind, Comp
 
 }
 
-export {SchemaEditorCustomElement}
+export {BlackcubeSchemaEditorCustomElement}

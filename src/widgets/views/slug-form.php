@@ -9,8 +9,11 @@ use blackcube\admin\helpers\Html;
 use yii\helpers\ArrayHelper;
 use blackcube\admin\helpers\Parameter;
 use yii\helpers\Url;
+use yii\helpers\StringHelper;
+use yii\helpers\Inflector;
+$elementType = Inflector::camel2id(StringHelper::basename(get_class($slugForm->getElement())));
 ?>
-<?php echo Html::beginTag('div', ['toggle-slug' => ($slugForm->getElement()->id === null)?'':$slugForm->getElement()->id]); ?>
+<?php echo Html::beginTag('div', ['blackcube-toggle-slug' => ($slugForm->getElement()->id === null)?'':$elementType.'-'.$slugForm->getElement()->id]); ?>
     <div class="bloc mb-2">
         <div class="bloc-title">
             <?php echo Html::activeCheckbox($slugForm, 'hasSlug', ['class' => 'mr-2 toggle', 'label' => false]); ?>
@@ -93,7 +96,8 @@ use yii\helpers\Url;
                 <?php echo Html::activeUpload($seo, 'image', [
                         'upload-url' => Url::to(['upload']),
                         'preview-url' => Url::to(['preview', 'name' => '__name__']),
-                        'delete-url' => Url::to(['delete', 'name' => '__name__'])
+                        'delete-url' => Url::to(['delete', 'name' => '__name__']),
+                        'file-type' => 'jpg,png',
                 ]); ?>
             </div>
         </div>
@@ -105,7 +109,7 @@ use yii\helpers\Url;
             <div class="w-full bloc-fieldset md:w-4/12">
                 <?php echo Html::activeLabel($seo, 'ogType', ['class' => 'label']); ?>
                 <div class="dropdown">
-                    <?php echo Html::activeDropDownList($seo, 'ogType', ['type1' => 'type1']); ?>
+                    <?php echo Html::activeDropDownList($seo, 'ogType', ['siteweb' => 'Website']); ?>
                     <div class="arrow">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
                     </div>
@@ -118,7 +122,7 @@ use yii\helpers\Url;
             <div class="w-full bloc-fieldset md:w-4/12">
                 <?php echo Html::activeLabel($seo, 'twitterCard', ['class' => 'label']); ?>
                 <div class="dropdown">
-                    <?php echo Html::activeDropDownList($seo, 'twitterCard', ['type1' => 'type1']); ?>
+                    <?php echo Html::activeDropDownList($seo, 'twitterCard', ['summary' => 'Summary', 'summary_large_image' => 'Summary large image']); ?>
                     <div class="arrow">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
                     </div>

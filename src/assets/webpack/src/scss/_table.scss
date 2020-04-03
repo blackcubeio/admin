@@ -30,6 +30,12 @@
             @apply bg-green-600 text-white;
           }
         }
+        &.disabled {
+          @apply opacity-50;
+          &:hover {
+            @apply bg-gray-300 text-gray-800;
+          }
+        }
       }
     }
   }

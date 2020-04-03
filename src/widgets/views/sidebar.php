@@ -3,16 +3,15 @@ use blackcube\admin\helpers\Html;
 use yii\helpers\Url;
 ?>
 <!--Sidebar-->
-<aside id="sidebar" class="bg-gray-100 w-1/2 md:w-1/6 lg:w-1/6 border-r hidden md:block lg:block">
+<aside id="sidebar" class="bg-gray-100 w-1/2 md:w-56 lg:w-64 border-r hidden md:block lg:block">
 
     <ul class="list-none flex flex-col">
         <li class=" w-full h-full py-3 px-2 border-b bg-white">
-            <a href="index.html"
-               class="font-sans font-hairline hover:font-normal text-sm text-gray-700 no-underline">
+            <?php echo Html::beginTag('a', ['href' => Url::to(['default/index']), 'class' => 'font-sans font-hairline hover:font-normal text-sm text-nav-item no-underline']); ?>
                 <i class="fas fa-tachometer-alt float-left mx-2 mt-1"></i>
                 <span>Dashboard</span>
                 <span><i class="fas fa-angle-right float-right mt-2"></i></span>
-            </a>
+            <?php echo Html::endTag('a'); ?>
         </li>
         <li class="w-full h-full py-3 px-2 pb-0">
             <?php echo Html::beginTag('a', ['href' => '#', 'class' => 'font-sans font-hairline hover:font-normal text-sm text-nav-item no-underline']); ?>

@@ -4,7 +4,7 @@ import {Logger} from "aurelia-logging";
 import {AjaxService} from "../services/AjaxService";
 
 @inject(DOM.Element, TemplatingEngine, AjaxService)
-class ManageBlocsCustomAttribute implements ComponentCreated, ComponentBind, ComponentAttached, ComponentDetached, ComponentUnbind {
+class BlackcubeBlocsCustomAttribute implements ComponentCreated, ComponentBind, ComponentAttached, ComponentDetached, ComponentUnbind {
     private element:HTMLElement;
     @bindable({ primaryProperty: true }) url: string;
     private logger:Logger = LogManager.getLogger('components.ManageBlocs');
@@ -75,4 +75,4 @@ class ManageBlocsCustomAttribute implements ComponentCreated, ComponentBind, Com
     }
 }
 
-export {ManageBlocsCustomAttribute}
+export {BlackcubeBlocsCustomAttribute}

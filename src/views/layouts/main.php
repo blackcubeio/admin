@@ -33,7 +33,7 @@ $this->beginPage(); ?><!DOCTYPE html>
     </head>
     <body>
         <?php $this->beginBody(); ?>
-        <!-- div class="loader" html-loader="">
+        <!-- div class="loader" blackcube-loader="">
             <span>
                 <i class="fas fa-circle-notch fa-spin fa-5x"></i>
             </span>

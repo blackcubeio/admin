@@ -213,10 +213,10 @@ module.exports = __webpack_require__(/*! ./app.ts */"./app.ts");
 
 /***/ }),
 
-/***/ "components/AjaxLinkManagerCustomAttribute":
-/*!**********************************************************!*\
-  !*** ./app/components/AjaxLinkManagerCustomAttribute.ts ***!
-  \**********************************************************/
+/***/ "components/BlackcubeAjaxLinkCustomAttribute":
+/*!************************************************************!*\
+  !*** ./app/components/BlackcubeAjaxLinkCustomAttribute.ts ***!
+  \************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -231,10 +231,10 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 Object.defineProperty(exports, "__esModule", { value: true });
 var aurelia_framework_1 = __webpack_require__(/*! aurelia-framework */ "aurelia-framework");
 var AjaxService_1 = __webpack_require__(/*! ../services/AjaxService */ "./app/services/AjaxService.ts");
-var AjaxLinkManagerCustomAttribute = /** @class */ (function () {
-    function AjaxLinkManagerCustomAttribute(element, templatingEngine, ajaxService) {
+var BlackcubeAjaxLinkCustomAttribute = /** @class */ (function () {
+    function BlackcubeAjaxLinkCustomAttribute(element, templatingEngine, ajaxService) {
         var _this = this;
-        this.logger = aurelia_framework_1.LogManager.getLogger('components.AjaxLinkManager');
+        this.logger = aurelia_framework_1.LogManager.getLogger('components.BlackcubeAjaxLinkCustomAttribute');
         this.onDelegateClick = function (evt) {
             if (evt.target) {
                 //@ts-ignore
@@ -261,37 +261,37 @@ var AjaxLinkManagerCustomAttribute = /** @class */ (function () {
         this.ajaxService = ajaxService;
         this.logger.debug('Constructor');
     }
-    AjaxLinkManagerCustomAttribute.prototype.created = function (owningView, myView) {
+    BlackcubeAjaxLinkCustomAttribute.prototype.created = function (owningView, myView) {
         this.logger.debug('Created');
     };
-    AjaxLinkManagerCustomAttribute.prototype.bind = function (bindingContext, overrideContext) {
+    BlackcubeAjaxLinkCustomAttribute.prototype.bind = function (bindingContext, overrideContext) {
         this.logger.debug('Bind');
     };
-    AjaxLinkManagerCustomAttribute.prototype.attached = function () {
+    BlackcubeAjaxLinkCustomAttribute.prototype.attached = function () {
         this.logger.debug('Attached');
         this.element.addEventListener('click', this.onDelegateClick);
     };
-    AjaxLinkManagerCustomAttribute.prototype.detached = function () {
+    BlackcubeAjaxLinkCustomAttribute.prototype.detached = function () {
         this.logger.debug('Detached');
         this.element.removeEventListener('click', this.onDelegateClick);
     };
-    AjaxLinkManagerCustomAttribute.prototype.unbind = function () {
+    BlackcubeAjaxLinkCustomAttribute.prototype.unbind = function () {
         this.logger.debug('Unbind');
     };
-    AjaxLinkManagerCustomAttribute = __decorate([
+    BlackcubeAjaxLinkCustomAttribute = __decorate([
         aurelia_framework_1.inject(aurelia_framework_1.DOM.Element, aurelia_framework_1.TemplatingEngine, AjaxService_1.AjaxService)
-    ], AjaxLinkManagerCustomAttribute);
-    return AjaxLinkManagerCustomAttribute;
+    ], BlackcubeAjaxLinkCustomAttribute);
+    return BlackcubeAjaxLinkCustomAttribute;
 }());
-exports.AjaxLinkManagerCustomAttribute = AjaxLinkManagerCustomAttribute;
+exports.BlackcubeAjaxLinkCustomAttribute = BlackcubeAjaxLinkCustomAttribute;
 
 
 /***/ }),
 
-/***/ "components/AttachModalCustomAttribute":
-/*!******************************************************!*\
-  !*** ./app/components/AttachModalCustomAttribute.ts ***!
-  \******************************************************/
+/***/ "components/BlackcubeAttachModalCustomAttribute":
+/*!***************************************************************!*\
+  !*** ./app/components/BlackcubeAttachModalCustomAttribute.ts ***!
+  \***************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -306,8 +306,8 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 Object.defineProperty(exports, "__esModule", { value: true });
 var aurelia_framework_1 = __webpack_require__(/*! aurelia-framework */ "aurelia-framework");
 var AjaxService_1 = __webpack_require__(/*! ../services/AjaxService */ "./app/services/AjaxService.ts");
-var AttachModalCustomAttribute = /** @class */ (function () {
-    function AttachModalCustomAttribute(element, ajaxService) {
+var BlackcubeAttachModalCustomAttribute = /** @class */ (function () {
+    function BlackcubeAttachModalCustomAttribute(element, ajaxService) {
         var _this = this;
         this.logger = aurelia_framework_1.LogManager.getLogger('components.AttachModal');
         this.ready = false;
@@ -340,21 +340,21 @@ var AttachModalCustomAttribute = /** @class */ (function () {
         this.logger.debug('Constructor');
         this.ajaxService = ajaxService;
     }
-    AttachModalCustomAttribute.prototype.created = function (owningView, myView) {
+    BlackcubeAttachModalCustomAttribute.prototype.created = function (owningView, myView) {
         this.logger.debug('Created');
     };
-    AttachModalCustomAttribute.prototype.bind = function (bindingContext, overrideContext) {
+    BlackcubeAttachModalCustomAttribute.prototype.bind = function (bindingContext, overrideContext) {
         this.logger.debug('Bind');
     };
-    AttachModalCustomAttribute.prototype.attached = function () {
+    BlackcubeAttachModalCustomAttribute.prototype.attached = function () {
         this.logger.debug('Attached');
         this.element.addEventListener('submit', this.onDelegateSubmit);
     };
-    AttachModalCustomAttribute.prototype.detached = function () {
+    BlackcubeAttachModalCustomAttribute.prototype.detached = function () {
         this.element.removeEventListener('submit', this.onDelegateSubmit);
         this.logger.debug('Detached');
     };
-    AttachModalCustomAttribute.prototype.attachModal = function () {
+    BlackcubeAttachModalCustomAttribute.prototype.attachModal = function () {
         document.body.insertAdjacentHTML('afterbegin', this.modalView);
         this.modal = document.querySelector('#modal-delete');
         this.backdrop = document.querySelector('#modal-delete-backdrop');
@@ -366,7 +366,7 @@ var AttachModalCustomAttribute = /** @class */ (function () {
         this.modal.addEventListener('click', this.onClose);
         this.modalOk.addEventListener('click', this.onSubmitOk);
     };
-    AttachModalCustomAttribute.prototype.detachModal = function () {
+    BlackcubeAttachModalCustomAttribute.prototype.detachModal = function () {
         if (this.modalClose) {
             this.modalClose.removeEventListener('click', this.onClose);
         }
@@ -384,139 +384,26 @@ var AttachModalCustomAttribute = /** @class */ (function () {
             this.backdrop.remove();
         }
     };
-    AttachModalCustomAttribute.prototype.unbind = function () {
+    BlackcubeAttachModalCustomAttribute.prototype.unbind = function () {
         this.logger.debug('Unbind');
     };
     __decorate([
         aurelia_framework_1.bindable({ primaryProperty: true })
-    ], AttachModalCustomAttribute.prototype, "url", void 0);
-    AttachModalCustomAttribute = __decorate([
+    ], BlackcubeAttachModalCustomAttribute.prototype, "url", void 0);
+    BlackcubeAttachModalCustomAttribute = __decorate([
         aurelia_framework_1.inject(aurelia_framework_1.DOM.Element, AjaxService_1.AjaxService)
-    ], AttachModalCustomAttribute);
-    return AttachModalCustomAttribute;
+    ], BlackcubeAttachModalCustomAttribute);
+    return BlackcubeAttachModalCustomAttribute;
 }());
-exports.AttachModalCustomAttribute = AttachModalCustomAttribute;
+exports.BlackcubeAttachModalCustomAttribute = BlackcubeAttachModalCustomAttribute;
 
 
 /***/ }),
 
-/***/ "components/HtmlLoaderCustomAttribute":
-/*!*****************************************************!*\
-  !*** ./app/components/HtmlLoaderCustomAttribute.ts ***!
-  \*****************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-var aurelia_framework_1 = __webpack_require__(/*! aurelia-framework */ "aurelia-framework");
-var aurelia_event_aggregator_1 = __webpack_require__(/*! aurelia-event-aggregator */ "aurelia-event-aggregator");
-var HtmlLoaderCustomAttribute = /** @class */ (function () {
-    function HtmlLoaderCustomAttribute(element, eventAggregator) {
-        var _this = this;
-        this.logger = aurelia_framework_1.LogManager.getLogger('components.HtmlLoader');
-        this.onRemoveLoader = function (data) {
-            _this.logger.debug('Remove loader');
-            _this.element.style.display = 'none';
-        };
-        this.element = element;
-        this.eventAggregator = eventAggregator;
-        this.logger.debug('Constructor');
-    }
-    HtmlLoaderCustomAttribute.prototype.created = function (owningView, myView) {
-        this.logger.debug('Created');
-    };
-    HtmlLoaderCustomAttribute.prototype.bind = function (bindingContext, overrideContext) {
-        this.logger.debug('Bind');
-    };
-    HtmlLoaderCustomAttribute.prototype.attached = function () {
-        this.logger.debug('Attached');
-        this.subscriber = this.eventAggregator.subscribe('RemoveLoader', this.onRemoveLoader);
-    };
-    HtmlLoaderCustomAttribute.prototype.detached = function () {
-        this.logger.debug('Detached');
-        this.subscriber.dispose();
-    };
-    HtmlLoaderCustomAttribute.prototype.unbind = function () {
-        this.logger.debug('Unbind');
-    };
-    HtmlLoaderCustomAttribute = __decorate([
-        aurelia_framework_1.inject(aurelia_framework_1.DOM.Element, aurelia_event_aggregator_1.EventAggregator)
-    ], HtmlLoaderCustomAttribute);
-    return HtmlLoaderCustomAttribute;
-}());
-exports.HtmlLoaderCustomAttribute = HtmlLoaderCustomAttribute;
-
-
-/***/ }),
-
-/***/ "components/LoaderDoneCustomAttribute":
-/*!*****************************************************!*\
-  !*** ./app/components/LoaderDoneCustomAttribute.ts ***!
-  \*****************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-var aurelia_framework_1 = __webpack_require__(/*! aurelia-framework */ "aurelia-framework");
-var aurelia_event_aggregator_1 = __webpack_require__(/*! aurelia-event-aggregator */ "aurelia-event-aggregator");
-var LoaderDoneCustomAttribute = /** @class */ (function () {
-    function LoaderDoneCustomAttribute(element, eventAggregator) {
-        var _this = this;
-        this.logger = aurelia_framework_1.LogManager.getLogger('components.LoaderDone');
-        this.onRemoveLoader = function (data) {
-            _this.logger.debug('Remove loader');
-            _this.element.style.display = 'none';
-        };
-        this.element = element;
-        this.eventAggregator = eventAggregator;
-        this.logger.debug('Constructor');
-    }
-    LoaderDoneCustomAttribute.prototype.created = function (owningView, myView) {
-        this.logger.debug('Created');
-    };
-    LoaderDoneCustomAttribute.prototype.bind = function (bindingContext, overrideContext) {
-        this.logger.debug('Bind');
-    };
-    LoaderDoneCustomAttribute.prototype.attached = function () {
-        this.logger.debug('Attached');
-        this.eventAggregator.publish('RemoveLoader', {});
-    };
-    LoaderDoneCustomAttribute.prototype.detached = function () {
-        this.logger.debug('Detached');
-    };
-    LoaderDoneCustomAttribute.prototype.unbind = function () {
-        this.logger.debug('Unbind');
-    };
-    LoaderDoneCustomAttribute = __decorate([
-        aurelia_framework_1.inject(aurelia_framework_1.DOM.Element, aurelia_event_aggregator_1.EventAggregator)
-    ], LoaderDoneCustomAttribute);
-    return LoaderDoneCustomAttribute;
-}());
-exports.LoaderDoneCustomAttribute = LoaderDoneCustomAttribute;
-
-
-/***/ }),
-
-/***/ "components/ManageBlocsCustomAttribute":
-/*!******************************************************!*\
-  !*** ./app/components/ManageBlocsCustomAttribute.ts ***!
-  \******************************************************/
+/***/ "components/BlackcubeBlocsCustomAttribute":
+/*!*********************************************************!*\
+  !*** ./app/components/BlackcubeBlocsCustomAttribute.ts ***!
+  \*********************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -531,8 +418,8 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 Object.defineProperty(exports, "__esModule", { value: true });
 var aurelia_framework_1 = __webpack_require__(/*! aurelia-framework */ "aurelia-framework");
 var AjaxService_1 = __webpack_require__(/*! ../services/AjaxService */ "./app/services/AjaxService.ts");
-var ManageBlocsCustomAttribute = /** @class */ (function () {
-    function ManageBlocsCustomAttribute(element, templatingEngine, ajaxService) {
+var BlackcubeBlocsCustomAttribute = /** @class */ (function () {
+    function BlackcubeBlocsCustomAttribute(element, templatingEngine, ajaxService) {
         var _this = this;
         this.logger = aurelia_framework_1.LogManager.getLogger('components.ManageBlocs');
         this.onDelegateClick = function (evt) {
@@ -565,13 +452,13 @@ var ManageBlocsCustomAttribute = /** @class */ (function () {
         this.ajaxService = ajaxService;
         this.logger.debug('Constructor');
     }
-    ManageBlocsCustomAttribute.prototype.created = function (owningView, myView) {
+    BlackcubeBlocsCustomAttribute.prototype.created = function (owningView, myView) {
         this.logger.debug('Created');
     };
-    ManageBlocsCustomAttribute.prototype.bind = function (bindingContext, overrideContext) {
+    BlackcubeBlocsCustomAttribute.prototype.bind = function (bindingContext, overrideContext) {
         this.logger.debug('Bind');
     };
-    ManageBlocsCustomAttribute.prototype.attached = function () {
+    BlackcubeBlocsCustomAttribute.prototype.attached = function () {
         this.logger.debug('Attached');
         this.logger.debug(this.url);
         this.form = this.element.closest('form');
@@ -581,29 +468,88 @@ var ManageBlocsCustomAttribute = /** @class */ (function () {
         }
         this.element.addEventListener('click', this.onDelegateClick);
     };
-    ManageBlocsCustomAttribute.prototype.detached = function () {
+    BlackcubeBlocsCustomAttribute.prototype.detached = function () {
         this.logger.debug('Detached');
         this.element.removeEventListener('click', this.onDelegateClick);
     };
-    ManageBlocsCustomAttribute.prototype.unbind = function () {
+    BlackcubeBlocsCustomAttribute.prototype.unbind = function () {
         this.logger.debug('Unbind');
     };
     __decorate([
         aurelia_framework_1.bindable({ primaryProperty: true })
-    ], ManageBlocsCustomAttribute.prototype, "url", void 0);
-    ManageBlocsCustomAttribute = __decorate([
+    ], BlackcubeBlocsCustomAttribute.prototype, "url", void 0);
+    BlackcubeBlocsCustomAttribute = __decorate([
         aurelia_framework_1.inject(aurelia_framework_1.DOM.Element, aurelia_framework_1.TemplatingEngine, AjaxService_1.AjaxService)
-    ], ManageBlocsCustomAttribute);
-    return ManageBlocsCustomAttribute;
+    ], BlackcubeBlocsCustomAttribute);
+    return BlackcubeBlocsCustomAttribute;
 }());
-exports.ManageBlocsCustomAttribute = ManageBlocsCustomAttribute;
+exports.BlackcubeBlocsCustomAttribute = BlackcubeBlocsCustomAttribute;
 
 
 /***/ }),
 
-/***/ "components/ResumableFileCustomElement":
+/***/ "components/BlackcubeChoicesCustomAttribute":
+/*!***********************************************************!*\
+  !*** ./app/components/BlackcubeChoicesCustomAttribute.ts ***!
+  \***********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var aurelia_framework_1 = __webpack_require__(/*! aurelia-framework */ "aurelia-framework");
+var AjaxService_1 = __webpack_require__(/*! ../services/AjaxService */ "./app/services/AjaxService.ts");
+var choices_js_1 = __importDefault(__webpack_require__(/*! choices.js */ "../../../../node_modules/choices.js/public/assets/scripts/choices.js"));
+var BlackcubeChoicesCustomAttribute = /** @class */ (function () {
+    function BlackcubeChoicesCustomAttribute(element, ajaxService) {
+        // @bindable({ primaryProperty: true }) url: string;
+        this.logger = aurelia_framework_1.LogManager.getLogger('components.ChoicesManager');
+        this.element = element;
+        this.logger.debug('Constructor');
+        this.ajaxService = ajaxService;
+    }
+    BlackcubeChoicesCustomAttribute.prototype.created = function (owningView, myView) {
+        this.logger.debug('Created');
+    };
+    BlackcubeChoicesCustomAttribute.prototype.bind = function (bindingContext, overrideContext) {
+        this.logger.debug('Bind');
+    };
+    BlackcubeChoicesCustomAttribute.prototype.attached = function () {
+        this.logger.debug('Attached');
+        // @ts-ignore
+        this.choices = new choices_js_1.default(this.element, {
+            removeItemButton: false
+        });
+    };
+    BlackcubeChoicesCustomAttribute.prototype.detached = function () {
+        this.logger.debug('Detached');
+    };
+    BlackcubeChoicesCustomAttribute.prototype.unbind = function () {
+        this.logger.debug('Unbind');
+    };
+    BlackcubeChoicesCustomAttribute = __decorate([
+        aurelia_framework_1.inject(aurelia_framework_1.DOM.Element, AjaxService_1.AjaxService)
+    ], BlackcubeChoicesCustomAttribute);
+    return BlackcubeChoicesCustomAttribute;
+}());
+exports.BlackcubeChoicesCustomAttribute = BlackcubeChoicesCustomAttribute;
+
+
+/***/ }),
+
+/***/ "components/BlackcubeFileCustomElement":
 /*!******************************************************!*\
-  !*** ./app/components/ResumableFileCustomElement.ts ***!
+  !*** ./app/components/BlackcubeFileCustomElement.ts ***!
   \******************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
@@ -623,10 +569,11 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var aurelia_framework_1 = __webpack_require__(/*! aurelia-framework */ "aurelia-framework");
 var AjaxService_1 = __webpack_require__(/*! ../services/AjaxService */ "./app/services/AjaxService.ts");
 var resumablejs_1 = __importDefault(__webpack_require__(/*! resumablejs */ "../../../../node_modules/resumablejs/resumable.js"));
-var ResumableFileCustomElement = /** @class */ (function () {
-    function ResumableFileCustomElement(element, ajaxService) {
+var BlackcubeFileCustomElement = /** @class */ (function () {
+    function BlackcubeFileCustomElement(element, ajaxService) {
         var _this = this;
-        this.logger = aurelia_framework_1.LogManager.getLogger('components.ResumableFile');
+        this.logger = aurelia_framework_1.LogManager.getLogger('components.BlackcubeFile');
+        this.fileType = '';
         this.multiple = false;
         this.value = '';
         this.onRemove = function (handledFile) {
@@ -729,19 +676,19 @@ var ResumableFileCustomElement = /** @class */ (function () {
         this.ajaxService = ajaxService;
         this.logger.debug('Constructor');
     }
-    ResumableFileCustomElement.prototype.created = function (owningView, myView) {
+    BlackcubeFileCustomElement.prototype.created = function (owningView, myView) {
         this.logger.debug('Created');
     };
-    ResumableFileCustomElement.prototype.bind = function (bindingContext, overrideContext) {
+    BlackcubeFileCustomElement.prototype.bind = function (bindingContext, overrideContext) {
         this.logger.debug('Bind');
     };
-    ResumableFileCustomElement.prototype.generatePreviewUrl = function (name) {
+    BlackcubeFileCustomElement.prototype.generatePreviewUrl = function (name) {
         return this.previewUrl.replace('__name__', name);
     };
-    ResumableFileCustomElement.prototype.generateDeleteUrl = function (name) {
+    BlackcubeFileCustomElement.prototype.generateDeleteUrl = function (name) {
         return this.deleteUrl.replace('__name__', name);
     };
-    ResumableFileCustomElement.prototype.setFiles = function (value) {
+    BlackcubeFileCustomElement.prototype.setFiles = function (value) {
         var _this = this;
         var files = value.split(/\s*,\s*/);
         this.handledFiles = files.filter(function (value, index) {
@@ -756,7 +703,7 @@ var ResumableFileCustomElement = /** @class */ (function () {
         });
         this.hiddenField.value = this.getFilesValue();
     };
-    ResumableFileCustomElement.prototype.setFile = function (name, file) {
+    BlackcubeFileCustomElement.prototype.setFile = function (name, file) {
         var _this = this;
         if (file === void 0) { file = null; }
         this.handledFiles.forEach(function (handledFile, index) {
@@ -776,7 +723,7 @@ var ResumableFileCustomElement = /** @class */ (function () {
         ];
         this.hiddenField.value = this.getFilesValue();
     };
-    ResumableFileCustomElement.prototype.appendFile = function (name, file) {
+    BlackcubeFileCustomElement.prototype.appendFile = function (name, file) {
         if (file === void 0) { file = null; }
         this.handledFiles.push({
             name: name,
@@ -787,18 +734,22 @@ var ResumableFileCustomElement = /** @class */ (function () {
         });
         this.hiddenField.value = this.getFilesValue();
     };
-    ResumableFileCustomElement.prototype.getFilesValue = function () {
+    BlackcubeFileCustomElement.prototype.getFilesValue = function () {
         var mapped = this.handledFiles.map(function (uploadedFile, index) {
             return uploadedFile.name;
         }).join(', ');
         return (typeof mapped === 'string') ? mapped : '';
     };
-    ResumableFileCustomElement.prototype.attached = function () {
+    BlackcubeFileCustomElement.prototype.attached = function () {
         this.parentForm = this.element.closest('form');
         this.logger.debug('Multiple', this.multiple);
         var resumableConfig = {
             target: this.uploadUrl
         };
+        var fileTypes = this.fileType.split(/\s*,\s*/).filter(function (value, index) {
+            return value.trim() !== '';
+        });
+        resumableConfig.fileType = fileTypes;
         if (this.parentForm) {
             var csrfField = this.parentForm.querySelector('input[name=_csrf]');
             this.csfr = {
@@ -843,7 +794,7 @@ var ResumableFileCustomElement = /** @class */ (function () {
         }
         this.logger.debug('Attached');
     };
-    Object.defineProperty(ResumableFileCustomElement.prototype, "getFiles", {
+    Object.defineProperty(BlackcubeFileCustomElement.prototype, "getFiles", {
         get: function () {
             if (this.resumable.support) {
                 return this.resumable.files.map(function (file, index) {
@@ -855,43 +806,46 @@ var ResumableFileCustomElement = /** @class */ (function () {
         enumerable: true,
         configurable: true
     });
-    ResumableFileCustomElement.prototype.detached = function () {
+    BlackcubeFileCustomElement.prototype.detached = function () {
         this.logger.debug('Detached');
     };
-    ResumableFileCustomElement.prototype.unbind = function () {
+    BlackcubeFileCustomElement.prototype.unbind = function () {
         this.logger.debug('Unbind');
     };
     __decorate([
         aurelia_framework_1.bindable({ defaultBindingMode: aurelia_framework_1.bindingMode.fromView })
-    ], ResumableFileCustomElement.prototype, "uploadUrl", void 0);
+    ], BlackcubeFileCustomElement.prototype, "uploadUrl", void 0);
     __decorate([
         aurelia_framework_1.bindable({ defaultBindingMode: aurelia_framework_1.bindingMode.fromView })
-    ], ResumableFileCustomElement.prototype, "previewUrl", void 0);
+    ], BlackcubeFileCustomElement.prototype, "previewUrl", void 0);
     __decorate([
         aurelia_framework_1.bindable({ defaultBindingMode: aurelia_framework_1.bindingMode.fromView })
-    ], ResumableFileCustomElement.prototype, "deleteUrl", void 0);
+    ], BlackcubeFileCustomElement.prototype, "deleteUrl", void 0);
     __decorate([
         aurelia_framework_1.bindable({ defaultBindingMode: aurelia_framework_1.bindingMode.fromView })
-    ], ResumableFileCustomElement.prototype, "name", void 0);
+    ], BlackcubeFileCustomElement.prototype, "fileType", void 0);
     __decorate([
         aurelia_framework_1.bindable({ defaultBindingMode: aurelia_framework_1.bindingMode.fromView })
-    ], ResumableFileCustomElement.prototype, "multiple", void 0);
+    ], BlackcubeFileCustomElement.prototype, "name", void 0);
     __decorate([
         aurelia_framework_1.bindable({ defaultBindingMode: aurelia_framework_1.bindingMode.fromView })
-    ], ResumableFileCustomElement.prototype, "value", void 0);
-    ResumableFileCustomElement = __decorate([
+    ], BlackcubeFileCustomElement.prototype, "multiple", void 0);
+    __decorate([
+        aurelia_framework_1.bindable({ defaultBindingMode: aurelia_framework_1.bindingMode.fromView })
+    ], BlackcubeFileCustomElement.prototype, "value", void 0);
+    BlackcubeFileCustomElement = __decorate([
         aurelia_framework_1.inject(aurelia_framework_1.DOM.Element, AjaxService_1.AjaxService)
-    ], ResumableFileCustomElement);
-    return ResumableFileCustomElement;
+    ], BlackcubeFileCustomElement);
+    return BlackcubeFileCustomElement;
 }());
-exports.ResumableFileCustomElement = ResumableFileCustomElement;
+exports.BlackcubeFileCustomElement = BlackcubeFileCustomElement;
 
 
 /***/ }),
 
-/***/ "components/ResumableFileCustomElement.html":
+/***/ "components/BlackcubeFileCustomElement.html":
 /*!********************************************************!*\
-  !*** ./app/components/ResumableFileCustomElement.html ***!
+  !*** ./app/components/BlackcubeFileCustomElement.html ***!
   \********************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
@@ -900,10 +854,121 @@ module.exports = "<template>\n    <!-- div ref=\"dropTarget\" style=\"border:1px
 
 /***/ }),
 
-/***/ "components/SchemaEditorCustomElement":
+/***/ "components/BlackcubePieCustomElement":
 /*!*****************************************************!*\
-  !*** ./app/components/SchemaEditorCustomElement.ts ***!
+  !*** ./app/components/BlackcubePieCustomElement.ts ***!
   \*****************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
+    result["default"] = mod;
+    return result;
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var aurelia_framework_1 = __webpack_require__(/*! aurelia-framework */ "aurelia-framework");
+var Chartist = __importStar(__webpack_require__(/*! chartist */ "../../../../node_modules/chartist/dist/chartist.js"));
+var BlackcubePieCustomElement = /** @class */ (function () {
+    function BlackcubePieCustomElement(element) {
+        this.logger = aurelia_framework_1.LogManager.getLogger('components.ChartistPie');
+        this.inactive = 0;
+        this.activeUrl = 0;
+        this.activeNoUrl = 0;
+        this.inactiveLabel = 'Inactive';
+        this.activeUrlLabel = 'Active';
+        this.activeNoUrlLabel = 'Active No URL';
+        this.element = element;
+        this.logger.debug('Constructor');
+    }
+    BlackcubePieCustomElement.prototype.created = function (owningView, myView) {
+        this.logger.debug('Created');
+    };
+    BlackcubePieCustomElement.prototype.bind = function (bindingContext, overrideContext) {
+        this.logger.debug('Bind');
+    };
+    BlackcubePieCustomElement.prototype.attached = function () {
+        this.chart = new Chartist.Pie(this.element, {
+            labels: [this.activeUrlLabel, this.inactiveLabel, this.activeNoUrlLabel],
+            series: [{
+                    value: this.activeUrl,
+                    name: this.activeUrlLabel,
+                    className: 'active-url',
+                    meta: 'Meta One'
+                }, {
+                    value: this.inactive,
+                    name: this.inactiveLabel,
+                    className: 'inactive',
+                    meta: 'Meta Two'
+                }, {
+                    value: this.activeNoUrl,
+                    name: this.activeNoUrlLabel,
+                    className: 'active-no-url',
+                    meta: 'Meta Three'
+                }]
+        }, {
+            width: '250px',
+            height: '250px',
+            donut: true,
+            labelOffset: -50,
+            donutWidth: 30,
+            donutSolid: true,
+            startAngle: 270,
+            showLabel: true,
+            ignoreEmptyValues: true
+            // labelPosition: 'outside'
+        });
+        this.logger.debug('Attached');
+    };
+    BlackcubePieCustomElement.prototype.detached = function () {
+        this.logger.debug('Detached');
+    };
+    BlackcubePieCustomElement.prototype.unbind = function () {
+        this.logger.debug('Unbind');
+    };
+    __decorate([
+        aurelia_framework_1.bindable({ defaultBindingMode: aurelia_framework_1.bindingMode.fromView })
+    ], BlackcubePieCustomElement.prototype, "inactive", void 0);
+    __decorate([
+        aurelia_framework_1.bindable({ defaultBindingMode: aurelia_framework_1.bindingMode.fromView })
+    ], BlackcubePieCustomElement.prototype, "activeUrl", void 0);
+    __decorate([
+        aurelia_framework_1.bindable({ defaultBindingMode: aurelia_framework_1.bindingMode.fromView })
+    ], BlackcubePieCustomElement.prototype, "activeNoUrl", void 0);
+    __decorate([
+        aurelia_framework_1.bindable({ defaultBindingMode: aurelia_framework_1.bindingMode.fromView })
+    ], BlackcubePieCustomElement.prototype, "inactiveLabel", void 0);
+    __decorate([
+        aurelia_framework_1.bindable({ defaultBindingMode: aurelia_framework_1.bindingMode.fromView })
+    ], BlackcubePieCustomElement.prototype, "activeUrlLabel", void 0);
+    __decorate([
+        aurelia_framework_1.bindable({ defaultBindingMode: aurelia_framework_1.bindingMode.fromView })
+    ], BlackcubePieCustomElement.prototype, "activeNoUrlLabel", void 0);
+    BlackcubePieCustomElement = __decorate([
+        aurelia_framework_1.noView(),
+        aurelia_framework_1.inject(aurelia_framework_1.DOM.Element)
+    ], BlackcubePieCustomElement);
+    return BlackcubePieCustomElement;
+}());
+exports.BlackcubePieCustomElement = BlackcubePieCustomElement;
+
+
+/***/ }),
+
+/***/ "components/BlackcubeSchemaEditorCustomElement":
+/*!**************************************************************!*\
+  !*** ./app/components/BlackcubeSchemaEditorCustomElement.ts ***!
+  \**************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -921,19 +986,19 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var aurelia_framework_1 = __webpack_require__(/*! aurelia-framework */ "aurelia-framework");
 var jsoneditor_1 = __importDefault(__webpack_require__(/*! jsoneditor */ "../../../../node_modules/jsoneditor/index.js"));
-var SchemaEditorCustomElement = /** @class */ (function () {
-    function SchemaEditorCustomElement(element) {
+var BlackcubeSchemaEditorCustomElement = /** @class */ (function () {
+    function BlackcubeSchemaEditorCustomElement(element) {
         this.logger = aurelia_framework_1.LogManager.getLogger('components.SchemaEditor');
         this.element = element;
         this.logger.debug('Constructor');
     }
-    SchemaEditorCustomElement.prototype.created = function (owningView, myView) {
+    BlackcubeSchemaEditorCustomElement.prototype.created = function (owningView, myView) {
         this.logger.debug('Created');
     };
-    SchemaEditorCustomElement.prototype.bind = function (bindingContext, overrideContext) {
+    BlackcubeSchemaEditorCustomElement.prototype.bind = function (bindingContext, overrideContext) {
         this.logger.debug('Bind');
     };
-    SchemaEditorCustomElement.prototype.attached = function () {
+    BlackcubeSchemaEditorCustomElement.prototype.attached = function () {
         this.hiddenField = this.element.querySelector('input[type=hidden]');
         if (this.hiddenField) {
             if (this.fieldId) {
@@ -952,13 +1017,13 @@ var SchemaEditorCustomElement = /** @class */ (function () {
         }
         this.logger.debug('Attached');
     };
-    SchemaEditorCustomElement.prototype.detached = function () {
+    BlackcubeSchemaEditorCustomElement.prototype.detached = function () {
         this.logger.debug('Detached');
     };
-    SchemaEditorCustomElement.prototype.unbind = function () {
+    BlackcubeSchemaEditorCustomElement.prototype.unbind = function () {
         this.logger.debug('Unbind');
     };
-    SchemaEditorCustomElement.prototype.buildEditor = function () {
+    BlackcubeSchemaEditorCustomElement.prototype.buildEditor = function () {
         var _this = this;
         var config = {
             mode: "tree",
@@ -983,30 +1048,30 @@ var SchemaEditorCustomElement = /** @class */ (function () {
     };
     __decorate([
         aurelia_framework_1.bindable({ defaultBindingMode: aurelia_framework_1.bindingMode.fromView })
-    ], SchemaEditorCustomElement.prototype, "fieldId", void 0);
+    ], BlackcubeSchemaEditorCustomElement.prototype, "fieldId", void 0);
     __decorate([
         aurelia_framework_1.bindable({ defaultBindingMode: aurelia_framework_1.bindingMode.fromView })
-    ], SchemaEditorCustomElement.prototype, "fieldName", void 0);
+    ], BlackcubeSchemaEditorCustomElement.prototype, "fieldName", void 0);
     __decorate([
         aurelia_framework_1.bindable({ defaultBindingMode: aurelia_framework_1.bindingMode.fromView })
-    ], SchemaEditorCustomElement.prototype, "schema", void 0);
+    ], BlackcubeSchemaEditorCustomElement.prototype, "schema", void 0);
     __decorate([
         aurelia_framework_1.bindable({ defaultBindingMode: aurelia_framework_1.bindingMode.fromView })
-    ], SchemaEditorCustomElement.prototype, "language", void 0);
-    SchemaEditorCustomElement = __decorate([
+    ], BlackcubeSchemaEditorCustomElement.prototype, "language", void 0);
+    BlackcubeSchemaEditorCustomElement = __decorate([
         aurelia_framework_1.inject(aurelia_framework_1.DOM.Element)
-    ], SchemaEditorCustomElement);
-    return SchemaEditorCustomElement;
+    ], BlackcubeSchemaEditorCustomElement);
+    return BlackcubeSchemaEditorCustomElement;
 }());
-exports.SchemaEditorCustomElement = SchemaEditorCustomElement;
+exports.BlackcubeSchemaEditorCustomElement = BlackcubeSchemaEditorCustomElement;
 
 
 /***/ }),
 
-/***/ "components/SchemaEditorCustomElement.html":
-/*!*******************************************************!*\
-  !*** ./app/components/SchemaEditorCustomElement.html ***!
-  \*******************************************************/
+/***/ "components/BlackcubeSchemaEditorCustomElement.html":
+/*!****************************************************************!*\
+  !*** ./app/components/BlackcubeSchemaEditorCustomElement.html ***!
+  \****************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -1014,10 +1079,10 @@ module.exports = "<template>\n    <input type=\"hidden\" />\n    <div></div>\n</
 
 /***/ }),
 
-/***/ "components/ToggleSlugCustomAttribute":
-/*!*****************************************************!*\
-  !*** ./app/components/ToggleSlugCustomAttribute.ts ***!
-  \*****************************************************/
+/***/ "components/BlackcubeToggleSlugCustomAttribute":
+/*!**************************************************************!*\
+  !*** ./app/components/BlackcubeToggleSlugCustomAttribute.ts ***!
+  \**************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -1033,31 +1098,40 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var aurelia_framework_1 = __webpack_require__(/*! aurelia-framework */ "aurelia-framework");
 var aurelia_event_aggregator_1 = __webpack_require__(/*! aurelia-event-aggregator */ "aurelia-event-aggregator");
 var StorageService_1 = __webpack_require__(/*! ../services/StorageService */ "./app/services/StorageService.ts");
-var ToggleSlugCustomAttribute = /** @class */ (function () {
-    function ToggleSlugCustomAttribute(element, eventAggregator, storageService) {
+var BlackcubeToggleSlugCustomAttribute = /** @class */ (function () {
+    function BlackcubeToggleSlugCustomAttribute(element, eventAggregator, storageService) {
         var _this = this;
         this.logger = aurelia_framework_1.LogManager.getLogger('components.ToggleSlug');
         this.toggleBlocInitialDisplay = 'inherit';
         this.onToggle = function () {
             if (_this.toggleBloc) {
-                if (_this.toggleBloc.style.display === 'none') {
-                    _this.toggleBloc.style.display = _this.toggleBlocInitialDisplay;
-                    _this.storageService.setElementSlugOpened(_this.elementId);
+                if (_this.toggleBloc.classList.contains('hidden')) {
+                    _this.toggleBloc.classList.remove('hidden');
                 }
                 else {
-                    _this.toggleBloc.style.display = 'none';
-                    _this.storageService.setElementSlugClosed(_this.elementId);
+                    _this.toggleBloc.classList.add('hidden');
                 }
+                /*/
+                if (this.toggleBloc.style.display === 'none') {
+                    this.toggleBloc.style.display = this.toggleBlocInitialDisplay;
+                    this.storageService.setElementSlugOpened(this.elementId);
+                } else {
+                    this.toggleBloc.style.display = 'none';
+                    this.storageService.setElementSlugClosed(this.elementId);
+                }
+                /**/
             }
         };
         this.onChange = function () {
             if (_this.toggleBloc && _this.toggleCheckbox) {
                 if (_this.toggleCheckbox.checked) {
-                    _this.toggleBloc.style.display = _this.toggleBlocInitialDisplay;
+                    _this.toggleBloc.classList.remove('hidden');
+                    // this.toggleBloc.style.display = this.toggleBlocInitialDisplay;
                     _this.storageService.setElementSlugOpened(_this.elementId);
                 }
                 else {
-                    _this.toggleBloc.style.display = 'none';
+                    _this.toggleBloc.classList.add('hidden');
+                    // this.toggleBloc.style.display = 'none';
                     _this.storageService.setElementSlugClosed(_this.elementId);
                 }
             }
@@ -1067,13 +1141,13 @@ var ToggleSlugCustomAttribute = /** @class */ (function () {
         this.storageService = storageService;
         this.logger.debug('Constructor');
     }
-    ToggleSlugCustomAttribute.prototype.created = function (owningView, myView) {
+    BlackcubeToggleSlugCustomAttribute.prototype.created = function (owningView, myView) {
         this.logger.debug('Created');
     };
-    ToggleSlugCustomAttribute.prototype.bind = function (bindingContext, overrideContext) {
+    BlackcubeToggleSlugCustomAttribute.prototype.bind = function (bindingContext, overrideContext) {
         this.logger.debug('Bind');
     };
-    ToggleSlugCustomAttribute.prototype.attached = function () {
+    BlackcubeToggleSlugCustomAttribute.prototype.attached = function () {
         this.logger.debug('Current ID', this.elementId);
         var opened = this.storageService.getElementSlugOpened(this.elementId);
         this.toggleCheckbox = this.element.querySelector('.toggle');
@@ -1085,7 +1159,11 @@ var ToggleSlugCustomAttribute = /** @class */ (function () {
                 opened = this.toggleCheckbox.checked;
             }
             if (opened === false) {
-                this.toggleBloc.style.display = 'none';
+                this.toggleBloc.classList.add('hidden');
+                // this.toggleBloc.style.display = 'none';
+            }
+            else {
+                this.toggleBloc.classList.remove('hidden');
             }
         }
         if (this.toggleCheckbox) {
@@ -1097,21 +1175,21 @@ var ToggleSlugCustomAttribute = /** @class */ (function () {
         this.eventAggregator.publish('RemoveLoader', {});
         this.logger.debug('Attached');
     };
-    ToggleSlugCustomAttribute.prototype.detached = function () {
+    BlackcubeToggleSlugCustomAttribute.prototype.detached = function () {
         this.logger.debug('Detached');
     };
-    ToggleSlugCustomAttribute.prototype.unbind = function () {
+    BlackcubeToggleSlugCustomAttribute.prototype.unbind = function () {
         this.logger.debug('Unbind');
     };
     __decorate([
         aurelia_framework_1.bindable({ primaryProperty: true })
-    ], ToggleSlugCustomAttribute.prototype, "elementId", void 0);
-    ToggleSlugCustomAttribute = __decorate([
+    ], BlackcubeToggleSlugCustomAttribute.prototype, "elementId", void 0);
+    BlackcubeToggleSlugCustomAttribute = __decorate([
         aurelia_framework_1.inject(aurelia_framework_1.DOM.Element, aurelia_event_aggregator_1.EventAggregator, StorageService_1.StorageService)
-    ], ToggleSlugCustomAttribute);
-    return ToggleSlugCustomAttribute;
+    ], BlackcubeToggleSlugCustomAttribute);
+    return BlackcubeToggleSlugCustomAttribute;
 }());
-exports.ToggleSlugCustomAttribute = ToggleSlugCustomAttribute;
+exports.BlackcubeToggleSlugCustomAttribute = BlackcubeToggleSlugCustomAttribute;
 
 
 /***/ }),
@@ -1129,14 +1207,16 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var aurelia_framework_1 = __webpack_require__(/*! aurelia-framework */ "aurelia-framework");
 function configure(configure) {
     configure.globalResources([
-        'components/SchemaEditorCustomElement',
-        'components/ToggleSlugCustomAttribute',
-        'components/HtmlLoaderCustomAttribute',
-        'components/LoaderDoneCustomAttribute',
-        'components/ManageBlocsCustomAttribute',
-        'components/AttachModalCustomAttribute',
-        'components/AjaxLinkManagerCustomAttribute',
-        'components/ResumableFileCustomElement'
+        'components/BlackcubeSchemaEditorCustomElement',
+        'components/BlackcubeToggleSlugCustomAttribute',
+        // PLATFORM.moduleName('components/BlackcubeLoaderCustomAttribute'),
+        // PLATFORM.moduleName('components/BlackcubeLoaderDoneCustomAttribute'),
+        'components/BlackcubeBlocsCustomAttribute',
+        'components/BlackcubeAttachModalCustomAttribute',
+        'components/BlackcubeAjaxLinkCustomAttribute',
+        'components/BlackcubeFileCustomElement',
+        'components/BlackcubeChoicesCustomAttribute',
+        'components/BlackcubePieCustomElement'
     ]);
 }
 exports.configure = configure;

@@ -4,11 +4,12 @@ import {EventAggregator, Subscription} from 'aurelia-event-aggregator';
 import {Logger} from "aurelia-logging";
 
 @inject(DOM.Element, EventAggregator)
-class LoaderDoneCustomAttribute implements ComponentCreated, ComponentBind, ComponentAttached, ComponentDetached, ComponentUnbind {
+class BlackcubeLoaderCustomAttribute implements ComponentCreated, ComponentBind, ComponentAttached, ComponentDetached, ComponentUnbind {
     private element:HTMLElement;
     private eventAggregator:EventAggregator;
+    private subscriber:Subscription;
 
-    private logger:Logger = LogManager.getLogger('components.LoaderDone');
+    private logger:Logger = LogManager.getLogger('components.HtmlLoader');
 
     public constructor(element:HTMLElement, eventAggregator) {
         this.element = element;
@@ -26,11 +27,12 @@ class LoaderDoneCustomAttribute implements ComponentCreated, ComponentBind, Comp
 
     public attached(): void {
         this.logger.debug('Attached');
-        this.eventAggregator.publish('RemoveLoader', {});
+        this.subscriber = this.eventAggregator.subscribe('RemoveLoader', this.onRemoveLoader);
     }
 
     public detached(): void {
         this.logger.debug('Detached');
+        this.subscriber.dispose();
     }
 
     public unbind(): void {
@@ -44,4 +46,4 @@ class LoaderDoneCustomAttribute implements ComponentCreated, ComponentBind, Comp
     }
 }
 
-export {LoaderDoneCustomAttribute}
+export {BlackcubeLoaderCustomAttribute}

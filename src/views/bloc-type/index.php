@@ -6,7 +6,7 @@ use blackcube\admin\helpers\Html;
 
 $formatter = Yii::$app->formatter;
 ?>
-<div class="flex flex-1" loader-done="">
+<div class="flex flex-1">
     <?php echo \blackcube\admin\widgets\Sidebar::widget(); ?>
     <main class="bg-white flex-1 p-3 overflow-hidden">
         <div class="inline-block min-w-full overflow-hidden px-6 py-6">

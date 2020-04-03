@@ -16,9 +16,9 @@ interface Csrf {
     value:string
 }
 @inject(DOM.Element, AjaxService)
-class ResumableFileCustomElement implements ComponentCreated, ComponentBind, ComponentAttached, ComponentDetached, ComponentUnbind {
+class BlackcubeFileCustomElement implements ComponentCreated, ComponentBind, ComponentAttached, ComponentDetached, ComponentUnbind {
     private element:HTMLElement;
-    private logger:Logger = LogManager.getLogger('components.ResumableFile');
+    private logger:Logger = LogManager.getLogger('components.BlackcubeFile');
     private resumable:Resumable;
     public browseButton:HTMLButtonElement;
     public dropTarget:HTMLElement;
@@ -32,6 +32,7 @@ class ResumableFileCustomElement implements ComponentCreated, ComponentBind, Com
     @bindable({ defaultBindingMode: bindingMode.fromView}) public uploadUrl: string;
     @bindable({ defaultBindingMode: bindingMode.fromView}) public previewUrl: string;
     @bindable({ defaultBindingMode: bindingMode.fromView}) public deleteUrl: string;
+    @bindable({ defaultBindingMode: bindingMode.fromView}) public fileType: string = '';
     @bindable({ defaultBindingMode: bindingMode.fromView}) public name: string;
     @bindable({ defaultBindingMode: bindingMode.fromView}) public multiple: string|boolean = false;
     @bindable({ defaultBindingMode: bindingMode.fromView}) public value: string = '';
@@ -147,6 +148,10 @@ class ResumableFileCustomElement implements ComponentCreated, ComponentBind, Com
         let resumableConfig:Resumable.ConfigurationHash = {
             target: this.uploadUrl
         };
+        let fileTypes = this.fileType.split(/\s*,\s*/).filter((value:string, index:number) => {
+            return value.trim() !== '';
+        });
+        resumableConfig.fileType = fileTypes;
         if (this.parentForm) {
             let csrfField = <HTMLInputElement>this.parentForm.querySelector('input[name=_csrf]');
             this.csfr = {
@@ -287,4 +292,4 @@ class ResumableFileCustomElement implements ComponentCreated, ComponentBind, Com
     }
 }
 
-export {ResumableFileCustomElement}
+export {BlackcubeFileCustomElement}

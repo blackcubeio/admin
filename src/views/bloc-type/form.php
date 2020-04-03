@@ -5,7 +5,7 @@
  */
 use blackcube\admin\helpers\Html;
 ?>
-<div class="flex flex-1" loader-done="">
+<div class="flex flex-1">
     <?php echo \blackcube\admin\widgets\Sidebar::widget(); ?>
     <main class="bg-white flex-1 p-3 overflow-hidden">
         <?php echo Html::beginForm('', 'post', ['class' => 'form']); ?>
