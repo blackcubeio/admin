@@ -38,11 +38,11 @@ class CategoryController extends BaseElementController
         $actions = parent::actions();
         $actions['blocs'] = [
             'class' => BlocAction::class,
-            'elementClass' => Category::class
+            'elementClass' => Category::class,
         ];
         $actions['modal'] = [
             'class' => ModalAction::class,
-            'elementClass' => Category::class
+            'elementClass' => Category::class,
         ];
         return $actions;
     }

@@ -70,7 +70,7 @@ use yii\helpers\Url;
 
             <?php if ($tag->id !== null && $tag->type !== null): ?>
             <?php echo Html::beginTag('div', [
-                'blackcube-blocs' => Url::to(['tag/blocs', 'id' => $tag->id])
+                'blackcube-blocs' => Url::to(['blocs', 'id' => $tag->id])
             ]); ?>
                 <div class="bloc">
                     <div class="bloc-title">
@@ -78,7 +78,7 @@ use yii\helpers\Url;
                     </div>
                 </div>
                 <div data-ajax-target="">
-                    <?php echo $this->render('_blocs', ['blocs' => $blocs, 'element' => $tag]); ?>
+                    <?php echo $this->render('@blackcube/admin/views/common/_blocs', ['blocs' => $blocs, 'element' => $tag]); ?>
                 </div>
                 <?php if ($tag->type && $tag->type->getBlocTypes()->count() > 0): ?>
                 <div class="bloc bloc-tools">
@@ -99,7 +99,7 @@ use yii\helpers\Url;
             <?php endif; ?>
 
             <div class="buttons">
-                <?php echo Html::a(Yii::t('blackcube.admin', 'Cancel'), ['tag/index'], [
+                <?php echo Html::a(Yii::t('blackcube.admin', 'Cancel'), ['index'], [
                     'class' => 'button-cancel'
                 ]); ?>
                 <?php echo Html::button(Yii::t('blackcube.admin', 'Save'), [

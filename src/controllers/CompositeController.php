@@ -10,8 +10,9 @@ use blackcube\admin\Module;
 use blackcube\core\interfaces\ElementInterface;
 use blackcube\core\models\Bloc;
 use blackcube\core\models\Category;
+use blackcube\core\models\Composite;
 use blackcube\core\models\Slug;
-use blackcube\core\models\Tag;
+use blackcube\core\models\Language;
 use blackcube\core\models\Type;
 use blackcube\core\actions\ResumableUploadAction;
 use blackcube\core\actions\ResumablePreviewAction;
@@ -26,7 +27,7 @@ use yii\web\NotFoundHttpException;
 use Yii;
 use yii\web\Response;
 
-class TagController extends BaseElementController
+class CompositeController extends BaseElementController
 {
 
     /**
@@ -37,55 +38,46 @@ class TagController extends BaseElementController
         $actions = parent::actions();
         $actions['blocs'] = [
             'class' => BlocAction::class,
-            'elementClass' => Tag::class,
+            'elementClass' => Composite::class,
         ];
         $actions['modal'] = [
             'class' => ModalAction::class,
-            'elementClass' => Tag::class
+            'elementClass' => Composite::class
         ];
         return $actions;
     }
 
     /**
      * @param string|null $id
-     * @param string|null $categoryId
      * @return string
      */
-    public function actionIndex($categoryId = null)
+    public function actionIndex()
     {
-        $tagsQuery = Tag::find()
-            ->with('category')
+        $compositesQuery = Composite::find()
             ->with('slug.seo')
             ->with('slug.sitemap')
             ->orderBy(['name' => SORT_ASC]);
-        if ($categoryId !== null) {
-            $tagsQuery->andWhere(['categoryId' => $categoryId]);
-        }
         return $this->render('index', [
-            'tagsQuery' => $tagsQuery
+            'compositesQuery' => $compositesQuery
         ]);
     }
 
-    public function actionToggle($id = null, $categoryId = null)
+    public function actionToggle($id = null)
     {
         if (Yii::$app->request->isAjax) {
             if ($id !== null) {
-                $currentTag = Tag::findOne(['id' => $id]);
-                if ($currentTag !== null) {
-                    $currentTag->active = !$currentTag->active;
-                    $currentTag->save(false, ['active']);
+                $currentComposite = Composite::findOne(['id' => $id]);
+                if ($currentComposite !== null) {
+                    $currentComposite->active = !$currentComposite->active;
+                    $currentComposite->save(false, ['active']);
                 }
             }
-            $tagsQuery = Tag::find()
-                ->with('category')
+            $compositesQuery = Composite::find()
                 ->with('slug.seo')
                 ->with('slug.sitemap')
                 ->orderBy(['name' => SORT_ASC]);
-            if ($categoryId !== null) {
-                $tagsQuery->andWhere(['categoryId' => $categoryId]);
-            }
             return $this->renderPartial('_list', [
-                'tagsQuery' => $tagsQuery
+                'compositesQuery' => $compositesQuery
             ]);
         }
     }
@@ -97,21 +89,21 @@ class TagController extends BaseElementController
      */
     public function actionCreate()
     {
-        $tag = new Tag();
-        $slugForm = new SlugForm(['element' => $tag]);
-        $blocs = $tag->getBlocs()->all();
-        $result = $this->saveElement($tag, $blocs, $slugForm);
+        $composite = new Composite();
+        $slugForm = new SlugForm(['element' => $composite]);
+        $blocs = $composite->getBlocs()->all();
+        $result = $this->saveElement($composite, $blocs, $slugForm);
         if ($result === true) {
-            return $this->redirect(['tag/edit', 'id' => $tag->id]);
+            return $this->redirect(['edit', 'id' => $composite->id]);
         }
-        $categoriesQuery = Category::find()->orderBy(['name' => SORT_ASC]);
+        $languagesQuery = Language::find()->active()->orderBy(['name' => SORT_ASC]);
         $typesQuery = Type::find()->orderBy(['name' => SORT_ASC]);
         return $this->render('form', [
-            'tag' => $tag,
+            'composite' => $composite,
             'slugForm' => $slugForm,
             'typesQuery' => $typesQuery,
             'blocs' => $blocs,
-            'categoriesQuery' => $categoriesQuery,
+            'languagesQuery' => $languagesQuery,
         ]);
     }
 
@@ -124,24 +116,24 @@ class TagController extends BaseElementController
      */
     public function actionEdit($id)
     {
-        $tag = Tag::findOne(['id' => $id]);
-        if ($tag === null) {
+        $composite = Composite::findOne(['id' => $id]);
+        if ($composite === null) {
             throw new NotFoundHttpException();
         }
-        $slugForm = new SlugForm(['element' => $tag]);
-        $blocs = $tag->getBlocs()->all();
-        $result = $this->saveElement($tag, $blocs, $slugForm);
+        $slugForm = new SlugForm(['element' => $composite]);
+        $blocs = $composite->getBlocs()->all();
+        $result = $this->saveElement($composite, $blocs, $slugForm);
         if ($result === true) {
-            return $this->redirect(['tag/edit', 'id' => $tag->id]);
+            return $this->redirect(['edit', 'id' => $composite->id]);
         }
-        $categoriesQuery = Category::find()->orderBy(['name' => SORT_ASC]);
+        $languagesQuery = Language::find()->active()->orderBy(['name' => SORT_ASC]);
         $typesQuery = Type::find()->orderBy(['name' => SORT_ASC]);
         return $this->render('form', [
-            'tag' => $tag,
+            'composite' => $composite,
             'slugForm' => $slugForm,
             'typesQuery' => $typesQuery,
             'blocs' => $blocs,
-            'categoriesQuery' => $categoriesQuery,
+            'languagesQuery' => $languagesQuery,
         ]);
     }
 
@@ -154,28 +146,28 @@ class TagController extends BaseElementController
      */
     public function actionDelete($id)
     {
-        $tag = Tag::findOne(['id' => $id]);
-        if ($tag === null) {
+        $composite = Composite::findOne(['id' => $id]);
+        if ($composite === null) {
             throw new NotFoundHttpException();
         }
         if (Yii::$app->request->isPost) {
             $transaction = Module::getInstance()->db->beginTransaction();
             try {
-                $slug = $tag->getSlug()->one();
+                $slug = $composite->getSlug()->one();
                 if ($slug !== null) {
                     $slug->delete();
                 }
-                $blocsQuery = $tag->getBlocs();
+                $blocsQuery = $composite->getBlocs();
                 foreach($blocsQuery->each() as $bloc) {
                     $bloc->delete();
                 }
-                $tag->delete();
+                $composite->delete();
                 $transaction->commit();
             } catch (\Exception $e) {
                 $transaction->rollBack();
             }
         }
-        return $this->redirect(['tag/index']);
+        return $this->redirect(['index']);
     }
 
 }

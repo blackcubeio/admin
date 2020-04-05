@@ -13,7 +13,7 @@ class BlocAction extends Action
 {
     public $elementClass;
 
-    public $view = '_blocs';
+    public $view = '@blackcube/admin/views/common/_blocs';
 
     public function run($id = null)
     {

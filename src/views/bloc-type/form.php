@@ -53,7 +53,7 @@ use blackcube\admin\helpers\Html;
                 </div>
 
         <div class="buttons">
-            <?php echo Html::a(Yii::t('blackcube.admin', 'Cancel'), ['bloc-type/index'], [
+            <?php echo Html::a(Yii::t('blackcube.admin', 'Cancel'), ['index'], [
                 'class' => 'button-cancel'
             ]); ?>
             <?php echo Html::button(Yii::t('blackcube.admin', 'Save'), [

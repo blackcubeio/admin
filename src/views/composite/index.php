@@ -1,6 +1,6 @@
 <?php
 /**
- * @var $categoriesQuery \blackcube\core\models\FilterActiveQuery
+ * @var $compositesQuery \blackcube\core\models\FilterActiveQuery
  */
 use blackcube\admin\helpers\Html;
 
@@ -11,7 +11,7 @@ $formatter = Yii::$app->formatter;
     <main class="overflow-hidden">
         <div class="table-container">
             <div blackcube-ajax-link="" blackcube-attach-modal="">
-                <?php echo $this->render('_list', ['categoriesQuery' => $categoriesQuery]); ?>
+                <?php echo $this->render('_list', ['compositesQuery' => $compositesQuery]); ?>
             </div>
             <div class="px-6 py-6 flex flex-col xs:flex-row items-center justify-end xs:justify-between">
                 <?php echo Html::a(Yii::t('blackcube.admin', 'Create'), ['create'], ['class' => 'text-sm bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-2 px-4 rounded']); ?>

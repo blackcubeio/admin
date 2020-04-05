@@ -30,13 +30,13 @@ $formatter = Yii::$app->formatter;
                     <td>
                         <div class="flex items-center">
                             <p class="text-gray-900 whitespace-no-wrap">
-                                <?php echo Html::a($type->name, ['type/edit', 'id' => $type->id], ['class' => 'hover:text-blue-600 py-1']); ?>
+                                <?php echo Html::a($type->name, ['edit', 'id' => $type->id], ['class' => 'hover:text-blue-600 py-1']); ?>
 
                             </p>
                         </div>
                     </td>
                     <td>
-                        <?php echo Html::beginForm(['type/delete', 'id' => $type->id], 'post', ['data-ajax-modal' => \yii\helpers\Url::to(['type/modal', 'id' => $type->id])]); ?>
+                        <?php echo Html::beginForm(['delete', 'id' => $type->id], 'post', ['data-ajax-modal' => \yii\helpers\Url::to(['modal', 'id' => $type->id])]); ?>
                         <?php if ($type->getElementsCount() > 0): ?>
                             <span class="button disabled">
                                 <i class="fa fa-trash-alt"></i>
@@ -46,7 +46,7 @@ $formatter = Yii::$app->formatter;
                                 <i class="fa fa-trash-alt"></i>
                             </button>
                         <?php endif; ?>
-                        <?php echo Html::a('<i class="fa fa-pen-alt"></i>', ['type/edit', 'id' => $type->id], ['class' => 'button']); ?>
+                        <?php echo Html::a('<i class="fa fa-pen-alt"></i>', ['edit', 'id' => $type->id], ['class' => 'button']); ?>
                         <?php echo Html::endForm(); ?>
                     </td>
                 </tr>
@@ -54,7 +54,7 @@ $formatter = Yii::$app->formatter;
             </tbody>
         </table>
             <div class="px-6 py-6 flex flex-col xs:flex-row items-center justify-end xs:justify-between">
-                <?php echo Html::a(Yii::t('blackcube.admin', 'Create'), ['type/create'], ['class' => 'text-sm bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-2 px-4 rounded']); ?>
+                <?php echo Html::a(Yii::t('blackcube.admin', 'Create'), ['create'], ['class' => 'text-sm bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-2 px-4 rounded']); ?>
             </div>
         <?php /*
         <div

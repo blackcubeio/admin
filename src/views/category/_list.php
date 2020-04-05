@@ -30,7 +30,7 @@ $formatter = Yii::$app->formatter;
                 <td>
                     <div class="flex items-start">
                         <p class="text-gray-900 whitespace-no-wrap">
-                            <?php echo Html::a($category->name, ['category/edit', 'id' => $category->id], ['class' => 'hover:text-blue-600 py-1']); ?>
+                            <?php echo Html::a($category->name, ['edit', 'id' => $category->id], ['class' => 'hover:text-blue-600 py-1']); ?>
                         </p>
                     </div>
                 </td>
@@ -38,7 +38,7 @@ $formatter = Yii::$app->formatter;
                     <?php echo Publication::widget(['element' => $category]); ?>
                 </td>
                 <td>
-                    <?php echo Html::beginForm(['category/delete', 'id' => $category->id], 'post', ['data-ajax-modal' => \yii\helpers\Url::to(['category/modal', 'id' => $category->id])]); ?>
+                    <?php echo Html::beginForm(['delete', 'id' => $category->id], 'post', ['data-ajax-modal' => \yii\helpers\Url::to(['modal', 'id' => $category->id])]); ?>
                     <?php if ($category->getTags()->count() > 0): ?>
                         <span class="button disabled">
                             <i class="fa fa-trash-alt"></i>
@@ -48,8 +48,8 @@ $formatter = Yii::$app->formatter;
                             <i class="fa fa-trash-alt"></i>
                         </button>
                     <?php endif; ?>
-                    <?php echo Html::a('<i class="fa fa-pen-alt"></i>', ['category/edit', 'id' => $category->id], ['class' => 'button']); ?>
-                    <?php echo Html::a(($category->active?'<i class="fa fa-eye"></i>':' <i class="fa fa-eye-slash"></i>'), ['category/toggle', 'id' => $category->id], ['data-ajax' => '', 'class' => 'button '.($category->active ? 'published' : 'draft')]); ?>
+                    <?php echo Html::a('<i class="fa fa-pen-alt"></i>', ['edit', 'id' => $category->id], ['class' => 'button']); ?>
+                    <?php echo Html::a(($category->active?'<i class="fa fa-eye"></i>':' <i class="fa fa-eye-slash"></i>'), ['toggle', 'id' => $category->id], ['data-ajax' => '', 'class' => 'button '.($category->active ? 'published' : 'draft')]); ?>
                     <?php echo Html::endForm(); ?>
                 </td>
             </tr>

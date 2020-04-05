@@ -13,7 +13,7 @@ class ModalAction extends Action
 {
     public $elementClass;
 
-    public $view = '_modal';
+    public $view = '@blackcube/admin/views/common/_modal';
 
     public function run($id = null)
     {

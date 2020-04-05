@@ -74,7 +74,7 @@ use yii\helpers\Url;
 
 
             <div class="buttons">
-                <?php echo Html::a(Yii::t('blackcube.admin', 'Cancel'), ['type/index'], [
+                <?php echo Html::a(Yii::t('blackcube.admin', 'Cancel'), ['index'], [
                     'class' => 'button-cancel'
                 ]); ?>
                 <?php echo Html::button(Yii::t('blackcube.admin', 'Save'), [

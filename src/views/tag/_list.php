@@ -30,8 +30,8 @@ $formatter = Yii::$app->formatter;
                 <td>
                     <div class="flex items-start">
                         <p class="text-gray-900 whitespace-no-wrap">
-                            <?php echo Html::a($tag->name, ['tag/edit', 'id' => $tag->id], ['class' => 'hover:text-blue-600 py-1']); ?>
-                            <span class="text-xs text-gray-600 italic">(<?php echo Html::a($tag->category->name, ['category/index', 'id' => $tag->categoryId], ['class' => 'hover:text-blue-600 py-1']); ?>)</span>
+                            <?php echo Html::a($tag->name, ['edit', 'id' => $tag->id], ['class' => 'hover:text-blue-600 py-1']); ?>
+                            <span class="text-xs text-gray-600 italic">(<?php echo Html::a($tag->category->name, ['index', 'id' => $tag->categoryId], ['class' => 'hover:text-blue-600 py-1']); ?>)</span>
                         </p>
                     </div>
                 </td>
@@ -39,12 +39,12 @@ $formatter = Yii::$app->formatter;
                     <?php echo Publication::widget(['element' => $tag]); ?>
                 </td>
                 <td>
-                    <?php echo Html::beginForm(['tag/delete', 'id' => $tag->id], 'post', ['data-ajax-modal' => \yii\helpers\Url::to(['tag/modal', 'id' => $tag->id])]); ?>
+                    <?php echo Html::beginForm(['delete', 'id' => $tag->id], 'post', ['data-ajax-modal' => \yii\helpers\Url::to(['modal', 'id' => $tag->id])]); ?>
                         <button class="button danger">
                             <i class="fa fa-trash-alt"></i>
                         </button>
-                    <?php echo Html::a('<i class="fa fa-pen-alt"></i>', ['tag/edit', 'id' => $tag->id], ['class' => 'button']); ?>
-                    <?php echo Html::a(($tag->active?'<i class="fa fa-eye"></i>':' <i class="fa fa-eye-slash"></i>'), ['tag/toggle', 'id' => $tag->id], ['data-ajax' => '', 'class' => 'button '.($tag->active ? 'published' : 'draft')]); ?>
+                    <?php echo Html::a('<i class="fa fa-pen-alt"></i>', ['edit', 'id' => $tag->id], ['class' => 'button']); ?>
+                    <?php echo Html::a(($tag->active?'<i class="fa fa-eye"></i>':' <i class="fa fa-eye-slash"></i>'), ['toggle', 'id' => $tag->id], ['data-ajax' => '', 'class' => 'button '.($tag->active ? 'published' : 'draft')]); ?>
                     <?php echo Html::endForm(); ?>
                 </td>
             </tr>
