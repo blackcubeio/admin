@@ -6,7 +6,7 @@
 
 switch($type)
 {
-    case \blackcube\core\models\Tag::TYPE:
+    case \blackcube\core\models\Tag::getElementType():
         $type = 'le tag';
         break;
     default:

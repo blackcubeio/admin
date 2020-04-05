@@ -1,6 +1,6 @@
 <?php
 /**
- * @var $element \blackcube\core\models\Tag
+ * @var $element \blackcube\core\models\BlocType
  */
 
 ?>
@@ -13,7 +13,7 @@
             </div>
             <div class="body">
                 <p>
-                    Attention, vous allez supprimer le tag
+                    Attention, vous allez supprimer le type de bloc
                 </p>
                     <strong class="uppercase text-sm"><?php echo $element->name; ?></strong>
                 <p>

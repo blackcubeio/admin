@@ -13,6 +13,8 @@ class BlocAction extends Action
 {
     public $elementClass;
 
+    public $view = '_blocs';
+
     public function run($id = null)
     {
         if ($this->elementClass === null) {
@@ -56,7 +58,7 @@ class BlocAction extends Action
                     }
                 }
             }
-            return $this->controller->renderPartial('_blocs', ['blocs' => $blocs, 'element' => $element]);
+            return $this->controller->renderPartial($this->view, ['blocs' => $blocs, 'element' => $element]);
         }
 
     }

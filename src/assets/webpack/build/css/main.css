@@ -746,25 +746,49 @@ video {
   margin-bottom: 0.5rem;
 }
 
-.form .bloc-title {
+.form .bloc-title, .form .bloc-subtitle {
   width: 100%;
-  padding-left: 0;
-  padding-right: 0;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
   margin-left: 0.75rem;
   margin-right: 0.75rem;
   margin-bottom: 0.25rem;
-  border-bottom-width: 1px;
+  border-width: 1px;
+  border-radius: 0.25rem;
   border-color: #e2e8f0;
-  background-color: #f7fafc;
+  background-color: #4a5568;
 }
 
-.form .bloc-title .title {
+.form .bloc-title .title, .form .bloc-subtitle .title {
   text-transform: uppercase;
   letter-spacing: 0.025em;
-  color: #1a202c;
+  color: #f7fafc;
+  font-size: 1.125rem;
+  font-weight: 300;
+  margin-bottom: 0.25rem;
+}
+
+.form .bloc-subtitle {
+  width: 100%;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+  margin-left: 0.75rem;
+  margin-right: 0.75rem;
+  margin-bottom: 0.25rem;
+  border-width: 1px;
+  border-radius: 0.25rem;
+  border-color: #e2e8f0;
+  background-color: #cbd5e0;
+}
+
+.form .bloc-subtitle .title {
+  text-transform: uppercase;
+  letter-spacing: 0.025em;
+  color: #4a5568;
   font-size: 0.875rem;
   font-weight: 300;
   margin-bottom: 0.25rem;
+  font-style: italic;
 }
 
 .form .bloc-fieldset {
@@ -1262,6 +1286,10 @@ main .bloc-tools .button:hover {
   color: #718096;
   text-transform: uppercase;
   letter-spacing: 0.05em;
+}
+
+.table-container table th.status, .table-container table th.tools {
+  width: 12rem;
 }
 
 .table-container table td {
@@ -1765,7 +1793,6 @@ main .bloc-tools .button:hover {
 }
 
 .status-bar {
-  cursor: pointer;
   font-weight: 100;
   color: #fff;
   font-size: 0.75rem;
@@ -1776,11 +1803,16 @@ main .bloc-tools .button:hover {
 }
 
 .status-bar.active {
-  background-color: #2f855a;
+  background-color: #38a169;
+}
+
+.status-bar.deactivated {
+  background-color: #f6ad55;
+  color: #1a202c;
 }
 
 .status-bar.inactive {
-  background-color: #c53030;
+  background-color: #e53e3e;
 }
 
 .status-bar:first-child {

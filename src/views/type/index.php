@@ -8,17 +8,17 @@ $formatter = Yii::$app->formatter;
 ?>
 <div class="flex flex-1">
     <?php echo \blackcube\admin\widgets\Sidebar::widget(); ?>
-    <main class="bg-white flex-1 p-3 overflow-hidden">
-        <div class="inline-block min-w-full overflow-hidden px-6 py-6">
-            <table class="min-w-full leading-normal">
+    <main class="overflow-hidden">
+        <div class="table-container" blackcube-attach-modal="">
+            <table>
             <thead>
                 <tr>
-                    <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                    <th>
                         <?php echo Yii::t('blackcube.admin', 'Name'); ?>
                         <!-- input type="text" class="appearance-none bg-gray-200 text-gray-700 border border-gray-300 rounded py-1 px-4 mb-1 leading-tight"
                         placeholder="<?php echo Yii::t('blackcube.admin', 'Name'); ?>" -->
                     </th>
-                    <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                    <th class="tools">
                         <?php echo Yii::t('blackcube.admin', 'Action'); ?>
                     </th>
                 </tr>
@@ -27,26 +27,27 @@ $formatter = Yii::$app->formatter;
                 <?php foreach ($typesQuery->each() as $type): ?>
                 <?php /* @var \blackcube\core\models\Type $type */ ?>
                 <tr>
-                    <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                        <div class="flex items-start">
+                    <td>
+                        <div class="flex items-center">
                             <p class="text-gray-900 whitespace-no-wrap">
                                 <?php echo Html::a($type->name, ['type/edit', 'id' => $type->id], ['class' => 'hover:text-blue-600 py-1']); ?>
 
                             </p>
                         </div>
                     </td>
-                    <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                    <td>
+                        <?php echo Html::beginForm(['type/delete', 'id' => $type->id], 'post', ['data-ajax-modal' => \yii\helpers\Url::to(['type/modal', 'id' => $type->id])]); ?>
                         <?php if ($type->getElementsCount() > 0): ?>
-                            <span class="bg-gray-300 text-gray-800 font-bold py-2 px-2 rounded inline-flex items-center opacity-25">
+                            <span class="button disabled">
                                 <i class="fa fa-trash-alt"></i>
                             </span>
                         <?php else: ?>
-                            <?php echo Html::beginForm(['type/delete', 'id' => $type->id]); ?>
-                            <button class="bg-gray-300 hover:bg-red-600 hover:text-white text-gray-800 font-bold py-2 px-2 rounded inline-flex items-center">
+                            <button class="button danger">
                                 <i class="fa fa-trash-alt"></i>
                             </button>
-                            <?php echo Html::endForm(); ?>
                         <?php endif; ?>
+                        <?php echo Html::a('<i class="fa fa-pen-alt"></i>', ['type/edit', 'id' => $type->id], ['class' => 'button']); ?>
+                        <?php echo Html::endForm(); ?>
                     </td>
                 </tr>
                 <?php endforeach; ?>

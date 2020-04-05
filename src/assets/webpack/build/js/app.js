@@ -1104,34 +1104,25 @@ var BlackcubeToggleSlugCustomAttribute = /** @class */ (function () {
         this.logger = aurelia_framework_1.LogManager.getLogger('components.ToggleSlug');
         this.toggleBlocInitialDisplay = 'inherit';
         this.onToggle = function () {
-            if (_this.toggleBloc) {
+            if (_this.toggleBloc && _this.toggleCheckbox && _this.toggleCheckbox.checked) {
                 if (_this.toggleBloc.classList.contains('hidden')) {
                     _this.toggleBloc.classList.remove('hidden');
+                    _this.storageService.setElementSlugOpened(_this.elementId);
                 }
                 else {
                     _this.toggleBloc.classList.add('hidden');
+                    _this.storageService.setElementSlugClosed(_this.elementId);
                 }
-                /*/
-                if (this.toggleBloc.style.display === 'none') {
-                    this.toggleBloc.style.display = this.toggleBlocInitialDisplay;
-                    this.storageService.setElementSlugOpened(this.elementId);
-                } else {
-                    this.toggleBloc.style.display = 'none';
-                    this.storageService.setElementSlugClosed(this.elementId);
-                }
-                /**/
             }
         };
         this.onChange = function () {
             if (_this.toggleBloc && _this.toggleCheckbox) {
                 if (_this.toggleCheckbox.checked) {
                     _this.toggleBloc.classList.remove('hidden');
-                    // this.toggleBloc.style.display = this.toggleBlocInitialDisplay;
                     _this.storageService.setElementSlugOpened(_this.elementId);
                 }
                 else {
                     _this.toggleBloc.classList.add('hidden');
-                    // this.toggleBloc.style.display = 'none';
                     _this.storageService.setElementSlugClosed(_this.elementId);
                 }
             }
@@ -1160,7 +1151,6 @@ var BlackcubeToggleSlugCustomAttribute = /** @class */ (function () {
             }
             if (opened === false) {
                 this.toggleBloc.classList.add('hidden');
-                // this.toggleBloc.style.display = 'none';
             }
             else {
                 this.toggleBloc.classList.remove('hidden');

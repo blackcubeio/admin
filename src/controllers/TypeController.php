@@ -2,6 +2,7 @@
 
 namespace blackcube\admin\controllers;
 
+use blackcube\admin\actions\ModalAction;
 use blackcube\admin\models\SlugForm;
 use blackcube\admin\models\TagManager;
 use blackcube\admin\Module;
@@ -24,6 +25,16 @@ use yii\web\Response;
 
 class TypeController extends Controller
 {
+
+    public function actions()
+    {
+        $actions = parent::actions();
+        $actions['modal'] = [
+            'class' => ModalAction::class,
+            'elementClass' => Type::class
+        ];
+        return $actions;
+    }
 
     /**
      * @param string|null $id

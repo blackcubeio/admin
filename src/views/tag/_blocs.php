@@ -17,8 +17,8 @@ $pathAlias = \blackcube\admin\Module::getInstance()->adminTemplatesAlias;
         <?php echo $this->render($adminTemplate, ['i' => $i, 'bloc' => $bloc, 'element' => $element]); ?>
     <?php else: ?>
         <?php echo Html::beginTag('div', ['class' => 'bloc'.($bloc->active ? '': ' inactive')]); ?>
-        <div class="bloc-title">
-            <label class="title italic"><?php echo $bloc->blocType->name; ?></label>
+        <div class="bloc-subtitle">
+            <label class="title"><?php echo $bloc->blocType->name; ?></label>
         </div>
             <?php echo Html::activeHiddenInput($bloc, '['.$i.']id'); ?>
             <?php foreach($bloc->elasticAttributes as $id => $attribute): ?>

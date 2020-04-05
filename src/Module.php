@@ -20,6 +20,7 @@ use yii\base\BootstrapInterface;
 use yii\base\Module as BaseModule;
 use yii\db\Connection;
 use yii\di\Instance;
+use yii\rbac\DbManager;
 use yii\web\Application as WebApplication;
 use yii\console\Application as ConsoleApplication;
 use Exception;
@@ -55,6 +56,11 @@ class Module extends BaseModule implements BootstrapInterface
      */
     public $db = 'db';
 
+    /**
+     * @var string command prefix
+     */
+    public $commandNameSpace = 'bc:';
+
 
     /**
      * @inheritdoc
@@ -72,6 +78,12 @@ class Module extends BaseModule implements BootstrapInterface
     public function bootstrap($app)
     {
         Yii::setAlias('@blackcube/admin', __DIR__);
+        $app->setComponents([
+            'authManager' => [
+                'class' => DbManager::class,
+                'db' => $app->db,
+            ]
+        ]);
         if ($app instanceof ConsoleApplication) {
             $this->bootstrapConsole($app);
         } elseif ($app instanceof WebApplication) {
@@ -87,10 +99,7 @@ class Module extends BaseModule implements BootstrapInterface
      */
     protected function bootstrapConsole(ConsoleApplication $app)
     {
-        $app->controllerMap['bc:admin'] = [
-            'class' => AdministratorController::class,
-        ];
-        $app->controllerMap['blackcube:administrator'] = [
+        $app->controllerMap[$this->commandNameSpace.'admin'] = [
             'class' => AdministratorController::class,
         ];
         $app->controllerMap['bc:icons'] = [

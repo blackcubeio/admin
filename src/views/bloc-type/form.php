@@ -7,7 +7,12 @@ use blackcube\admin\helpers\Html;
 ?>
 <div class="flex flex-1">
     <?php echo \blackcube\admin\widgets\Sidebar::widget(); ?>
-    <main class="bg-white flex-1 p-3 overflow-hidden">
+    <main>
+        <ul class="header">
+            <li class="">
+                <?php echo Html::a('<i class="fa fa-angle-left mr-2"></i> Back', ['index'], ['class' => 'button']); ?>
+            </li>
+        </ul>
         <?php echo Html::beginForm('', 'post', ['class' => 'form']); ?>
             <div class="bloc">
                 <div class="bloc-title">

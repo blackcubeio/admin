@@ -20,7 +20,7 @@ $elementType = Inflector::camel2id(StringHelper::basename(get_class($slugForm->g
             <span class="title">Slug</span>
         </div>
     </div>
-    <div class="toggle-target">
+    <div class="toggle-target hidden">
         <?php echo Html::activeHiddenInput($slugForm, 'openedSlug', ['class' => 'slug-status']); ?>
         <div class="bloc">
             <div class="w-full bloc-fieldset md:w-1/12">

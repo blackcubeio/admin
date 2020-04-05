@@ -5,6 +5,7 @@ namespace blackcube\admin\controllers;
 use blackcube\admin\models\SlugForm;
 use blackcube\admin\models\TagManager;
 use blackcube\admin\actions\BlocAction;
+use blackcube\admin\actions\ModalAction;
 use blackcube\admin\Module;
 use blackcube\core\interfaces\ElementInterface;
 use blackcube\core\models\Bloc;
@@ -25,7 +26,7 @@ use yii\web\NotFoundHttpException;
 use Yii;
 use yii\web\Response;
 
-class TagController extends Controller
+class TagController extends BaseElementController
 {
 
     /**
@@ -38,14 +39,9 @@ class TagController extends Controller
             'class' => BlocAction::class,
             'elementClass' => Tag::class
         ];
-        $actions['upload'] = [
-            'class' => ResumableUploadAction::class,
-        ];
-        $actions['preview'] = [
-            'class' => ResumablePreviewAction::class,
-        ];
-        $actions['delete'] = [
-            'class' => ResumableDeleteAction::class,
+        $actions['modal'] = [
+            'class' => ModalAction::class,
+            'elementClass' => Tag::class
         ];
         return $actions;
     }
@@ -70,13 +66,6 @@ class TagController extends Controller
         ]);
     }
 
-    public function actionModal($id = null)
-    {
-        $tag = Tag::findOne(['id' => $id]);
-        return $this->renderPartial('_modal', [
-            'tag' => $tag,
-        ]);
-    }
     public function actionToggle($id = null, $categoryId = null)
     {
         if (Yii::$app->request->isAjax) {
@@ -120,9 +109,9 @@ class TagController extends Controller
         return $this->render('form', [
             'tag' => $tag,
             'slugForm' => $slugForm,
+            'typesQuery' => $typesQuery,
             'blocs' => $blocs,
             'categoriesQuery' => $categoriesQuery,
-            'typesQuery' => $typesQuery,
         ]);
     }
 
@@ -150,9 +139,9 @@ class TagController extends Controller
         return $this->render('form', [
             'tag' => $tag,
             'slugForm' => $slugForm,
-            'categoriesQuery' => $categoriesQuery,
             'typesQuery' => $typesQuery,
             'blocs' => $blocs,
+            'categoriesQuery' => $categoriesQuery,
         ]);
     }
 
@@ -187,51 +176,6 @@ class TagController extends Controller
             }
         }
         return $this->redirect(['tag/index']);
-    }
-
-    /**
-     * @param ElementInterface $element
-     * @param Bloc[] $blocs
-     * @param SlugForm $slugForm
-     * @return bool
-     * @throws ErrorException
-     * @throws \yii\db\Exception
-     */
-    protected function saveElement(ElementInterface &$element, &$blocs, SlugForm &$slugForm)
-    {
-        $saveStatus = false;
-        // $slugForm = new SlugForm(['element' => $element]);
-        // $blocs = $element->getBlocs()->all();
-        if (Yii::$app->request->isPost) {
-            Model::loadMultiple($blocs, Yii::$app->request->bodyParams);
-            $element->load(Yii::$app->request->bodyParams);
-            $slugForm->multiLoad(Yii::$app->request->bodyParams);
-
-            if ($element->validate() && $slugForm->preValidate() && Model::validateMultiple($blocs)) {
-                $transaction = Module::getInstance()->db->beginTransaction();
-                $slugFormStatus = $slugForm->save();
-                $elementStatus = $element->save();
-                $blocStatus = true;
-                foreach($blocs as $bloc) {
-                    $bloc->active = true;
-                    $blocStatus = $blocStatus && $bloc->save();
-                }
-                if ($slugFormStatus && $elementStatus && $blocStatus) {
-                    if ($slugForm->hasSlug) {
-                        $element->attachSlug($slugForm->getSlug());
-                    } else {
-                        $element->detachSlug();
-                    }
-                    $transaction->commit();
-                    $saveStatus = true;
-                } else {
-                    $transaction->rollBack();
-                    throw new ErrorException();
-                }
-            }
-        }
-        return $saveStatus;
-        // return [$element, $slugForm, $blocs];
     }
 
 }

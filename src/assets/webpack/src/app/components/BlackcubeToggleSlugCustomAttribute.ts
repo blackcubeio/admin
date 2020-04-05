@@ -45,7 +45,6 @@ class BlackcubeToggleSlugCustomAttribute implements ComponentCreated, ComponentB
             }
             if (opened === false) {
                 this.toggleBloc.classList.add('hidden');
-                // this.toggleBloc.style.display = 'none';
             } else {
                 this.toggleBloc.classList.remove('hidden');
             }
@@ -68,21 +67,14 @@ class BlackcubeToggleSlugCustomAttribute implements ComponentCreated, ComponentB
         this.logger.debug('Unbind');
     }
     protected onToggle = () => {
-        if (this.toggleBloc) {
+        if (this.toggleBloc && this.toggleCheckbox && this.toggleCheckbox.checked) {
             if (this.toggleBloc.classList.contains('hidden')) {
-                this.toggleBloc.classList.remove('hidden')
-            } else {
-                this.toggleBloc.classList.add('hidden')
-            }
-            /*/
-            if (this.toggleBloc.style.display === 'none') {
-                this.toggleBloc.style.display = this.toggleBlocInitialDisplay;
+                this.toggleBloc.classList.remove('hidden');
                 this.storageService.setElementSlugOpened(this.elementId);
             } else {
-                this.toggleBloc.style.display = 'none';
+                this.toggleBloc.classList.add('hidden');
                 this.storageService.setElementSlugClosed(this.elementId);
             }
-            /**/
         }
     };
 
@@ -90,11 +82,9 @@ class BlackcubeToggleSlugCustomAttribute implements ComponentCreated, ComponentB
         if (this.toggleBloc && this.toggleCheckbox) {
             if (this.toggleCheckbox.checked) {
                 this.toggleBloc.classList.remove('hidden');
-                // this.toggleBloc.style.display = this.toggleBlocInitialDisplay;
                 this.storageService.setElementSlugOpened(this.elementId);
             } else {
                 this.toggleBloc.classList.add('hidden');
-                // this.toggleBloc.style.display = 'none';
                 this.storageService.setElementSlugClosed(this.elementId);
             }
         }

@@ -3,6 +3,7 @@
  * @var $categoriesQuery \blackcube\core\models\FilterActiveQuery
  */
 use blackcube\admin\helpers\Html;
+use blackcube\admin\widgets\Publication;
 
 $formatter = Yii::$app->formatter;
 ?>
@@ -14,10 +15,10 @@ $formatter = Yii::$app->formatter;
                     <!-- input type="text" class="appearance-none bg-gray-200 text-gray-700 border border-gray-300 rounded py-1 px-4 mb-1 leading-tight"
                     placeholder="<?php echo Yii::t('blackcube.admin', 'Name'); ?>" -->
                 </th>
-                <th>
+                <th class="status">
                     <?php echo Yii::t('blackcube.admin', 'Status'); ?>
                 </th>
-                <th>
+                <th class="tools">
                     <?php echo Yii::t('blackcube.admin', 'Action'); ?>
                 </th>
             </tr>
@@ -34,20 +35,7 @@ $formatter = Yii::$app->formatter;
                     </div>
                 </td>
                 <td>
-                    <span class="inline-flex mx-0">
-                        <?php echo Html::tag('span', 'U' . Html::tag('span', 'Status de l\'URL', ['class' => 'tooltip-text']), [
-                            'class' => 'tooltip status-bar '.(($category->slug && $category->slug->active) ? 'active':'inactive'),
-                        ]); ?>
-                        <?php echo Html::tag('span', 'S' . Html::tag('span', 'Intégration Sitemap', ['class' => 'tooltip-text']), [
-                            'class' => 'tooltip status-bar '.(($category->slug && $category->slug->sitemap && $category->slug->sitemap->active) ? 'active':'inactive'),
-                        ]); ?>
-                        <?php echo Html::tag('span', 'G' . Html::tag('span', 'Mise en place SEO', ['class' => 'tooltip-text']), [
-                            'class' => 'tooltip status-bar '.(($category->slug && $category->slug->seo && $category->slug->seo->active) ? 'active':'inactive'),
-                        ]); ?>
-                    </span>
-                    <!-- p class="text-gray-900 whitespace-no-wrap">
-                        <?php // echo $formatter->asDate($tag->dateCreate); ?>
-                    </p -->
+                    <?php echo Publication::widget(['element' => $category]); ?>
                 </td>
                 <td>
                     <?php echo Html::beginForm(['category/delete', 'id' => $category->id], 'post', ['data-ajax-modal' => \yii\helpers\Url::to(['category/modal', 'id' => $category->id])]); ?>

@@ -2,10 +2,16 @@
   @apply w-full p-6;
   .bloc {
     @apply flex flex-wrap mb-2;
-    &-title {
-      @apply w-full px-0 mx-3 mb-1 border-b border-gray-300 bg-gray-100;
+    &-title, &-subtitle {
+      @apply w-full px-2 mx-3 mb-1 border rounded border-gray-300 bg-gray-700;
       .title {
-        @apply uppercase tracking-wide text-gray-900 text-sm font-light mb-1;
+        @apply uppercase tracking-wide text-gray-100 text-lg font-light mb-1;
+      }
+    }
+    &-subtitle {
+      @apply w-full px-2 mx-3 mb-1 border rounded border-gray-300 bg-gray-400;
+      .title {
+        @apply uppercase tracking-wide text-gray-700 text-sm font-light mb-1 italic;
       }
     }
     &-fieldset {

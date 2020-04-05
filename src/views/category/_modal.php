@@ -1,6 +1,6 @@
 <?php
 /**
- * @var $category \blackcube\core\models\Category
+ * @var $element \blackcube\core\models\Category
  */
 
 ?>
@@ -15,7 +15,7 @@
                 <p>
                     Attention, vous allez supprimer la catégorie
                 </p>
-                    <strong class="uppercase text-sm"><?php echo $category->name; ?></strong>
+                    <strong class="uppercase text-sm"><?php echo $element->name; ?></strong>
                 <p>
                     Etes vous certain de vouloir continuer ?
                 </p>

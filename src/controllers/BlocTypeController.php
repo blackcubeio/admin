@@ -2,6 +2,7 @@
 
 namespace blackcube\admin\controllers;
 
+use blackcube\admin\actions\ModalAction;
 use blackcube\admin\Module;
 use blackcube\core\models\BlocType;
 use blackcube\core\models\Type;
@@ -14,6 +15,16 @@ use Yii;
 
 class BlocTypeController extends Controller
 {
+
+    public function actions()
+    {
+        $actions = parent::actions();
+        $actions['modal'] = [
+            'class' => ModalAction::class,
+            'elementClass' => BlocType::class
+        ];
+        return $actions;
+    }
 
     public function actionIndex($id = null)
     {

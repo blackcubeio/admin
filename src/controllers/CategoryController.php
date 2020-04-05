@@ -2,6 +2,7 @@
 
 namespace blackcube\admin\controllers;
 
+use blackcube\admin\actions\ModalAction;
 use blackcube\admin\models\SlugForm;
 use blackcube\admin\models\TagManager;
 use blackcube\admin\actions\BlocAction;
@@ -26,7 +27,7 @@ use yii\web\NotFoundHttpException;
 use Yii;
 use yii\web\Response;
 
-class CategoryController extends Controller
+class CategoryController extends BaseElementController
 {
 
     /**
@@ -39,14 +40,9 @@ class CategoryController extends Controller
             'class' => BlocAction::class,
             'elementClass' => Category::class
         ];
-        $actions['upload'] = [
-            'class' => ResumableUploadAction::class,
-        ];
-        $actions['preview'] = [
-            'class' => ResumablePreviewAction::class,
-        ];
-        $actions['delete'] = [
-            'class' => ResumableDeleteAction::class,
+        $actions['modal'] = [
+            'class' => ModalAction::class,
+            'elementClass' => Category::class
         ];
         return $actions;
     }
@@ -65,14 +61,7 @@ class CategoryController extends Controller
         ]);
     }
 
-    public function actionModal($id = null)
-    {
-        $category = Category::findOne(['id' => $id]);
-        return $this->renderPartial('_modal', [
-            'category' => $category,
-        ]);
-    }
-    public function actionToggle($id = null, $categoryId = null)
+    public function actionToggle($id = null)
     {
         if (Yii::$app->request->isAjax) {
             if ($id !== null) {
@@ -112,8 +101,8 @@ class CategoryController extends Controller
             'category' => $category,
             'slugForm' => $slugForm,
             'typesQuery' => $typesQuery,
-            'languagesQuery' => $languagesQuery,
             'blocs' => $blocs,
+            'languagesQuery' => $languagesQuery,
         ]);
     }
 
@@ -142,8 +131,8 @@ class CategoryController extends Controller
             'category' => $category,
             'slugForm' => $slugForm,
             'typesQuery' => $typesQuery,
-            'languagesQuery' => $languagesQuery,
             'blocs' => $blocs,
+            'languagesQuery' => $languagesQuery,
         ]);
     }
 
@@ -178,51 +167,6 @@ class CategoryController extends Controller
             }
         }
         return $this->redirect(['category/index']);
-    }
-
-    /**
-     * @param ElementInterface $element
-     * @param Bloc[] $blocs
-     * @param SlugForm $slugForm
-     * @return bool
-     * @throws ErrorException
-     * @throws \yii\db\Exception
-     */
-    protected function saveElement(ElementInterface &$element, &$blocs, SlugForm &$slugForm)
-    {
-        $saveStatus = false;
-        // $slugForm = new SlugForm(['element' => $element]);
-        // $blocs = $element->getBlocs()->all();
-        if (Yii::$app->request->isPost) {
-            Model::loadMultiple($blocs, Yii::$app->request->bodyParams);
-            $element->load(Yii::$app->request->bodyParams);
-            $slugForm->multiLoad(Yii::$app->request->bodyParams);
-
-            if ($element->validate() && $slugForm->preValidate() && Model::validateMultiple($blocs)) {
-                $transaction = Module::getInstance()->db->beginTransaction();
-                $slugFormStatus = $slugForm->save();
-                $elementStatus = $element->save();
-                $blocStatus = true;
-                foreach($blocs as $bloc) {
-                    $bloc->active = true;
-                    $blocStatus = $blocStatus && $bloc->save();
-                }
-                if ($slugFormStatus && $elementStatus && $blocStatus) {
-                    if ($slugForm->hasSlug) {
-                        $element->attachSlug($slugForm->getSlug());
-                    } else {
-                        $element->detachSlug();
-                    }
-                    $transaction->commit();
-                    $saveStatus = true;
-                } else {
-                    $transaction->rollBack();
-                    throw new ErrorException();
-                }
-            }
-        }
-        return $saveStatus;
-        // return [$element, $slugForm, $blocs];
     }
 
 }
