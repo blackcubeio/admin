@@ -7,7 +7,7 @@ use blackcube\admin\models\TagManager;
 use blackcube\admin\actions\BlocAction;
 use blackcube\admin\actions\ModalAction;
 use blackcube\admin\Module;
-use blackcube\core\interfaces\ElementInterface;
+use blackcube\core\interfaces\TaggableInterface;
 use blackcube\core\models\Bloc;
 use blackcube\core\models\Category;
 use blackcube\core\models\Composite;
@@ -207,23 +207,4 @@ class CompositeController extends BaseElementController
         return $this->redirect(['index']);
     }
 
-    protected function handleTags($element, $selectedTags = [])
-    {
-        $currentTags = $element->getTags()->all();
-        $existingTags = [];
-        foreach ($currentTags as $currentTag) {
-            if (in_array($currentTag->id, $selectedTags) === false) {
-                $element->detachTag($currentTag);
-            } else {
-                $existingTags[] = $currentTag->id;
-            }
-        }
-        $missingTags = array_diff($selectedTags, $existingTags);
-        foreach($missingTags as $missingTagId) {
-            $missingTag = Tag::findOne(['id' => $missingTagId]);
-            if ($missingTag !== null) {
-                $element->attachTag($missingTag);
-            }
-        }
-    }
 }

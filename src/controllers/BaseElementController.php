@@ -5,7 +5,9 @@ namespace blackcube\admin\controllers;
 use blackcube\admin\models\SlugForm;
 use blackcube\admin\Module;
 use blackcube\core\interfaces\ElementInterface;
+use blackcube\core\interfaces\TaggableInterface;
 use blackcube\core\models\Bloc;
+use blackcube\core\models\Tag;
 use blackcube\core\web\actions\ResumableUploadAction;
 use blackcube\core\web\actions\ResumablePreviewAction;
 use blackcube\core\web\actions\ResumableDeleteAction;
@@ -77,6 +79,31 @@ abstract class BaseElementController extends Controller
         }
         return $saveStatus;
         // return [$element, $slugForm, $blocs];
+    }
+
+    /**
+     * (De)tach tags to element
+     * @param TaggableInterface $element
+     * @param array $selectedTags
+     */
+    protected function handleTags(TaggableInterface $element, $selectedTags = [])
+    {
+        $currentTags = $element->getTags()->all();
+        $existingTags = [];
+        foreach ($currentTags as $currentTag) {
+            if (in_array($currentTag->id, $selectedTags) === false) {
+                $element->detachTag($currentTag);
+            } else {
+                $existingTags[] = $currentTag->id;
+            }
+        }
+        $missingTags = array_diff($selectedTags, $existingTags);
+        foreach($missingTags as $missingTagId) {
+            $missingTag = Tag::findOne(['id' => $missingTagId]);
+            if ($missingTag !== null) {
+                $element->attachTag($missingTag);
+            }
+        }
     }
 
 }
