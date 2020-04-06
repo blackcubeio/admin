@@ -13,9 +13,9 @@ use blackcube\core\models\Category;
 use blackcube\core\models\Slug;
 use blackcube\core\models\Tag;
 use blackcube\core\models\Type;
-use blackcube\core\actions\ResumableUploadAction;
-use blackcube\core\actions\ResumablePreviewAction;
-use blackcube\core\actions\ResumableDeleteAction;
+use blackcube\core\web\actions\ResumableUploadAction;
+use blackcube\core\web\actions\ResumablePreviewAction;
+use blackcube\core\web\actions\ResumableDeleteAction;
 use yii\base\ErrorException;
 use yii\base\Event;
 use yii\base\Model;
@@ -54,10 +54,14 @@ class TagController extends BaseElementController
     public function actionIndex($categoryId = null)
     {
         $tagsQuery = Tag::find()
-            ->with('category')
+            ->innerJoinWith('category', true)
             ->with('slug.seo')
             ->with('slug.sitemap')
-            ->orderBy(['name' => SORT_ASC]);
+            ->orderBy([
+                Category::tableName().'.name' => SORT_ASC,
+                'name' => SORT_ASC
+            ]);
+
         if ($categoryId !== null) {
             $tagsQuery->andWhere(['categoryId' => $categoryId]);
         }
@@ -77,10 +81,13 @@ class TagController extends BaseElementController
                 }
             }
             $tagsQuery = Tag::find()
-                ->with('category')
+                ->innerJoinWith('category', true)
                 ->with('slug.seo')
                 ->with('slug.sitemap')
-                ->orderBy(['name' => SORT_ASC]);
+                ->orderBy([
+                    Category::tableName().'.name' => SORT_ASC,
+                    'name' => SORT_ASC
+                ]);
             if ($categoryId !== null) {
                 $tagsQuery->andWhere(['categoryId' => $categoryId]);
             }
@@ -97,8 +104,11 @@ class TagController extends BaseElementController
      */
     public function actionCreate()
     {
-        $tag = new Tag();
-        $slugForm = new SlugForm(['element' => $tag]);
+        $tag = Yii::createObject(Tag::class);
+        $slugForm = Yii::createObject([
+            'class' => SlugForm::class,
+            'element' => $tag,
+        ]);
         $blocs = $tag->getBlocs()->all();
         $result = $this->saveElement($tag, $blocs, $slugForm);
         if ($result === true) {
@@ -128,7 +138,10 @@ class TagController extends BaseElementController
         if ($tag === null) {
             throw new NotFoundHttpException();
         }
-        $slugForm = new SlugForm(['element' => $tag]);
+        $slugForm = Yii::createObject([
+            'class' => SlugForm::class,
+            'element' => $tag
+        ]);
         $blocs = $tag->getBlocs()->all();
         $result = $this->saveElement($tag, $blocs, $slugForm);
         if ($result === true) {

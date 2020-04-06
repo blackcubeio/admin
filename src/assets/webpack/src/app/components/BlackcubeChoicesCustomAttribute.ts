@@ -30,7 +30,8 @@ class BlackcubeChoicesCustomAttribute implements ComponentCreated, ComponentBind
         this.logger.debug('Attached');
         // @ts-ignore
         this.choices = new Choices(this.element, {
-            removeItemButton: false
+            removeItemButton: true,
+            searchFields: ['label']
         });
     }
 

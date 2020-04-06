@@ -14,11 +14,12 @@
 
 namespace blackcube\admin\models;
 
-use Yii;
+use blackcube\admin\Module;
 use yii\base\NotSupportedException;
 use yii\behaviors\TimestampBehavior;
 use yii\db\Expression;
 use yii\web\IdentityInterface;
+use Yii;
 
 /**
  * This is the model class for table "{{%administrators}}".
@@ -54,7 +55,7 @@ class Administrator extends \yii\db\ActiveRecord implements IdentityInterface
             'class' => TimestampBehavior::class,
             'createdAtAttribute' => 'dateCreate',
             'updatedAtAttribute' => 'dateUpdate',
-            'value' => new Expression('NOW()'),
+            'value' => Yii::createObject(Expression::class, ['NOW()']),
         ];
         return $behaviors;
     }
@@ -74,7 +75,7 @@ class Administrator extends \yii\db\ActiveRecord implements IdentityInterface
      */
     public static function find()
     {
-        return new FilterActiveQuery(static::class);
+        return Yii::createObject(FilterActiveQuery::class, [static::class]);
     }
 
     /**
@@ -111,15 +112,15 @@ class Administrator extends \yii\db\ActiveRecord implements IdentityInterface
     public function attributeLabels():array
     {
         return [
-            'id' => Yii::t('blackcube.admin', 'ID'),
-            'email' => Yii::t('blackcube.admin', 'Email'),
-            'password' => Yii::t('blackcube.admin', 'Password'),
-            'active' => Yii::t('blackcube.admin', 'Active'),
-            'authKey' => Yii::t('blackcube.admin', 'Auth Key'),
-            'token' => Yii::t('blackcube.admin', 'Token'),
-            'tokenType' => Yii::t('blackcube.admin', 'Token Type'),
-            'dateCreate' => Yii::t('blackcube.admin', 'Date Create'),
-            'dateUpdate' => Yii::t('blackcube.admin', 'Date Update'),
+            'id' => Module::t('models', 'ID'),
+            'email' => Module::t('models', 'Email'),
+            'password' => Module::t('models', 'Password'),
+            'active' => Module::t('models', 'Active'),
+            'authKey' => Module::t('models', 'Auth Key'),
+            'token' => Module::t('models', 'Token'),
+            'tokenType' => Module::t('models', 'Token Type'),
+            'dateCreate' => Module::t('models', 'Date Create'),
+            'dateUpdate' => Module::t('models', 'Date Update'),
         ];
     }
 
@@ -137,11 +138,11 @@ class Administrator extends \yii\db\ActiveRecord implements IdentityInterface
         if ($administrator !== null) {
             $password = $this->password;
             if (static::validatePassword($password, $administrator->password) === false) {
-                $this->addError('password', Yii::t('blackcube.admin', 'Password is invalid'));
+                $this->addError('password', Module::t('validators', 'Password is invalid'));
                 $success = false;
             }
         } else {
-            $this->addError($attribute, Yii::t('blackcube.admin', 'Administrator does not exist'));
+            $this->addError($attribute, Module::t('validators', 'Administrator does not exist'));
             $success = false;
         }
 

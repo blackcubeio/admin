@@ -7,6 +7,7 @@ use blackcube\core\models\Seo;
 use blackcube\core\models\Sitemap;
 use blackcube\core\models\Slug;
 use yii\base\Model;
+use Yii;
 
 class SlugForm extends Model
 {
@@ -52,18 +53,22 @@ class SlugForm extends Model
         $this->_element = $element;
         $this->_slug = $this->_element->getSlug()->one();
         if ($this->_slug === null) {
-            $this->_slug = new Slug();
+            $this->_slug = Yii::createObject(Slug::class);
             $this->hasSlug = false;
         } else {
             $this->hasSlug = true;
         }
         $this->_sitemap = $this->_slug->getSitemap()->one();
         if ($this->_sitemap === null) {
-            $this->_sitemap = new Sitemap(['priority' => 0.5, 'frequency' => 'daily']);
+            $this->_sitemap = Yii::createObject([
+                'class' => Sitemap::class,
+                'priority' => 0.5,
+                'frequency' => 'daily'
+            ]);
         }
         $this->_seo = $this->_slug->getSeo()->one();
         if ($this->_seo === null) {
-            $this->_seo = new Seo();
+            $this->_seo = Yii::createObject(Seo::class);
         }
     }
 

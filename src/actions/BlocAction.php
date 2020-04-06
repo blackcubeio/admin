@@ -33,7 +33,7 @@ class BlocAction extends Action
             $originalBlocs = $element->getBlocs()->all();
             Model::loadMultiple($originalBlocs, Yii::$app->request->bodyParams);
             if (isset(Yii::$app->request->bodyParams['blocAdd'])) {
-                $bloc = new Bloc();
+                $bloc = Yii::createObject(Bloc::class);
                 $bloc->blocTypeId = Yii::$app->request->bodyParams['blocTypeId'];
                 $bloc->save(false);
                 $element->attachBloc($bloc, -1);

@@ -18,6 +18,52 @@ class Html extends \yii\helpers\Html
         ],
     ];
 
+    public static function activeDateTimeInput($model, $attribute, $options = [])
+    {
+        $name = isset($options['name']) ? $options['name'] : static::getInputName($model, $attribute);
+        if (isset($options['value'])) {
+            $value = $options['value'];
+        } else {
+            $currentValue = static::getAttributeValue($model, $attribute);
+            if ($currentValue instanceof \DateTime) {
+                $value = $currentValue->format('Y-m-d\TH:i:s');
+            } else {
+                $value = $currentValue;
+            }
+        }
+        if (!array_key_exists('id', $options)) {
+            $options['id'] = static::getInputId($model, $attribute);
+        }
+
+        static::setActivePlaceholder($model, $attribute, $options);
+        // self::normalizeMaxLength($model, $attribute, $options);
+
+        return static::input('datetime-local', $name, $value, $options);
+    }
+
+    public static function activeDateInput($model, $attribute, $options = [])
+    {
+        $name = isset($options['name']) ? $options['name'] : static::getInputName($model, $attribute);
+        if (isset($options['value'])) {
+            $value = $options['value'];
+        } else {
+            $currentValue = static::getAttributeValue($model, $attribute);
+            if ($currentValue instanceof \DateTime) {
+                $value = $currentValue->format('Y-m-d');
+            } else {
+                $value = $currentValue;
+            }
+        }
+        if (!array_key_exists('id', $options)) {
+            $options['id'] = static::getInputId($model, $attribute);
+        }
+
+        static::setActivePlaceholder($model, $attribute, $options);
+        // self::normalizeMaxLength($model, $attribute, $options);
+
+        return static::input('date', $name, $value, $options);
+    }
+
     public static function activeSchema(Model $model, $attribute, $options = [])
     {
         $selfId = static::getInputId($model, $attribute);

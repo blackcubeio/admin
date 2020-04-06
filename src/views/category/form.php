@@ -1,5 +1,16 @@
 <?php
 /**
+ * form.php
+ *
+ * PHP version 7.2+
+ *
+ * @author Philippe Gaultier <pgaultier@redcat.io>
+ * @copyright 2010-2020 Redcat
+ * @license https://www.redcat.io/license license
+ * @version XXX
+ * @link https://www.redcat.io
+ * @package blackcube\admin\views\category
+ *
  * @var $category \blackcube\core\models\Category
  * @var $slugForm \blackcube\admin\models\SlugForm
  * @var $typesQuery \blackcube\core\models\FilterActiveQuery
@@ -8,26 +19,31 @@
  * @var $blocs \blackcube\core\models\Bloc[]
  * @var $this \yii\web\View
  */
+
+use blackcube\admin\Module;
 use blackcube\admin\helpers\Html;
+use blackcube\admin\widgets\Sidebar;
+use blackcube\admin\widgets\SlugForm;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Url;
+
 ?>
 <div class="flex flex-1">
-    <?php echo \blackcube\admin\widgets\Sidebar::widget(); ?>
+    <?php echo Sidebar::widget(); ?>
     <main>
         <ul class="header">
             <li class="">
-                <?php echo Html::a('<i class="fa fa-angle-left mr-2"></i> Back', ['index'], ['class' => 'button']); ?>
+                <?php echo Html::a('<i class="fa fa-angle-left mr-2"></i> '.Module::t('category', 'Back'), ['index'], ['class' => 'button']); ?>
             </li>
         </ul>
         <?php echo Html::beginForm('', 'post', ['class' => 'form']); ?>
-            <?php echo \blackcube\admin\widgets\SlugForm::widget([
+            <?php echo SlugForm::widget([
                 'element' => $category,
                 'slugForm' => $slugForm,
             ]); ?>
             <div class="bloc">
                 <div class="bloc-title">
-                    <span class="title">Catégorie</span>
+                    <span class="title"><?php echo Module::t('category', 'Category'); ?></span>
                 </div>
             </div>
             <div class="bloc">
@@ -52,7 +68,7 @@ use yii\helpers\Url;
                     <?php echo Html::activeLabel($category, 'typeId', ['class' => 'label']); ?>
                     <div class="dropdown">
                         <?php echo Html::activeDropDownList($category, 'typeId', ArrayHelper::map($typesQuery->select(['id', 'name'])->asArray()->all(), 'id', 'name'), [
-                            'prompt' => 'No Type',
+                            'prompt' => Module::t('category', 'No type'),
                         ]); ?>
                         <div class="arrow">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
@@ -74,7 +90,7 @@ use yii\helpers\Url;
             ]); ?>
                 <div class="bloc">
                     <div class="bloc-title">
-                        <span class="title">Contenu</span>
+                        <span class="title"><?php echo Module::t('category', 'Content'); ?></span>
                     </div>
                 </div>
                 <div data-ajax-target="">
@@ -99,10 +115,10 @@ use yii\helpers\Url;
             <?php endif; ?>
 
             <div class="buttons">
-                <?php echo Html::a(Yii::t('blackcube.admin', 'Cancel'), ['index'], [
+                <?php echo Html::a(Module::t('category', 'Cancel'), ['index'], [
                     'class' => 'button-cancel'
                 ]); ?>
-                <?php echo Html::button(Yii::t('blackcube.admin', 'Save'), [
+                <?php echo Html::button(Module::t('category', 'Save'), [
                     'type' => 'submit',
                     'class' => 'button-submit'
                 ]); ?>

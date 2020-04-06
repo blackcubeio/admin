@@ -14,9 +14,9 @@ use blackcube\core\models\Language;
 use blackcube\core\models\Slug;
 use blackcube\core\models\Tag;
 use blackcube\core\models\Type;
-use blackcube\core\actions\ResumableUploadAction;
-use blackcube\core\actions\ResumablePreviewAction;
-use blackcube\core\actions\ResumableDeleteAction;
+use blackcube\core\web\actions\ResumableUploadAction;
+use blackcube\core\web\actions\ResumablePreviewAction;
+use blackcube\core\web\actions\ResumableDeleteAction;
 use yii\base\ErrorException;
 use yii\base\Event;
 use yii\base\Model;
@@ -88,8 +88,11 @@ class CategoryController extends BaseElementController
      */
     public function actionCreate()
     {
-        $category = new Category();
-        $slugForm = new SlugForm(['element' => $category]);
+        $category = Yii::createObject(Category::class);
+        $slugForm = Yii::createObject([
+            'class' => SlugForm::class,
+            'element' => $category
+        ]);
         $blocs = $category->getBlocs()->all();
         $result = $this->saveElement($category, $blocs, $slugForm);
         if ($result === true) {
@@ -119,7 +122,10 @@ class CategoryController extends BaseElementController
         if ($category === null) {
             throw new NotFoundHttpException();
         }
-        $slugForm = new SlugForm(['element' => $category]);
+        $slugForm = Yii::createObject([
+            'class' => SlugForm::class,
+            'element' => $category
+        ]);
         $blocs = $category->getBlocs()->all();
         $result = $this->saveElement($category, $blocs, $slugForm);
         if ($result === true) {

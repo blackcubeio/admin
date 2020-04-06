@@ -1,13 +1,26 @@
 <?php
 /**
+ * slug-form.php
+ *
+ * PHP version 7.2+
+ *
+ * @author Philippe Gaultier <pgaultier@redcat.io>
+ * @copyright 2010-2020 Redcat
+ * @license https://www.redcat.io/license license
+ * @version XXX
+ * @link https://www.redcat.io
+ * @package blackcube\admin\views\tag
+ *
  * @var $slugForm blackcube\admin\models\SlugForm
  * @var $slug blackcube\core\models\Slug
  * @var $sitemap blackcube\core\models\Sitemap
  * @var $seo blackcube\core\models\Seo
  */
+
+use blackcube\admin\Module;
 use blackcube\admin\helpers\Html;
-use yii\helpers\ArrayHelper;
 use blackcube\admin\helpers\Parameter;
+use yii\helpers\ArrayHelper;
 use yii\helpers\Url;
 use yii\helpers\StringHelper;
 use yii\helpers\Inflector;
@@ -17,7 +30,9 @@ $elementType = Inflector::camel2id(StringHelper::basename(get_class($slugForm->g
     <div class="bloc mb-2">
         <div class="bloc-title">
             <?php echo Html::activeCheckbox($slugForm, 'hasSlug', ['class' => 'mr-2 toggle', 'label' => false]); ?>
-            <span class="title">Slug</span>
+            <span class="title">
+                <?php echo Module::t('widgets', 'Slug'); ?>
+            </span>
         </div>
     </div>
     <div class="toggle-target hidden">
@@ -44,7 +59,7 @@ $elementType = Inflector::camel2id(StringHelper::basename(get_class($slugForm->g
         </div>
         <div class="bloc ml-4">
             <div class="w-full bloc-fieldset md:w-1/12">
-                <?php echo Html::activeLabel($sitemap, 'active', ['class' => 'label', 'label' => 'Sitemap']); ?>
+                <?php echo Html::activeLabel($sitemap, 'active', ['class' => 'label', 'label' => Module::t('widgets', 'Sitemap')]); ?>
                 <?php echo Html::activeCheckbox($sitemap, 'active', ['label' => false, 'class' => 'checkbox']); ?>
             </div>
             <div class="w-full bloc-fieldset md:w-2/12">
@@ -68,7 +83,7 @@ $elementType = Inflector::camel2id(StringHelper::basename(get_class($slugForm->g
         </div>
         <div class="bloc ml-4">
             <div class="w-full bloc-fieldset md:w-1/12">
-                <?php echo Html::activeLabel($seo, 'active', ['class' => 'label', 'label' => 'Seo']); ?>
+                <?php echo Html::activeLabel($seo, 'active', ['class' => 'label', 'label' => Module::t('widgets', 'Seo')]); ?>
                 <?php echo Html::activeCheckbox($seo, 'active', ['label' => false, 'class' => 'checkbox']); ?>
             </div>
             <div class="w-full bloc-fieldset md:w-1/12">
@@ -109,7 +124,7 @@ $elementType = Inflector::camel2id(StringHelper::basename(get_class($slugForm->g
             <div class="w-full bloc-fieldset md:w-4/12">
                 <?php echo Html::activeLabel($seo, 'ogType', ['class' => 'label']); ?>
                 <div class="dropdown">
-                    <?php echo Html::activeDropDownList($seo, 'ogType', ['siteweb' => 'Website']); ?>
+                    <?php echo Html::activeDropDownList($seo, 'ogType', ['siteweb' => Module::t('widgets', 'Website')]); ?>
                     <div class="arrow">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
                     </div>
@@ -122,7 +137,7 @@ $elementType = Inflector::camel2id(StringHelper::basename(get_class($slugForm->g
             <div class="w-full bloc-fieldset md:w-4/12">
                 <?php echo Html::activeLabel($seo, 'twitterCard', ['class' => 'label']); ?>
                 <div class="dropdown">
-                    <?php echo Html::activeDropDownList($seo, 'twitterCard', ['summary' => 'Summary', 'summary_large_image' => 'Summary large image']); ?>
+                    <?php echo Html::activeDropDownList($seo, 'twitterCard', ['summary' => Module::t('widgets', 'Summary'), 'summary_large_image' => Module::t('widgets', 'Summary large image')]); ?>
                     <div class="arrow">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
                     </div>

@@ -40,7 +40,7 @@ class BlocTypeController extends Controller
 
     public function actionCreate()
     {
-        $blocType = new BlocType();
+        $blocType = Yii::createObject(BlocType::class);
         $blocType->template = '{"type": "object", "properties": {"text": {"type": "string"}}, "required": []}';
         $typeBlocTypes = $this->getTypeBlocTypes();
         if (Yii::$app->request->isPost) {
@@ -121,7 +121,7 @@ class BlocTypeController extends Controller
                 $typeBlocType = TypeBlocType::find()->where(['typeId' => $type->id, 'blocTypeId' => $id])->one();
             }
             if ($typeBlocType === null) {
-                $typeBlocType = new TypeBlocType();
+                $typeBlocType = Yii::createObject(TypeBlocType::class);
                 $typeBlocType->typeId = $type->id;
                 $typeBlocType->blocTypeId = $id;
                 $typeBlocType->allowed = false;

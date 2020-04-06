@@ -1273,8 +1273,8 @@ main .bloc-tools .button:hover {
 }
 
 .table-container table th {
-  padding-left: 1.25rem;
-  padding-right: 1.25rem;
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
   padding-top: 0.75rem;
   padding-bottom: 0.75rem;
   border-bottom-width: 2px;
@@ -1288,15 +1288,15 @@ main .bloc-tools .button:hover {
   letter-spacing: 0.05em;
 }
 
-.table-container table th.status, .table-container table th.tools {
+.table-container table th.status, .table-container table th.tools, .table-container table th.type {
   width: 12rem;
 }
 
 .table-container table td {
-  padding-left: 1.25rem;
-  padding-right: 1.25rem;
-  padding-top: 1.25rem;
-  padding-bottom: 1.25rem;
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
   border-bottom-width: 1px;
   border-color: #edf2f7;
   background-color: #fff;
@@ -1358,6 +1358,17 @@ main .bloc-tools .button:hover {
 .table-container table td .button.disabled:hover {
   background-color: #e2e8f0;
   color: #2d3748;
+}
+
+.table-container table td.category {
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  background-color: #edf2f7;
+  color: #2d3748;
+  text-align: center;
+  font-weight: 600;
 }
 
 /*===============================
@@ -1575,6 +1586,7 @@ main .bloc-tools .button:hover {
   background-color: #cbd5e0;
   border-color: #edf2f7;
   color: #4a5568;
+  font-size: 0.75rem;
   word-break: break-all;
   box-sizing: border-box;
 }
@@ -1644,7 +1656,7 @@ main .bloc-tools .button:hover {
 
 .choices__list--dropdown .choices__item {
   position: relative;
-  font-size: 0.875rem;
+  font-size: 0.75rem;
   padding: 0.5rem;
   color: #4a5568;
 }
@@ -1659,7 +1671,7 @@ main .bloc-tools .button:hover {
   }
 
   .choices__list--dropdown .choices__item--selectable:after {
-    font-size: 0.875rem;
+    font-size: 0.75rem;
     opacity: 0;
     position: absolute;
     content: attr(data-select-text);
@@ -1706,8 +1718,9 @@ main .bloc-tools .button:hover {
 }
 
 .choices__heading {
-  font-weight: 600;
-  font-size: 12px;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  background-color: #cbd5e0;
   padding: 10px;
   border-bottom: 1px solid #f7f7f7;
   color: gray;
@@ -1755,6 +1768,10 @@ main .bloc-tools .button:hover {
 }
 
 /*=====  End of Choices  ======*/
+
+.text-xxs {
+  font-size: .5rem;
+}
 
 .inactive {
   background: repeating-linear-gradient(45deg, rgba(255, 165, 0, 0.05), rgba(255, 165, 0, 0.05) 10px, rgba(255, 140, 0, 0.15) 10px, rgba(255, 140, 0, 0.15) 20px);

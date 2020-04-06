@@ -165,8 +165,9 @@ class WebpackAsset extends AssetBundle
                     $bundles = file_get_contents(Yii::getAlias($assetsFileAlias));
                     $bundles = Json::decode($bundles);
                     if ($cache !== null) {
-                        $cacheDependency = new FileDependency([
-                            'fileName' => $assetsFileAlias
+                        $cacheDependency = Yii::createObject([
+                            'class' => FileDependency::class,
+                            'fileName' => $assetsFileAlias,
                         ]);
                         $cache->set($cacheKey, $bundles, 0, $cacheDependency);
                     }

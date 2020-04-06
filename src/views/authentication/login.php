@@ -1,8 +1,20 @@
 <?php
 /**
+ * login.php
+ *
+ * PHP version 7.2+
+ *
+ * @author Philippe Gaultier <pgaultier@redcat.io>
+ * @copyright 2010-2020 Redcat
+ * @license https://www.redcat.io/license license
+ * @version XXX
+ * @link https://www.redcat.io
+ * @package blackcube\admin\views\authentication
+ *
  * @var \blackcube\admin\models\Administrator $administrator
  */
-use yii\helpers\Html;
+use blackcube\admin\Module;
+use blackcube\admin\helpers\Html;
 ?>
 <div class="form container">
     <div class="w-full max-w-lg">
@@ -19,7 +31,7 @@ use yii\helpers\Html;
                 </div>
                 <div class="buttons">
                     <a class="link" href="#">
-                        Forgot Password?
+                        <?php echo Module::t('authentication', 'Forgot Password?'); ?>
                     </a>
                     <button class="submit-btn" type="submit">Login</button>
                 </div>

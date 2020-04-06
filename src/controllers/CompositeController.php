@@ -13,10 +13,11 @@ use blackcube\core\models\Category;
 use blackcube\core\models\Composite;
 use blackcube\core\models\Slug;
 use blackcube\core\models\Language;
+use blackcube\core\models\Tag;
 use blackcube\core\models\Type;
-use blackcube\core\actions\ResumableUploadAction;
-use blackcube\core\actions\ResumablePreviewAction;
-use blackcube\core\actions\ResumableDeleteAction;
+use blackcube\core\web\actions\ResumableUploadAction;
+use blackcube\core\web\actions\ResumablePreviewAction;
+use blackcube\core\web\actions\ResumableDeleteAction;
 use yii\base\ErrorException;
 use yii\base\Event;
 use yii\base\Model;
@@ -89,19 +90,37 @@ class CompositeController extends BaseElementController
      */
     public function actionCreate()
     {
-        $composite = new Composite();
-        $slugForm = new SlugForm(['element' => $composite]);
+        $composite = Yii::createObject(Composite::class);
+        $slugForm = Yii::createObject([
+            'class' => SlugForm::class,
+            'element' => $composite
+        ]);
         $blocs = $composite->getBlocs()->all();
         $result = $this->saveElement($composite, $blocs, $slugForm);
         if ($result === true) {
+            $selectedTags = Yii::$app->request->getBodyParam('selectedTags', []);
+            $this->handleTags($composite, $selectedTags);
             return $this->redirect(['edit', 'id' => $composite->id]);
         }
         $languagesQuery = Language::find()->active()->orderBy(['name' => SORT_ASC]);
         $typesQuery = Type::find()->orderBy(['name' => SORT_ASC]);
+        $selectTagsData =  Tag::find()
+            ->innerJoinWith('category', true)
+            ->orderBy([
+                Category::tableName().'.name' => SORT_ASC,
+                Tag::tableName().'.name' => SORT_ASC
+            ])->select([
+                Tag::tableName().'.id as tagId',
+                Tag::tableName().'.name as tagName',
+                Tag::tableName().'.categoryId',
+                Category::tableName().'.name as categoryName'
+            ])->asArray()->all();
+
         return $this->render('form', [
             'composite' => $composite,
             'slugForm' => $slugForm,
             'typesQuery' => $typesQuery,
+            'selectTagsData' => $selectTagsData,
             'blocs' => $blocs,
             'languagesQuery' => $languagesQuery,
         ]);
@@ -120,18 +139,36 @@ class CompositeController extends BaseElementController
         if ($composite === null) {
             throw new NotFoundHttpException();
         }
-        $slugForm = new SlugForm(['element' => $composite]);
+        $slugForm = Yii::createObject([
+            'class' => SlugForm::class,
+            'element' => $composite
+        ]);
         $blocs = $composite->getBlocs()->all();
         $result = $this->saveElement($composite, $blocs, $slugForm);
         if ($result === true) {
+            $selectedTags = Yii::$app->request->getBodyParam('selectedTags', []);
+            $this->handleTags($composite, $selectedTags);
             return $this->redirect(['edit', 'id' => $composite->id]);
         }
         $languagesQuery = Language::find()->active()->orderBy(['name' => SORT_ASC]);
         $typesQuery = Type::find()->orderBy(['name' => SORT_ASC]);
+        $selectTagsData =  Tag::find()
+            ->innerJoinWith('category', true)
+            ->orderBy([
+                Category::tableName().'.name' => SORT_ASC,
+                Tag::tableName().'.name' => SORT_ASC
+            ])->select([
+                Tag::tableName().'.id as tagId',
+                Tag::tableName().'.name as tagName',
+                Tag::tableName().'.categoryId',
+                Category::tableName().'.name as categoryName'
+            ])->asArray()->all();
+
         return $this->render('form', [
             'composite' => $composite,
             'slugForm' => $slugForm,
             'typesQuery' => $typesQuery,
+            'selectTagsData' => $selectTagsData,
             'blocs' => $blocs,
             'languagesQuery' => $languagesQuery,
         ]);
@@ -170,4 +207,23 @@ class CompositeController extends BaseElementController
         return $this->redirect(['index']);
     }
 
+    protected function handleTags($element, $selectedTags = [])
+    {
+        $currentTags = $element->getTags()->all();
+        $existingTags = [];
+        foreach ($currentTags as $currentTag) {
+            if (in_array($currentTag->id, $selectedTags) === false) {
+                $element->detachTag($currentTag);
+            } else {
+                $existingTags[] = $currentTag->id;
+            }
+        }
+        $missingTags = array_diff($selectedTags, $existingTags);
+        foreach($missingTags as $missingTagId) {
+            $missingTag = Tag::findOne(['id' => $missingTagId]);
+            if ($missingTag !== null) {
+                $element->attachTag($missingTag);
+            }
+        }
+    }
 }

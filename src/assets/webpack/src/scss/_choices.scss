@@ -169,7 +169,7 @@ $choices-icon-cross-inverse: url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjEiI
 .#{$choices-selector}__list--multiple {
   @apply inline;
   .#{$choices-selector}__item {
-    @apply inline-block align-middle rounded py-1 px-2 mx-1 bg-gray-400 border-gray-200 text-gray-700;
+    @apply inline-block align-middle rounded py-1 px-2 mx-1 bg-gray-400 border-gray-200 text-gray-700 text-xs;
     word-break: break-all;
     box-sizing: border-box;
     &[data-deletable] {
@@ -224,7 +224,7 @@ $choices-icon-cross-inverse: url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjEiI
     will-change: scroll-position;
   }
   .#{$choices-selector}__item {
-    @apply relative text-sm p-2 text-gray-700;
+    @apply relative text-xs p-2 text-gray-700;
     [dir='rtl'] & {
       text-align: right;
     }
@@ -233,7 +233,7 @@ $choices-icon-cross-inverse: url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjEiI
     @media (min-width: 640px) {
       padding-right: 100px;
       &:after {
-        @apply text-sm opacity-0 absolute;
+        @apply text-xs opacity-0 absolute;
         content: attr(data-select-text);
         right: 10px;
         top: 50%;
@@ -273,8 +273,9 @@ $choices-icon-cross-inverse: url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjEiI
 }
 
 .#{$choices-selector}__heading {
-  font-weight: 600;
-  font-size: $choices-font-size-sm;
+  @apply uppercase text-xs bg-gray-400;
+  // font-weight: 600;
+  // font-size: $choices-font-size-sm;
   padding: 10px;
   border-bottom: 1px solid lighten($choices-keyline-color, 10%);
   color: lighten(#333, 30%);

@@ -528,7 +528,8 @@ var BlackcubeChoicesCustomAttribute = /** @class */ (function () {
         this.logger.debug('Attached');
         // @ts-ignore
         this.choices = new choices_js_1.default(this.element, {
-            removeItemButton: false
+            removeItemButton: true,
+            searchFields: ['label']
         });
     };
     BlackcubeChoicesCustomAttribute.prototype.detached = function () {

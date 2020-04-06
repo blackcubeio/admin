@@ -1,4 +1,19 @@
 <?php
+/**
+ * footer.php
+ *
+ * PHP version 7.2+
+ *
+ * @author Philippe Gaultier <pgaultier@redcat.io>
+ * @copyright 2010-2020 Redcat
+ * @license https://www.redcat.io/license license
+ * @version XXX
+ * @link https://www.redcat.io
+ * @package blackcube\admin\widgets\views
+ *
+ */
+
+use blackcube\admin\Module;
 use blackcube\admin\helpers\Html;
 use blackcube\admin\assets\StaticAsset;
 

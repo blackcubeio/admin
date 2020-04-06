@@ -1,14 +1,27 @@
 <?php
 /**
+ * _blocs.php
+ *
+ * PHP version 7.2+
+ *
+ * @author Philippe Gaultier <pgaultier@redcat.io>
+ * @copyright 2010-2020 Redcat
+ * @license https://www.redcat.io/license license
+ * @version XXX
+ * @link https://www.redcat.io
+ * @package blackcube\admin\views\common
+ *
  * @var $blocs \blackcube\core\models\Bloc[]
  * @var $this \yii\web\View
  * @var $element \blackcube\core\models\Tag
  */
+
+use blackcube\admin\Module;
 use blackcube\admin\helpers\Html;
-use yii\helpers\ArrayHelper;
 use yii\helpers\Url;
+use Yii;
 $blocsCount = count($blocs);
-$pathAlias = \blackcube\admin\Module::getInstance()->adminTemplatesAlias;
+$pathAlias = Module::getInstance()->adminTemplatesAlias;
 ?>
 
 <?php foreach($blocs as $i => $bloc): ?>

@@ -60,7 +60,7 @@ class TypeController extends Controller
      */
     public function actionCreate()
     {
-        $type = new Type();
+        $type = Yii::createObject(Type::class);
         $typeBlocTypes = $this->getTypeBlocTypes();
         if (Yii::$app->request->isPost) {
             $type->load(Yii::$app->request->bodyParams);
@@ -161,7 +161,7 @@ class TypeController extends Controller
                 $typeBlocType = TypeBlocType::find()->where(['typeId' => $id, 'blocTypeId' => $blocType->id])->one();
             }
             if ($typeBlocType === null) {
-                $typeBlocType = new TypeBlocType();
+                $typeBlocType = Yii::createObject(TypeBlocType::class);
                 if ($id === null) {
                     $typeBlocType->setScenario(TypeBlocType::SCENARIO_PRE_VALIDATE_BLOCTYPE);
                 }

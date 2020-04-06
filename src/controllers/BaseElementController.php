@@ -6,9 +6,9 @@ use blackcube\admin\models\SlugForm;
 use blackcube\admin\Module;
 use blackcube\core\interfaces\ElementInterface;
 use blackcube\core\models\Bloc;
-use blackcube\core\actions\ResumableUploadAction;
-use blackcube\core\actions\ResumablePreviewAction;
-use blackcube\core\actions\ResumableDeleteAction;
+use blackcube\core\web\actions\ResumableUploadAction;
+use blackcube\core\web\actions\ResumablePreviewAction;
+use blackcube\core\web\actions\ResumableDeleteAction;
 use yii\base\ErrorException;
 use yii\base\Model;
 use yii\web\Controller;
@@ -47,8 +47,6 @@ abstract class BaseElementController extends Controller
     protected function saveElement(ElementInterface &$element, &$blocs, SlugForm &$slugForm)
     {
         $saveStatus = false;
-        // $slugForm = new SlugForm(['element' => $element]);
-        // $blocs = $element->getBlocs()->all();
         if (Yii::$app->request->isPost) {
             Model::loadMultiple($blocs, Yii::$app->request->bodyParams);
             $element->load(Yii::$app->request->bodyParams);

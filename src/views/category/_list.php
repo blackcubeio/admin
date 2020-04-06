@@ -1,9 +1,23 @@
 <?php
 /**
+ * _list.php
+ *
+ * PHP version 7.2+
+ *
+ * @author Philippe Gaultier <pgaultier@redcat.io>
+ * @copyright 2010-2020 Redcat
+ * @license https://www.redcat.io/license license
+ * @version XXX
+ * @link https://www.redcat.io
+ * @package blackcube\admin\views\category
+ *
  * @var $categoriesQuery \blackcube\core\models\FilterActiveQuery
  */
+
+use blackcube\admin\Module;
 use blackcube\admin\helpers\Html;
 use blackcube\admin\widgets\Publication;
+use yii\helpers\Url;
 
 $formatter = Yii::$app->formatter;
 ?>
@@ -11,15 +25,18 @@ $formatter = Yii::$app->formatter;
         <thead>
             <tr>
                 <th>
-                    <?php echo Yii::t('blackcube.admin', 'Name'); ?>
+                    <?php echo Module::t('category', 'Name'); ?>
                     <!-- input type="text" class="appearance-none bg-gray-200 text-gray-700 border border-gray-300 rounded py-1 px-4 mb-1 leading-tight"
-                    placeholder="<?php echo Yii::t('blackcube.admin', 'Name'); ?>" -->
+                    placeholder="<?php echo Module::t('category', 'Name'); ?>" -->
+                </th>
+                <th class="type">
+                    <?php echo Module::t('category', 'Type'); ?>
                 </th>
                 <th class="status">
-                    <?php echo Yii::t('blackcube.admin', 'Status'); ?>
+                    <?php echo Module::t('category', 'Status'); ?>
                 </th>
                 <th class="tools">
-                    <?php echo Yii::t('blackcube.admin', 'Action'); ?>
+                    <?php echo Module::t('category', 'Action'); ?>
                 </th>
             </tr>
         </thead>
@@ -35,10 +52,17 @@ $formatter = Yii::$app->formatter;
                     </div>
                 </td>
                 <td>
+                    <?php if ($category->type !== null): ?>
+                        <span class="text-xs text-gray-600 italic uppercase"><?php echo $category->type->name; ?></span>
+                    <?php else: ?>
+                        <span class="text-xs text-gray-600 italic uppercase"><?php echo Module::t('category', 'No type'); ?></span>
+                    <?php endif; ?>
+                </td>
+                <td>
                     <?php echo Publication::widget(['element' => $category]); ?>
                 </td>
                 <td>
-                    <?php echo Html::beginForm(['delete', 'id' => $category->id], 'post', ['data-ajax-modal' => \yii\helpers\Url::to(['modal', 'id' => $category->id])]); ?>
+                    <?php echo Html::beginForm(['delete', 'id' => $category->id], 'post', ['data-ajax-modal' => Url::to(['modal', 'id' => $category->id])]); ?>
                     <?php if ($category->getTags()->count() > 0): ?>
                         <span class="button disabled">
                             <i class="fa fa-trash-alt"></i>
