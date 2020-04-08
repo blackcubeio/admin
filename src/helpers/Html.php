@@ -8,6 +8,8 @@ use yii\base\Model;
 use blackcube\core\models\Bloc;
 use blackcube\core\interfaces\ElasticInterface;
 use yii\base\NotSupportedException;
+use yii\helpers\Inflector;
+use yii\helpers\Json;
 
 class Html extends \yii\helpers\Html
 {
@@ -18,6 +20,24 @@ class Html extends \yii\helpers\Html
         ],
     ];
 
+    public static function bindAureliaAttributes($parameters = [])
+    {
+        $aureliaParameters = '';
+        foreach ($parameters as $key => $value) {
+            if (isset($value)) {
+                $key = Inflector::camel2id($key);
+                if (is_bool($value)) {
+                    $value = $value ? '1' : '0';
+                } elseif (!(is_numeric($value) || is_string($value))) {
+                    $value = Json::encode($value);
+                }
+                //ELSE VALUE IS OK
+                $aureliaParameters .= $key.'.bind: \''.$value.'\'; ';
+            }
+        }
+        return $aureliaParameters;
+
+    }
     public static function activeDateTimeInput($model, $attribute, $options = [])
     {
         $name = isset($options['name']) ? $options['name'] : static::getInputName($model, $attribute);
@@ -113,6 +133,19 @@ class Html extends \yii\helpers\Html
         return $options;
     }
 
+    public static function activeElasticDescription(ElasticInterface $elastic, $attribute, $options = [])
+    {
+        if (!preg_match(static::$attributeRegex, $attribute, $matches)) {
+            throw new InvalidArgumentException('Attribute name must contain word characters only.');
+        }
+        $realAttibute = $matches[2];
+        $attributeHints = $elastic->attributeHints();
+        if (isset($attributeHints[$realAttibute])) {
+            return static::tag('span', $attributeHints[$realAttibute], $options);
+        } else {
+            return '';
+        }
+    }
     public static function activeElasticField(ElasticInterface $elastic, $attribute, $options = [])
     {
         if (!preg_match(static::$attributeRegex, $attribute, $matches)) {

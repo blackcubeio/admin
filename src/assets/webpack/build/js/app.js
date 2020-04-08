@@ -122,6 +122,19 @@ var AjaxService = /** @class */ (function () {
             return response.text();
         });
     };
+    AjaxService.prototype.getRequestJson = function (url) {
+        this.logger.debug('getRequestJson', url);
+        return this.httpClient.fetch(url, {
+            method: 'get',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            }
+        })
+            .then(function (response) {
+            return response.json();
+        });
+    };
     AjaxService.prototype.deleteRequest = function (url, csrf) {
         if (csrf === void 0) { csrf = ''; }
         this.logger.debug('deleteRequest');
@@ -544,6 +557,88 @@ var BlackcubeChoicesCustomAttribute = /** @class */ (function () {
     return BlackcubeChoicesCustomAttribute;
 }());
 exports.BlackcubeChoicesCustomAttribute = BlackcubeChoicesCustomAttribute;
+
+
+/***/ }),
+
+/***/ "components/BlackcubeControllerActionCustomAttribute":
+/*!********************************************************************!*\
+  !*** ./app/components/BlackcubeControllerActionCustomAttribute.ts ***!
+  \********************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var aurelia_framework_1 = __webpack_require__(/*! aurelia-framework */ "aurelia-framework");
+var AjaxService_1 = __webpack_require__(/*! ../services/AjaxService */ "./app/services/AjaxService.ts");
+var BlackcubeControllerActionCustomAttribute = /** @class */ (function () {
+    function BlackcubeControllerActionCustomAttribute(element, ajaxService) {
+        var _this = this;
+        this.logger = aurelia_framework_1.LogManager.getLogger('components.BlackcubeControllerAction');
+        this.onChange = function (evt) {
+            var select = evt.currentTarget;
+            var url = _this.url.replace('__controller__', select.value);
+            _this.ajaxService.getRequestJson(url)
+                .then(function (body) {
+                _this.logger.debug('body');
+                var length = _this.targetElement.options.length;
+                for (var i = (length - 1); i >= 0; i--) {
+                    _this.targetElement.options[i].remove();
+                }
+                body.forEach(function (value) {
+                    var option = document.createElement('option');
+                    option.value = value.id;
+                    option.label = value.name;
+                    if ((select.value === _this.originalSourceValue) && (option.value === _this.originalTargetValue)) {
+                        option.selected = true;
+                    }
+                    _this.targetElement.options.add(option);
+                });
+            });
+            _this.logger.debug('onChange', select.value);
+        };
+        this.element = element;
+        this.ajaxService = ajaxService;
+        this.logger.debug('Constructor');
+    }
+    BlackcubeControllerActionCustomAttribute.prototype.created = function (owningView, myView) {
+        this.logger.debug('Created');
+    };
+    BlackcubeControllerActionCustomAttribute.prototype.bind = function (bindingContext, overrideContext) {
+        this.logger.debug('Bind');
+    };
+    BlackcubeControllerActionCustomAttribute.prototype.attached = function () {
+        this.sourceElement = this.element.querySelector('[data-controller-action=source]');
+        this.originalSourceValue = this.sourceElement.value;
+        this.targetElement = this.element.querySelector('[data-controller-action=target]');
+        this.originalTargetValue = this.targetElement.value;
+        this.sourceElement.addEventListener('change', this.onChange);
+        this.logger.debug('Attached');
+    };
+    BlackcubeControllerActionCustomAttribute.prototype.detached = function () {
+        this.sourceElement.removeEventListener('change', this.onChange);
+        this.logger.debug('Detached');
+    };
+    BlackcubeControllerActionCustomAttribute.prototype.unbind = function () {
+        this.logger.debug('Unbind');
+    };
+    __decorate([
+        aurelia_framework_1.bindable({ primaryProperty: true })
+    ], BlackcubeControllerActionCustomAttribute.prototype, "url", void 0);
+    BlackcubeControllerActionCustomAttribute = __decorate([
+        aurelia_framework_1.inject(aurelia_framework_1.DOM.Element, AjaxService_1.AjaxService)
+    ], BlackcubeControllerActionCustomAttribute);
+    return BlackcubeControllerActionCustomAttribute;
+}());
+exports.BlackcubeControllerActionCustomAttribute = BlackcubeControllerActionCustomAttribute;
 
 
 /***/ }),
@@ -1207,7 +1302,8 @@ function configure(configure) {
         'components/BlackcubeAjaxLinkCustomAttribute',
         'components/BlackcubeFileCustomElement',
         'components/BlackcubeChoicesCustomAttribute',
-        'components/BlackcubePieCustomElement'
+        'components/BlackcubePieCustomElement',
+        'components/BlackcubeControllerActionCustomAttribute'
     ]);
 }
 exports.configure = configure;

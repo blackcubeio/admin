@@ -62,6 +62,20 @@ class AjaxService {
                 return response.text();
             });
     }
+    public getRequestJson(url:string)
+    {
+        this.logger.debug('getRequestJson', url);
+        return this.httpClient.fetch(url, {
+            method: 'get',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            }
+        })
+            .then((response:Response) => {
+                return response.json();
+            });
+    }
     public deleteRequest(url:string, csrf:string = '')
     {
         this.logger.debug('deleteRequest');

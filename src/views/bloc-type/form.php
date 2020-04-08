@@ -3,20 +3,30 @@
  * @var $blocType \blackcube\core\models\BlocType
  * @var $typeBlocTypes \blackcube\core\models\TypeBlocType[]
  */
+
+use blackcube\admin\Module;
 use blackcube\admin\helpers\Html;
+use blackcube\admin\widgets\Sidebar;
+use blackcube\admin\widgets\SlugForm;
+use yii\helpers\ArrayHelper;
+use yii\helpers\Url;
+
 ?>
 <div class="flex flex-1">
-    <?php echo \blackcube\admin\widgets\Sidebar::widget(); ?>
+    <?php echo Sidebar::widget(); ?>
     <main>
         <ul class="header">
-            <li class="">
-                <?php echo Html::a('<i class="fa fa-angle-left mr-2"></i> Back', ['index'], ['class' => 'button']); ?>
+            <li>
+                <?php echo Html::a('<i class="fa fa-angle-left mr-2"></i> '.Module::t('bloc-type', 'Back'), ['index'], ['class' => 'button']); ?>
+            </li>
+            <li>
+                <?php echo Html::a('<i class="fa fa-check mr-2"></i> '.Module::t('bloc-type', 'Save'), ['index'], ['class' => 'button']); ?>
             </li>
         </ul>
         <?php echo Html::beginForm('', 'post', ['class' => 'form']); ?>
             <div class="bloc">
                 <div class="bloc-title">
-                    <span class="title">Type de bloc</span>
+                    <span class="title"><?php echo Module::t('bloc-type', 'Bloc type'); ?></span>
                 </div>
             </div>
         <div class="bloc">
@@ -37,7 +47,7 @@ use blackcube\admin\helpers\Html;
             </div>
         <div class="bloc">
             <div class="bloc-title">
-                <span class="title">Types associés</span>
+                <span class="title"><?php echo Module::t('bloc-type', 'Associated types'); ?></span>
             </div>
         </div>
 
@@ -53,10 +63,10 @@ use blackcube\admin\helpers\Html;
                 </div>
 
         <div class="buttons">
-            <?php echo Html::a(Yii::t('blackcube.admin', 'Cancel'), ['index'], [
+            <?php echo Html::a('<i class="fa fa-times mr-2"></i> '.Module::t('bloc-type', 'Cancel'), ['index'], [
                 'class' => 'button-cancel'
             ]); ?>
-            <?php echo Html::button(Yii::t('blackcube.admin', 'Save'), [
+            <?php echo Html::button('<i class="fa fa-check mr-2"></i> '.Module::t('bloc-type', 'Save'), [
                 'type' => 'submit',
                 'class' => 'button-submit'
             ]); ?>

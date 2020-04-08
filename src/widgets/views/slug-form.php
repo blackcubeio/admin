@@ -106,7 +106,7 @@ $elementType = Inflector::camel2id(StringHelper::basename(get_class($slugForm->g
             </div>
         </div>
         <div class="bloc ml-4 justify-end">
-            <div class="w-full bloc-fieldset md:w-11/12">
+            <div class="w-full bloc-fieldset md:w-4/12">
                 <?php echo Html::activeLabel($seo, 'image', ['class' => 'label']); ?>
                 <?php echo Html::activeUpload($seo, 'image', [
                         'upload-url' => Url::to(['upload']),
@@ -114,6 +114,9 @@ $elementType = Inflector::camel2id(StringHelper::basename(get_class($slugForm->g
                         'delete-url' => Url::to(['delete', 'name' => '__name__']),
                         'file-type' => 'jpg,png',
                 ]); ?>
+            </div>
+            <div class="w-full bloc-fieldset md:w-7/12">
+                <span><?php echo Module::t('widgets', 'Image size should be 1200x630'); ?></span>
             </div>
         </div>
         <div class="bloc ml-4 justify-end">

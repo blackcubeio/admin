@@ -18,6 +18,7 @@ use blackcube\admin\commands\AdministratorController;
 use blackcube\admin\commands\IconsController;
 use yii\base\BootstrapInterface;
 use yii\base\Module as BaseModule;
+use yii\console\controllers\MigrateController;
 use yii\db\Connection;
 use yii\di\Instance;
 use yii\i18n\GettextMessageSource;
@@ -60,7 +61,7 @@ class Module extends BaseModule implements BootstrapInterface
     /**
      * @var string command prefix
      */
-    public $commandNameSpace = 'bc:';
+    public $commandNameSpace = 'bca:';
 
 
     /**
@@ -104,8 +105,15 @@ class Module extends BaseModule implements BootstrapInterface
         $app->controllerMap[$this->commandNameSpace.'admin'] = [
             'class' => AdministratorController::class,
         ];
-        $app->controllerMap['bc:icons'] = [
-            'class' => IconsController::class,
+        $app->controllerMap[$this->commandNameSpace.'migrate'] = [
+            'class' => MigrateController::class,
+            'migrationNamespaces' => [
+                'blackcube\admin\migrations',
+            ],
+            'migrationPath' => [
+                '@yii/rbac/migrations',
+            ],
+            'db' => $this->db,
         ];
 
     }

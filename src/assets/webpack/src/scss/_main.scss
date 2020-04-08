@@ -1,9 +1,9 @@
 main {
   @apply bg-white flex-1 p-3;
   .header {
-    @apply flex px-6 mx-3;
+    @apply flex justify-between px-6 mx-3;
     .button {
-      @apply inline-block border border-gray-700 rounded py-2 px-4 bg-gray-700 text-white w-full;
+      @apply inline-block border border-gray-700 rounded py-1 px-4 bg-gray-700 text-white w-full text-xs uppercase;
       &:hover {
         @apply bg-blue-800;
       }
@@ -30,7 +30,7 @@ main {
     .dropdown-tool {
       @apply relative border border-gray-200 rounded-l bg-gray-200;
       select {
-        @apply block font-light appearance-none w-full bg-gray-200 text-gray-700 py-1 pl-4 pr-8  leading-tight;
+        @apply block font-light appearance-none w-full bg-gray-200 text-gray-700 py-2 pl-4 pr-8  leading-tight;
         &:focus {
           @apply outline-none;
         }

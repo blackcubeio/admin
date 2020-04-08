@@ -1,5 +1,5 @@
 .form {
-  @apply w-full p-6;
+  @apply w-full pt-3 pb-6 px-6;
   .bloc {
     @apply flex flex-wrap mb-2;
     &-title, &-subtitle {
@@ -49,24 +49,6 @@
       svg {
         @apply fill-current h-4 w-4;
       }
-    }
-  }
-  .buttons {
-    @apply flex items-center justify-end;
-    .button-cancel, .button-submit {
-      @apply px-4 py-1 font-light tracking-wider rounded mx-3;
-      &:hover {
-        @apply bg-blue-800;
-      }
-    }
-    .button-cancel {
-      @apply text-gray-900 bg-gray-200;
-      &:hover {
-        @apply text-white;
-      }
-    }
-    .button-submit {
-      @apply text-white bg-gray-700;
     }
   }
 }

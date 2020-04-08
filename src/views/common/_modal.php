@@ -21,7 +21,7 @@ use blackcube\admin\helpers\Html;
 <div class="modal" id="modal-delete">
     <div class="inner">
         <div class="info">
-            <div class="header">
+            <div class="header danger">
                 <h3><?php echo Module::t('common', 'Delete'); ?></h3>
                 <button id="modal-delete-cross"><span>×</span></button>
             </div>
@@ -35,7 +35,7 @@ use blackcube\admin\helpers\Html;
                 </p>
             </div>
             <div class="footer">
-                <button class="close" type="button" style="transition: all .15s ease" id="modal-delete-close"><?php echo Module::t('common', 'No'); ?></button>
+                <button class="close" type="button" style="transition: all .15s ease" id="modal-delete-close"><?php echo Module::t('common', 'Cancel'); ?></button>
                 <button class="run" type="button" style="transition: all .15s ease" id="modal-delete-ok"><?php echo Module::t('common', 'Delete'); ?></button>
             </div>
         </div>

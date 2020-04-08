@@ -17,8 +17,10 @@ use blackcube\core\models\Type;
 use blackcube\core\web\controllers\BlackcubeController;
 use yii\base\ErrorException;
 use yii\base\Model;
+use yii\helpers\Inflector;
 use yii\helpers\Json;
 use yii\web\Controller;
+use yii\web\MethodNotAllowedHttpException;
 use yii\web\NotFoundHttpException;
 use Yii;
 use yii\web\Response;
@@ -26,6 +28,9 @@ use yii\web\Response;
 class TypeController extends Controller
 {
 
+    /**
+     * {@inheritDoc}
+     */
     public function actions()
     {
         $actions = parent::actions();
@@ -64,6 +69,9 @@ class TypeController extends Controller
         $typeBlocTypes = $this->getTypeBlocTypes();
         if (Yii::$app->request->isPost) {
             $type->load(Yii::$app->request->bodyParams);
+            if ($type->action === 'default') {
+                $type->action = null;
+            }
             Model::loadMultiple($typeBlocTypes, Yii::$app->request->bodyParams);
             if ($type->validate() === true && Model::validateMultiple($typeBlocTypes)) {
                 $transaction = Module::getInstance()->db->beginTransaction();
@@ -91,6 +99,7 @@ class TypeController extends Controller
             'type' => $type,
             'typeBlocTypes' => $typeBlocTypes,
             'controllers' => $this->findControllers(),
+            'actions' => $this->findActions($type->controller)
         ]);
     }
 
@@ -110,13 +119,16 @@ class TypeController extends Controller
         $typeBlocTypes = $this->getTypeBlocTypes($id);
         if (Yii::$app->request->isPost) {
             $type->load(Yii::$app->request->bodyParams);
+            if ($type->action === 'default') {
+                $type->action = null;
+            }
             Model::loadMultiple($typeBlocTypes, Yii::$app->request->bodyParams);
             if ($type->validate() === true && Model::validateMultiple($typeBlocTypes)) {
                 if ($type->save()) {
                     foreach ($typeBlocTypes as $typeBlocType) {
                         $typeBlocType->save();
                     }
-                    return $this->redirect(['type/index']);
+                    return $this->redirect(['index']);
                 }
             }
         }
@@ -124,6 +136,7 @@ class TypeController extends Controller
             'type' => $type,
             'typeBlocTypes' => $typeBlocTypes,
             'controllers' => $this->findControllers(),
+            'actions' => $this->findActions($type->controller)
         ]);
     }
 
@@ -143,7 +156,7 @@ class TypeController extends Controller
         if (Yii::$app->request->isPost) {
             $type->delete();
         }
-        return $this->redirect(['type/index']);
+        return $this->redirect(['index']);
     }
 
     /**
@@ -173,6 +186,64 @@ class TypeController extends Controller
         }
         return $typeBlocTypes;
     }
+
+    /**
+     * @param $controller
+     * @return array
+     * @throws MethodNotAllowedHttpException
+     */
+    public function actionActions($controller)
+    {
+        if (true || Yii::$app->request->isAjax) {
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            return $this->findActions($controller);
+        } else {
+            throw new MethodNotAllowedHttpException();
+        }
+    }
+
+    protected function findActions($controller = null)
+    {
+        $actions = [];
+        $actions[] = [
+            'id' => 'default',
+            'name' => '*'
+        ];
+        if ($controller !== null) {
+            try {
+                $controllerNamespace = CoreModule::getInstance()->cmsControllerNamespace;
+                $controllerClass = $controllerNamespace.'\\'.$controller.'Controller';
+                $ref = new \ReflectionClass($controllerClass);
+                foreach ($ref->getMethods(\ReflectionMethod::IS_PUBLIC) as $method) {
+                    if (strncmp('action', $method->name, 6) === 0 && ($method->name !== 'actions')) {
+                        $realMethod = str_replace('action', '', $method->name);
+                        $actions[] = [
+                            'id' => Inflector::camel2id($realMethod),
+                            'name' => Inflector::camel2id($realMethod),
+                        ];
+                    }
+                }
+                if ($ref->hasMethod('actions')) {
+                    $currentController = $ref->newInstanceWithoutConstructor();
+                    $externalActions = $currentController->actions();
+                    foreach($externalActions as $id => $config) {
+                        $actions[] = [
+                            'id' => $id,
+                            'name' => $id
+                        ];
+                    }
+
+                }
+            } catch (\Exception $e) {
+
+            }
+        }
+        return $actions;
+    }
+    /**
+     * @return array
+     * @throws \ReflectionException
+     */
     protected function findControllers()
     {
         $controllerNamespace = CoreModule::getInstance()->cmsControllerNamespace;
@@ -189,10 +260,10 @@ class TypeController extends Controller
                 if ($matches[2] !== 'Blackcube') {
                     $targetClass = $controllerNamespace.'\\'.$matches[1];
                     $ref = new \ReflectionClass($targetClass);
-                    if ($ref->isSubclassOf(BlackcubeController::class)) {
+                    if ($ref->isSubclassOf(BlackcubeController::class) && $ref->isAbstract() === false) {
                         $controllers[] = [
                             'id' => $matches[2],
-                            'name' => $matches[2],
+                            'name' => Inflector::camel2id($matches[2]),
                         ];
                     }
 

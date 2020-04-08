@@ -11,6 +11,7 @@ export function configure(configure: FrameworkConfiguration) {
         PLATFORM.moduleName('components/BlackcubeAjaxLinkCustomAttribute'),
         PLATFORM.moduleName('components/BlackcubeFileCustomElement'),
         PLATFORM.moduleName('components/BlackcubeChoicesCustomAttribute'),
-        PLATFORM.moduleName('components/BlackcubePieCustomElement')
+        PLATFORM.moduleName('components/BlackcubePieCustomElement'),
+        PLATFORM.moduleName('components/BlackcubeControllerActionCustomAttribute')
     ]);
 }

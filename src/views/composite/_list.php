@@ -49,16 +49,16 @@ $formatter = Yii::$app->formatter;
                     <div class="flex items-start">
                         <p class="text-gray-900 whitespace-no-wrap">
                             <?php echo Html::a($composite->name, ['edit', 'id' => $composite->id], ['class' => 'hover:text-blue-600 py-1']); ?>
-                            <?php if ($composite->dateStart !== null): ?>
-                                <span class="text-xs text-gray-600 italic">
-                                    <?php echo Module::t('composite', 'Start: {0,date,medium}', [$composite->activeDateStart]); ?>
+                            <?php if (($composite->dateStart !== null) || ($composite->dateEnd !== null)): ?>
+                                <br/>
+                                <span class="text-xs text-gray-600 italic ml-2">
+                                <?php if ($composite->dateStart !== null): ?>
+                                        <?php echo Module::t('composite', 'Start: {0,date,medium}', [$composite->activeDateStart]); ?>
 
-                                </span>
-                            <?php endif; ?>
-                            <?php if ($composite->dateEnd !== null): ?>
-                                <span class="text-xs text-gray-600 italic">
-                                    <?php echo Module::t('composite', 'End: {0,date,medium}', [$composite->activeDateEnd]); ?>
-
+                                <?php endif; ?>
+                                <?php if ($composite->dateEnd !== null): ?>
+                                        <?php echo Module::t('composite', 'End: {0,date,medium}', [$composite->activeDateEnd]); ?>
+                                <?php endif; ?>
                                 </span>
                             <?php endif; ?>
                         </p>

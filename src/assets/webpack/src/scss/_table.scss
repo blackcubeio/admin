@@ -11,7 +11,7 @@
     td {
       @apply px-3 py-3 border-b border-gray-200 bg-white text-sm;
       .button {
-        @apply bg-gray-300 text-gray-800 font-bold py-2 px-2 rounded inline-flex items-center outline-none;
+        @apply bg-gray-300 text-gray-800 font-bold py-2 px-2 rounded inline-flex items-center outline-none text-xs;
         &:focus {
           @apply outline-none;
         }

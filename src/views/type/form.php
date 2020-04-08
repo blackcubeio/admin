@@ -4,23 +4,30 @@
  * @var $blocTypesQuery \blackcube\core\models\FilterActiveQuery
  * @var $typeBlocTypes \blackcube\core\models\TypeBlocType[]
  * @var $controllers array
+ * @var $actions array
  */
+use blackcube\admin\Module;
 use blackcube\admin\helpers\Html;
+use blackcube\admin\widgets\Sidebar;
+use blackcube\admin\widgets\SlugForm;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Url;
 ?>
 <div class="flex flex-1">
-    <?php echo \blackcube\admin\widgets\Sidebar::widget(); ?>
+    <?php echo Sidebar::widget(); ?>
     <main>
         <ul class="header">
-            <li class="">
-                <?php echo Html::a('<i class="fa fa-angle-left mr-2"></i> Back', ['index'], ['class' => 'button']); ?>
+            <li>
+                <?php echo Html::a('<i class="fa fa-angle-left mr-2"></i> '.Module::t('type', 'Back'), ['index'], ['class' => 'button']); ?>
+            </li>
+            <li>
+                <?php echo Html::a('<i class="fa fa-check mr-2"></i> '.Module::t('type', 'Save'), ['index'], ['class' => 'button']); ?>
             </li>
         </ul>
         <?php echo Html::beginForm('', 'post', ['class' => 'form']); ?>
             <div class="bloc">
                 <div class="bloc-title">
-                    <span class="title">Type</span>
+                    <span class="title"><?php echo Module::t('type', 'Type'); ?></span>
                 </div>
             </div>
 
@@ -30,11 +37,15 @@ use yii\helpers\Url;
                     <?php echo Html::activeTextInput($type, 'name', ['class' => 'textfield'.($type->hasErrors('name')?' error':'')]); ?>
                 </div>
             </div>
-            <div class="bloc">
+            <?php echo Html::beginTag('div', [
+                    'class' => 'bloc',
+                    'blackcube-controller-action' => Url::to(['actions', 'controller' => '__controller__'])
+            ]); ?>
                 <div class="w-full bloc-fieldset md:w-4/12">
                     <?php echo Html::activeLabel($type, 'controller', ['class' => 'label']); ?>
                     <div class="dropdown">
                         <?php echo Html::activeDropDownList($type, 'controller', ArrayHelper::map($controllers, 'id', 'name'), [
+                            'data-controller-action' => 'source'
                         ]); ?>
                         <div class="arrow">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
@@ -43,8 +54,19 @@ use yii\helpers\Url;
                 </div>
                 <div class="w-full bloc-fieldset md:w-4/12">
                     <?php echo Html::activeLabel($type, 'action', ['class' => 'label']); ?>
-                    <?php echo Html::activeTextInput($type, 'action', ['class' => 'textfield'.($type->hasErrors('action')?' error':'')]); ?>
+                    <div class="dropdown">
+                        <?php echo Html::activeDropDownList($type, 'action', ArrayHelper::map($actions, 'id', 'name'), [
+                            'data-controller-action' => 'target',
+                        ]); ?>
+                        <div class="arrow">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
+                        </div>
+                    </div>
                 </div>
+                <!-- div class="w-full bloc-fieldset md:w-4/12">
+                    <?php echo Html::activeLabel($type, 'action', ['class' => 'label']); ?>
+                    <?php echo Html::activeTextInput($type, 'action', ['class' => 'textfield'.($type->hasErrors('action')?' error':'')]); ?>
+                </div -->
                 <div class="w-full bloc-fieldset md:w-2/12">
                     <?php echo Html::activeLabel($type, 'minBlocs', ['class' => 'label']); ?>
                     <?php echo Html::activeTextInput($type, 'minBlocs', ['class' => 'textfield'.($type->hasErrors('minBlocs')?' error':'')]); ?>
@@ -53,11 +75,11 @@ use yii\helpers\Url;
                     <?php echo Html::activeLabel($type, 'maxBlocs', ['class' => 'label']); ?>
                     <?php echo Html::activeTextInput($type, 'maxBlocs', ['class' => 'textfield'.($type->hasErrors('maxBlocs')?' error':'')]); ?>
                 </div>
-            </div>
+            <?php echo Html::endTag('div'); ?>
 
             <div class="bloc">
                 <div class="bloc-title">
-                    <span class="title">Types de blocs autorisés</span>
+                    <span class="title"><?php echo Module::t('type', 'Allowed bloc types'); ?></span>
                 </div>
             </div>
 
@@ -72,12 +94,11 @@ use yii\helpers\Url;
                 <?php endforeach; ?>
             </div>
 
-
             <div class="buttons">
-                <?php echo Html::a(Yii::t('blackcube.admin', 'Cancel'), ['index'], [
+                <?php echo Html::a('<i class="fa fa-times mr-2"></i> '.Module::t('type', 'Cancel'), ['index'], [
                     'class' => 'button-cancel'
                 ]); ?>
-                <?php echo Html::button(Yii::t('blackcube.admin', 'Save'), [
+                <?php echo Html::button('<i class="fa fa-check mr-2"></i> '.Module::t('type', 'Save'), [
                     'type' => 'submit',
                     'class' => 'button-submit'
                 ]); ?>

@@ -43,6 +43,7 @@ $pathAlias = Module::getInstance()->adminTemplatesAlias;
                         'preview-url' => Url::to(['preview', 'name' => '__name__']),
                         'delete-url' => Url::to(['delete', 'name' => '__name__'])
                     ]); ?>
+                    <?php echo Html::activeElasticDescription($bloc,  '['.$i.']'.$id, ['class' => 'italic text-xs text-gray-700']); ?>
                 </div>
             <?php endforeach; ?>
             <!-- AJAX TARGET TO SET THE BLOCS -->

@@ -32,8 +32,11 @@ use yii\helpers\Url;
     <?php echo Sidebar::widget(); ?>
     <main>
         <ul class="header">
-            <li class="">
+            <li>
                 <?php echo Html::a('<i class="fa fa-angle-left mr-2"></i> '.Module::t('category', 'Back'), ['index'], ['class' => 'button']); ?>
+            </li>
+            <li>
+                <?php echo Html::a('<i class="fa fa-check mr-2"></i> '.Module::t('category', 'Save'), ['index'], ['class' => 'button']); ?>
             </li>
         </ul>
         <?php echo Html::beginForm('', 'post', ['class' => 'form']); ?>
@@ -115,10 +118,10 @@ use yii\helpers\Url;
             <?php endif; ?>
 
             <div class="buttons">
-                <?php echo Html::a(Module::t('category', 'Cancel'), ['index'], [
+                <?php echo Html::a('<i class="fa fa-times mr-2"></i> '.Module::t('category', 'Cancel'), ['index'], [
                     'class' => 'button-cancel'
                 ]); ?>
-                <?php echo Html::button(Module::t('category', 'Save'), [
+                <?php echo Html::button('<i class="fa fa-check mr-2"></i> '.Module::t('category', 'Save'), [
                     'type' => 'submit',
                     'class' => 'button-submit'
                 ]); ?>
