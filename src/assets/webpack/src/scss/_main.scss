@@ -1,14 +1,5 @@
 main {
   @apply bg-white flex-1 p-3;
-  .header {
-    @apply flex justify-between px-6 mx-3;
-    .button {
-      @apply inline-block border border-gray-700 rounded py-1 px-4 bg-gray-700 text-white w-full text-xs uppercase;
-      &:hover {
-        @apply bg-blue-800;
-      }
-    }
-  }
   .bloc {
     @apply flex flex-wrap mb-2;
     @apply text-gray-700 text-sm;

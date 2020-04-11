@@ -31,15 +31,16 @@ use yii\helpers\Url;
 <div class="flex flex-1">
     <?php echo Sidebar::widget(); ?>
     <main>
+        <?php echo Html::beginForm('', 'post', ['class' => 'form']); ?>
         <ul class="header">
             <li>
                 <?php echo Html::a('<i class="fa fa-angle-left mr-2"></i> '.Module::t('category', 'Back'), ['index'], ['class' => 'button']); ?>
             </li>
             <li>
-                <?php echo Html::a('<i class="fa fa-check mr-2"></i> '.Module::t('category', 'Save'), ['index'], ['class' => 'button']); ?>
+                <?php echo Html::button('<i class="fa fa-check mr-2"></i> '.Module::t('category', 'Save'), ['type' => 'submit', 'class' => 'button']); ?>
             </li>
         </ul>
-        <?php echo Html::beginForm('', 'post', ['class' => 'form']); ?>
+
             <?php echo SlugForm::widget([
                 'element' => $category,
                 'slugForm' => $slugForm,

@@ -11,7 +11,7 @@ use yii\base\NotSupportedException;
 use yii\helpers\Inflector;
 use yii\helpers\Json;
 
-class Html extends \yii\helpers\Html
+class Html extends \blackcube\core\web\helpers\Html
 {
     private static $icons = [
         'plus' => [
@@ -20,6 +20,14 @@ class Html extends \yii\helpers\Html
         ],
     ];
 
+
+    /**
+     * Prepare AureliaCustomAttribute parameters
+     *
+     * @param array $parameters
+     * @return string
+     * @since XXX
+     */
     public static function bindAureliaAttributes($parameters = [])
     {
         $aureliaParameters = '';
@@ -38,51 +46,7 @@ class Html extends \yii\helpers\Html
         return $aureliaParameters;
 
     }
-    public static function activeDateTimeInput($model, $attribute, $options = [])
-    {
-        $name = isset($options['name']) ? $options['name'] : static::getInputName($model, $attribute);
-        if (isset($options['value'])) {
-            $value = $options['value'];
-        } else {
-            $currentValue = static::getAttributeValue($model, $attribute);
-            if ($currentValue instanceof \DateTime) {
-                $value = $currentValue->format('Y-m-d\TH:i:s');
-            } else {
-                $value = $currentValue;
-            }
-        }
-        if (!array_key_exists('id', $options)) {
-            $options['id'] = static::getInputId($model, $attribute);
-        }
 
-        static::setActivePlaceholder($model, $attribute, $options);
-        // self::normalizeMaxLength($model, $attribute, $options);
-
-        return static::input('datetime-local', $name, $value, $options);
-    }
-
-    public static function activeDateInput($model, $attribute, $options = [])
-    {
-        $name = isset($options['name']) ? $options['name'] : static::getInputName($model, $attribute);
-        if (isset($options['value'])) {
-            $value = $options['value'];
-        } else {
-            $currentValue = static::getAttributeValue($model, $attribute);
-            if ($currentValue instanceof \DateTime) {
-                $value = $currentValue->format('Y-m-d');
-            } else {
-                $value = $currentValue;
-            }
-        }
-        if (!array_key_exists('id', $options)) {
-            $options['id'] = static::getInputId($model, $attribute);
-        }
-
-        static::setActivePlaceholder($model, $attribute, $options);
-        // self::normalizeMaxLength($model, $attribute, $options);
-
-        return static::input('date', $name, $value, $options);
-    }
 
     public static function activeSchema(Model $model, $attribute, $options = [])
     {
@@ -122,8 +86,16 @@ class Html extends \yii\helpers\Html
     {
         if ($structure['field'] !== 'file' && $structure['field'] !== 'files') {
             unset($options['upload-url'], $options['preview-url'], $options['delete-url'], $options['file-type']);
-        } elseif (($structure['field'] === 'file' || $structure['field'] === 'files') && isset($structure['fileType']) && isset($options['file-type']) === false) {
-            $options['file-type'] = $structure['fileType'];
+        } elseif (($structure['field'] === 'file' || $structure['field'] === 'files')) {
+            if (isset($structure['fileType']) && isset($options['file-type']) === false) {
+                $options['file-type'] = $structure['fileType'];
+            }
+            if (isset($structure['imageWidth']) && isset($options['image-width']) === false) {
+                $options['image-width'] = $structure['imageWidth'];
+            }
+            if (isset($structure['imageHeight']) && isset($options['image-height']) === false) {
+                $options['image-height'] = $structure['imageHeight'];
+            }
         }
         if ($structure['field'] === 'file') {
             $options['multiple'] = false;

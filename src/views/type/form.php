@@ -87,7 +87,7 @@ use yii\helpers\Url;
                 <?php foreach ($typeBlocTypes as $i => $typeBlocType): ?>
                     <div class="w-full bloc-fieldset md:w-2/12">
                         <?php echo Html::activeCheckbox($typeBlocType, '['.$i.']allowed', ['label' => false, 'class' => 'checkbox']); ?>
-                        <?php echo Html::activeLabel($typeBlocType, '['.$i.']allowed', ['class' => 'label', 'style' => 'display:inline-block;', 'label' => $typeBlocType->blocType->name]); ?>
+                        <?php echo Html::activeLabel($typeBlocType, '['.$i.']allowed', ['class' => 'label', 'style' => 'display:inline;', 'label' => $typeBlocType->blocType->name]); ?>
                         <?php echo Html::activeHiddenInput($typeBlocType, '['.$i.']typeId'); ?>
                         <?php echo Html::activeHiddenInput($typeBlocType, '['.$i.']blocTypeId'); ?>
                     </div>

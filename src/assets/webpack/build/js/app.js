@@ -665,6 +665,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var aurelia_framework_1 = __webpack_require__(/*! aurelia-framework */ "aurelia-framework");
 var AjaxService_1 = __webpack_require__(/*! ../services/AjaxService */ "./app/services/AjaxService.ts");
 var resumablejs_1 = __importDefault(__webpack_require__(/*! resumablejs */ "../../../../node_modules/resumablejs/resumable.js"));
+var urijs_1 = __importDefault(__webpack_require__(/*! urijs */ "../../../../node_modules/urijs/src/URI.js"));
 var BlackcubeFileCustomElement = /** @class */ (function () {
     function BlackcubeFileCustomElement(element, ajaxService) {
         var _this = this;
@@ -778,8 +779,19 @@ var BlackcubeFileCustomElement = /** @class */ (function () {
     BlackcubeFileCustomElement.prototype.bind = function (bindingContext, overrideContext) {
         this.logger.debug('Bind');
     };
+    BlackcubeFileCustomElement.prototype.appendParametersUrl = function (url) {
+        var baseUrl = new urijs_1.default(url);
+        if (this.imageWidth) {
+            baseUrl.addSearch({ width: this.imageWidth });
+        }
+        if (this.imageHeight) {
+            baseUrl.addSearch({ height: this.imageHeight });
+        }
+        return baseUrl.toString();
+    };
     BlackcubeFileCustomElement.prototype.generatePreviewUrl = function (name) {
-        return this.previewUrl.replace('__name__', name);
+        var url = this.previewUrl.replace('__name__', name);
+        return this.appendParametersUrl(url);
     };
     BlackcubeFileCustomElement.prototype.generateDeleteUrl = function (name) {
         return this.deleteUrl.replace('__name__', name);
@@ -929,6 +941,12 @@ var BlackcubeFileCustomElement = /** @class */ (function () {
     __decorate([
         aurelia_framework_1.bindable({ defaultBindingMode: aurelia_framework_1.bindingMode.fromView })
     ], BlackcubeFileCustomElement.prototype, "value", void 0);
+    __decorate([
+        aurelia_framework_1.bindable({ defaultBindingMode: aurelia_framework_1.bindingMode.fromView })
+    ], BlackcubeFileCustomElement.prototype, "imageWidth", void 0);
+    __decorate([
+        aurelia_framework_1.bindable({ defaultBindingMode: aurelia_framework_1.bindingMode.fromView })
+    ], BlackcubeFileCustomElement.prototype, "imageHeight", void 0);
     BlackcubeFileCustomElement = __decorate([
         aurelia_framework_1.inject(aurelia_framework_1.DOM.Element, AjaxService_1.AjaxService)
     ], BlackcubeFileCustomElement);
@@ -1175,6 +1193,99 @@ module.exports = "<template>\n    <input type=\"hidden\" />\n    <div></div>\n</
 
 /***/ }),
 
+/***/ "components/BlackcubeToggleDependenciesCustomAttribute":
+/*!**********************************************************************!*\
+  !*** ./app/components/BlackcubeToggleDependenciesCustomAttribute.ts ***!
+  \**********************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var aurelia_framework_1 = __webpack_require__(/*! aurelia-framework */ "aurelia-framework");
+var BlackcubeToggleDependenciesCustomAttribute = /** @class */ (function () {
+    function BlackcubeToggleDependenciesCustomAttribute(element) {
+        var _this = this;
+        this.logger = aurelia_framework_1.LogManager.getLogger('components.ToggleDependencies');
+        this.onChange = function (item) {
+            var toggle = item.currentTarget;
+            if (toggle.checked) {
+                _this.activeFields();
+            }
+            else {
+                _this.deactivateFields();
+            }
+        };
+        this.element = element;
+        this.logger.debug('Constructor');
+    }
+    BlackcubeToggleDependenciesCustomAttribute.prototype.created = function (owningView, myView) {
+        this.logger.debug('Created');
+    };
+    BlackcubeToggleDependenciesCustomAttribute.prototype.bind = function (bindingContext, overrideContext) {
+        this.logger.debug('Bind');
+    };
+    BlackcubeToggleDependenciesCustomAttribute.prototype.attached = function () {
+        if (this.targetFilter.trim() == '') {
+            this.targetFilter = '[data-dependency]';
+        }
+        this.toggleCheckbox = this.element.querySelector('input[type=checkbox]');
+        this.toggleTargets = this.element.querySelectorAll(this.targetFilter);
+        this.deactivateFields();
+        if (this.toggleCheckbox) {
+            this.toggleCheckbox.addEventListener('change', this.onChange);
+        }
+        this.logger.debug('Attached', this.targetFilter);
+    };
+    BlackcubeToggleDependenciesCustomAttribute.prototype.detached = function () {
+        if (this.toggleCheckbox) {
+            this.toggleCheckbox.removeEventListener('change', this.onChange);
+        }
+        this.logger.debug('Detached');
+    };
+    BlackcubeToggleDependenciesCustomAttribute.prototype.unbind = function () {
+        this.logger.debug('Unbind');
+    };
+    BlackcubeToggleDependenciesCustomAttribute.prototype.activeFields = function () {
+        this.toggleTargets.forEach(function (item) {
+            if (item.classList.contains('opacity-50')) {
+                item.classList.remove('opacity-50');
+            }
+            item.querySelectorAll('input, select').forEach(function (item) {
+                item.disabled = false;
+            });
+        });
+    };
+    BlackcubeToggleDependenciesCustomAttribute.prototype.deactivateFields = function () {
+        this.toggleTargets.forEach(function (item) {
+            if (!item.classList.contains('opacity-50')) {
+                item.classList.add('opacity-50');
+            }
+            item.querySelectorAll('input, select').forEach(function (item) {
+                item.disabled = true;
+            });
+        });
+    };
+    __decorate([
+        aurelia_framework_1.bindable({ primaryProperty: true })
+    ], BlackcubeToggleDependenciesCustomAttribute.prototype, "targetFilter", void 0);
+    BlackcubeToggleDependenciesCustomAttribute = __decorate([
+        aurelia_framework_1.inject(aurelia_framework_1.DOM.Element)
+    ], BlackcubeToggleDependenciesCustomAttribute);
+    return BlackcubeToggleDependenciesCustomAttribute;
+}());
+exports.BlackcubeToggleDependenciesCustomAttribute = BlackcubeToggleDependenciesCustomAttribute;
+
+
+/***/ }),
+
 /***/ "components/BlackcubeToggleSlugCustomAttribute":
 /*!**************************************************************!*\
   !*** ./app/components/BlackcubeToggleSlugCustomAttribute.ts ***!
@@ -1303,7 +1414,8 @@ function configure(configure) {
         'components/BlackcubeFileCustomElement',
         'components/BlackcubeChoicesCustomAttribute',
         'components/BlackcubePieCustomElement',
-        'components/BlackcubeControllerActionCustomAttribute'
+        'components/BlackcubeControllerActionCustomAttribute',
+        'components/BlackcubeToggleDependenciesCustomAttribute'
     ]);
 }
 exports.configure = configure;

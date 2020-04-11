@@ -59,6 +59,7 @@
     "aurelia-validation": "^1.5.0",
     "chartist": "^0.11.4",
     "choices.js": "^9.0.1",
-    "resumablejs": "^1.1.0"
+    "resumablejs": "^1.1.0",
+    "urijs": "^1.19.2"
   }
 }

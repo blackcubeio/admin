@@ -54,13 +54,13 @@ $pathAlias = Module::getInstance()->adminTemplatesAlias;
                 'type' => 'button',
                 'name' => 'blocDelete',
                 'value' => $bloc->id,
-                'class' => 'bg-gray-300 hover:bg-red-600 hover:text-white text-xs text-gray-800 font-bold p-1 mr-4 rounded inline-flex items-center  focus:outline-none'
+                'class' => 'button delete'
             ]); ?>
                 <i class="fa fa-trash-alt"></i>
             <?php echo Html::endTag('button'); ?>
             <?php if ($i === 0): ?>
                 <?php echo Html::beginTag('span', [
-                    'class' => 'p-1 font-light tracking-wider rounded-l ml-2 text-xs text-gray-700 bg-gray-200 focus:outline-none opacity-25'
+                    'class' => 'button up inactive'
                 ]); ?>
                 <i class="fa fa-angle-up"></i>
                 <?php echo Html::endTag('span'); ?>
@@ -69,14 +69,14 @@ $pathAlias = Module::getInstance()->adminTemplatesAlias;
                     'type' => 'button',
                     'name' => 'blocUp',
                     'value' => $bloc->id,
-                    'class' => 'p-1 font-light hover:text-white hover:bg-blue-800 text-xs tracking-wider rounded-l ml-2 text-gray-700 bg-gray-200 focus:outline-none'
+                    'class' => 'button up'
                 ]); ?>
                 <i class="fa fa-angle-up"></i>
                 <?php echo Html::endTag('button'); ?>
             <?php endif; ?>
             <?php if ($i >= ($blocsCount - 1)): ?>
                 <?php echo Html::beginTag('span', [
-                    'class' => 'p-1 font-light tracking-wider rounded-r mr-0 text-xs text-gray-700 bg-gray-200 focus:outline-none opacity-25'
+                    'class' => 'button down inactive'
                 ]); ?>
                 <i class="fa fa-angle-down"></i>
                 <?php echo Html::endTag('span'); ?>
@@ -85,7 +85,7 @@ $pathAlias = Module::getInstance()->adminTemplatesAlias;
                     'type' => 'button',
                     'name' => 'blocDown',
                     'value' => $bloc->id,
-                    'class' => 'p-1 font-light hover:text-white hover:bg-blue-800 text-xs tracking-wider rounded-r mr-0 text-gray-700 bg-gray-200 focus:outline-none'
+                    'class' => 'button down'
                 ]); ?>
                     <i class="fa fa-angle-down"></i>
                 <?php echo Html::endTag('button'); ?>

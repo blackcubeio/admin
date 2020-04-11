@@ -3,6 +3,7 @@ import {DOM, inject, noView, bindable, bindingMode, LogManager, ComponentCreated
 import {Logger} from "aurelia-logging";
 import {AjaxService} from "../services/AjaxService";
 import Resumable from "resumablejs"
+import URI from 'urijs';
 
 interface UploadedFile {
     name:string,
@@ -36,6 +37,8 @@ class BlackcubeFileCustomElement implements ComponentCreated, ComponentBind, Com
     @bindable({ defaultBindingMode: bindingMode.fromView}) public name: string;
     @bindable({ defaultBindingMode: bindingMode.fromView}) public multiple: string|boolean = false;
     @bindable({ defaultBindingMode: bindingMode.fromView}) public value: string = '';
+    @bindable({ defaultBindingMode: bindingMode.fromView}) public imageWidth: string;
+    @bindable({ defaultBindingMode: bindingMode.fromView}) public imageHeight: string;
 
     public constructor(element:HTMLElement, ajaxService:AjaxService) {
         this.element = element;
@@ -51,10 +54,22 @@ class BlackcubeFileCustomElement implements ComponentCreated, ComponentBind, Com
         this.logger.debug('Bind');
     }
 
+    private appendParametersUrl(url:string)
+    {
+        let baseUrl = new URI(url);
+        if (this.imageWidth) {
+            baseUrl.addSearch({width: this.imageWidth});
+        }
+        if (this.imageHeight) {
+            baseUrl.addSearch({height: this.imageHeight});
+        }
+        return baseUrl.toString();
+    }
 
     private generatePreviewUrl(name:string)
     {
-        return this.previewUrl.replace('__name__', name);
+        let url = this.previewUrl.replace('__name__', name);
+        return this.appendParametersUrl(url);
     }
 
     private generateDeleteUrl(name:string)

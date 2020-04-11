@@ -1,5 +1,14 @@
 .form {
   @apply w-full pt-3 pb-6 px-6;
+  .header {
+    @apply flex justify-between mb-2 mx-3 ;
+    .button {
+      @apply inline-block border border-gray-700 rounded py-1 px-4 bg-gray-700 text-white w-full text-xs uppercase;
+      &:hover {
+        @apply bg-blue-800;
+      }
+    }
+  }
   .bloc {
     @apply flex flex-wrap mb-2;
     &-title, &-subtitle {
@@ -32,6 +41,33 @@
         }
         &.error {
           @apply border-red-500;
+        }
+      }
+    }
+    .button {
+      @apply p-1 font-light text-xs tracking-wider text-gray-700 bg-gray-200 outline-none inline-flex;
+      &:focus {
+        @apply outline-none;
+      }
+      &:hover {
+        @apply text-white bg-blue-800;
+      }
+      &.delete {
+        @apply mr-4 rounded;
+        &:hover {
+          @apply bg-red-600 text-white;
+        }
+      }
+      &.up {
+        @apply rounded-l ml-2;
+      }
+      &.down {
+        @apply rounded-r mr-0;
+      }
+      &.inactive {
+        @apply opacity-25;
+        &:hover {
+          @apply text-gray-700 bg-gray-200;
         }
       }
     }

@@ -57,9 +57,17 @@ $elementType = Inflector::camel2id(StringHelper::basename(get_class($slugForm->g
                 <?php echo Html::activeTextInput($slug, 'path', ['class' => 'textfield'.($slug->hasErrors('path')?' error':'')]); ?>
             </div>
         </div>
-        <div class="bloc ml-4">
+        <div class="bloc">
+            <div class="w-full px-3">
+            <span class="italic text-xs text-gray-700"><?php echo Module::t('widgets', 'Sitemap and SEO elements are Slug dependant. They will be activated for the website only if Slug is active'); ?></span>
+            </div>
+        </div>
+        <div class="bloc">
+            <div class="bloc-subtitle">
+                <label class="title"><?php echo Module::t('widgets', 'Sitemap'); ?></label>
+            </div>
             <div class="w-full bloc-fieldset md:w-1/12">
-                <?php echo Html::activeLabel($sitemap, 'active', ['class' => 'label', 'label' => Module::t('widgets', 'Sitemap')]); ?>
+                <?php echo Html::activeLabel($sitemap, 'active', ['class' => 'label']); ?>
                 <?php echo Html::activeCheckbox($sitemap, 'active', ['label' => false, 'class' => 'checkbox']); ?>
             </div>
             <div class="w-full bloc-fieldset md:w-2/12">
@@ -81,9 +89,12 @@ $elementType = Inflector::camel2id(StringHelper::basename(get_class($slugForm->g
                 </div>
             </div>
         </div>
-        <div class="bloc ml-4">
+        <div class="bloc">
+            <div class="bloc-subtitle">
+                <label class="title"><?php echo Module::t('widgets', 'SEO'); ?></label>
+            </div>
             <div class="w-full bloc-fieldset md:w-1/12">
-                <?php echo Html::activeLabel($seo, 'active', ['class' => 'label', 'label' => Module::t('widgets', 'Seo')]); ?>
+                <?php echo Html::activeLabel($seo, 'active', ['class' => 'label']); ?>
                 <?php echo Html::activeCheckbox($seo, 'active', ['label' => false, 'class' => 'checkbox']); ?>
             </div>
             <div class="w-full bloc-fieldset md:w-1/12">
@@ -112,11 +123,13 @@ $elementType = Inflector::camel2id(StringHelper::basename(get_class($slugForm->g
                         'upload-url' => Url::to(['upload']),
                         'preview-url' => Url::to(['preview', 'name' => '__name__']),
                         'delete-url' => Url::to(['delete', 'name' => '__name__']),
+                        'image-width' => 1200,
+                        'image-height' => 630,
                         'file-type' => 'jpg,png',
                 ]); ?>
             </div>
             <div class="w-full bloc-fieldset md:w-7/12">
-                <span><?php echo Module::t('widgets', 'Image size should be 1200x630'); ?></span>
+                <span class="italic text-xs text-gray-700"><?php echo Module::t('widgets', 'Image size should be 1200x630'); ?></span>
             </div>
         </div>
         <div class="bloc ml-4 justify-end">
