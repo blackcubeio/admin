@@ -50,6 +50,7 @@ $currentCategoryId = null;
                 <tr>
                     <td colspan="4" class="category">
                         <?php echo $tag->category->name; ?>
+                        <span class="text-xs italic">(<?php echo $tag->category->language->id; ?>)</span>
                         <?php /*/ if($tag->category->active): ?><span class="text-xxs text-white bg-green-600 rounded-full p-1 ml-4"><i class="fa fa-eye"></i></span><?php else: ?><span class="text-xxs text-white bg-red-600 rounded-full p-1 ml-4"><i class="fa fa-eye-slash"></i></span><?php endif; /**/ ?>
                     </td>
                 </tr>

@@ -70,9 +70,24 @@ class BlackcubeToggleSlugCustomAttribute implements ComponentCreated, ComponentB
         if (this.toggleBloc && this.toggleCheckbox && this.toggleCheckbox.checked) {
             if (this.toggleBloc.classList.contains('hidden')) {
                 this.toggleBloc.classList.remove('hidden');
+                if (this.titleBloc) {
+                    let icon = <HTMLElement>this.titleBloc.querySelector('.fa');
+                    if (icon) {
+                        icon.classList.remove('fa-chevron-down');
+                        icon.classList.add('fa-chevron-up');
+                    }
+                }
+
                 this.storageService.setElementSlugOpened(this.elementId);
             } else {
                 this.toggleBloc.classList.add('hidden');
+                if (this.titleBloc) {
+                    let icon = <HTMLElement>this.titleBloc.querySelector('.fa');
+                    if (icon) {
+                        icon.classList.remove('fa-chevron-up');
+                        icon.classList.add('fa-chevron-down');
+                    }
+                }
                 this.storageService.setElementSlugClosed(this.elementId);
             }
         }
@@ -82,9 +97,23 @@ class BlackcubeToggleSlugCustomAttribute implements ComponentCreated, ComponentB
         if (this.toggleBloc && this.toggleCheckbox) {
             if (this.toggleCheckbox.checked) {
                 this.toggleBloc.classList.remove('hidden');
+                if (this.titleBloc) {
+                    let icon = <HTMLElement>this.titleBloc.querySelector('.fa');
+                    if (icon) {
+                        icon.classList.remove('fa-chevron-down');
+                        icon.classList.add('fa-chevron-up');
+                    }
+                }
                 this.storageService.setElementSlugOpened(this.elementId);
             } else {
                 this.toggleBloc.classList.add('hidden');
+                if (this.titleBloc) {
+                    let icon = <HTMLElement>this.titleBloc.querySelector('.fa');
+                    if (icon) {
+                        icon.classList.remove('fa-chevron-up');
+                        icon.classList.add('fa-chevron-down');
+                    }
+                }
                 this.storageService.setElementSlugClosed(this.elementId);
             }
         }

@@ -97,6 +97,7 @@ class NodeController extends BaseElementController
             'element' => $node
         ]);
         $blocs = $node->getBlocs()->all();
+        $compositesQuery = $node->getComposites();
         $result = $this->saveElement($node, $blocs, $slugForm);
         if ($result === true) {
             $selectedTags = Yii::$app->request->getBodyParam('selectedTags', []);
@@ -106,17 +107,7 @@ class NodeController extends BaseElementController
         $languagesQuery = Language::find()->active()->orderBy(['name' => SORT_ASC]);
         $targetNodesQuery = Node::find()->orderBy(['left' => SORT_ASC]);
         $typesQuery = Type::find()->orderBy(['name' => SORT_ASC]);
-        $selectTagsData =  Tag::find()
-            ->innerJoinWith('category', true)
-            ->orderBy([
-                Category::tableName().'.name' => SORT_ASC,
-                Tag::tableName().'.name' => SORT_ASC
-            ])->select([
-                Tag::tableName().'.id as tagId',
-                Tag::tableName().'.name as tagName',
-                Tag::tableName().'.categoryId',
-                Category::tableName().'.name as categoryName'
-            ])->asArray()->all();
+        $selectTagsData =  $this->prepareTags();
 
         return $this->render('form', [
             'node' => $node,
@@ -125,6 +116,7 @@ class NodeController extends BaseElementController
             'selectTagsData' => $selectTagsData,
             'targetNodesQuery' => $targetNodesQuery,
             'blocs' => $blocs,
+            'compositesQueyr' => $compositesQuery,
             'languagesQuery' => $languagesQuery,
         ]);
     }
@@ -149,6 +141,7 @@ class NodeController extends BaseElementController
 
         $parentNode = $node->getParent()->one();
         $blocs = $node->getBlocs()->all();
+        $compositesQuery = $node->getComposites();
         if (Yii::$app->request->isPost) {
             $moveNode =  Yii::$app->request->getBodyParam('moveNode', false);
             if ($moveNode == true) {
@@ -195,17 +188,7 @@ class NodeController extends BaseElementController
         $languagesQuery = Language::find()->active()->orderBy(['name' => SORT_ASC]);
         $targetNodesQuery = Node::find()->orderBy(['left' => SORT_ASC]);
         $typesQuery = Type::find()->orderBy(['name' => SORT_ASC]);
-        $selectTagsData =  Tag::find()
-            ->innerJoinWith('category', true)
-            ->orderBy([
-                Category::tableName().'.name' => SORT_ASC,
-                Tag::tableName().'.name' => SORT_ASC
-            ])->select([
-                Tag::tableName().'.id as tagId',
-                Tag::tableName().'.name as tagName',
-                Tag::tableName().'.categoryId',
-                Category::tableName().'.name as categoryName'
-            ])->asArray()->all();
+        $selectTagsData =  $this->prepareTags();
 
         return $this->render('form', [
             'node' => $node,
@@ -215,8 +198,56 @@ class NodeController extends BaseElementController
             'selectTagsData' => $selectTagsData,
             'targetNodesQuery' => $targetNodesQuery,
             'blocs' => $blocs,
+            'compositesQuery' => $compositesQuery,
             'languagesQuery' => $languagesQuery,
         ]);
+    }
+
+    public function actionSearch($query)
+    {
+        // if (Yii::$app->request->isAjax) {
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            $compositeQuery = Composite::findOrphans()
+                ->orderBy(['name' => SORT_ASC])
+                ->andWhere(['like', 'name', $query]);
+            return $compositeQuery
+                ->select(['id', 'name'])
+                ->all();
+
+        // }
+    }
+
+    public function actionComposites($id)
+    {
+        if (Yii::$app->request->isAjax && Yii::$app->request->isPost) {
+            $node = Node::findOne(['id' => $id]);
+            if ($node === null) {
+                throw new NotFoundHttpException();
+            }
+            if (isset(Yii::$app->request->bodyParams['compositeAdd'])) {
+                $composite = Composite::find()->andWhere(['id' => Yii::$app->request->bodyParams['compositeAdd']])->one();
+                if ($composite !== null) {
+                    $node->attachComposite($composite, -1);
+                }
+            } elseif (isset(Yii::$app->request->bodyParams['compositeDelete'])) {
+                $composite = Composite::find()->andWhere(['id' => Yii::$app->request->bodyParams['compositeDelete']])->one();
+                if ($composite !== null) {
+                    $node->detachComposite($composite);
+                }
+            } elseif (isset(Yii::$app->request->bodyParams['compositeUp'])) {
+                $composite = Composite::find()->andWhere(['id' => Yii::$app->request->bodyParams['compositeUp']])->one();
+                if ($composite !== null) {
+                    $node->moveCompositeUp($composite);
+                }
+            } elseif (isset(Yii::$app->request->bodyParams['compositeDown'])) {
+                $composite = Composite::find()->andWhere(['id' => Yii::$app->request->bodyParams['compositeDown']])->one();
+                if ($composite !== null) {
+                    $node->moveCompositeDown($composite);
+                }
+            }
+            $compositesQuery = $node->getComposites();
+            return $this->renderPartial('_composites', ['compositesQuery' => $compositesQuery, 'element' => $node]);
+        }
     }
 
     /**
@@ -229,7 +260,7 @@ class NodeController extends BaseElementController
     public function actionDelete($id)
     {
         $node = Node::findOne(['id' => $id]);
-        if ($composite === null) {
+        if ($node === null) {
             throw new NotFoundHttpException();
         }
         if (Yii::$app->request->isPost) {

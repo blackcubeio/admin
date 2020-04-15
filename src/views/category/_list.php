@@ -48,6 +48,7 @@ $formatter = Yii::$app->formatter;
                     <div class="flex items-start">
                         <p class="text-gray-900 whitespace-no-wrap">
                             <?php echo Html::a($category->name, ['edit', 'id' => $category->id], ['class' => 'hover:text-blue-600 py-1']); ?>
+                            <span class="text-xs text-gray-600 italic">(<?php echo $category->language->id; ?>)</span>
                         </p>
                     </div>
                 </td>

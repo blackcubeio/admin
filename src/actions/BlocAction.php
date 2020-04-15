@@ -44,10 +44,14 @@ class BlocAction extends Action
                 }
             } elseif (isset(Yii::$app->request->bodyParams['blocUp'])) {
                 $bloc = Bloc::find()->andWhere(['id' => Yii::$app->request->bodyParams['blocUp']])->one();
-                $element->moveBlocUp($bloc);
+                if ($bloc !== null) {
+                    $element->moveBlocUp($bloc);
+                }
             } elseif (isset(Yii::$app->request->bodyParams['blocDown'])) {
                 $bloc = Bloc::find()->andWhere(['id' => Yii::$app->request->bodyParams['blocDown']])->one();
-                $element->moveBlocDown($bloc);
+                if ($bloc !== null) {
+                    $element->moveBlocDown($bloc);
+                }
             }
             $blocs = $element->getBlocs()->all();
             foreach($blocs as $bloc) {

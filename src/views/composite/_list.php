@@ -49,6 +49,7 @@ $formatter = Yii::$app->formatter;
                     <div class="flex items-start">
                         <p class="text-gray-900 whitespace-no-wrap">
                             <?php echo Html::a($composite->name, ['edit', 'id' => $composite->id], ['class' => 'hover:text-blue-600 py-1']); ?>
+                            <span class="text-xs text-gray-600 italic">(<?php echo $composite->language->id; ?>)</span>
                             <?php if (($composite->dateStart !== null) || ($composite->dateEnd !== null)): ?>
                                 <br/>
                                 <span class="text-xs text-gray-600 italic ml-2">

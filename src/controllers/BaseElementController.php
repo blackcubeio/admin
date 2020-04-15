@@ -7,6 +7,7 @@ use blackcube\admin\Module;
 use blackcube\core\interfaces\ElementInterface;
 use blackcube\core\interfaces\TaggableInterface;
 use blackcube\core\models\Bloc;
+use blackcube\core\models\Category;
 use blackcube\core\models\Tag;
 use blackcube\core\web\actions\ResumableUploadAction;
 use blackcube\core\web\actions\ResumablePreviewAction;
@@ -105,5 +106,24 @@ abstract class BaseElementController extends Controller
             }
         }
     }
+
+    /**
+     * @return array list of tags
+     */
+    protected function prepareTags()
+    {
+        return Tag::find()
+            ->innerJoinWith('category', true)
+            ->orderBy([
+                Category::tableName().'.[[name]]' => SORT_ASC,
+                Tag::tableName().'.[[name]]' => SORT_ASC
+            ])->select([
+                Tag::tableName().'.[[id]] as [[tagId]]',
+                Tag::tableName().'.[[name]] as [[tagName]]',
+                Tag::tableName().'.[[categoryId]]',
+                Category::tableName().'.[[name]] as [[categoryName]]'
+            ])->asArray()->all();
+    }
+
 
 }

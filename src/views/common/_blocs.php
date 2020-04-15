@@ -13,7 +13,7 @@
  *
  * @var $blocs \blackcube\core\models\Bloc[]
  * @var $this \yii\web\View
- * @var $element \blackcube\core\models\Tag
+ * @var $element \blackcube\core\models\Tag|\blackcube\core\models\Composite|\blackcube\core\models\Category|\blackcube\core\models\Node
  */
 
 use blackcube\admin\Module;

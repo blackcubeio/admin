@@ -28,11 +28,14 @@ $elementType = Inflector::camel2id(StringHelper::basename(get_class($slugForm->g
 ?>
 <?php echo Html::beginTag('div', ['blackcube-toggle-slug' => ($slugForm->getElement()->id === null)?'':$elementType.'-'.$slugForm->getElement()->id]); ?>
     <div class="bloc mb-2">
-        <div class="bloc-title">
+        <div class="bloc-title flex justify-between">
+            <div class="inline-block">
             <?php echo Html::activeCheckbox($slugForm, 'hasSlug', ['class' => 'mr-2 toggle', 'label' => false]); ?>
             <span class="title">
                 <?php echo Module::t('widgets', 'Slug'); ?>
             </span>
+            </div>
+            <i class="fa fa-chevron-down text-white mt-2"></i>
         </div>
     </div>
     <div class="toggle-target hidden">

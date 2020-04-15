@@ -50,6 +50,7 @@ $formatter = Yii::$app->formatter;
                         <?php //TODO: fix margin left (problem when level > 4) ?>
                         <?php echo Html::beginTag('p', ['class' => 'text-gray-900 whitespace-no-wrap '.('ml-'.(($node->level -1) * 4))]); ?>
                             <?php echo Html::a($node->name, ['edit', 'id' => $node->id], ['class' => 'hover:text-blue-600 py-1']); ?>
+                            <span class="text-xs text-gray-600 italic">(<?php echo $node->language->id; ?>)</span>
                             <?php if (($node->dateStart !== null) || ($node->dateEnd !== null)): ?>
                                 <br/>
                                 <span class="text-xs text-gray-600 italic ml-2">

@@ -89,33 +89,42 @@ use yii\helpers\Url;
             </div>
 
             <?php if ($tag->id !== null && $tag->type !== null): ?>
-            <?php echo Html::beginTag('div', [
-                'blackcube-blocs' => Url::to(['blocs', 'id' => $tag->id])
-            ]); ?>
-                <div class="bloc">
-                    <div class="bloc-title">
-                        <span class="title"><?php echo Module::t('tag', 'Content'); ?></span>
-                    </div>
-                </div>
-                <div data-ajax-target="">
-                    <?php echo $this->render('@blackcube/admin/views/common/_blocs', ['blocs' => $blocs, 'element' => $tag]); ?>
-                </div>
-                <?php if ($tag->type && $tag->type->getBlocTypes()->count() > 0): ?>
-                <div class="bloc bloc-tools">
-                    <div class="dropdown-tool">
-                        <?php echo Html::dropDownList('blocTypeId', null, ArrayHelper::map($tag->type->blocTypes, 'id', 'name'), []); ?>
-                        <div class="dropdown-tool-arrow">
-                            <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
+                <?php echo Html::beginTag('div', ['blackcube-toggle-element' => Html::bindAureliaAttributes([
+                    'elementType' => \blackcube\core\models\Tag::getElementType(),
+                    'elementId' => $tag->id,
+                    'elementSubData' => 'blocs'
+                ])]); ?>
+                    <?php echo Html::beginTag('div', [
+                        'blackcube-blocs' => Url::to(['blocs', 'id' => $tag->id])
+                    ]); ?>
+                        <div class="bloc">
+                            <div class="bloc-title flex justify-between" data-toggle-element="source">
+                                <span class="title"><?php echo Module::t('tag', 'Content'); ?></span>
+                                <i class="fa fa-chevron-down text-white mt-2"></i>
+                            </div>
                         </div>
-                    </div>
-                    <button type="button" name="blocAdd" class="button">
-                        <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" >
-                            <path d="M5 3h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5c0-1.1.9-2 2-2zm0 2v14h14V5H5zm8 6h2a1 1 0 0 1 0 2h-2v2a1 1 0 0 1-2 0v-2H9a1 1 0 0 1 0-2h2V9a1 1 0 0 1 2 0v2z"/>
-                        </svg>
-                    </button>
-                </div>
-                <?php endif; ?>
-            <?php echo Html::endTag('div'); ?>
+                        <div data-toggle-element="target">
+                            <div data-ajax-target="">
+                                <?php echo $this->render('@blackcube/admin/views/common/_blocs', ['blocs' => $blocs, 'element' => $tag]); ?>
+                            </div>
+                            <?php if ($tag->type && $tag->type->getBlocTypes()->count() > 0): ?>
+                            <div class="bloc bloc-tools">
+                                <div class="dropdown-tool">
+                                    <?php echo Html::dropDownList('blocTypeId', null, ArrayHelper::map($tag->type->blocTypes, 'id', 'name'), []); ?>
+                                    <div class="dropdown-tool-arrow">
+                                        <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
+                                    </div>
+                                </div>
+                                <button type="button" name="blocAdd" class="button">
+                                    <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" >
+                                        <path d="M5 3h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5c0-1.1.9-2 2-2zm0 2v14h14V5H5zm8 6h2a1 1 0 0 1 0 2h-2v2a1 1 0 0 1-2 0v-2H9a1 1 0 0 1 0-2h2V9a1 1 0 0 1 2 0v2z"/>
+                                    </svg>
+                                </button>
+                            </div>
+                            <?php endif; ?>
+                        </div>
+                    <?php echo Html::endTag('div'); ?>
+                <?php echo Html::endTag('div'); ?>
             <?php endif; ?>
 
             <div class="buttons">

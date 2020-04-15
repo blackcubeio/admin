@@ -1,5 +1,28 @@
 class StorageService
 {
+    public getElementOpened(elementType:string, elementSubData:string, elementId: string): boolean
+    {
+        if (elementId !== '' && elementSubData !== '' && elementType !== '') {
+            const storageStatus = localStorage.getItem('admin:element:'+elementType+'-'+elementId+':'+elementSubData+':opened');
+            return storageStatus === '1';
+        }
+        return false;
+
+    }
+    public setElementOpened(elementType:string, elementSubData:string, elementId: string): void
+    {
+        if (elementId !== '' && elementSubData !== '' && elementType !== '') {
+            localStorage.setItem('admin:element:'+elementType+'-'+elementId+':'+elementSubData+':opened', '1');
+        }
+
+    }
+    public setElementClosed(elementType:string, elementSubData:string, elementId: string): void
+    {
+        if (elementId !== '' && elementSubData !== '' && elementType !== '') {
+            localStorage.removeItem('admin:element:'+elementType+'-'+elementId+':'+elementSubData+':opened');
+        }
+
+    }
     public getElementSlugOpened(elementId:string):boolean
     {
         if (elementId !== '') {
