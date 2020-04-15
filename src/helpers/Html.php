@@ -2,11 +2,10 @@
 
 namespace blackcube\admin\helpers;
 
+use blackcube\core\interfaces\ElasticInterface;
 use yii\base\InvalidArgumentException;
 use yii\base\InvalidConfigException;
 use yii\base\Model;
-use blackcube\core\models\Bloc;
-use blackcube\core\interfaces\ElasticInterface;
 use yii\base\NotSupportedException;
 use yii\helpers\Inflector;
 use yii\helpers\Json;

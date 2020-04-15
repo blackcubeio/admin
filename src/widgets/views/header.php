@@ -24,7 +24,7 @@ use blackcube\admin\helpers\Html;
             <span class="text-white text-lg p-2">Blackcube</span>
         </div>
         <div class="p-1 flex flex-row">
-            <a href="#" class="text-white p-2 no-underline hidden md:block lg:block"><?php echo Module::t('widgets', 'Logout'); ?></a>
+            <?php echo Html::a(Module::t('widgets', 'Logout'), ['authentication/logout'], ['class' => 'text-white p-2 no-underline hidden md:block lg:block']); ?>
             <!-- div id="ProfileDropDown" class="rounded hidden shadow-md bg-white absolute pin-t mt-12 mr-1 pin-r">
                 <ul class="list-reset">
                     <li><a href="#" class="no-underline px-4 py-2 block text-black hover:bg-grey-light">My account</a></li>

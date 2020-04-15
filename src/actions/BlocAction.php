@@ -20,7 +20,7 @@ class BlocAction extends Action
         if ($this->elementClass === null) {
             throw new InvalidArgumentException();
         }
-        if (Yii::$app->request->isAjax && Yii::$app->request->isPost) {
+        if (Yii::$app->request->isPost) {
             $elementClass = $this->elementClass;
             if ($id !== null) {
                 $element = $elementClass::findOne(['id' => $id]);

@@ -7,11 +7,32 @@ use blackcube\core\models\Composite;
 use blackcube\core\models\Node;
 use blackcube\core\models\Slug;
 use blackcube\core\models\Tag;
+use yii\filters\AccessControl;
 use yii\web\Controller;
 use Yii;
 
 class DefaultController extends Controller
 {
+    /**
+     * {@inheritDoc}
+     */
+    public function behaviors()
+    {
+        $behaviors = parent::behaviors();
+        $behaviors['access'] = [
+            'class' => AccessControl::class,
+            'rules' => [
+                [
+                    'allow' => true,
+                    'actions' => [
+                        'index'
+                    ],
+                    'roles' => ['@'],
+                ]
+            ]
+        ];
+        return $behaviors;
+    }
 
     public function actionIndex()
     {

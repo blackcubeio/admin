@@ -18,11 +18,19 @@ class AuthenticationController extends Controller
         if ($administrator->load(Yii::$app->request->bodyParams) === true) {
             if ($administrator->validate() === true) {
                 $realAdministrator = Administrator::find()->where(['email' => $administrator->email])->one();
+                Yii::$app->user->login($realAdministrator, 60 * 60 *24 * 30);
+                return $this->redirect(['default/']);
                 // $realAdministrator = $administrator::
             }
         }
         return $this->render('login', [
             'administrator' => $administrator
         ]);
+    }
+
+    public function actionLogout()
+    {
+        Yii::$app->user->logout();
+        $this->redirect(['login']);
     }
 }

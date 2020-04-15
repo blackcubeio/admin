@@ -98,11 +98,11 @@ class Administrator extends \yii\db\ActiveRecord implements IdentityInterface
             [['email'], 'required'],
             [['email'], 'email'],
             [['password'], 'required', 'on' => [static::SCENARIO_LOGIN, static::SCENARIO_CREATE]],
+            [['email'], 'validateLogin', 'on' => [static::SCENARIO_LOGIN], 'params' => ['password' => 'password']],
             [['email'], 'unique', 'on' => [static::SCENARIO_CREATE]],
             [['active'], 'boolean'],
             [['dateCreate', 'dateUpdate'], 'safe'],
             [['email', 'password', 'authKey', 'token', 'tokenType'], 'string', 'max' => 255],
-            [['email'], 'unique'],
         ];
     }
 
@@ -136,27 +136,23 @@ class Administrator extends \yii\db\ActiveRecord implements IdentityInterface
     {
         $administrator = static::find()->where(['email' => $this->$attribute])->active()->one();
         if ($administrator !== null) {
-            $password = $this->password;
-            if (static::validatePassword($password, $administrator->password) === false) {
+            $password = $this->{$params['password']};
+            //$administrator->validatePassword($password);
+            if ($administrator->validatePassword($password) === false) {
                 $this->addError('password', Module::t('validators', 'Password is invalid'));
-                $success = false;
             }
         } else {
             $this->addError($attribute, Module::t('validators', 'Administrator does not exist'));
-            $success = false;
         }
-
-        return $success;
     }
 
     /**
      * @param string $password password to check
-     * @param string $hash hashed password sotred in db
      * @return bool
      */
-    public static function validatePassword($password, $hash)
+    public function validatePassword($password)
     {
-        return Yii::$app->getSecurity()->validatePassword($password, $hash);
+        return Yii::$app->getSecurity()->validatePassword($password, $this->password);
     }
 
     /**

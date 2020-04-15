@@ -16,6 +16,7 @@ namespace blackcube\admin;
 
 use blackcube\admin\commands\AdministratorController;
 use blackcube\admin\commands\IconsController;
+use blackcube\admin\models\Administrator;
 use yii\base\BootstrapInterface;
 use yii\base\Module as BaseModule;
 use yii\console\controllers\MigrateController;
@@ -24,6 +25,7 @@ use yii\di\Instance;
 use yii\i18n\GettextMessageSource;
 use yii\rbac\DbManager;
 use yii\web\Application as WebApplication;
+use yii\web\User as WebUser;
 use yii\console\Application as ConsoleApplication;
 use Exception;
 use Yii;
@@ -126,6 +128,20 @@ class Module extends BaseModule implements BootstrapInterface
      */
     protected function bootstrapWeb(WebApplication $app)
     {
+        $app->setComponents([
+            'user' => [
+                'class' => WebUser::class,
+                'identityClass' => Administrator::class,
+                'enableAutoLogin' => true,
+                'autoRenewCookie' => true,
+                'loginUrl' => ['admin/authentication/login'],
+                'idParam' => '__blackcubeId',
+                'returnUrlParam' => '__blackcubeReturnUrl',
+                'identityCookie' => [
+                    'name' => '_blackcubeIdentity', 'httpOnly' => true
+                ]
+            ]
+        ]);
 
     }
 

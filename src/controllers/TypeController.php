@@ -3,31 +3,49 @@
 namespace blackcube\admin\controllers;
 
 use blackcube\admin\actions\ModalAction;
-use blackcube\admin\models\SlugForm;
-use blackcube\admin\models\TagManager;
 use blackcube\admin\Module;
 use blackcube\core\models\BlocType;
 use blackcube\core\models\TypeBlocType;
 use blackcube\core\Module as CoreModule;
-use blackcube\core\interfaces\ElementInterface;
-use blackcube\core\models\Category;
-use blackcube\core\models\Slug;
-use blackcube\core\models\Tag;
 use blackcube\core\models\Type;
 use blackcube\core\web\controllers\BlackcubeController;
 use yii\base\ErrorException;
 use yii\base\Model;
+use yii\filters\AccessControl;
+use yii\filters\AjaxFilter;
 use yii\helpers\Inflector;
-use yii\helpers\Json;
 use yii\web\Controller;
 use yii\web\MethodNotAllowedHttpException;
 use yii\web\NotFoundHttpException;
-use Yii;
 use yii\web\Response;
+use Yii;
 
 class TypeController extends Controller
 {
-
+    /**
+     * {@inheritDoc}
+     */
+    public function behaviors()
+    {
+        $behaviors = parent::behaviors();
+        $behaviors['access'] = [
+            'class' => AccessControl::class,
+            'rules' => [
+                [
+                    'allow' => true,
+                    'actions' => [
+                        'modal', 'index', 'create', 'edit', 'delete', 'actions',
+                    ],
+                    'roles' => ['@'],
+                ]
+            ]
+        ];
+        $behaviors['forceAjax'] = [
+            'class' => AjaxFilter::class,
+            'only' => ['modal', 'actions'],
+        ];
+        return $behaviors;
+    }
     /**
      * {@inheritDoc}
      */
@@ -194,12 +212,8 @@ class TypeController extends Controller
      */
     public function actionActions($controller)
     {
-        if (true || Yii::$app->request->isAjax) {
-            Yii::$app->response->format = Response::FORMAT_JSON;
-            return $this->findActions($controller);
-        } else {
-            throw new MethodNotAllowedHttpException();
-        }
+        Yii::$app->response->format = Response::FORMAT_JSON;
+        return $this->findActions($controller);
     }
 
     protected function findActions($controller = null)

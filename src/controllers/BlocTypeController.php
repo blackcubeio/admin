@@ -8,13 +8,39 @@ use blackcube\core\models\BlocType;
 use blackcube\core\models\Type;
 use blackcube\core\models\TypeBlocType;
 use yii\base\Model;
-use yii\helpers\Json;
+use yii\filters\AccessControl;
+use yii\filters\AjaxFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use Yii;
 
 class BlocTypeController extends Controller
 {
+
+    /**
+     * {@inheritDoc}
+     */
+    public function behaviors()
+    {
+        $behaviors = parent::behaviors();
+        $behaviors['access'] = [
+            'class' => AccessControl::class,
+            'rules' => [
+                [
+                    'allow' => true,
+                    'actions' => [
+                        'modal', 'index', 'create', 'edit', 'delete'
+                    ],
+                    'roles' => ['@'],
+                ]
+            ]
+        ];
+        $behaviors['forceAjax'] = [
+            'class' => AjaxFilter::class,
+            'only' => ['modal'],
+        ];
+        return $behaviors;
+    }
 
     public function actions()
     {

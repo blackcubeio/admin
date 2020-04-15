@@ -3,35 +3,47 @@
 namespace blackcube\admin\controllers;
 
 use blackcube\admin\models\SlugForm;
-use blackcube\admin\models\TagManager;
 use blackcube\admin\actions\BlocAction;
 use blackcube\admin\actions\ModalAction;
 use blackcube\admin\Module;
-use blackcube\core\interfaces\TaggableInterface;
-use blackcube\core\models\Bloc;
-use blackcube\core\models\Category;
 use blackcube\core\models\Composite;
 use blackcube\core\models\Node;
 use blackcube\core\models\NodeComposite;
-use blackcube\core\models\Slug;
 use blackcube\core\models\Language;
-use blackcube\core\models\Tag;
 use blackcube\core\models\Type;
-use blackcube\core\web\actions\ResumableUploadAction;
-use blackcube\core\web\actions\ResumablePreviewAction;
-use blackcube\core\web\actions\ResumableDeleteAction;
 use yii\base\ErrorException;
-use yii\base\Event;
-use yii\base\Model;
-use yii\db\ActiveRecord;
-use yii\helpers\Json;
-use yii\web\Controller;
+use yii\filters\AccessControl;
+use yii\filters\AjaxFilter;
 use yii\web\NotFoundHttpException;
-use Yii;
 use yii\web\Response;
+use Yii;
 
 class CompositeController extends BaseElementController
 {
+    /**
+     * {@inheritDoc}
+     */
+    public function behaviors()
+    {
+        $behaviors = parent::behaviors();
+        $behaviors['access'] = [
+            'class' => AccessControl::class,
+            'rules' => [
+                [
+                    'allow' => true,
+                    'actions' => [
+                        'modal', 'blocs', 'index', 'toggle', 'create', 'edit', 'delete', 'preview', 'upload', 'delete',
+                    ],
+                    'roles' => ['@'],
+                ]
+            ]
+        ];
+        $behaviors['forceAjax'] = [
+            'class' => AjaxFilter::class,
+            'only' => ['modal', 'blocs', 'toggle'],
+        ];
+        return $behaviors;
+    }
 
     /**
      * {@inheritDoc}
@@ -67,22 +79,20 @@ class CompositeController extends BaseElementController
 
     public function actionToggle($id = null)
     {
-        if (Yii::$app->request->isAjax) {
-            if ($id !== null) {
-                $currentComposite = Composite::findOne(['id' => $id]);
-                if ($currentComposite !== null) {
-                    $currentComposite->active = !$currentComposite->active;
-                    $currentComposite->save(false, ['active']);
-                }
+        if ($id !== null) {
+            $currentComposite = Composite::findOne(['id' => $id]);
+            if ($currentComposite !== null) {
+                $currentComposite->active = !$currentComposite->active;
+                $currentComposite->save(false, ['active']);
             }
-            $compositesQuery = Composite::find()
-                ->with('slug.seo')
-                ->with('slug.sitemap')
-                ->orderBy(['name' => SORT_ASC]);
-            return $this->renderPartial('_list', [
-                'compositesQuery' => $compositesQuery
-            ]);
         }
+        $compositesQuery = Composite::find()
+            ->with('slug.seo')
+            ->with('slug.sitemap')
+            ->orderBy(['name' => SORT_ASC]);
+        return $this->renderPartial('_list', [
+            'compositesQuery' => $compositesQuery
+        ]);
     }
 
     /**
@@ -175,6 +185,39 @@ class CompositeController extends BaseElementController
         ]);
     }
 
+    /**
+     * @param integer $id
+     * @return Response
+     * @throws NotFoundHttpException
+     * @throws \Throwable
+     * @throws \yii\db\StaleObjectException
+     */
+    public function actionDelete($id)
+    {
+        $composite = Composite::findOne(['id' => $id]);
+        if ($composite === null) {
+            throw new NotFoundHttpException();
+        }
+        if (Yii::$app->request->isPost) {
+            $transaction = Module::getInstance()->db->beginTransaction();
+            try {
+                $slug = $composite->getSlug()->one();
+                if ($slug !== null) {
+                    $slug->delete();
+                }
+                $blocsQuery = $composite->getBlocs();
+                foreach($blocsQuery->each() as $bloc) {
+                    $bloc->delete();
+                }
+                $composite->delete();
+                $transaction->commit();
+            } catch (\Exception $e) {
+                $transaction->rollBack();
+            }
+        }
+        return $this->redirect(['index']);
+    }
+
     protected function handleNodes($composite, $nodeComposite)
     {
         $status = true;
@@ -209,38 +252,6 @@ class CompositeController extends BaseElementController
             }
         }
         return $status;
-    }
-    /**
-     * @param integer $id
-     * @return Response
-     * @throws NotFoundHttpException
-     * @throws \Throwable
-     * @throws \yii\db\StaleObjectException
-     */
-    public function actionDelete($id)
-    {
-        $composite = Composite::findOne(['id' => $id]);
-        if ($composite === null) {
-            throw new NotFoundHttpException();
-        }
-        if (Yii::$app->request->isPost) {
-            $transaction = Module::getInstance()->db->beginTransaction();
-            try {
-                $slug = $composite->getSlug()->one();
-                if ($slug !== null) {
-                    $slug->delete();
-                }
-                $blocsQuery = $composite->getBlocs();
-                foreach($blocsQuery->each() as $bloc) {
-                    $bloc->delete();
-                }
-                $composite->delete();
-                $transaction->commit();
-            } catch (\Exception $e) {
-                $transaction->rollBack();
-            }
-        }
-        return $this->redirect(['index']);
     }
 
 }

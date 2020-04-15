@@ -3,32 +3,45 @@
 namespace blackcube\admin\controllers;
 
 use blackcube\admin\models\SlugForm;
-use blackcube\admin\models\TagManager;
 use blackcube\admin\actions\BlocAction;
 use blackcube\admin\actions\ModalAction;
 use blackcube\admin\Module;
-use blackcube\core\interfaces\ElementInterface;
-use blackcube\core\models\Bloc;
 use blackcube\core\models\Category;
-use blackcube\core\models\Slug;
 use blackcube\core\models\Tag;
 use blackcube\core\models\Type;
-use blackcube\core\web\actions\ResumableUploadAction;
-use blackcube\core\web\actions\ResumablePreviewAction;
-use blackcube\core\web\actions\ResumableDeleteAction;
 use yii\base\ErrorException;
-use yii\base\Event;
-use yii\base\Model;
-use yii\db\ActiveRecord;
-use yii\helpers\Json;
-use yii\web\Controller;
+use yii\filters\AccessControl;
+use yii\filters\AjaxFilter;
 use yii\web\NotFoundHttpException;
-use Yii;
 use yii\web\Response;
+use Yii;
 
 class TagController extends BaseElementController
 {
-
+    /**
+     * {@inheritDoc}
+     */
+    public function behaviors()
+    {
+        $behaviors = parent::behaviors();
+        $behaviors['access'] = [
+            'class' => AccessControl::class,
+            'rules' => [
+                [
+                    'allow' => true,
+                    'actions' => [
+                        'modal', 'blocs', 'index', 'toggle', 'create', 'edit', 'delete', 'preview', 'upload', 'delete',
+                    ],
+                    'roles' => ['@'],
+                ]
+            ]
+        ];
+        $behaviors['forceAjax'] = [
+            'class' => AjaxFilter::class,
+            'only' => ['modal', 'blocs', 'toggle'],
+        ];
+        return $behaviors;
+    }
     /**
      * {@inheritDoc}
      */
@@ -72,29 +85,27 @@ class TagController extends BaseElementController
 
     public function actionToggle($id = null, $categoryId = null)
     {
-        if (Yii::$app->request->isAjax) {
-            if ($id !== null) {
-                $currentTag = Tag::findOne(['id' => $id]);
-                if ($currentTag !== null) {
-                    $currentTag->active = !$currentTag->active;
-                    $currentTag->save(false, ['active']);
-                }
+        if ($id !== null) {
+            $currentTag = Tag::findOne(['id' => $id]);
+            if ($currentTag !== null) {
+                $currentTag->active = !$currentTag->active;
+                $currentTag->save(false, ['active']);
             }
-            $tagsQuery = Tag::find()
-                ->innerJoinWith('category', true)
-                ->with('slug.seo')
-                ->with('slug.sitemap')
-                ->orderBy([
-                    Category::tableName().'.name' => SORT_ASC,
-                    'name' => SORT_ASC
-                ]);
-            if ($categoryId !== null) {
-                $tagsQuery->andWhere(['categoryId' => $categoryId]);
-            }
-            return $this->renderPartial('_list', [
-                'tagsQuery' => $tagsQuery
-            ]);
         }
+        $tagsQuery = Tag::find()
+            ->innerJoinWith('category', true)
+            ->with('slug.seo')
+            ->with('slug.sitemap')
+            ->orderBy([
+                Category::tableName().'.name' => SORT_ASC,
+                'name' => SORT_ASC
+            ]);
+        if ($categoryId !== null) {
+            $tagsQuery->andWhere(['categoryId' => $categoryId]);
+        }
+        return $this->renderPartial('_list', [
+            'tagsQuery' => $tagsQuery
+        ]);
     }
 
     /**

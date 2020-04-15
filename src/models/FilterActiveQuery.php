@@ -3,8 +3,8 @@
 namespace blackcube\admin\models;
 
 use yii\db\ActiveQuery;
-use Yii;
 use yii\db\Expression;
+use Yii;
 
 class FilterActiveQuery extends ActiveQuery
 {
