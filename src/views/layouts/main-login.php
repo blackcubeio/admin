@@ -11,11 +11,11 @@
  * @link https://www.redcat.io
  * @package webapp\views\layouts
  *
- * @var $this yii\web\View
  * @var $content string
+ * @var $this \yii\web\View
  */
 
-use yii\helpers\Html;
+use blackcube\admin\helpers\Html;
 use blackcube\admin\assets\WebpackAsset;
 
 WebpackAsset::register($this);

@@ -12,14 +12,14 @@
  * @package blackcube\admin\views\common
  *
  * @var $blocs \blackcube\core\models\Bloc[]
- * @var $this \yii\web\View
  * @var $element \blackcube\core\models\Tag|\blackcube\core\models\Composite|\blackcube\core\models\Category|\blackcube\core\models\Node
+ * @var $this \yii\web\View
  */
 
 use blackcube\admin\Module;
 use blackcube\admin\helpers\Html;
 use yii\helpers\Url;
-use Yii;
+
 $blocsCount = count($blocs);
 $pathAlias = Module::getInstance()->adminTemplatesAlias;
 ?>

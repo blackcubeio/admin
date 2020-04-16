@@ -12,6 +12,7 @@
  * @package blackcube\admin\views\common
  *
  * @var $element \blackcube\core\models\Tag
+ * @var $this \yii\web\View
  */
 
 use blackcube\admin\Module;

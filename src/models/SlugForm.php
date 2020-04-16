@@ -1,4 +1,16 @@
 <?php
+/**
+ * SlugForm.php
+ *
+ * PHP version 7.2+
+ *
+ * @author Philippe Gaultier <pgaultier@redcat.io>
+ * @copyright 2010-2020 Redcat
+ * @license https://www.redcat.io/license license
+ * @version XXX
+ * @link https://www.redcat.io
+ * @package blackcube\admin\models
+ */
 
 namespace blackcube\admin\models;
 
@@ -9,13 +21,28 @@ use blackcube\core\models\Slug;
 use yii\base\Model;
 use Yii;
 
+/**
+ * SlugForm Model
+ *
+ * @author Philippe Gaultier <pgaultier@redcat.io>
+ * @copyright 2010-2020 Redcat
+ * @license https://www.redcat.io/license license
+ * @version XXX
+ * @link https://www.redcat.io
+ * @package blackcube\admin\models
+ */
 class SlugForm extends Model
 {
+    /**
+     * @var boolean
+     */
     public $hasSlug;
 
-    public $openedSlug = 0;
-
+    /**
+     * @var ElementInterface
+     */
     private $_element;
+
     /**
      * @var Slug
      */
@@ -29,16 +56,25 @@ class SlugForm extends Model
      */
     private $_seo;
 
+    /**
+     * @return array list of available sitemap frequencies
+     */
     public static function getFrequencies()
     {
         return array_combine(Sitemap::FREQUENCY, Sitemap::FREQUENCY);
     }
 
+    /**
+     * @return array list of available sitemap frequencies
+     */
     public static function getPriorities()
     {
         return array_combine(Sitemap::PRIORITY, Sitemap::PRIORITY);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public function rules()
     {
         return [
@@ -49,6 +85,10 @@ class SlugForm extends Model
         ];
     }
 
+    /**
+     * @param ElementInterface $element
+     * @throws \yii\base\InvalidConfigException
+     */
     public function setElement(ElementInterface $element)
     {
         $this->_element = $element;
@@ -73,6 +113,11 @@ class SlugForm extends Model
         }
     }
 
+    /**
+     * Load submodels
+     * @param $data original POST data
+     * @return bool
+     */
     public function multiLoad($data)
     {
         $status = $this->_seo->load($data);
@@ -82,6 +127,10 @@ class SlugForm extends Model
         return $status;
     }
 
+    /**
+     * Prevalidate submodels
+     * @return bool
+     */
     public function preValidate()
     {
         $status = true;
@@ -102,6 +151,10 @@ class SlugForm extends Model
         $status = $status && parent::validate();
         return $status;
     }
+
+    /**
+     * {@inheritDoc}
+     */
     public function validate($attributeNames = null, $clearErrors = true)
     {
         $status = true;
@@ -114,6 +167,10 @@ class SlugForm extends Model
         return $status;
     }
 
+    /**
+     * Save submodels
+     * @return bool
+     */
     public function save()
     {
         $status = true;
@@ -127,19 +184,33 @@ class SlugForm extends Model
         return $status;
     }
 
+    /**
+     * @return ElementInterface
+     */
     public function getElement()
     {
         return $this->_element;
     }
+
+    /**
+     * @return Slug
+     */
     public function getSlug()
     {
         return $this->_slug;
     }
+
+    /**
+     * @return Sitemap
+     */
     public function getSitemap()
     {
         return $this->_sitemap;
     }
 
+    /**
+     * @return Seo
+     */
     public function getSeo()
     {
         return $this->_seo;

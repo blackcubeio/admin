@@ -11,8 +11,8 @@
  * @link https://www.redcat.io
  * @package blackcube\admin\views\category
  *
- * @var $this yii\web\View
  * @var $categoriesQuery \blackcube\core\models\FilterActiveQuery
+ * @var $this \yii\web\View
  */
 
 use blackcube\admin\Module;

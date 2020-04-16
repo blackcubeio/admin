@@ -11,13 +11,13 @@
  * @link https://www.redcat.io
  * @package blackcube\admin\views\tag
  *
- * @var $this yii\web\View
  * @var $tag \blackcube\core\models\Tag
  * @var $slugForm \blackcube\admin\models\SlugForm
  * @var $categoriesQuery \blackcube\core\models\FilterActiveQuery
  * @var $typesQuery \blackcube\core\models\FilterActiveQuery
  * @var $tagBlocs \blackcube\core\models\TagBloc[]
  * @var $blocs \blackcube\core\models\Bloc[]
+ * @var $this \yii\web\View
  */
 
 use blackcube\admin\Module;

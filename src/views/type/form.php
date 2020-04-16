@@ -1,15 +1,27 @@
 <?php
 /**
+ * form.php
+ *
+ * PHP version 7.2+
+ *
+ * @author Philippe Gaultier <pgaultier@redcat.io>
+ * @copyright 2010-2020 Redcat
+ * @license https://www.redcat.io/license license
+ * @version XXX
+ * @link https://www.redcat.io
+ * @package blackcube\admin\views\type
+ *
  * @var $type \blackcube\core\models\Type
  * @var $blocTypesQuery \blackcube\core\models\FilterActiveQuery
  * @var $typeBlocTypes \blackcube\core\models\TypeBlocType[]
  * @var $controllers array
  * @var $actions array
+ * @var $this \yii\web\View
  */
+
 use blackcube\admin\Module;
 use blackcube\admin\helpers\Html;
 use blackcube\admin\widgets\Sidebar;
-use blackcube\admin\widgets\SlugForm;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Url;
 ?>

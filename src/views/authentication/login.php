@@ -12,9 +12,12 @@
  * @package blackcube\admin\views\authentication
  *
  * @var \blackcube\admin\models\Administrator $administrator
+ * @var $this \yii\web\View
  */
+
 use blackcube\admin\Module;
 use blackcube\admin\helpers\Html;
+
 ?>
 <div class="form container">
     <div class="w-full max-w-lg">

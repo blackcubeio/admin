@@ -9,7 +9,7 @@
  * @license https://www.redcat.io/license license
  * @version XXX
  * @link https://www.redcat.io
- * @package blackcube\admin\views\tag
+ * @package blackcube\admin\widgets\views
  *
  * @var $slugForm blackcube\admin\models\SlugForm
  * @var $slug blackcube\core\models\Slug
@@ -22,9 +22,13 @@ use blackcube\admin\helpers\Html;
 use blackcube\admin\helpers\Parameter;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Url;
-use yii\helpers\StringHelper;
-use yii\helpers\Inflector;
-$elementType = Inflector::camel2id(StringHelper::basename(get_class($slugForm->getElement())));
+use Yii;
+
+$elementClass = get_class($slugForm->getElement());
+//TODO: move into SlugForm
+$elementType = $elementClass::getElementType();
+// $elementType = Inflector::camel2id(StringHelper::basename(get_class($slugForm->getElement())));
+
 ?>
 <?php echo Html::beginTag('div', ['blackcube-toggle-slug' => ($slugForm->getElement()->id === null)?'':$elementType.'-'.$slugForm->getElement()->id]); ?>
     <div class="bloc mb-2">

@@ -1,13 +1,30 @@
 <?php
 /**
+ * index.php
+ *
+ * PHP version 7.2+
+ *
+ * @author Philippe Gaultier <pgaultier@redcat.io>
+ * @copyright 2010-2020 Redcat
+ * @license https://www.redcat.io/license license
+ * @version XXX
+ * @link https://www.redcat.io
+ * @package blackcube\admin\views\default
+ *
  * @var $countComposites array
+ * @var $countNodes array
+ * @var $countCategories array
+ * @var $countTags array
+ * @var $this \yii\web\View
  */
+
 use blackcube\admin\helpers\Html;
+use \blackcube\admin\widgets\Sidebar;
 
 $formatter = Yii::$app->formatter;
 ?>
 <div class="flex flex-1">
-    <?php echo \blackcube\admin\widgets\Sidebar::widget(); ?>
+    <?php echo Sidebar::widget(); ?>
     <main class="overflow-hidden">
         <div class="bloc">
             <div class="bloc-title">

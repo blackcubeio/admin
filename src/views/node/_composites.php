@@ -12,14 +12,14 @@
  * @package blackcube\admin\views\node
  *
  * @var $compositesQuery \blackcube\core\models\FilterActiveQuery
- * @var $this \yii\web\View
  * @var $element \blackcube\core\models\Node
+ * @var $this \yii\web\View
  */
 
 use blackcube\admin\Module;
 use blackcube\admin\helpers\Html;
 use yii\helpers\Url;
-// use Yii;
+
 $compositesCount = $compositesQuery->count();
 ?>
 

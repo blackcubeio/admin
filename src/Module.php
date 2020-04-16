@@ -5,11 +5,11 @@
  * PHP version 7.2+
  *
  * @author Philippe Gaultier <pgaultier@redcat.io>
- * @copyright 2010-2019 Redcat
+ * @copyright 2010-2020 Redcat
  * @license https://www.redcat.io/license license
  * @version XXX
  * @link https://www.redcat.io
- * @package blackcube\core
+ * @package blackcube\admin
  */
 
 namespace blackcube\admin;
@@ -27,20 +27,17 @@ use yii\rbac\DbManager;
 use yii\web\Application as WebApplication;
 use yii\web\User as WebUser;
 use yii\console\Application as ConsoleApplication;
-use Exception;
 use Yii;
-
-
 
 /**
  * Class module
  *
  * @author Philippe Gaultier <pgaultier@redcat.io>
- * @copyright 2010-2019 Redcat
+ * @copyright 2010-2020 Redcat
  * @license https://www.redcat.io/license license
  * @version XXX
  * @link https://www.redcat.io
- * @package blackcube\core
+ * @package blackcube\admin
  */
 class Module extends BaseModule implements BootstrapInterface
 {

@@ -1,15 +1,34 @@
 <?php
+/**
+ * SlugForm.php
+ *
+ * PHP version 7.2+
+ *
+ * @author Philippe Gaultier <pgaultier@redcat.io>
+ * @copyright 2010-2020 Redcat
+ * @license https://www.redcat.io/license license
+ * @version XXX
+ * @link https://www.redcat.io
+ * @package blackcube\admin\widgets
+ */
 
 namespace blackcube\admin\widgets;
 
 use blackcube\core\interfaces\ElementInterface;
-use blackcube\core\models\Sitemap;
-use blackcube\core\models\Seo;
-use blackcube\core\models\Slug;
 use blackcube\admin\models\SlugForm as SlugFormModel;
 use yii\base\Widget;
 use Yii;
 
+/**
+ * Widget SlugForm
+ *
+ * @author Philippe Gaultier <pgaultier@redcat.io>
+ * @copyright 2010-2020 Redcat
+ * @license https://www.redcat.io/license license
+ * @version XXX
+ * @link https://www.redcat.io
+ * @package blackcube\admin\widgets
+ */
 class SlugForm extends Widget
 {
     /**
@@ -22,11 +41,9 @@ class SlugForm extends Widget
      */
     public $slugForm;
 
-    public function init()
-    {
-        parent::init();
-    }
-
+    /**
+     * {@inheritDoc}
+     */
     public function run()
     {
         return $this->render('slug-form', [
