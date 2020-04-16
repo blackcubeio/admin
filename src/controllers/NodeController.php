@@ -1,4 +1,16 @@
 <?php
+/**
+ * NodeController.php
+ *
+ * PHP version 7.2+
+ *
+ * @author Philippe Gaultier <pgaultier@redcat.io>
+ * @copyright 2010-2020 Redcat
+ * @license https://www.redcat.io/license license
+ * @version XXX
+ * @link https://www.redcat.io
+ * @package blackcube\admin\controllers
+ */
 
 namespace blackcube\admin\controllers;
 
@@ -17,6 +29,16 @@ use yii\web\NotFoundHttpException;
 use yii\web\Response;
 use Yii;
 
+/**
+ * Class NodeController
+ *
+ * @author Philippe Gaultier <pgaultier@redcat.io>
+ * @copyright 2010-2020 Redcat
+ * @license https://www.redcat.io/license license
+ * @version XXX
+ * @link https://www.redcat.io
+ * @package blackcube\admin\controllers
+ */
 class NodeController extends BaseElementController
 {
     /**
@@ -43,6 +65,7 @@ class NodeController extends BaseElementController
         ];
         return $behaviors;
     }
+
     /**
      * {@inheritDoc}
      */
@@ -61,8 +84,7 @@ class NodeController extends BaseElementController
     }
 
     /**
-     * @param string|null $id
-     * @return string
+     * @return string|Response
      */
     public function actionIndex()
     {
@@ -75,6 +97,10 @@ class NodeController extends BaseElementController
         ]);
     }
 
+    /**
+     * @param null $id
+     * @return string|Response
+     */
     public function actionToggle($id = null)
     {
         if ($id !== null) {
@@ -96,6 +122,7 @@ class NodeController extends BaseElementController
     /**
      * @return string|Response
      * @throws ErrorException
+     * @throws \yii\base\InvalidConfigException
      * @throws \yii\db\Exception
      */
     public function actionCreate()
@@ -133,9 +160,8 @@ class NodeController extends BaseElementController
     /**
      * @param integer $id
      * @return string|Response
-     * @throws ErrorException
      * @throws NotFoundHttpException
-     * @throws \yii\db\Exception
+     * @throws \yii\base\InvalidConfigException
      */
     public function actionEdit($id)
     {
@@ -278,6 +304,10 @@ class NodeController extends BaseElementController
         }
     }
 
+    /**
+     * @param string $query
+     * @return array
+     */
     public function actionSearch($query)
     {
         Yii::$app->response->format = Response::FORMAT_JSON;

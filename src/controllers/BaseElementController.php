@@ -1,4 +1,16 @@
 <?php
+/**
+ * BaseElementController.php
+ *
+ * PHP version 7.2+
+ *
+ * @author Philippe Gaultier <pgaultier@redcat.io>
+ * @copyright 2010-2020 Redcat
+ * @license https://www.redcat.io/license license
+ * @version XXX
+ * @link https://www.redcat.io
+ * @package blackcube\admin\controllers
+ */
 
 namespace blackcube\admin\controllers;
 
@@ -17,6 +29,16 @@ use yii\base\Model;
 use yii\web\Controller;
 use Yii;
 
+/**
+ * Class BaseElementController
+ *
+ * @author Philippe Gaultier <pgaultier@redcat.io>
+ * @copyright 2010-2020 Redcat
+ * @license https://www.redcat.io/license license
+ * @version XXX
+ * @link https://www.redcat.io
+ * @package blackcube\admin\controllers
+ */
 abstract class BaseElementController extends Controller
 {
 

@@ -4,11 +4,11 @@
  *
  * PHP version 7.1+
  *
- * @author Philippe Gaultier <pgaultier@ibitux.com>
- * @copyright 2010-2018 Ibitux
- * @license https://www.ibitux.com/license license
+ * @author Philippe Gaultier <pgaultier@redcat.io>
+ * @copyright 2010-2020 Redcat
+ * @license https://www.redcat.io/license license
  * @version XXX
- * @link https://www.ibitux.com
+ * @link https://www.redcat.io
  * @package blackcube\admin\assets
  */
 
@@ -26,11 +26,11 @@ use Yii;
 /**
  * Base static assets
  *
- * @author Philippe Gaultier <pgaultier@ibitux.com>
- * @copyright 2010-2018 Ibitux
- * @license https://www.ibitux.com/license license
+ * @author Philippe Gaultier <pgaultier@redcat.io>
+ * @copyright 2010-2020 Redcat
+ * @license https://www.redcat.io/license license
  * @version XXX
- * @link https://www.ibitux.com
+ * @link https://www.redcat.io
  * @package blackcube\admin\assets
  * @since XXX
  */

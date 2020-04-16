@@ -5,7 +5,7 @@
  * PHP version 7.2+
  *
  * @author Philippe Gaultier <pgaultier@redcat.io>
- * @copyright 2010-2019 Redcat
+ * @copyright 2010-2020 Redcat
  * @license https://www.redcat.io/license license
  * @version XXX
  * @link https://www.redcat.io
@@ -25,7 +25,7 @@ use Yii;
  * This is the model class for table "{{%administrators}}".
  *
  * @author Philippe Gaultier <pgaultier@redcat.io>
- * @copyright 2010-2019 Redcat
+ * @copyright 2010-2020 Redcat
  * @license https://www.redcat.io/license license
  * @version XXX
  * @link https://www.redcat.io
@@ -45,6 +45,7 @@ class Administrator extends \yii\db\ActiveRecord implements IdentityInterface
 {
     public const SCENARIO_LOGIN = 'login';
     public const SCENARIO_CREATE = 'create';
+
     /**
      * {@inheritdoc}
      */
@@ -72,6 +73,7 @@ class Administrator extends \yii\db\ActiveRecord implements IdentityInterface
      * {@inheritdoc}
      * Add FilterActiveQuery
      * @return FilterActiveQuery|\yii\db\ActiveQuery
+     * @throws \yii\base\InvalidConfigException
      */
     public static function find()
     {
@@ -126,11 +128,9 @@ class Administrator extends \yii\db\ActiveRecord implements IdentityInterface
 
     /**
      * Validate login
-     *
-     * @param $attribute
-     * @param $params
-     *
-     * @since  XXX
+     * @param string $attribute
+     * @param array $params
+     * @throws \yii\base\InvalidConfigException
      */
     public function validateLogin($attribute, $params)
     {

@@ -1,4 +1,16 @@
 <?php
+/**
+ * TagController.php
+ *
+ * PHP version 7.2+
+ *
+ * @author Philippe Gaultier <pgaultier@redcat.io>
+ * @copyright 2010-2020 Redcat
+ * @license https://www.redcat.io/license license
+ * @version XXX
+ * @link https://www.redcat.io
+ * @package blackcube\admin\controllers
+ */
 
 namespace blackcube\admin\controllers;
 
@@ -16,6 +28,16 @@ use yii\web\NotFoundHttpException;
 use yii\web\Response;
 use Yii;
 
+/**
+ * Class TagController
+ *
+ * @author Philippe Gaultier <pgaultier@redcat.io>
+ * @copyright 2010-2020 Redcat
+ * @license https://www.redcat.io/license license
+ * @version XXX
+ * @link https://www.redcat.io
+ * @package blackcube\admin\controllers
+ */
 class TagController extends BaseElementController
 {
     /**
@@ -42,6 +64,7 @@ class TagController extends BaseElementController
         ];
         return $behaviors;
     }
+
     /**
      * {@inheritDoc}
      */
@@ -60,7 +83,6 @@ class TagController extends BaseElementController
     }
 
     /**
-     * @param string|null $id
      * @param string|null $categoryId
      * @return string
      */
@@ -83,6 +105,11 @@ class TagController extends BaseElementController
         ]);
     }
 
+    /**
+     * @param integer|null $id
+     * @param integer|null $categoryId
+     * @return string|Response
+     */
     public function actionToggle($id = null, $categoryId = null)
     {
         if ($id !== null) {
@@ -111,6 +138,7 @@ class TagController extends BaseElementController
     /**
      * @return string|Response
      * @throws ErrorException
+     * @throws \yii\base\InvalidConfigException
      * @throws \yii\db\Exception
      */
     public function actionCreate()
@@ -141,6 +169,7 @@ class TagController extends BaseElementController
      * @return string|Response
      * @throws ErrorException
      * @throws NotFoundHttpException
+     * @throws \yii\base\InvalidConfigException
      * @throws \yii\db\Exception
      */
     public function actionEdit($id)

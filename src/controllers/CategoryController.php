@@ -1,4 +1,16 @@
 <?php
+/**
+ * CategoryController.php
+ *
+ * PHP version 7.2+
+ *
+ * @author Philippe Gaultier <pgaultier@redcat.io>
+ * @copyright 2010-2020 Redcat
+ * @license https://www.redcat.io/license license
+ * @version XXX
+ * @link https://www.redcat.io
+ * @package blackcube\admin\controllers
+ */
 
 namespace blackcube\admin\controllers;
 
@@ -16,6 +28,16 @@ use yii\web\NotFoundHttpException;
 use yii\web\Response;
 use Yii;
 
+/**
+ * Class CategoryController
+ *
+ * @author Philippe Gaultier <pgaultier@redcat.io>
+ * @copyright 2010-2020 Redcat
+ * @license https://www.redcat.io/license license
+ * @version XXX
+ * @link https://www.redcat.io
+ * @package blackcube\admin\controllers
+ */
 class CategoryController extends BaseElementController
 {
     /**
@@ -61,7 +83,7 @@ class CategoryController extends BaseElementController
     }
 
     /**
-     * @return string
+     * @return string|Response
      */
     public function actionIndex()
     {
@@ -74,6 +96,10 @@ class CategoryController extends BaseElementController
         ]);
     }
 
+    /**
+     * @param null $id
+     * @return string|Response
+     */
     public function actionToggle($id = null)
     {
         if ($id !== null) {
@@ -95,6 +121,7 @@ class CategoryController extends BaseElementController
     /**
      * @return string|Response
      * @throws ErrorException
+     * @throws \yii\base\InvalidConfigException
      * @throws \yii\db\Exception
      */
     public function actionCreate()
@@ -125,6 +152,7 @@ class CategoryController extends BaseElementController
      * @return string|Response
      * @throws ErrorException
      * @throws NotFoundHttpException
+     * @throws \yii\base\InvalidConfigException
      * @throws \yii\db\Exception
      */
     public function actionEdit($id)
@@ -155,7 +183,7 @@ class CategoryController extends BaseElementController
 
     /**
      * @param integer $id
-     * @return Response
+     * @return string|Response
      * @throws NotFoundHttpException
      * @throws \Throwable
      * @throws \yii\db\StaleObjectException

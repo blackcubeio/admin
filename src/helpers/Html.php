@@ -1,4 +1,16 @@
 <?php
+/**
+ * Html.php
+ *
+ * PHP version 7.2+
+ *
+ * @author Philippe Gaultier <pgaultier@redcat.io>
+ * @copyright 2010-2020 Redcat
+ * @license https://www.redcat.io/license license
+ * @version XXX
+ * @link https://www.redcat.io
+ * @package blackcube\admin\helpers
+ */
 
 namespace blackcube\admin\helpers;
 
@@ -10,8 +22,21 @@ use yii\base\NotSupportedException;
 use yii\helpers\Inflector;
 use yii\helpers\Json;
 
+/**
+ * Class Html
+ *
+ * @author Philippe Gaultier <pgaultier@redcat.io>
+ * @copyright 2010-2020 Redcat
+ * @license https://www.redcat.io/license license
+ * @version XXX
+ * @link https://www.redcat.io
+ * @package blackcube\admin\helpers
+ */
 class Html extends \blackcube\core\web\helpers\Html
 {
+    /**
+     * @var array
+     */
     private static $icons = [
         'plus' => [
             'path' => 'M11 9h4v2h-4v4H9v-4H5V9h4V5h2v4zm-1 11a10 10 0 1 1 0-20 10 10 0 0 1 0 20zm0-2a8 8 0 1 0 0-16 8 8 0 0 0 0 16z',
@@ -46,7 +71,12 @@ class Html extends \blackcube\core\web\helpers\Html
 
     }
 
-
+    /**
+     * @param Model $model
+     * @param string $attribute
+     * @param array $options
+     * @return string
+     */
     public static function activeSchema(Model $model, $attribute, $options = [])
     {
         $selfId = static::getInputId($model, $attribute);
@@ -56,10 +86,16 @@ class Html extends \blackcube\core\web\helpers\Html
             'field-name' => $selfName,
             'schema' => $model->{$attribute}
         ], $options);
-        $tag = static::tag('blackcube-schema-editor', '', $options);
-        return $tag;
+        return static::tag('blackcube-schema-editor', '', $options);
     }
 
+    /**
+     * @param Model $model
+     * @param string $attribute
+     * @param array $options
+     * @return string
+     * @throws InvalidConfigException
+     */
     public static function activeUpload(Model $model, $attribute, $options = [])
     {
         if (isset($options['upload-url']) === false) {
@@ -81,6 +117,11 @@ class Html extends \blackcube\core\web\helpers\Html
         return static::tag('blackcube-file', '', $options);
     }
 
+    /**
+     * @param array $structure
+     * @param array $options
+     * @return array
+     */
     private static function filterElasticOptions($structure, $options = [])
     {
         if ($structure['field'] !== 'file' && $structure['field'] !== 'files') {
@@ -104,6 +145,12 @@ class Html extends \blackcube\core\web\helpers\Html
         return $options;
     }
 
+    /**
+     * @param ElasticInterface $elastic
+     * @param string $attribute
+     * @param array $options
+     * @return string
+     */
     public static function activeElasticDescription(ElasticInterface $elastic, $attribute, $options = [])
     {
         if (!preg_match(static::$attributeRegex, $attribute, $matches)) {
@@ -117,6 +164,15 @@ class Html extends \blackcube\core\web\helpers\Html
             return '';
         }
     }
+
+    /**
+     * @param ElasticInterface $elastic
+     * @param string $attribute
+     * @param array $options
+     * @return string
+     * @throws InvalidConfigException
+     * @throws NotSupportedException
+     */
     public static function activeElasticField(ElasticInterface $elastic, $attribute, $options = [])
     {
         if (!preg_match(static::$attributeRegex, $attribute, $matches)) {
@@ -163,6 +219,12 @@ class Html extends \blackcube\core\web\helpers\Html
         }
         return $result;
     }
+
+    /**
+     * @param string $name
+     * @param array $options
+     * @return string
+     */
     public static function svg($name, $options = [])
     {
         $tag = '';

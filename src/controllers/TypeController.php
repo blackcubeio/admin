@@ -1,13 +1,25 @@
 <?php
+/**
+ * TypeController.php
+ *
+ * PHP version 7.2+
+ *
+ * @author Philippe Gaultier <pgaultier@redcat.io>
+ * @copyright 2010-2020 Redcat
+ * @license https://www.redcat.io/license license
+ * @version XXX
+ * @link https://www.redcat.io
+ * @package blackcube\admin\controllers
+ */
 
 namespace blackcube\admin\controllers;
 
 use blackcube\admin\actions\ModalAction;
 use blackcube\admin\Module;
 use blackcube\core\models\BlocType;
+use blackcube\core\models\Type;
 use blackcube\core\models\TypeBlocType;
 use blackcube\core\Module as CoreModule;
-use blackcube\core\models\Type;
 use blackcube\core\web\controllers\BlackcubeController;
 use yii\base\ErrorException;
 use yii\base\Model;
@@ -20,6 +32,16 @@ use yii\web\NotFoundHttpException;
 use yii\web\Response;
 use Yii;
 
+/**
+ * Class TypeController
+ *
+ * @author Philippe Gaultier <pgaultier@redcat.io>
+ * @copyright 2010-2020 Redcat
+ * @license https://www.redcat.io/license license
+ * @version XXX
+ * @link https://www.redcat.io
+ * @package blackcube\admin\controllers
+ */
 class TypeController extends Controller
 {
     /**
@@ -46,6 +68,7 @@ class TypeController extends Controller
         ];
         return $behaviors;
     }
+
     /**
      * {@inheritDoc}
      */
@@ -61,7 +84,6 @@ class TypeController extends Controller
 
     /**
      * @param string|null $id
-     * @param string|null $categoryId
      * @return string
      */
     public function actionIndex($id = null)
@@ -78,8 +100,8 @@ class TypeController extends Controller
 
     /**
      * @return string|Response
-     * @throws ErrorException
-     * @throws \yii\db\Exception
+     * @throws \ReflectionException
+     * @throws \yii\base\InvalidConfigException
      */
     public function actionCreate()
     {
@@ -124,9 +146,8 @@ class TypeController extends Controller
     /**
      * @param integer $id
      * @return string|Response
-     * @throws ErrorException
      * @throws NotFoundHttpException
-     * @throws \yii\db\Exception
+     * @throws \ReflectionException
      */
     public function actionEdit($id)
     {
@@ -160,7 +181,7 @@ class TypeController extends Controller
 
     /**
      * @param integer $id
-     * @return Response
+     * @return string|Response
      * @throws NotFoundHttpException
      * @throws \Throwable
      * @throws \yii\db\StaleObjectException
@@ -180,6 +201,7 @@ class TypeController extends Controller
     /**
      * @param integer|null $id
      * @return TypeBlocType[]
+     * @throws \yii\base\InvalidConfigException
      */
     protected function getTypeBlocTypes($id = null)
     {
@@ -216,6 +238,10 @@ class TypeController extends Controller
         return $this->findActions($controller);
     }
 
+    /**
+     * @param null $controller
+     * @return array
+     */
     protected function findActions($controller = null)
     {
         $actions = [];
@@ -254,6 +280,7 @@ class TypeController extends Controller
         }
         return $actions;
     }
+
     /**
      * @return array
      * @throws \ReflectionException

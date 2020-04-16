@@ -1,4 +1,16 @@
 <?php
+/**
+ * BlocTypeController.php
+ *
+ * PHP version 7.2+
+ *
+ * @author Philippe Gaultier <pgaultier@redcat.io>
+ * @copyright 2010-2020 Redcat
+ * @license https://www.redcat.io/license license
+ * @version XXX
+ * @link https://www.redcat.io
+ * @package blackcube\admin\controllers
+ */
 
 namespace blackcube\admin\controllers;
 
@@ -13,7 +25,18 @@ use yii\filters\AjaxFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use Yii;
+use yii\web\Response;
 
+/**
+ * Class BlocTypeController
+ *
+ * @author Philippe Gaultier <pgaultier@redcat.io>
+ * @copyright 2010-2020 Redcat
+ * @license https://www.redcat.io/license license
+ * @version XXX
+ * @link https://www.redcat.io
+ * @package blackcube\admin\controllers
+ */
 class BlocTypeController extends Controller
 {
 
@@ -42,6 +65,9 @@ class BlocTypeController extends Controller
         return $behaviors;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public function actions()
     {
         $actions = parent::actions();
@@ -52,6 +78,10 @@ class BlocTypeController extends Controller
         return $actions;
     }
 
+    /**
+     * @param null $id
+     * @return string|Response
+     */
     public function actionIndex($id = null)
     {
         $blocTypesQuery = BlocType::find()
@@ -64,6 +94,10 @@ class BlocTypeController extends Controller
         ]);
     }
 
+    /**
+     * @return string|Response
+     * @throws \yii\base\InvalidConfigException
+     */
     public function actionCreate()
     {
         $blocType = Yii::createObject(BlocType::class);
@@ -99,6 +133,12 @@ class BlocTypeController extends Controller
         ]);
     }
 
+    /**
+     * @param $id
+     * @return string|Response
+     * @throws NotFoundHttpException
+     * @throws \yii\base\InvalidConfigException
+     */
     public function actionEdit($id)
     {
         $blocType = BlocType::findOne(['id' => $id]);
@@ -124,6 +164,13 @@ class BlocTypeController extends Controller
         ]);
     }
 
+    /**
+     * @param $id
+     * @return string|Response
+     * @throws NotFoundHttpException
+     * @throws \Throwable
+     * @throws \yii\db\StaleObjectException
+     */
     public function actionDelete($id)
     {
         $blocType = BlocType::findOne(['id' => $id]);
@@ -136,6 +183,11 @@ class BlocTypeController extends Controller
         return $this->redirect(['bloc-type/index']);
     }
 
+    /**
+     * @param null $id
+     * @return array
+     * @throws \yii\base\InvalidConfigException
+     */
     protected function getTypeBlocTypes($id = null)
     {
         $typeQuery = Type::find()->orderBy(['name' => SORT_ASC]);

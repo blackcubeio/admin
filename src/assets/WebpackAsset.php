@@ -2,13 +2,13 @@
 /**
  * WebpackAsset.php
  *
- * PHP version 7.1+
+ * PHP version 7.2+
  *
- * @author Philippe Gaultier <pgaultier@ibitux.com>
- * @copyright 2010-2018 Ibitux
- * @license https://www.ibitux.com/license license
+ * @author Philippe Gaultier <pgaultier@redcat.io>
+ * @copyright 2010-2020 Redcat
+ * @license https://www.redcat.io/license license
  * @version XXX
- * @link https://www.ibitux.com
+ * @link https://www.redcat.io
  * @package blackcube\admin\assets
  */
 
@@ -27,11 +27,11 @@ use Yii;
 /**
  * Base webpack assets
  *
- * @author Philippe Gaultier <pgaultier@ibitux.com>
- * @copyright 2010-2018 Ibitux
- * @license https://www.ibitux.com/license license
+ * @author Philippe Gaultier <pgaultier@redcat.io>
+ * @copyright 2010-2020 Redcat
+ * @license https://www.redcat.io/license license
  * @version XXX
- * @link https://www.ibitux.com
+ * @link https://www.redcat.io
  * @package blackcube\admin\assets
  * @since XXX
  */
@@ -151,6 +151,7 @@ class WebpackAsset extends AssetBundle
     /**
      * Merge webpack bundles with classic bundles and cache it if needed
      * @return void
+     * @throws Exception
      * @since XXX
      */
     protected function mergeWebpackBundles()
@@ -191,6 +192,7 @@ class WebpackAsset extends AssetBundle
 
     /**
      * @return null|Cache
+     * @throws \yii\base\InvalidConfigException
      * @since XXX
      */
     private function getCache()

@@ -1,4 +1,16 @@
 <?php
+/**
+ * DefaultController.php
+ *
+ * PHP version 7.2+
+ *
+ * @author Philippe Gaultier <pgaultier@redcat.io>
+ * @copyright 2010-2020 Redcat
+ * @license https://www.redcat.io/license license
+ * @version XXX
+ * @link https://www.redcat.io
+ * @package blackcube\admin\controllers
+ */
 
 namespace blackcube\admin\controllers;
 
@@ -10,7 +22,18 @@ use blackcube\core\models\Tag;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 use Yii;
+use yii\web\Response;
 
+/**
+ * Class DefaultController
+ *
+ * @author Philippe Gaultier <pgaultier@redcat.io>
+ * @copyright 2010-2020 Redcat
+ * @license https://www.redcat.io/license license
+ * @version XXX
+ * @link https://www.redcat.io
+ * @package blackcube\admin\controllers
+ */
 class DefaultController extends Controller
 {
     /**
@@ -34,6 +57,9 @@ class DefaultController extends Controller
         return $behaviors;
     }
 
+    /**
+     * @return string|Response
+     */
     public function actionIndex()
     {
         $countComposites = [
@@ -63,6 +89,11 @@ class DefaultController extends Controller
             'countTags' => $countTags,
         ]);
     }
+
+    /**
+     * @return string|Response
+     * @todo: remove
+     */
     public function actionTest()
     {
         return $this->render('test', []);

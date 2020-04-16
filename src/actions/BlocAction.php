@@ -1,4 +1,16 @@
 <?php
+/**
+ * BlocAction.php
+ *
+ * PHP version 7.2+
+ *
+ * @author Philippe Gaultier <pgaultier@redcat.io>
+ * @copyright 2010-2020 Redcat
+ * @license https://www.redcat.io/license license
+ * @version XXX
+ * @link https://www.redcat.io
+ * @package blackcube\admin\actions
+ */
 
 namespace blackcube\admin\actions;
 
@@ -7,14 +19,37 @@ use yii\base\Action;
 use yii\base\InvalidArgumentException;
 use yii\base\Model;
 use yii\web\NotFoundHttpException;
+use yii\web\Response;
 use Yii;
 
+/**
+ * Class BlocAction
+ *
+ * @author Philippe Gaultier <pgaultier@redcat.io>
+ * @copyright 2010-2020 Redcat
+ * @license https://www.redcat.io/license license
+ * @version XXX
+ * @link https://www.redcat.io
+ * @package blackcube\admin\actions
+ */
 class BlocAction extends Action
 {
+    /**
+     * @var string
+     */
     public $elementClass;
 
+    /**
+     * @var string
+     */
     public $view = '@blackcube/admin/views/common/_blocs';
 
+    /**
+     * @param null $id
+     * @return string|Response
+     * @throws NotFoundHttpException
+     * @throws \yii\base\InvalidConfigException
+     */
     public function run($id = null)
     {
         if ($this->elementClass === null) {
