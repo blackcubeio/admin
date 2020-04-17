@@ -17,6 +17,7 @@ namespace blackcube\admin\controllers;
 use blackcube\admin\models\SlugForm;
 use blackcube\admin\actions\BlocAction;
 use blackcube\admin\actions\ModalAction;
+use blackcube\admin\components\Rbac;
 use blackcube\admin\Module;
 use blackcube\core\models\Category;
 use blackcube\core\models\Tag;
@@ -52,7 +53,35 @@ class TagController extends BaseElementController
                 [
                     'allow' => true,
                     'actions' => [
-                        'modal', 'blocs', 'index', 'toggle', 'create', 'edit', 'delete', 'preview', 'upload', 'delete',
+                        'modal', 'index',
+                    ],
+                    'roles' => [Rbac::PERMISSION_TAG_VIEW],
+                ],
+                [
+                    'allow' => true,
+                    'actions' => [
+                        'create', 'edit', 'blocs',
+                    ],
+                    'roles' => [Rbac::PERMISSION_TAG_CREATE],
+                ],
+                [
+                    'allow' => true,
+                    'actions' => [
+                        'edit', 'toggle', 'blocs',
+                    ],
+                    'roles' => [Rbac::PERMISSION_TAG_UPDATE],
+                ],
+                [
+                    'allow' => true,
+                    'actions' => [
+                        'delete',
+                    ],
+                    'roles' => [Rbac::PERMISSION_TAG_DELETE],
+                ],
+                [
+                    'allow' => true,
+                    'actions' => [
+                        'preview', 'upload', 'delete',
                     ],
                     'roles' => ['@'],
                 ]

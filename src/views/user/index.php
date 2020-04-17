@@ -16,6 +16,7 @@
  */
 
 use blackcube\admin\Module;
+use blackcube\admin\components\Rbac;
 use blackcube\admin\helpers\Html;
 use blackcube\admin\widgets\Sidebar;
 use yii\helpers\Url;
@@ -31,7 +32,9 @@ $formatter = Yii::$app->formatter;
                 <?php echo $this->render('_list', ['usersQuery' => $usersQuery]); ?>
             </div>
             <div class="buttons">
+                <?php if (Yii::$app->user->can(Rbac::PERMISSION_USER_CREATE)): ?>
                 <?php echo Html::a('<i class="fa fa-plus mr-2"></i> '.Module::t('user', 'Create'), ['create'], ['class' => 'button-submit']); ?>
+                <?php endif; ?>
             </div>
         </div>
     </main>

@@ -28,15 +28,15 @@ use yii\helpers\Url;
 <div class="flex flex-1">
     <?php echo Sidebar::widget(); ?>
     <main>
-        <ul class="header">
-            <li>
-                <?php echo Html::a('<i class="fa fa-angle-left mr-2"></i> '.Module::t('type', 'Back'), ['index'], ['class' => 'button']); ?>
-            </li>
-            <li>
-                <?php echo Html::a('<i class="fa fa-check mr-2"></i> '.Module::t('type', 'Save'), ['index'], ['class' => 'button']); ?>
-            </li>
-        </ul>
         <?php echo Html::beginForm('', 'post', ['class' => 'form']); ?>
+            <ul class="header">
+                <li>
+                    <?php echo Html::a('<i class="fa fa-angle-left mr-2"></i> '.Module::t('type', 'Back'), ['index'], ['class' => 'button']); ?>
+                </li>
+                <li>
+                    <?php echo Html::a('<i class="fa fa-check mr-2"></i> '.Module::t('type', 'Save'), ['index'], ['class' => 'button']); ?>
+                </li>
+            </ul>
             <div class="bloc">
                 <div class="bloc-title">
                     <span class="title"><?php echo Module::t('type', 'Type'); ?></span>

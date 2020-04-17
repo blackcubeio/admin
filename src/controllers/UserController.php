@@ -15,18 +15,14 @@
 namespace blackcube\admin\controllers;
 
 use blackcube\admin\actions\ModalAction;
+use blackcube\admin\components\Rbac;
 use blackcube\admin\models\Administrator;
-use blackcube\admin\Module;
-use blackcube\core\models\BlocType;
-use blackcube\core\models\Type;
-use blackcube\core\models\TypeBlocType;
-use yii\base\Model;
 use yii\filters\AccessControl;
 use yii\filters\AjaxFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use Yii;
 use yii\web\Response;
+use Yii;
 
 /**
  * Class UserController
@@ -53,10 +49,31 @@ class UserController extends Controller
                 [
                     'allow' => true,
                     'actions' => [
-                        'modal', 'index', 'create', 'edit', 'delete', 'rbac', 'toggle',
+                        'modal', 'index',
                     ],
-                    'roles' => ['@'],
-                ]
+                    'roles' => [Rbac::PERMISSION_USER_VIEW],
+                ],
+                [
+                    'allow' => true,
+                    'actions' => [
+                        'create', 'edit', 'rbac',
+                    ],
+                    'roles' => [Rbac::PERMISSION_USER_CREATE],
+                ],
+                [
+                    'allow' => true,
+                    'actions' => [
+                        'edit', 'rbac', 'toggle',
+                    ],
+                    'roles' => [Rbac::PERMISSION_USER_UPDATE],
+                ],
+                [
+                    'allow' => true,
+                    'actions' => [
+                        'delete',
+                    ],
+                    'roles' => [Rbac::PERMISSION_USER_DELETE],
+                ],
             ]
         ];
         $behaviors['forceAjax'] = [

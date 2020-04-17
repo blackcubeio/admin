@@ -16,6 +16,7 @@
  */
 
 use blackcube\admin\Module;
+use blackcube\admin\components\Rbac;
 use blackcube\admin\helpers\Html;
 use blackcube\admin\widgets\Sidebar;
 
@@ -28,7 +29,9 @@ use blackcube\admin\widgets\Sidebar;
                 <?php echo $this->render('_list', ['tagsQuery' => $tagsQuery]); ?>
             </div>
             <div class="buttons">
+                <?php if (Yii::$app->user->can(Rbac::PERMISSION_TAG_CREATE)): ?>
                 <?php echo Html::a('<i class="fa fa-plus mr-2"></i> '.Module::t('tag', 'Create'), ['create'], ['class' => 'button-submit']); ?>
+                <?php endif; ?>
             </div>
         </div>
     </main>

@@ -15,13 +15,13 @@
 namespace blackcube\admin\controllers;
 
 use blackcube\admin\actions\ModalAction;
+use blackcube\admin\components\Rbac;
 use blackcube\admin\Module;
 use blackcube\core\models\BlocType;
 use blackcube\core\models\Type;
 use blackcube\core\models\TypeBlocType;
 use blackcube\core\Module as CoreModule;
 use blackcube\core\web\controllers\BlackcubeController;
-use yii\base\ErrorException;
 use yii\base\Model;
 use yii\filters\AccessControl;
 use yii\filters\AjaxFilter;
@@ -56,10 +56,31 @@ class TypeController extends Controller
                 [
                     'allow' => true,
                     'actions' => [
-                        'modal', 'index', 'create', 'edit', 'delete', 'actions',
+                        'modal', 'index',
                     ],
-                    'roles' => ['@'],
-                ]
+                    'roles' => [Rbac::PERMISSION_TYPE_VIEW],
+                ],
+                [
+                    'allow' => true,
+                    'actions' => [
+                        'create', 'edit', 'actions',
+                    ],
+                    'roles' => [Rbac::PERMISSION_TYPE_CREATE],
+                ],
+                [
+                    'allow' => true,
+                    'actions' => [
+                        'edit', 'toggle', 'actions',
+                    ],
+                    'roles' => [Rbac::PERMISSION_TYPE_UPDATE],
+                ],
+                [
+                    'allow' => true,
+                    'actions' => [
+                        'delete',
+                    ],
+                    'roles' => [Rbac::PERMISSION_TYPE_DELETE],
+                ],
             ]
         ];
         $behaviors['forceAjax'] = [

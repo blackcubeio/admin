@@ -187,6 +187,23 @@ var StorageService = /** @class */ (function () {
             localStorage.removeItem('admin:element:' + elementType + '-' + elementId + ':' + elementSubData + ':opened');
         }
     };
+    StorageService.prototype.getSectionOpened = function (elementType, elementId) {
+        if (elementId !== '' && elementType !== '') {
+            var storageStatus = localStorage.getItem('admin:section:' + elementType + '-' + elementId + ':opened');
+            return storageStatus === '1';
+        }
+        return false;
+    };
+    StorageService.prototype.setSectionOpened = function (elementType, elementId) {
+        if (elementId !== '' && elementType !== '') {
+            localStorage.setItem('admin:section:' + elementType + '-' + elementId + ':opened', '1');
+        }
+    };
+    StorageService.prototype.setSectionClosed = function (elementType, elementId) {
+        if (elementId !== '' && elementType !== '') {
+            localStorage.removeItem('admin:section:' + elementType + '-' + elementId + ':opened');
+        }
+    };
     StorageService.prototype.getElementSlugOpened = function (elementId) {
         if (elementId !== '') {
             var storageStatus = localStorage.getItem('admin:element:' + elementId + ':slug:opened');
@@ -1501,6 +1518,118 @@ module.exports = "<template>\n    <div class=\"bloc bloc-tools relative\">\n    
 
 /***/ }),
 
+/***/ "components/BlackcubeSidebarCustomAttribute":
+/*!***********************************************************!*\
+  !*** ./app/components/BlackcubeSidebarCustomAttribute.ts ***!
+  \***********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var aurelia_framework_1 = __webpack_require__(/*! aurelia-framework */ "aurelia-framework");
+var StorageService_1 = __webpack_require__(/*! ../services/StorageService */ "./app/services/StorageService.ts");
+var BlackcubeSidebarCustomAttribute = /** @class */ (function () {
+    function BlackcubeSidebarCustomAttribute(element, storageService) {
+        var _this = this;
+        this.logger = aurelia_framework_1.LogManager.getLogger('components.BlackcubeSidebar');
+        this.onDelegateClick = function (evt) {
+            if (evt.target) {
+                //@ts-ignore
+                var currentButton = evt.target.closest('[data-blackcube-section]');
+                if (currentButton && _this.element.contains(currentButton)) {
+                    _this.logger.debug('delegateClick');
+                    var currentSection = currentButton.dataset.blackcubeSection;
+                    if (currentSection) {
+                        var opened = _this.storageService.getSectionOpened('menu', currentSection);
+                        var nexNode = currentButton.nextElementSibling;
+                        var arrow = currentButton.querySelector('i.arrow');
+                        if (opened) {
+                            _this.storageService.setSectionClosed('menu', currentSection);
+                            if (nexNode) {
+                                nexNode.classList.add('hidden');
+                            }
+                            if (arrow) {
+                                arrow.classList.remove('fa-angle-down');
+                                arrow.classList.add('fa-angle-right');
+                            }
+                        }
+                        else if (nexNode) {
+                            _this.storageService.setSectionOpened('menu', currentSection);
+                            nexNode.classList.remove('hidden');
+                            if (arrow) {
+                                arrow.classList.remove('fa-angle-right');
+                                arrow.classList.add('fa-angle-down');
+                            }
+                        }
+                    }
+                }
+            }
+        };
+        this.element = element;
+        this.storageService = storageService;
+        this.logger.debug('Constructor');
+    }
+    BlackcubeSidebarCustomAttribute.prototype.created = function (owningView, myView) {
+        this.logger.debug('Created');
+    };
+    BlackcubeSidebarCustomAttribute.prototype.bind = function (bindingContext, overrideContext) {
+        this.logger.debug('Bind');
+    };
+    BlackcubeSidebarCustomAttribute.prototype.attached = function () {
+        var _this = this;
+        var currentSections = this.element.querySelectorAll('[data-blackcube-section]');
+        currentSections.forEach(function (element) {
+            var currentSection = element.dataset.blackcubeSection;
+            if (currentSection) {
+                var opened = _this.storageService.getSectionOpened('menu', currentSection);
+                var nexNode = element.nextElementSibling;
+                var arrow = element.querySelector('i.arrow');
+                if (opened) {
+                    if (nexNode) {
+                        nexNode.classList.remove('hidden');
+                    }
+                    if (arrow) {
+                        arrow.classList.remove('fa-angle-right');
+                        arrow.classList.add('fa-angle-down');
+                    }
+                }
+                else if (nexNode) {
+                    nexNode.classList.add('hidden');
+                    if (arrow) {
+                        arrow.classList.remove('fa-angle-down');
+                        arrow.classList.add('fa-angle-right');
+                    }
+                }
+            }
+        });
+        this.element.addEventListener('click', this.onDelegateClick);
+        this.logger.debug('Attached');
+    };
+    BlackcubeSidebarCustomAttribute.prototype.detached = function () {
+        this.element.removeEventListener('click', this.onDelegateClick);
+        this.logger.debug('Detached');
+    };
+    BlackcubeSidebarCustomAttribute.prototype.unbind = function () {
+        this.logger.debug('Unbind');
+    };
+    BlackcubeSidebarCustomAttribute = __decorate([
+        aurelia_framework_1.inject(aurelia_framework_1.DOM.Element, StorageService_1.StorageService)
+    ], BlackcubeSidebarCustomAttribute);
+    return BlackcubeSidebarCustomAttribute;
+}());
+exports.BlackcubeSidebarCustomAttribute = BlackcubeSidebarCustomAttribute;
+
+
+/***/ }),
+
 /***/ "components/BlackcubeToggleDependenciesCustomAttribute":
 /*!**********************************************************************!*\
   !*** ./app/components/BlackcubeToggleDependenciesCustomAttribute.ts ***!
@@ -1874,7 +2003,8 @@ function configure(configure) {
         'components/BlackcubeToggleDependenciesCustomAttribute',
         'components/BlackcubeToggleElementCustomAttribute',
         'components/BlackcubeSearchCompositeCustomElement',
-        'components/BlackcubeRbacCustomAttribute'
+        'components/BlackcubeRbacCustomAttribute',
+        'components/BlackcubeSidebarCustomAttribute'
     ]);
 }
 exports.configure = configure;

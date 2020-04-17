@@ -15,6 +15,7 @@
 namespace blackcube\admin\controllers;
 
 use blackcube\admin\actions\ModalAction;
+use blackcube\admin\components\Rbac;
 use blackcube\admin\Module;
 use blackcube\core\models\BlocType;
 use blackcube\core\models\Type;
@@ -52,10 +53,31 @@ class BlocTypeController extends Controller
                 [
                     'allow' => true,
                     'actions' => [
-                        'modal', 'index', 'create', 'edit', 'delete'
+                        'modal', 'index',
                     ],
-                    'roles' => ['@'],
-                ]
+                    'roles' => [Rbac::PERMISSION_BLOCTYPE_VIEW],
+                ],
+                [
+                    'allow' => true,
+                    'actions' => [
+                        'create', 'edit',
+                    ],
+                    'roles' => [Rbac::PERMISSION_BLOCTYPE_CREATE],
+                ],
+                [
+                    'allow' => true,
+                    'actions' => [
+                        'edit', 'toggle',
+                    ],
+                    'roles' => [Rbac::PERMISSION_BLOCTYPE_UPDATE],
+                ],
+                [
+                    'allow' => true,
+                    'actions' => [
+                        'delete',
+                    ],
+                    'roles' => [Rbac::PERMISSION_BLOCTYPE_DELETE],
+                ],
             ]
         ];
         $behaviors['forceAjax'] = [

@@ -23,6 +23,29 @@ class StorageService
         }
 
     }
+    public getSectionOpened(elementType:string, elementId: string): boolean
+    {
+        if (elementId !== '' && elementType !== '') {
+            const storageStatus = localStorage.getItem('admin:section:'+elementType+'-'+elementId+':opened');
+            return storageStatus === '1';
+        }
+        return false;
+
+    }
+    public setSectionOpened(elementType:string, elementId: string): void
+    {
+        if (elementId !== '' && elementType !== '') {
+            localStorage.setItem('admin:section:'+elementType+'-'+elementId+':opened', '1');
+        }
+
+    }
+    public setSectionClosed(elementType:string, elementId: string): void
+    {
+        if (elementId !== '' && elementType !== '') {
+            localStorage.removeItem('admin:section:'+elementType+'-'+elementId+':opened');
+        }
+
+    }
     public getElementSlugOpened(elementId:string):boolean
     {
         if (elementId !== '') {

@@ -17,6 +17,7 @@ export function configure(configure: FrameworkConfiguration) {
         PLATFORM.moduleName('components/BlackcubeToggleDependenciesCustomAttribute'),
         PLATFORM.moduleName('components/BlackcubeToggleElementCustomAttribute'),
         PLATFORM.moduleName('components/BlackcubeSearchCompositeCustomElement'),
-        PLATFORM.moduleName('components/BlackcubeRbacCustomAttribute')
+        PLATFORM.moduleName('components/BlackcubeRbacCustomAttribute'),
+        PLATFORM.moduleName('components/BlackcubeSidebarCustomAttribute')
     ]);
 }

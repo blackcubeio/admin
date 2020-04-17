@@ -16,6 +16,7 @@
  */
 
 use blackcube\admin\Module;
+use blackcube\admin\components\Rbac;
 use blackcube\admin\helpers\Html;
 use blackcube\admin\widgets\Publication;
 use yii\helpers\Url;
@@ -59,7 +60,11 @@ $currentCategoryId = null;
                 <td>
                     <div class="flex items-start">
                         <p class="text-gray-900 whitespace-no-wrap">
-                            <?php echo Html::a($tag->name, ['edit', 'id' => $tag->id], ['class' => 'hover:text-blue-600 py-1']); ?>
+                            <?php if (Yii::$app->user->can(Rbac::PERMISSION_TAG_UPDATE)): ?>
+                                <?php echo Html::a($tag->name, ['edit', 'id' => $tag->id], ['class' => 'hover:text-blue-600 py-1']); ?>
+                            <?php else: ?>
+                                <?php echo Html::tag('span', $tag->name, ['class' => 'py-1']); ?>
+                            <?php endif; ?>
                         </p>
                     </div>
                 </td>
@@ -74,13 +79,19 @@ $currentCategoryId = null;
                     <?php echo Publication::widget(['element' => $tag]); ?>
                 </td>
                 <td>
+                    <?php if (Yii::$app->user->can(Rbac::PERMISSION_TAG_DELETE)): ?>
                     <?php echo Html::beginForm(['delete', 'id' => $tag->id], 'post', ['data-ajax-modal' => Url::to(['modal', 'id' => $tag->id])]); ?>
                         <button class="button danger">
                             <i class="fa fa-trash-alt"></i>
                         </button>
+                    <?php endif; ?>
+                    <?php if (Yii::$app->user->can(Rbac::PERMISSION_TAG_UPDATE)): ?>
                     <?php echo Html::a('<i class="fa fa-pen-alt"></i>', ['edit', 'id' => $tag->id], ['class' => 'button']); ?>
                     <?php echo Html::a(($tag->active?'<i class="fa fa-eye"></i>':' <i class="fa fa-eye-slash"></i>'), ['toggle', 'id' => $tag->id], ['data-ajax' => '', 'class' => 'button '.($tag->active ? 'published' : 'draft')]); ?>
+                    <?php endif; ?>
+                    <?php if (Yii::$app->user->can(Rbac::PERMISSION_TAG_DELETE)): ?>
                     <?php echo Html::endForm(); ?>
+                    <?php endif; ?>
                 </td>
             </tr>
             <?php endforeach; ?>
