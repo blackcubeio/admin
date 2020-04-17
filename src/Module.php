@@ -16,6 +16,7 @@ namespace blackcube\admin;
 
 use blackcube\admin\commands\AdministratorController;
 use blackcube\admin\commands\IconsController;
+use blackcube\admin\commands\InitController;
 use blackcube\admin\models\Administrator;
 use yii\base\BootstrapInterface;
 use yii\base\Module as BaseModule;
@@ -83,7 +84,7 @@ class Module extends BaseModule implements BootstrapInterface
         $app->setComponents([
             'authManager' => [
                 'class' => DbManager::class,
-                'db' => $app->db,
+                'db' => $this->db,
             ]
         ]);
         if ($app instanceof ConsoleApplication) {
@@ -103,6 +104,9 @@ class Module extends BaseModule implements BootstrapInterface
     {
         $app->controllerMap[$this->commandNameSpace.'admin'] = [
             'class' => AdministratorController::class,
+        ];
+        $app->controllerMap[$this->commandNameSpace.'init'] = [
+            'class' => InitController::class,
         ];
         $app->controllerMap[$this->commandNameSpace.'migrate'] = [
             'class' => MigrateController::class,

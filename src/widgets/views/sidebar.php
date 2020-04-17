@@ -43,6 +43,13 @@ use yii\helpers\Url;
                     <span><i class="fa fa-angle-right float-right mt-2"></i></span>
                     <?php echo Html::endTag('a'); ?>
                 <?php echo Html::endTag('li'); ?>
+                <?php echo Html::beginTag('li', ['class' => 'w-full h-full py-3 px-2 border-b '.($controller === 'user' ? 'bg-white':'')]); ?>
+                <?php echo Html::beginTag('a', ['href' => Url::to(['user/index']), 'class' => 'font-sans font-hairline hover:font-normal text-sm text-nav-item no-underline']); ?>
+                <i class="fa fa-user-alt float-left mx-2 mt-2"></i>
+                <?php echo Module::t('widgets', 'Users'); ?>
+                <span><i class="fa fa-angle-right float-right mt-2"></i></span>
+                <?php echo Html::endTag('a'); ?>
+                <?php echo Html::endTag('li'); ?>
                 <?php echo Html::beginTag('li', ['class' => 'w-full h-full py-3 px-2 border-b '.($controller === 'type' ? 'bg-white':'')]); ?>
                     <?php echo Html::beginTag('a', ['href' => Url::to(['type/index']), 'class' => 'font-sans font-hairline hover:font-normal text-sm text-nav-item no-underline']); ?>
                     <i class="fa fa-file-invoice float-left mx-2 mt-2"></i>

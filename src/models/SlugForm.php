@@ -36,6 +36,11 @@ class SlugForm extends Model
     /**
      * @var boolean
      */
+    public $openedSlug;
+
+    /**
+     * @var boolean
+     */
     public $hasSlug;
 
     /**

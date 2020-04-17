@@ -2,7 +2,7 @@
 
 namespace blackcube\admin\commands;
 
-use blackcube\admin\components\RbacConstants;
+use blackcube\admin\components\Rbac;
 use blackcube\admin\models\Administrator;
 use yii\console\Controller;
 use yii\console\ExitCode;
@@ -14,7 +14,7 @@ class RbacController extends Controller
 
     public function actionInit()
     {
-        $originalRights = new ReflectionClass(RbacConstants::class);
+        $originalRights = new ReflectionClass(Rbac::class);
         // Yii::$app->
         foreach ($originalRights->getConstants() as $name => $value) {
             if (strncmp($name, 'PERMISSION_', 11) === 0) {

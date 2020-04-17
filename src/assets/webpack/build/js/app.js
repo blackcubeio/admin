@@ -140,6 +140,13 @@ var AjaxService = /** @class */ (function () {
         this.logger.debug('deleteRequest');
         return this.httpClient.fetch(url, { method: 'delete', headers: { 'X-CSRF-Token': csrf } });
     };
+    AjaxService.prototype.updateRbac = function (url, formData) {
+        this.logger.debug('updateRbac');
+        return this.httpClient.fetch(url, {
+            method: 'post',
+            body: formData
+        });
+    };
     AjaxService = __decorate([
         aurelia_framework_1.inject(aurelia_fetch_client_1.HttpClient)
     ], AjaxService);
@@ -1184,6 +1191,96 @@ exports.BlackcubePieCustomElement = BlackcubePieCustomElement;
 
 /***/ }),
 
+/***/ "components/BlackcubeRbacCustomAttribute":
+/*!********************************************************!*\
+  !*** ./app/components/BlackcubeRbacCustomAttribute.ts ***!
+  \********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var aurelia_framework_1 = __webpack_require__(/*! aurelia-framework */ "aurelia-framework");
+var AjaxService_1 = __webpack_require__(/*! ../services/AjaxService */ "./app/services/AjaxService.ts");
+var BlackcubeRbacCustomAttribute = /** @class */ (function () {
+    function BlackcubeRbacCustomAttribute(element, ajaxService) {
+        var _this = this;
+        this.logger = aurelia_framework_1.LogManager.getLogger('components.BlackcubeRbac');
+        this.onDelegateChange = function (event) {
+            if (event.target) {
+                //@ts-ignore
+                var currentCheckbox = event.target.closest('input[type=checkbox]');
+                if (currentCheckbox && _this.element.contains(currentCheckbox)) {
+                    _this.logger.debug('delegateClick', currentCheckbox.dataset);
+                    var formData = new FormData();
+                    if ('rbacType' in currentCheckbox.dataset) {
+                        //@ts-ignore
+                        formData.append('type', currentCheckbox.dataset.rbacType);
+                    }
+                    if ('rbacName' in currentCheckbox.dataset) {
+                        //@ts-ignore
+                        formData.append('name', currentCheckbox.dataset.rbacName);
+                    }
+                    formData.append('mode', currentCheckbox.checked ? 'add' : 'remove');
+                    formData.append(_this.csrf.name, _this.csrf.value);
+                    // formData.append()
+                    _this.ajaxService.updateRbac(_this.targetUrl, formData)
+                        .then(function (response) {
+                        return response.text();
+                    })
+                        .then(function (html) {
+                        _this.element.innerHTML = html;
+                    });
+                }
+            }
+        };
+        this.element = element;
+        this.ajaxService = ajaxService;
+        this.logger.debug('Constructor');
+    }
+    BlackcubeRbacCustomAttribute.prototype.created = function (owningView, myView) {
+        this.logger.debug('Created');
+    };
+    BlackcubeRbacCustomAttribute.prototype.bind = function (bindingContext, overrideContext) {
+        this.logger.debug('Bind');
+    };
+    BlackcubeRbacCustomAttribute.prototype.attached = function () {
+        var parentForm = this.element.closest('form');
+        var csrfField = parentForm.querySelector('input[name=_csrf]');
+        this.csrf = {
+            name: csrfField.name,
+            value: csrfField.value
+        };
+        this.element.addEventListener('change', this.onDelegateChange);
+        this.logger.debug('Attached');
+    };
+    BlackcubeRbacCustomAttribute.prototype.detached = function () {
+        this.element.removeEventListener('change', this.onDelegateChange);
+        this.logger.debug('Detached');
+    };
+    BlackcubeRbacCustomAttribute.prototype.unbind = function () {
+        this.logger.debug('Unbind');
+    };
+    __decorate([
+        aurelia_framework_1.bindable({ primaryProperty: true })
+    ], BlackcubeRbacCustomAttribute.prototype, "targetUrl", void 0);
+    BlackcubeRbacCustomAttribute = __decorate([
+        aurelia_framework_1.inject(aurelia_framework_1.DOM.Element, AjaxService_1.AjaxService)
+    ], BlackcubeRbacCustomAttribute);
+    return BlackcubeRbacCustomAttribute;
+}());
+exports.BlackcubeRbacCustomAttribute = BlackcubeRbacCustomAttribute;
+
+
+/***/ }),
+
 /***/ "components/BlackcubeSchemaEditorCustomElement":
 /*!**************************************************************!*\
   !*** ./app/components/BlackcubeSchemaEditorCustomElement.ts ***!
@@ -1776,7 +1873,8 @@ function configure(configure) {
         'components/BlackcubeControllerActionCustomAttribute',
         'components/BlackcubeToggleDependenciesCustomAttribute',
         'components/BlackcubeToggleElementCustomAttribute',
-        'components/BlackcubeSearchCompositeCustomElement'
+        'components/BlackcubeSearchCompositeCustomElement',
+        'components/BlackcubeRbacCustomAttribute'
     ]);
 }
 exports.configure = configure;

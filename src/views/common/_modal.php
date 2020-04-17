@@ -16,6 +16,7 @@
  */
 
 use blackcube\admin\Module;
+use blackcube\admin\models\Administrator;
 use blackcube\admin\helpers\Html;
 
 ?>
@@ -30,7 +31,7 @@ use blackcube\admin\helpers\Html;
                 <p>
                     <?php echo Module::t('common', 'Beware, you are going to delete the element:'); ?>
                 </p>
-                    <strong class="uppercase text-sm"><?php echo $element->name; ?></strong>
+                    <strong class="uppercase text-sm"><?php echo ($element instanceof Administrator) ? $element->email :$element->name; ?></strong>
                 <p>
                     <?php echo Module::t('common', 'Do you really want to conitnue ?'); ?>
                 </p>

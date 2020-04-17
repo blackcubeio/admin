@@ -1,7 +1,7 @@
 
 import {DOM, inject, noView, bindable, bindingMode, LogManager, ComponentCreated, ComponentBind, ComponentAttached, ComponentDetached, ComponentUnbind, View} from 'aurelia-framework';
 import {Logger} from "aurelia-logging";
-import {AjaxService} from "../services/AjaxService";
+import {AjaxService, Csrf} from "../services/AjaxService";
 import Resumable from "resumablejs"
 import URI from 'urijs';
 
@@ -11,10 +11,6 @@ interface UploadedFile {
     previewUrl:string,
     deleteUrl:string,
     file?:Resumable.ResumableFile|null
-}
-interface Csrf {
-    name:string,
-    value:string
 }
 @inject(DOM.Element, AjaxService)
 class BlackcubeFileCustomElement implements ComponentCreated, ComponentBind, ComponentAttached, ComponentDetached, ComponentUnbind {

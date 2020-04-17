@@ -45,6 +45,18 @@ class Administrator extends \yii\db\ActiveRecord implements IdentityInterface
 {
     public const SCENARIO_LOGIN = 'login';
     public const SCENARIO_CREATE = 'create';
+    public const SCENARIO_CREATE_ONLINE = 'create_online';
+    public const SCENARIO_UPDATE = 'update';
+
+    /**
+     * @var string
+     */
+    public $newPassword;
+
+    /**
+     * @var string
+     */
+    public $checkPassword;
 
     /**
      * {@inheritdoc}
@@ -88,6 +100,8 @@ class Administrator extends \yii\db\ActiveRecord implements IdentityInterface
         $scenarios = parent::scenarios();
         $scenarios[static::SCENARIO_LOGIN] = ['email', 'password'];
         $scenarios[static::SCENARIO_CREATE] = ['email', 'password'];
+        $scenarios[static::SCENARIO_CREATE_ONLINE] = ['email', 'newPassword', 'checkPassword', 'active'];
+        $scenarios[static::SCENARIO_UPDATE] = ['email', 'newPassword', 'checkPassword', 'active'];
         return $scenarios;
     }
 
@@ -100,8 +114,10 @@ class Administrator extends \yii\db\ActiveRecord implements IdentityInterface
             [['email'], 'required'],
             [['email'], 'email'],
             [['password'], 'required', 'on' => [static::SCENARIO_LOGIN, static::SCENARIO_CREATE]],
+            [['newPassword', 'checkPassword'], 'required', 'on' => [static::SCENARIO_CREATE_ONLINE]],
+            [['newPassword'], 'compare', 'compareAttribute' => 'checkPassword', 'on' => [static::SCENARIO_UPDATE, static::SCENARIO_CREATE_ONLINE]],
             [['email'], 'validateLogin', 'on' => [static::SCENARIO_LOGIN], 'params' => ['password' => 'password']],
-            [['email'], 'unique', 'on' => [static::SCENARIO_CREATE]],
+            [['email'], 'unique', 'on' => [static::SCENARIO_CREATE, static::SCENARIO_CREATE_ONLINE, static::SCENARIO_UPDATE]],
             [['active'], 'boolean'],
             [['dateCreate', 'dateUpdate'], 'safe'],
             [['email', 'password', 'authKey', 'token', 'tokenType'], 'string', 'max' => 255],
@@ -117,6 +133,8 @@ class Administrator extends \yii\db\ActiveRecord implements IdentityInterface
             'id' => Module::t('models', 'ID'),
             'email' => Module::t('models', 'Email'),
             'password' => Module::t('models', 'Password'),
+            'newPassword' => Module::t('models', 'New Password'),
+            'checkPassword' => Module::t('models', 'Password Verification'),
             'active' => Module::t('models', 'Active'),
             'authKey' => Module::t('models', 'Auth Key'),
             'token' => Module::t('models', 'Token'),
@@ -138,8 +156,12 @@ class Administrator extends \yii\db\ActiveRecord implements IdentityInterface
         if ($administrator !== null) {
             $password = $this->{$params['password']};
             //$administrator->validatePassword($password);
-            if ($administrator->validatePassword($password) === false) {
-                $this->addError('password', Module::t('validators', 'Password is invalid'));
+            try {
+                if ($administrator->validatePassword($password) === false) {
+                    $this->addError('password', Module::t('validators', 'Password is invalid'));
+                }
+            } catch(\Exception $e) {
+                $this->addError('email', Module::t('validators', 'User is invalid'));
             }
         } else {
             $this->addError($attribute, Module::t('validators', 'Administrator does not exist'));
@@ -152,7 +174,11 @@ class Administrator extends \yii\db\ActiveRecord implements IdentityInterface
      */
     public function validatePassword($password)
     {
-        return Yii::$app->getSecurity()->validatePassword($password, $this->password);
+        try {
+            return Yii::$app->getSecurity()->validatePassword($password, $this->password);
+        } catch(\Exception $e) {
+            return false;
+        }
     }
 
     /**
@@ -212,8 +238,16 @@ class Administrator extends \yii\db\ActiveRecord implements IdentityInterface
     public function beforeSave($insert)
     {
         //TODO: better check with password_get_info($this->password) => ['algoName' => 'unknown'] not hashed;
-        if ($this->scenario === static::SCENARIO_CREATE) {
+        if ($this->scenario === static::SCENARIO_CREATE || $this->scenario === static::SCENARIO_CREATE_ONLINE) {
             $this->password = static::hashPassword($this->password);
+        }
+        if ($this->scenario === static::SCENARIO_UPDATE) {
+            if (empty($this->password) === false) {
+                $passwordInfo = password_get_info($this->password);
+                if ($passwordInfo['algoName'] === 'unknown') {
+                    $this->password = static::hashPassword($this->password);
+                }
+            }
         }
         if (empty($this->authKey) === true) {
             $this->authKey = Yii::$app->getSecurity()->generateRandomString();

@@ -30,7 +30,7 @@ use blackcube\admin\helpers\Html;
                 </div>
                 <div class="mt-2">
                     <?php echo Html::activeLabel($administrator, 'password', ['class' => 'label']); ?>
-                    <?php echo Html::activeTextInput($administrator, 'password', ['class' => 'field'.($administrator->hasErrors('password') ? ' error':''), 'required' => 'required', 'placeholder' => 'Password', 'aria-label' => 'Password']); // $administrator->hasErrors('password') ? 'invalid':'']); ?>
+                    <?php echo Html::activePasswordInput($administrator, 'password', ['class' => 'field'.($administrator->hasErrors('password') ? ' error':''), 'required' => 'required', 'placeholder' => 'Password', 'aria-label' => 'Password']); // $administrator->hasErrors('password') ? 'invalid':'']); ?>
                 </div>
                 <div class="buttons">
                     <a class="link" href="#">

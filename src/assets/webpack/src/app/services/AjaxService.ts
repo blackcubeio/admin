@@ -2,6 +2,11 @@ import {inject, LogManager} from "aurelia-framework";
 import {HttpClient, HttpClientConfiguration} from "aurelia-fetch-client";
 import {Logger} from "aurelia-logging";
 
+interface Csrf {
+    name:string,
+    value:string
+}
+
 @inject(HttpClient)
 class AjaxService {
     private httpClient:HttpClient;
@@ -81,6 +86,15 @@ class AjaxService {
         this.logger.debug('deleteRequest');
         return this.httpClient.fetch(url, { method: 'delete', headers: {'X-CSRF-Token': csrf}});
     }
+    public updateRbac(url:string, formData:FormData)
+    {
+        this.logger.debug('updateRbac');
+        return this.httpClient.fetch(url, {
+            method: 'post',
+            body: formData
+        });
+
+    }
 }
 
-export {AjaxService}
+export {AjaxService, Csrf}

@@ -51,6 +51,7 @@ class AuthenticationController extends Controller
                 return $this->redirect(['default/']);
                 // $realAdministrator = $administrator::
             }
+            $administrator->password = null;
         }
         return $this->render('login', [
             'administrator' => $administrator
