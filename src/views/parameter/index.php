@@ -9,9 +9,9 @@
  * @license https://www.redcat.io/license license
  * @version XXX
  * @link https://www.redcat.io
- * @package blackcube\admin\views\type
+ * @package blackcube\admin\views\parameter
  *
- * @var $typesQuery \blackcube\core\models\FilterActiveQuery
+ * @var $parametersQuery \yii\db\ActiveQuery
  * @var $this \yii\web\View
  */
 
@@ -28,11 +28,11 @@ $formatter = Yii::$app->formatter;
     <main class="overflow-hidden">
         <div class="table-container" >
             <div blackcube-ajax-link="" blackcube-attach-modal="">
-                <?php echo $this->render('_list', ['typesQuery' => $typesQuery]); ?>
+                <?php echo $this->render('_list', ['parametersQuery' => $parametersQuery]); ?>
             </div>
             <div class="buttons">
-                <?php if (Yii::$app->user->can(Rbac::PERMISSION_TYPE_CREATE)): ?>
-                <?php echo Html::a('<i class="fa fa-plus mr-2"></i> '.Module::t('type', 'Create'), ['create'], ['class' => 'button-submit']); ?>
+                <?php if (Yii::$app->user->can(Rbac::PERMISSION_PARAMETER_CREATE)): ?>
+                <?php echo Html::a('<i class="fa fa-plus mr-2"></i> '.Module::t('parameter', 'Create'), ['create'], ['class' => 'button-submit']); ?>
                 <?php endif; ?>
             </div>
         </div>

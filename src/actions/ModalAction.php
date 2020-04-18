@@ -59,7 +59,15 @@ class ModalAction extends Action
                 throw new NotFoundHttpException();
             }
         } else {
-            throw new NotFoundHttpException();
+            $domain = Yii::$app->request->getQueryParam('domain', null);
+            $name = Yii::$app->request->getQueryParam('name', null);
+            if ($domain === null || $name === null) {
+                throw new NotFoundHttpException();
+            }
+            $element = $elementClass::findOne(['domain' => $domain, 'name' => $name]);
+            if ($element === null) {
+                throw new NotFoundHttpException();
+            }
         }
         return $this->controller->renderPartial($this->view, ['element' => $element]);
     }

@@ -63,7 +63,6 @@ class Module extends BaseModule implements BootstrapInterface
      */
     public $commandNameSpace = 'bca:';
 
-
     /**
      * @inheritdoc
      */
