@@ -94,6 +94,32 @@ class Html extends \blackcube\core\web\helpers\Html
      * @param string $attribute
      * @param array $options
      * @return string
+     */
+    public static function activeEditorJs(Model $model, $attribute, $options = [])
+    {
+        $selfId = static::getInputId($model, $attribute);
+        $selfName = static::getInputName($model, $attribute);
+        if (isset($options['value']) === true) {
+            $selfValue = $options['value'];
+            unset($options['value']);
+        } else {
+            $selfValue = static::getAttributeValue($model, $attribute);
+        }
+
+        $options = array_merge([
+            'field-id' => $selfId,
+            'field-name' => $selfName,
+            'field-value' => $selfValue,
+        ], $options);
+        return static::tag('blackcube-editor-js', '', $options);
+
+    }
+
+    /**
+     * @param Model $model
+     * @param string $attribute
+     * @param array $options
+     * @return string
      * @throws InvalidConfigException
      */
     public static function activeUpload(Model $model, $attribute, $options = [])
@@ -188,6 +214,10 @@ class Html extends \blackcube\core\web\helpers\Html
             case 'files':
                 $options['class'] = ($elastic->hasErrors($realAttibute)?' error':'');
                 $result = static::activeUpload($elastic, $attribute, $options);
+                break;
+            case 'wysiwyg':
+                $options['class'] = ($elastic->hasErrors($realAttibute)?' error':'');
+                $result = static::activeEditorJs($elastic, $attribute, $options);
                 break;
             case 'dropdownlist':
                 throw new NotSupportedException();

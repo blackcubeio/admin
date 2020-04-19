@@ -32,10 +32,10 @@ use blackcube\admin\helpers\Html;
                     <?php echo Html::activeLabel($administrator, 'password', ['class' => 'label']); ?>
                     <?php echo Html::activePasswordInput($administrator, 'password', ['class' => 'field'.($administrator->hasErrors('password') ? ' error':''), 'required' => 'required', 'placeholder' => 'Password', 'aria-label' => 'Password']); // $administrator->hasErrors('password') ? 'invalid':'']); ?>
                 </div>
-                <div class="buttons">
-                    <a class="link" href="#">
+                <div class="buttons" style="justify-content: flex-end;">
+                    <!-- a class="link" href="#">
                         <?php echo Module::t('authentication', 'Forgot Password?'); ?>
-                    </a>
+                    </a -->
                     <button class="submit-btn" type="submit">Login</button>
                 </div>
                 <!-- a class="inline-block right-0 align-baseline font-bold text-sm text-500 hover:text-blue-800" href="#">

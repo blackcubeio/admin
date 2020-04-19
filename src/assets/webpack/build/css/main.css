@@ -2045,6 +2045,30 @@ blackcube-resumable-file.error button {
   border-color: #f56565;
 }
 
+blackcube-editor-js h1 {
+  font-size: 3rem;
+}
+
+blackcube-editor-js h2 {
+  font-size: 2.25rem;
+}
+
+blackcube-editor-js h3 {
+  font-size: 1.875rem;
+}
+
+blackcube-editor-js h4 {
+  font-size: 1.5rem;
+}
+
+blackcube-editor-js h5 {
+  font-size: 1.25rem;
+}
+
+blackcube-editor-js h6 {
+  font-size: 1.125rem;
+}
+
 .sr-only {
   position: absolute;
   width: 1px;

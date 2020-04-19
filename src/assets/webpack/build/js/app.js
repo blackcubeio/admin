@@ -478,6 +478,7 @@ var BlackcubeBlocsCustomAttribute = /** @class */ (function () {
         this.logger = aurelia_framework_1.LogManager.getLogger('components.ManageBlocs');
         this.onDelegateClick = function (evt) {
             if (evt.target) {
+                //TODO: make better delegate
                 //@ts-ignore
                 var currentButton = evt.target.closest('button[type=button]');
                 if (currentButton && _this.element.contains(currentButton)) {
@@ -769,6 +770,167 @@ var BlackcubeControllerActionCustomAttribute = /** @class */ (function () {
 }());
 exports.BlackcubeControllerActionCustomAttribute = BlackcubeControllerActionCustomAttribute;
 
+
+/***/ }),
+
+/***/ "components/BlackcubeEditorJsCustomElement":
+/*!**********************************************************!*\
+  !*** ./app/components/BlackcubeEditorJsCustomElement.ts ***!
+  \**********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var aurelia_framework_1 = __webpack_require__(/*! aurelia-framework */ "aurelia-framework");
+var editorjs_1 = __importDefault(__webpack_require__(/*! @editorjs/editorjs */ "../../../../node_modules/@editorjs/editorjs/dist/editor.js"));
+var header_1 = __importDefault(__webpack_require__(/*! @editorjs/header */ "../../../../node_modules/@editorjs/header/dist/bundle.js"));
+var raw_1 = __importDefault(__webpack_require__(/*! @editorjs/raw */ "../../../../node_modules/@editorjs/raw/dist/bundle.js"));
+var list_1 = __importDefault(__webpack_require__(/*! @editorjs/list */ "../../../../node_modules/@editorjs/list/dist/bundle.js"));
+var quote_1 = __importDefault(__webpack_require__(/*! @editorjs/quote */ "../../../../node_modules/@editorjs/quote/dist/bundle.js"));
+var embed_1 = __importDefault(__webpack_require__(/*! @editorjs/embed */ "../../../../node_modules/@editorjs/embed/dist/bundle.js"));
+var marker_1 = __importDefault(__webpack_require__(/*! @editorjs/marker */ "../../../../node_modules/@editorjs/marker/dist/bundle.js"));
+var paragraph_1 = __importDefault(__webpack_require__(/*! @editorjs/paragraph */ "../../../../node_modules/@editorjs/paragraph/dist/bundle.js"));
+var delimiter_1 = __importDefault(__webpack_require__(/*! @editorjs/delimiter */ "../../../../node_modules/@editorjs/delimiter/dist/bundle.js"));
+var BlackcubeEditorJsCustomElement = /** @class */ (function () {
+    function BlackcubeEditorJsCustomElement(element) {
+        var _this = this;
+        this.logger = aurelia_framework_1.LogManager.getLogger('components.EditorJs');
+        this.onEditorJsChange = function (api) {
+            _this.logger.debug('Data changed');
+            _this.editorJs.save()
+                .then(function (outputData) {
+                var jsonData = JSON.stringify(outputData);
+                _this.hiddenField.value = jsonData;
+            }).catch(function (error) {
+                _this.logger.error('save failed');
+            });
+        };
+        this.element = element;
+        this.logger.debug('Constructor');
+    }
+    BlackcubeEditorJsCustomElement.prototype.created = function (owningView, myView) {
+        this.logger.debug('Created');
+    };
+    BlackcubeEditorJsCustomElement.prototype.bind = function (bindingContext, overrideContext) {
+        this.logger.debug('Bind');
+    };
+    BlackcubeEditorJsCustomElement.prototype.attached = function () {
+        this.hiddenField.name = this.fieldName;
+        this.hiddenField.id = this.fieldId;
+        this.hiddenField.value = this.fieldValue;
+        this.initEditorJs();
+        this.logger.debug('Attached');
+    };
+    BlackcubeEditorJsCustomElement.prototype.detached = function () {
+        this.logger.debug('Detached');
+    };
+    BlackcubeEditorJsCustomElement.prototype.unbind = function () {
+        this.logger.debug('Unbind');
+    };
+    BlackcubeEditorJsCustomElement.prototype.initEditorJs = function () {
+        var initData = {
+            blocks: []
+        };
+        try {
+            initData = JSON.parse(this.hiddenField.value);
+        }
+        catch (e) {
+            this.logger.debug('Data read failed');
+        }
+        this.editorJs = new editorjs_1.default({
+            holder: this.editorContent,
+            onChange: this.onEditorJsChange,
+            tools: {
+                header: {
+                    class: header_1.default,
+                    config: {
+                        placeholder: 'Enter a header',
+                        levels: [1, 2, 3, 4, 5, 6],
+                        defaultLevel: 2
+                    }
+                },
+                raw: {
+                    class: raw_1.default,
+                    config: {
+                        placeholder: 'Enter HTML code'
+                    }
+                },
+                list: {
+                    class: list_1.default,
+                    inlineToolbar: true
+                },
+                quote: {
+                    class: quote_1.default,
+                    inlineToolbar: true,
+                    shortcut: 'CMD+SHIFT+O',
+                    config: {
+                        quotePlaceholder: 'Enter a quote',
+                        captionPlaceholder: 'Quote\'s author'
+                    }
+                },
+                embed: {
+                    class: embed_1.default,
+                    inlineToolbar: true,
+                    config: {
+                        services: {
+                            youtube: true,
+                            vimeo: true
+                        }
+                    }
+                },
+                marker: {
+                    class: marker_1.default,
+                    shortcut: 'CMD+SHIFT+M'
+                },
+                paragraph: {
+                    class: paragraph_1.default,
+                    inlineToolbar: true
+                },
+                delimiter: {
+                    class: delimiter_1.default
+                }
+            },
+            data: initData
+        });
+    };
+    __decorate([
+        aurelia_framework_1.bindable({ defaultBindingMode: aurelia_framework_1.bindingMode.fromView })
+    ], BlackcubeEditorJsCustomElement.prototype, "fieldId", void 0);
+    __decorate([
+        aurelia_framework_1.bindable({ defaultBindingMode: aurelia_framework_1.bindingMode.fromView })
+    ], BlackcubeEditorJsCustomElement.prototype, "fieldName", void 0);
+    __decorate([
+        aurelia_framework_1.bindable({ defaultBindingMode: aurelia_framework_1.bindingMode.fromView })
+    ], BlackcubeEditorJsCustomElement.prototype, "fieldValue", void 0);
+    BlackcubeEditorJsCustomElement = __decorate([
+        aurelia_framework_1.inject(aurelia_framework_1.DOM.Element)
+    ], BlackcubeEditorJsCustomElement);
+    return BlackcubeEditorJsCustomElement;
+}());
+exports.BlackcubeEditorJsCustomElement = BlackcubeEditorJsCustomElement;
+
+
+/***/ }),
+
+/***/ "components/BlackcubeEditorJsCustomElement.html":
+/*!************************************************************!*\
+  !*** ./app/components/BlackcubeEditorJsCustomElement.html ***!
+  \************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "<template>\n    <input type=\"hidden\" ref=\"hiddenField\">\n    <div ref=\"editorContent\">\n\n    </div>\n</template>\n";
 
 /***/ }),
 
@@ -2004,7 +2166,8 @@ function configure(configure) {
         'components/BlackcubeToggleElementCustomAttribute',
         'components/BlackcubeSearchCompositeCustomElement',
         'components/BlackcubeRbacCustomAttribute',
-        'components/BlackcubeSidebarCustomAttribute'
+        'components/BlackcubeSidebarCustomAttribute',
+        'components/BlackcubeEditorJsCustomElement'
     ]);
 }
 exports.configure = configure;

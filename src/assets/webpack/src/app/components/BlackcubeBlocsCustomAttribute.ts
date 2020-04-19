@@ -41,6 +41,7 @@ class BlackcubeBlocsCustomAttribute implements ComponentCreated, ComponentBind, 
 
     protected onDelegateClick = (evt:Event) => {
         if (evt.target) {
+            //TODO: make better delegate
             //@ts-ignore
             let currentButton = <HTMLButtonElement>evt.target.closest('button[type=button]');
             if (currentButton && this.element.contains(currentButton)) {
