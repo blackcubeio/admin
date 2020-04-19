@@ -133,7 +133,7 @@ class Module extends BaseModule implements BootstrapInterface
     protected function bootstrapWeb(WebApplication $app)
     {
         $app->setComponents([
-            'blackcubeUser' => [
+            'user' => [
                 'class' => WebUser::class,
                 'identityClass' => Administrator::class,
                 'enableAutoLogin' => true,
