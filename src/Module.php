@@ -26,6 +26,7 @@ use yii\di\Instance;
 use yii\i18n\GettextMessageSource;
 use yii\rbac\DbManager;
 use yii\web\Application as WebApplication;
+use yii\web\ErrorHandler;
 use yii\web\User as WebUser;
 use yii\console\Application as ConsoleApplication;
 use Yii;
@@ -39,6 +40,8 @@ use Yii;
  * @version XXX
  * @link https://www.redcat.io
  * @package blackcube\admin
+ *
+ * @var $blackcubeUser WebUser
  */
 class Module extends BaseModule implements BootstrapInterface
 {
@@ -72,6 +75,7 @@ class Module extends BaseModule implements BootstrapInterface
         parent::init();
         $this->db = Instance::ensure($this->db, Connection::class);
         $this->registerTranslations();
+        $this->registerErrorHandler();
     }
 
     /**
@@ -84,7 +88,7 @@ class Module extends BaseModule implements BootstrapInterface
             'authManager' => [
                 'class' => DbManager::class,
                 'db' => $this->db,
-            ]
+            ],
         ]);
         if ($app instanceof ConsoleApplication) {
             $this->bootstrapConsole($app);
@@ -129,7 +133,7 @@ class Module extends BaseModule implements BootstrapInterface
     protected function bootstrapWeb(WebApplication $app)
     {
         $app->setComponents([
-            'user' => [
+            'blackcubeUser' => [
                 'class' => WebUser::class,
                 'identityClass' => Administrator::class,
                 'enableAutoLogin' => true,
@@ -156,6 +160,29 @@ class Module extends BaseModule implements BootstrapInterface
             'useMoFile' => false,
             'basePath' => '@blackcube/admin/i18n',
         ];
+    }
+
+    /**
+     * Register errorHandler for all module URLs
+     * @throws \yii\base\InvalidConfigException
+     */
+    public function registerErrorHandler()
+    {
+        list($route,) = Yii::$app->urlManager->parseRequest(Yii::$app->request);
+        if (preg_match('/'.$this->id.'\//', $route) > 0) {
+            Yii::configure($this, [
+                'components' => [
+                    'errorHandler' => [
+                        'class' => ErrorHandler::class,
+                        'errorAction' => $this->id.'/technical/error',
+                    ]
+                ],
+            ]);
+            /** @var ErrorHandler $handler */
+            $handler = $this->get('errorHandler');
+            Yii::$app->set('errorHandler', $handler);
+            $handler->register();
+        }
     }
 
     /**

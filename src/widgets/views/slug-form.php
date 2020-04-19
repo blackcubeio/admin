@@ -19,7 +19,7 @@
 
 use blackcube\admin\Module;
 use blackcube\admin\helpers\Html;
-use blackcube\admin\helpers\Parameter;
+use blackcube\core\models\Parameter;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Url;
 use Yii;
