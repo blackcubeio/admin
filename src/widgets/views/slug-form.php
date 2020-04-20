@@ -147,7 +147,7 @@ $elementType = $elementClass::getElementType();
             <div class="w-full bloc-fieldset md:w-4/12">
                 <?php echo Html::activeLabel($seo, 'ogType', ['class' => 'label']); ?>
                 <div class="dropdown">
-                    <?php echo Html::activeDropDownList($seo, 'ogType', ['siteweb' => Module::t('widgets', 'Website')]); ?>
+                    <?php echo Html::activeDropDownList($seo, 'ogType', ['website' => Module::t('widgets', 'Website')]); ?>
                     <div class="arrow">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
                     </div>
