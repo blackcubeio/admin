@@ -24,6 +24,11 @@ use blackcube\admin\helpers\Html;
             <span class="text-white text-lg p-2">Blackcube</span>
         </div>
         <div class="p-1 flex flex-row">
+            <?php echo Html::a(Module::t('widgets', 'Preview <i class="fa"></i>'), ['default/preview'], [
+                'class' => 'text-white p-2 no-underline hidden md:block lg:block',
+                'blackcube-ajax-link' => '',
+                'data-ajax' => '',
+            ]); ?>
             <?php echo Html::a(Module::t('widgets', 'Logout'), ['authentication/logout'], ['class' => 'text-white p-2 no-underline hidden md:block lg:block']); ?>
             <!-- div id="ProfileDropDown" class="rounded hidden shadow-md bg-white absolute pin-t mt-12 mr-1 pin-r">
                 <ul class="list-reset">

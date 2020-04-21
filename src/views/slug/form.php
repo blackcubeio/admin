@@ -1,6 +1,6 @@
 <?php
 /**
- * slug-form.php
+ * form.php
  *
  * PHP version 7.2+
  *
@@ -9,54 +9,43 @@
  * @license https://www.redcat.io/license license
  * @version XXX
  * @link https://www.redcat.io
- * @package blackcube\admin\widgets\views
+ * @package blackcube\admin\views\slug
  *
- * @var $slugForm blackcube\admin\models\SlugForm
- * @var $slug blackcube\core\models\Slug
- * @var $sitemap blackcube\core\models\Sitemap
- * @var $seo blackcube\core\models\Seo
+ * @var $slugForm \blackcube\admin\models\SlugForm
+ * @var $this \yii\web\View
  */
 
 use blackcube\admin\Module;
 use blackcube\admin\helpers\Html;
+use blackcube\admin\widgets\Sidebar;
+use blackcube\admin\widgets\SlugForm;
 use blackcube\core\models\Parameter;
-use blackcube\core\models\Slug;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Url;
-
-$elementClass = get_class($slugForm->getElement());
-//TODO: move into SlugForm
-$elementType = $elementClass::getElementType();
-
-
-$slugFormOptions = [];
-if ($slugForm->isStandalone === false) {
-    $slugFormOptions['blackcube-toggle-slug'] = ($slugForm->getElement()->id === null)?'':$elementType.'-'.$slugForm->getElement()->id;
-}
-
 ?>
-<?php echo Html::beginTag('div', $slugFormOptions); ?>
-    <div class="bloc mb-2">
-        <div class="bloc-title flex justify-between">
-            <div class="inline-block">
-            <?php if ($slugForm->isStandalone === false): ?>
-                <?php echo Html::activeCheckbox($slugForm, 'hasSlug', ['class' => 'mr-2 toggle', 'label' => false]); ?>
-            <?php endif; ?>
-            <span class="title">
-                <?php echo Module::t('widgets', 'Slug'); ?>
-                <?php if ($slugForm->isStandalone && $slugForm->getIsRedirectSlug() === false): ?>
-                    <span class="text-xs text-gray-200 italic pl-2">(<?php echo $slugForm->getElement()->name; ?>)</span>
-                <?php endif; ?>
-            </span>
-            </div>
-            <?php if ($slugForm->isStandalone === false): ?>
-            <i class="fa fa-chevron-down text-white mt-2"></i>
-            <?php endif; ?>
-        </div>
-    </div>
+<div class="flex flex-1">
+    <?php echo Sidebar::widget(); ?>
+    <main>
+        <?php echo Html::beginForm('', 'post', ['class' => 'form']); ?>
+        <ul class="header">
+            <li>
+                <?php echo Html::a('<i class="fa fa-angle-left mr-2"></i> '.Module::t('slug', 'Back'), ['index'], ['class' => 'button']); ?>
+            </li>
+            <li>
+                <?php echo Html::button('<i class="fa fa-check mr-2"></i> '.Module::t('slug', 'Save'), ['type' => 'submit', 'class' => 'button']); ?>
+            </li>
+        </ul>
+        <?php echo SlugForm::widget([
+            'element' => $slugForm->getSlug(),
+            'slugForm' => $slugForm,
+        ]); ?>
 
-    <?php echo Html::beginTag('div', ['class' => ''.(($slugForm->isStandalone === false)?'toggle-target hidden':'')]); ?>
-        <?php echo Html::activeHiddenInput($slugForm, 'openedSlug', ['class' => 'slug-status']); ?>
+        <?php /*/ ?>
+        <div class="bloc">
+            <div class="bloc-title">
+                <span class="title"><?php echo Module::t('slug', 'Slug'); ?></span>
+            </div>
+        </div>
         <div class="bloc">
             <div class="w-full bloc-fieldset md:w-1/12">
                 <?php echo Html::activeLabel($slug, 'active', ['class' => 'label']); ?>
@@ -77,7 +66,6 @@ if ($slugForm->isStandalone === false) {
                 <?php echo Html::activeTextInput($slug, 'path', ['class' => 'textfield'.($slug->hasErrors('path')?' error':'')]); ?>
             </div>
         </div>
-        <?php if($slugForm->getIsRedirectSlug() === true): ?>
         <div class="bloc">
             <div class="w-full bloc-fieldset md:w-4/12">
                 <?php echo Html::activeLabel($slug, 'httpCode', ['class' => 'label']); ?>
@@ -96,10 +84,9 @@ if ($slugForm->isStandalone === false) {
                 <?php echo Html::activeTextInput($slug, 'targetUrl', ['class' => 'textfield'.($slug->hasErrors('targetUrl')?' error':'')]); ?>
             </div>
         </div>
-        <?php endif; ?>
         <div class="bloc">
             <div class="w-full px-3">
-            <span class="italic text-xs text-gray-700"><?php echo Module::t('widgets', 'Sitemap and SEO elements are Slug dependant. They will be activated for the website only if Slug is active'); ?></span>
+                <span class="italic text-xs text-gray-700"><?php echo Module::t('widgets', 'Sitemap and SEO elements are Slug dependant. They will be activated for the website only if Slug is active'); ?></span>
             </div>
         </div>
         <div class="bloc">
@@ -160,12 +147,12 @@ if ($slugForm->isStandalone === false) {
             <div class="w-full bloc-fieldset md:w-4/12">
                 <?php echo Html::activeLabel($seo, 'image', ['class' => 'label']); ?>
                 <?php echo Html::activeUpload($seo, 'image', [
-                        'upload-url' => Url::to(['file-upload']),
-                        'preview-url' => Url::to(['file-preview', 'name' => '__name__']),
-                        'delete-url' => Url::to(['file-delete', 'name' => '__name__']),
-                        'image-width' => 1200,
-                        'image-height' => 630,
-                        'file-type' => 'jpg,png',
+                    'upload-url' => Url::to(['file-upload']),
+                    'preview-url' => Url::to(['file-preview', 'name' => '__name__']),
+                    'delete-url' => Url::to(['file-delete', 'name' => '__name__']),
+                    'image-width' => 1200,
+                    'image-height' => 630,
+                    'file-type' => 'jpg,png',
                 ]); ?>
             </div>
             <div class="w-full bloc-fieldset md:w-7/12">
@@ -200,5 +187,16 @@ if ($slugForm->isStandalone === false) {
                 </div>
             </div>
         </div>
-    <?php echo Html::endTag('div'); ?>
-<?php echo Html::endTag('div'); ?>
+        <?php /**/ ?>
+        <div class="buttons">
+                <?php echo Html::a('<i class="fa fa-times mr-2"></i> '.Module::t('slug', 'Cancel'), ['index'], [
+                    'class' => 'button-cancel'
+                ]); ?>
+                <?php echo Html::button('<i class="fa fa-check mr-2"></i> '.Module::t('slug', 'Save'), [
+                    'type' => 'submit',
+                    'class' => 'button-submit'
+                ]); ?>
+            </div>
+        <?php echo Html::endForm(); ?>
+    </main>
+</div>

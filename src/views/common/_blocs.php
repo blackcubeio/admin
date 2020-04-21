@@ -39,9 +39,9 @@ $pathAlias = Module::getInstance()->adminTemplatesAlias;
                     <?php echo Html::activeLabel($bloc, '['.$i.']'.$id, ['class' => 'label']); ?>
                     <?php // echo Html::activeTextInput($bloc, '['.$i.']'.$id, ['class' => 'textfield'.($bloc->hasErrors($id)?' error':'')]); ?>
                     <?php echo Html::activeElasticField($bloc, '['.$i.']'.$id, [
-                        'upload-url' => Url::to(['upload']),
-                        'preview-url' => Url::to(['preview', 'name' => '__name__']),
-                        'delete-url' => Url::to(['delete', 'name' => '__name__'])
+                        'upload-url' => Url::to(['file-upload']),
+                        'preview-url' => Url::to(['file-preview', 'name' => '__name__']),
+                        'delete-url' => Url::to(['file-delete', 'name' => '__name__'])
                     ]); ?>
                     <?php echo Html::activeElasticDescription($bloc,  '['.$i.']'.$id, ['class' => 'italic text-xs text-gray-700']); ?>
                 </div>

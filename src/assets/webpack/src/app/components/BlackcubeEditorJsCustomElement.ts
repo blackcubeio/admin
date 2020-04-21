@@ -10,6 +10,7 @@ import Embed from '@editorjs/embed';
 import Marker from '@editorjs/marker';
 import Paragraph from '@editorjs/paragraph';
 import Delimiter from '@editorjs/delimiter';
+import CodeTool from '@editorjs/code';
 
 @inject(DOM.Element)
 class BlackcubeEditorJsCustomElement implements ComponentCreated, ComponentBind, ComponentAttached, ComponentDetached, ComponentUnbind {
@@ -74,12 +75,14 @@ class BlackcubeEditorJsCustomElement implements ComponentCreated, ComponentBind,
         }
         this.editorJs = new EditorJS({
             holder: this.editorContent,
+            placeholder: 'Start writing',
             onChange: this.onEditorJsChange,
+            minHeight: 50,
             tools: {
                 header: {
                     class: Header,
                     config: {
-                        placeholder: 'Enter a header',
+                        placeholder: 'Start to write a header',
                         levels: [1, 2, 3, 4, 5, 6],
                         defaultLevel: 2
                     }
@@ -87,20 +90,31 @@ class BlackcubeEditorJsCustomElement implements ComponentCreated, ComponentBind,
                 raw: {
                     class: RawTool,
                     config: {
-                        placeholder: 'Enter HTML code'
+                        placeholder: 'Start to write HTML code'
                     }
                 },
+                /*/
+                code: {
+                    class: CodeTool,
+                    config: {
+                        placeholder: 'Start coding'
+                    }
+                },
+                /**/
                 list: {
                     class: List,
-                    inlineToolbar: true
+                    inlineToolbar: true,
+                    config: {
+                        placeholder: 'Start to write your list'
+                    }
                 },
                 quote: {
                     class: Quote,
                     inlineToolbar: true,
                     shortcut: 'CMD+SHIFT+O',
                     config: {
-                        quotePlaceholder: 'Enter a quote',
-                        captionPlaceholder: 'Quote\'s author'
+                        quotePlaceholder: 'Start to write a quote',
+                        captionPlaceholder: 'Caption'
                     }
                 },
                 embed: {
@@ -119,7 +133,10 @@ class BlackcubeEditorJsCustomElement implements ComponentCreated, ComponentBind,
                 },
                 paragraph: {
                     class: Paragraph,
-                    inlineToolbar: true
+                    inlineToolbar: true,
+                    config: {
+                        placeholder: 'Start to write something'
+                    }
                 },
                 delimiter: {
                     class: Delimiter

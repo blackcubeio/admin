@@ -81,7 +81,7 @@ class CategoryController extends BaseElementController
                 [
                     'allow' => true,
                     'actions' => [
-                        'preview', 'upload', 'delete',
+                        'file-preview', 'file-upload', 'file-delete',
                     ],
                     'roles' => ['@'],
                 ]

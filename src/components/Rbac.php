@@ -58,6 +58,11 @@ class Rbac
     public const PERMISSION_USER_VIEW = 'USER:VIEW';
     public const ROLE_USER_MANAGER = 'USER:MANAGER';
 
+    public const PERMISSION_SLUG_DELETE = 'SLUG:DELETE';
+    public const PERMISSION_SLUG_UPDATE = 'SLUG:UPDATE';
+    public const PERMISSION_SLUG_VIEW = 'SLUG:VIEW';
+    public const ROLE_SLUG_MANAGER = 'SLUG:MANAGER';
+
     public const ROLE_ADMIN = 'ADMIN';
 
     /**

@@ -168,20 +168,22 @@ class Module extends BaseModule implements BootstrapInterface
      */
     public function registerErrorHandler()
     {
-        list($route,) = Yii::$app->urlManager->parseRequest(Yii::$app->request);
-        if (preg_match('/'.$this->id.'\//', $route) > 0) {
-            Yii::configure($this, [
-                'components' => [
-                    'errorHandler' => [
-                        'class' => ErrorHandler::class,
-                        'errorAction' => $this->id.'/technical/error',
-                    ]
-                ],
-            ]);
-            /** @var ErrorHandler $handler */
-            $handler = $this->get('errorHandler');
-            Yii::$app->set('errorHandler', $handler);
-            $handler->register();
+        if (Yii::$app instanceof WebApplication) {
+            list($route,) = Yii::$app->urlManager->parseRequest(Yii::$app->request);
+            if (preg_match('/'.$this->id.'\//', $route) > 0) {
+                Yii::configure($this, [
+                    'components' => [
+                        'errorHandler' => [
+                            'class' => ErrorHandler::class,
+                            'errorAction' => $this->id.'/technical/error',
+                        ]
+                    ],
+                ]);
+                /** @var ErrorHandler $handler */
+                $handler = $this->get('errorHandler');
+                Yii::$app->set('errorHandler', $handler);
+                $handler->register();
+            }
         }
     }
 

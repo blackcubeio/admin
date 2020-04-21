@@ -18,7 +18,15 @@
 use blackcube\admin\Module;
 use blackcube\admin\models\Administrator;
 use blackcube\admin\helpers\Html;
+use blackcube\core\models\Slug;
 
+if ($element instanceof Administrator) {
+    $elementName = $element->email;
+} elseif ($element instanceof Slug) {
+    $elementName = $element->path;
+} else {
+    $elementName = $element->name;
+}
 ?>
 <div class="modal" id="modal-delete">
     <div class="inner">
@@ -31,7 +39,7 @@ use blackcube\admin\helpers\Html;
                 <p>
                     <?php echo Module::t('common', 'Beware, you are going to delete the element:'); ?>
                 </p>
-                    <strong class="uppercase text-sm"><?php echo ($element instanceof Administrator) ? $element->email :$element->name; ?></strong>
+                    <strong class="uppercase text-sm"><?php echo $elementName; ?></strong>
                 <p>
                     <?php echo Module::t('common', 'Do you really want to conitnue ?'); ?>
                 </p>

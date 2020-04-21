@@ -48,13 +48,13 @@ abstract class BaseElementController extends Controller
     public function actions()
     {
         $actions = parent::actions();
-        $actions['upload'] = [
+        $actions['file-upload'] = [
             'class' => ResumableUploadAction::class,
         ];
-        $actions['preview'] = [
+        $actions['file-preview'] = [
             'class' => ResumablePreviewAction::class,
         ];
-        $actions['delete'] = [
+        $actions['file-delete'] = [
             'class' => ResumableDeleteAction::class,
         ];
         return $actions;

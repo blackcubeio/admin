@@ -44,7 +44,12 @@ class SlugForm extends Model
     public $hasSlug;
 
     /**
-     * @var ElementInterface
+     * @var bool
+     */
+    public $isStandalone = false;
+
+    /**
+     * @var ElementInterface|Slug
      */
     private $_element;
 
@@ -91,13 +96,25 @@ class SlugForm extends Model
     }
 
     /**
-     * @param ElementInterface $element
+     * @param ElementInterface|Slug $element
      * @throws \yii\base\InvalidConfigException
      */
-    public function setElement(ElementInterface $element)
+    public function setElement($element)
     {
         $this->_element = $element;
-        $this->_slug = $this->_element->getSlug()->one();
+        if ($element instanceof Slug) {
+            $this->isStandalone = true;
+            $attachedElement = $element->element;
+            if ($attachedElement !== null) {
+                $this->_element = $attachedElement;
+            }
+        }
+
+        if ($this->_element instanceof Slug) {
+            $this->_slug = $this->_element;
+        } else {
+            $this->_slug = $this->_element->getSlug()->one();
+        }
         if ($this->_slug === null) {
             $this->_slug = Yii::createObject(Slug::class);
             $this->hasSlug = false;
@@ -189,8 +206,12 @@ class SlugForm extends Model
         return $status;
     }
 
+    public function getIsRedirectSlug()
+    {
+        return ($this->_element instanceof Slug && $this->_element === $this->_slug);
+    }
     /**
-     * @return ElementInterface
+     * @return ElementInterface|Slug
      */
     public function getElement()
     {

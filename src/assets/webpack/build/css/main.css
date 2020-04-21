@@ -957,6 +957,10 @@ video {
   border-color: #a0aec0;
 }
 
+.form .dropdown select.error {
+  border-color: #f56565;
+}
+
 .form .dropdown .arrow {
   pointer-events: none;
   position: absolute;

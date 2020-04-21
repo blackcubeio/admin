@@ -850,12 +850,14 @@ var BlackcubeEditorJsCustomElement = /** @class */ (function () {
         }
         this.editorJs = new editorjs_1.default({
             holder: this.editorContent,
+            placeholder: 'Start writing',
             onChange: this.onEditorJsChange,
+            minHeight: 50,
             tools: {
                 header: {
                     class: header_1.default,
                     config: {
-                        placeholder: 'Enter a header',
+                        placeholder: 'Start to write a header',
                         levels: [1, 2, 3, 4, 5, 6],
                         defaultLevel: 2
                     }
@@ -863,20 +865,31 @@ var BlackcubeEditorJsCustomElement = /** @class */ (function () {
                 raw: {
                     class: raw_1.default,
                     config: {
-                        placeholder: 'Enter HTML code'
+                        placeholder: 'Start to write HTML code'
                     }
                 },
+                /*/
+                code: {
+                    class: CodeTool,
+                    config: {
+                        placeholder: 'Start coding'
+                    }
+                },
+                /**/
                 list: {
                     class: list_1.default,
-                    inlineToolbar: true
+                    inlineToolbar: true,
+                    config: {
+                        placeholder: 'Start to write your list'
+                    }
                 },
                 quote: {
                     class: quote_1.default,
                     inlineToolbar: true,
                     shortcut: 'CMD+SHIFT+O',
                     config: {
-                        quotePlaceholder: 'Enter a quote',
-                        captionPlaceholder: 'Quote\'s author'
+                        quotePlaceholder: 'Start to write a quote',
+                        captionPlaceholder: 'Caption'
                     }
                 },
                 embed: {
@@ -895,7 +908,10 @@ var BlackcubeEditorJsCustomElement = /** @class */ (function () {
                 },
                 paragraph: {
                     class: paragraph_1.default,
-                    inlineToolbar: true
+                    inlineToolbar: true,
+                    config: {
+                        placeholder: 'Start to write something'
+                    }
                 },
                 delimiter: {
                     class: delimiter_1.default

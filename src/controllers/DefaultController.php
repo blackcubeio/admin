@@ -14,6 +14,8 @@
 
 namespace blackcube\admin\controllers;
 
+use blackcube\admin\components\Rbac;
+use blackcube\core\components\PreviewManager;
 use blackcube\core\models\Category;
 use blackcube\core\models\Composite;
 use blackcube\core\models\Node;
@@ -50,7 +52,14 @@ class DefaultController extends Controller
                     'actions' => [
                         'index'
                     ],
-                    'roles' => ['@'],
+                    'roles' => [Rbac::PERMISSION_SITE_DASHBOARD],
+                ],
+                [
+                    'allow' => true,
+                    'actions' => [
+                        'preview'
+                    ],
+                    'roles' => [Rbac::PERMISSION_SITE_PREVIEW]
                 ]
             ]
         ];
@@ -90,6 +99,19 @@ class DefaultController extends Controller
         ]);
     }
 
+    public function actionPreview()
+    {
+        $previewManager = Yii::createObject([
+            'class' => PreviewManager::class,
+        ]);
+        if ($previewManager->check() === true) {
+            $previewManager->deactivate();
+        } else {
+            $previewManager->activate();
+            $previewManager->setSimulateDate('2020-04-25');
+        }
+        return 'Preview Status = '.$previewManager->check();
+    }
     /**
      * @return string|Response
      * @todo: remove
