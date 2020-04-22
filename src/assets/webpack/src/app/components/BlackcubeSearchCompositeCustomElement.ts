@@ -34,14 +34,12 @@ class BlackcubeSearchCompositeCustomElement implements ComponentCreated, Compone
     }
 
     public attached(): void {
-        this.logger.debug('Search : ',this.search, this.searchUrl);
-        // this.search.addEventListener('input', this.onInput);
-        this.compositeAdd.addEventListener('click', this.onClickDelegate);
+        this.search.addEventListener('focus', this.onInput);
         this.logger.debug('Attached');
     }
 
     public detached(): void {
-        this.compositeAdd.removeEventListener('click', this.onClickDelegate);
+        this.search.removeEventListener('focus', this.onInput);
         this.logger.debug('Detached');
     }
 
@@ -49,17 +47,12 @@ class BlackcubeSearchCompositeCustomElement implements ComponentCreated, Compone
         this.logger.debug('Unbind');
     }
 
-    protected onClickDelegate = (evt:Event) => {
-        if (evt.target) {
-            //@ts-ignore
-            let currentButton = <HTMLButtonElement>evt.target.closest('button[ref=compositeAdd]');
-            if (currentButton && this.compositeAdd.contains(currentButton)) {
-                this.logger.debug('Submit sent');
-                // this.compositeAdd.value = '';
-                this.search.value = '';
-            }
-        }
-    };
+    protected onClick()
+    {
+        this.logger.debug('Submit sent');
+        this.search.value = '';
+    }
+
     protected buildSearchQuery(search:string)
     {
         return this.searchUrl.replace('__query__', search);
@@ -72,20 +65,22 @@ class BlackcubeSearchCompositeCustomElement implements ComponentCreated, Compone
         this.search.value = value;
         this.composites = [];
     }
-    protected onInput(event:Event)
+    protected onInput = (event:Event) =>
     {
         this.compositeAdd.value = '';
-        if (this.search.value.trim() === '') {
-            this.composites = [];
-        } else {
+        // if (this.search.value.trim() === '') {
+            // this.composites = [];
+        // } else {
             this.ajaxService.getRequestJson(this.buildSearchQuery(this.search.value))
                 .then((composites:Composite[]) => {
                     this.composites = composites;
+                    /*/
                     if (composites.length === 1) {
                         this.onChoose(composites[0].id, composites[0].name);
                     }
+                    /**/
                 });
-        }
+        // }
     }
 
 }

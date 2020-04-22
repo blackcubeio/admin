@@ -65,7 +65,54 @@ class BlackcubeSchemaEditorCustomElement implements ComponentCreated, ComponentB
             navigationBar: false,
             statusBar: false,
             mainMenuBar: false,
-            language: "en"
+            language: "en",
+            templates: [
+                {
+                    text: 'Email',
+                    title: 'Insert Email property',
+                    className: 'jsoneditor-type-object',
+                    value: {
+                        type: 'string',
+                        format: 'email',
+                        minLength: 6,
+                        description: 'Email'
+                    }
+                },
+                {
+                    text: 'Regexp',
+                    title: 'Insert Regexp property',
+                    className: 'jsoneditor-type-object',
+                    value: {
+                        type: 'string',
+                        pattern: '^[a-z0-9]+$',
+                        minLength: 6,
+                        description: 'Email'
+                    }
+                },
+                {
+                    text: 'Image',
+                    title: 'Insert Image property',
+                    className: 'jsoneditor-type-object',
+                    value: {
+                        type: 'string',
+                        format: 'file',
+                        fileType: 'png,jpg',
+                        imageWidth: 600,
+                        imageHeight: 200,
+                        description: 'Image size should be 600x200'
+                    }
+                },
+                {
+                    text: 'Wysiwyg',
+                    title: 'Insert Wysiwyg property',
+                    className: 'jsoneditor-type-object',
+                    value: {
+                        type: 'string',
+                        format: 'wysiwyg',
+                        description: 'Wysiwyg Editor'
+                    }
+                }
+            ]
         };
         if (this.language) {
             config.language = this.language;

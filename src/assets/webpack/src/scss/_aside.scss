@@ -1,10 +1,10 @@
 aside {
-  @apply bg-gray-100 w-1/2  border-r hidden;
+  @apply bg-gray-100 border-r w-40;
   @screen md {
-    @apply w-56 block;
+    @apply w-56;
   }
   @screen lg {
-    @apply w-64 block;
+    @apply w-56;
   }
   &>ul {
     & i.angle {

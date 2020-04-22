@@ -67,6 +67,7 @@ class AjaxService {
                 return response.text();
             });
     }
+
     public getRequestJson(url:string)
     {
         this.logger.debug('getRequestJson', url);
@@ -81,6 +82,18 @@ class AjaxService {
                 return response.json();
             });
     }
+    public postRequest(url:string, formData:FormData)
+    {
+        this.logger.debug('postRequest', url);
+        return this.httpClient.fetch(url, {
+            method: 'post',
+            body: formData,
+        })
+            .then((response:Response) => {
+                return response.text();
+            });
+    }
+
     public deleteRequest(url:string, csrf:string = '')
     {
         this.logger.debug('deleteRequest');

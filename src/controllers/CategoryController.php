@@ -126,10 +126,10 @@ class CategoryController extends BaseElementController
     }
 
     /**
-     * @param null $id
+     * @param integer $id
      * @return string|Response
      */
-    public function actionToggle($id = null)
+    public function actionToggle($id)
     {
         if ($id !== null) {
             $currentCategory = Category::findOne(['id' => $id]);
@@ -138,12 +138,8 @@ class CategoryController extends BaseElementController
                 $currentCategory->save(false, ['active']);
             }
         }
-        $categoriesQuery = Category::find()
-            ->with('slug.seo')
-            ->with('slug.sitemap')
-            ->orderBy(['name' => SORT_ASC]);
-        return $this->renderPartial('_list', [
-            'categoriesQuery' => $categoriesQuery
+        return $this->renderPartial('_line', [
+            'category' => $currentCategory
         ]);
     }
 

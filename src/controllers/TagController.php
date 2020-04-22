@@ -135,11 +135,10 @@ class TagController extends BaseElementController
     }
 
     /**
-     * @param integer|null $id
-     * @param integer|null $categoryId
+     * @param integer $id
      * @return string|Response
      */
-    public function actionToggle($id = null, $categoryId = null)
+    public function actionToggle($id)
     {
         if ($id !== null) {
             $currentTag = Tag::findOne(['id' => $id]);
@@ -148,20 +147,7 @@ class TagController extends BaseElementController
                 $currentTag->save(false, ['active']);
             }
         }
-        $tagsQuery = Tag::find()
-            ->innerJoinWith('category', true)
-            ->with('slug.seo')
-            ->with('slug.sitemap')
-            ->orderBy([
-                Category::tableName().'.name' => SORT_ASC,
-                'name' => SORT_ASC
-            ]);
-        if ($categoryId !== null) {
-            $tagsQuery->andWhere(['categoryId' => $categoryId]);
-        }
-        return $this->renderPartial('_list', [
-            'tagsQuery' => $tagsQuery
-        ]);
+        return $this->renderPartial('_line', ['tag' => $currentTag]);
     }
 
     /**

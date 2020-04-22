@@ -28,7 +28,7 @@ $formatter = Yii::$app->formatter;
     <?php echo Sidebar::widget(); ?>
     <main class="overflow-hidden">
         <div class="table-container">
-            <div blackcube-ajax-link="" blackcube-attach-modal="">
+            <div blackcube-ajaxify="click" blackcube-attach-modal="">
                 <?php echo $this->render('_list', ['usersQuery' => $usersQuery]); ?>
             </div>
             <div class="buttons">

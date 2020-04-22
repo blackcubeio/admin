@@ -14,7 +14,9 @@
 
 namespace blackcube\admin\widgets;
 
+use blackcube\core\components\PreviewManager;
 use yii\base\Widget;
+use Yii;
 
 /**
  * Widget Header
@@ -33,6 +35,9 @@ class Header extends Widget
      */
     public function run()
     {
-        return $this->render('header', []);
+        $previewManager = Yii::createObject(PreviewManager::class);
+        return $this->render('header', [
+            'previewManager' => $previewManager,
+        ]);
     }
 }

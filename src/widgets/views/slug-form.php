@@ -137,26 +137,26 @@ if ($slugForm->isStandalone === false) {
                 <?php echo Html::activeLabel($seo, 'active', ['class' => 'label']); ?>
                 <?php echo Html::activeCheckbox($seo, 'active', ['label' => false, 'class' => 'checkbox']); ?>
             </div>
-            <div class="w-full bloc-fieldset md:w-1/12">
+            <div class="w-full bloc-fieldset md:w-2/12">
                 <?php echo Html::activeLabel($seo, 'noindex', ['class' => 'label']); ?>
                 <?php echo Html::activeCheckbox($seo, 'noindex', ['label' => false, 'class' => 'checkbox']); ?>
-            </div>
-            <div class="w-full bloc-fieldset md:w-1/12">
-                <?php echo Html::activeLabel($seo, 'nofollow', ['class' => 'label']); ?>
-                <?php echo Html::activeCheckbox($seo, 'nofollow', ['label' => false, 'class' => 'checkbox']); ?>
             </div>
             <div class="w-full bloc-fieldset md:w-9/12">
                 <?php echo Html::activeLabel($seo, 'title', ['class' => 'label']); ?>
                 <?php echo Html::activeTextInput($seo, 'title', ['class' => 'textfield'.($seo->hasErrors('title')?' error':'')]); ?>
             </div>
         </div>
-        <div class="bloc ml-4 justify-end">
-            <div class="w-full bloc-fieldset md:w-11/12">
+        <div class="bloc justify-end">
+            <div class="w-full bloc-fieldset md:w-2/12">
+                <?php echo Html::activeLabel($seo, 'nofollow', ['class' => 'label']); ?>
+                <?php echo Html::activeCheckbox($seo, 'nofollow', ['label' => false, 'class' => 'checkbox']); ?>
+            </div>
+            <div class="w-full bloc-fieldset md:w-9/12">
                 <?php echo Html::activeLabel($seo, 'description', ['class' => 'label']); ?>
                 <?php echo Html::activeTextarea($seo, 'description', ['class' => 'textfield'.($seo->hasErrors('description')?' error':'')]); ?>
             </div>
         </div>
-        <div class="bloc ml-4 justify-end">
+        <div class="bloc justify-end">
             <div class="w-full bloc-fieldset md:w-4/12">
                 <?php echo Html::activeLabel($seo, 'image', ['class' => 'label']); ?>
                 <?php echo Html::activeUpload($seo, 'image', [
@@ -168,11 +168,11 @@ if ($slugForm->isStandalone === false) {
                         'file-type' => 'jpg,png',
                 ]); ?>
             </div>
-            <div class="w-full bloc-fieldset md:w-7/12">
+            <div class="w-full bloc-fieldset md:w-5/12">
                 <span class="italic text-xs text-gray-700"><?php echo Module::t('widgets', 'Image size should be 1200x630'); ?></span>
             </div>
         </div>
-        <div class="bloc ml-4 justify-end">
+        <div class="bloc justify-end">
             <div class="w-full bloc-fieldset md:w-1/12">
                 <?php echo Html::activeLabel($seo, 'og', ['class' => 'label']); ?>
                 <?php echo Html::activeCheckbox($seo, 'og', ['label' => false, 'class' => 'checkbox']); ?>

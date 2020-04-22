@@ -127,10 +127,10 @@ class NodeController extends BaseElementController
     }
 
     /**
-     * @param null $id
+     * @param integer $id
      * @return string|Response
      */
-    public function actionToggle($id = null)
+    public function actionToggle($id)
     {
         if ($id !== null) {
             $currentNode = Node::findOne(['id' => $id]);
@@ -139,12 +139,8 @@ class NodeController extends BaseElementController
                 $currentNode->save(false, ['active']);
             }
         }
-        $nodesQuery = Node::find()
-            ->with('slug.seo')
-            ->with('slug.sitemap')
-            ->orderBy(['name' => SORT_ASC]);
-        return $this->renderPartial('_list', [
-            'nodesQuery' => $nodesQuery
+        return $this->renderPartial('_line', [
+            'node' => $currentNode
         ]);
     }
 

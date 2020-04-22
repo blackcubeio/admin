@@ -155,7 +155,7 @@ class SlugController extends BaseElementController
      * @param integer $id
      * @return string|Response
      */
-    public function actionToggle($id = null)
+    public function actionToggle($id)
     {
         if ($id !== null) {
             $currentSlug = Slug::findOne(['id' => $id]);
@@ -164,12 +164,8 @@ class SlugController extends BaseElementController
                 $currentSlug->save(false, ['active']);
             }
         }
-        $slugsQuery = Slug::find()
-            ->with('seo')
-            ->with('sitemap')
-            ->orderBy(['path' => SORT_ASC]);
-        return $this->renderPartial('_list', [
-            'slugsQuery' => $slugsQuery
+        return $this->renderPartial('_line', [
+            'slug' => $currentSlug
         ]);
     }
 

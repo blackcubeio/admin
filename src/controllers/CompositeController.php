@@ -129,10 +129,10 @@ class CompositeController extends BaseElementController
     }
 
     /**
-     * @param null $id
+     * @param integer $id
      * @return string|Response
      */
-    public function actionToggle($id = null)
+    public function actionToggle($id)
     {
         if ($id !== null) {
             $currentComposite = Composite::findOne(['id' => $id]);
@@ -141,12 +141,8 @@ class CompositeController extends BaseElementController
                 $currentComposite->save(false, ['active']);
             }
         }
-        $compositesQuery = Composite::find()
-            ->with('slug.seo')
-            ->with('slug.sitemap')
-            ->orderBy(['name' => SORT_ASC]);
-        return $this->renderPartial('_list', [
-            'compositesQuery' => $compositesQuery
+        return $this->renderPartial('_line', [
+            'composite' => $currentComposite
         ]);
     }
 

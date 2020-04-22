@@ -135,6 +135,16 @@ var AjaxService = /** @class */ (function () {
             return response.json();
         });
     };
+    AjaxService.prototype.postRequest = function (url, formData) {
+        this.logger.debug('postRequest', url);
+        return this.httpClient.fetch(url, {
+            method: 'post',
+            body: formData,
+        })
+            .then(function (response) {
+            return response.text();
+        });
+    };
     AjaxService.prototype.deleteRequest = function (url, csrf) {
         if (csrf === void 0) { csrf = ''; }
         this.logger.debug('deleteRequest');
@@ -267,10 +277,10 @@ module.exports = __webpack_require__(/*! ./app.ts */"./app.ts");
 
 /***/ }),
 
-/***/ "components/BlackcubeAjaxLinkCustomAttribute":
-/*!************************************************************!*\
-  !*** ./app/components/BlackcubeAjaxLinkCustomAttribute.ts ***!
-  \************************************************************/
+/***/ "components/BlackcubeAjaxifyCustomAttribute":
+/*!***********************************************************!*\
+  !*** ./app/components/BlackcubeAjaxifyCustomAttribute.ts ***!
+  \***********************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -285,28 +295,101 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 Object.defineProperty(exports, "__esModule", { value: true });
 var aurelia_framework_1 = __webpack_require__(/*! aurelia-framework */ "aurelia-framework");
 var AjaxService_1 = __webpack_require__(/*! ../services/AjaxService */ "./app/services/AjaxService.ts");
-var BlackcubeAjaxLinkCustomAttribute = /** @class */ (function () {
-    function BlackcubeAjaxLinkCustomAttribute(element, templatingEngine, ajaxService) {
+var AjaxEvent;
+(function (AjaxEvent) {
+    AjaxEvent["CLICK"] = "click";
+    AjaxEvent["DBLCLICK"] = "dblclick";
+    AjaxEvent["INPUT"] = "input";
+    AjaxEvent["CHANGE"] = "change";
+    AjaxEvent["SUBMIT"] = "submit";
+    AjaxEvent["BLUR"] = "blur";
+    AjaxEvent["FOCUS"] = "focus";
+})(AjaxEvent || (AjaxEvent = {}));
+var BlackcubeAjaxifyCustomAttribute = /** @class */ (function () {
+    function BlackcubeAjaxifyCustomAttribute(element, templatingEngine, ajaxService) {
         var _this = this;
-        this.logger = aurelia_framework_1.LogManager.getLogger('components.BlackcubeAjaxLinkCustomAttribute');
-        this.onDelegateClick = function (evt) {
-            if (evt.target) {
+        this.logger = aurelia_framework_1.LogManager.getLogger('components.BlackcubeAjaxify');
+        this.onDelegateEvent = function (event) {
+            if (event.target) {
                 //@ts-ignore
-                var currentLink = evt.target.closest('a[data-ajax]');
-                if (currentLink && _this.element.contains(currentLink)) {
-                    evt.preventDefault();
-                    _this.logger.debug('delegateClick');
-                    var url = currentLink.href;
-                    _this.ajaxService.getRequest(url)
-                        .then(function (html) {
-                        _this.element.innerHTML = html;
-                        /*/
-                        this.templatingEngine.enhance({
-                            element:this.element,
-                            bindingContext: this
-                        })
-                        /*/
-                    });
+                var triggerElement = event.target.closest('[data-ajaxify-source]');
+                if (triggerElement && _this.element.contains(triggerElement)) {
+                    // if we have triggerElement and triggerElement should be handled
+                    var currentSource = triggerElement.dataset.ajaxifySource;
+                    var targetSelector = null;
+                    var targetUrl = null;
+                    var targetElement_1 = null;
+                    if (currentSource) {
+                        targetSelector = '[data-ajaxify-target=' + currentSource + ']';
+                    }
+                    if (targetSelector !== null) {
+                        targetElement_1 = _this.element.querySelector(targetSelector);
+                        if (!targetElement_1 && _this.element.dataset.ajaxifyTarget === currentSource) {
+                            targetElement_1 = _this.element;
+                        }
+                    }
+                    if (_this.event === AjaxEvent.SUBMIT) {
+                        // we should handle the form (post / ...)
+                        var elementForm = triggerElement.closest('form');
+                        if (elementForm) {
+                            if (elementForm.method.toLowerCase() === 'post') {
+                                var formData = new FormData(elementForm);
+                                if (triggerElement.hasAttribute('name') && triggerElement.hasAttribute('value')) {
+                                    //@ts-ignore
+                                    formData.append(triggerElement.name, triggerElement.value);
+                                }
+                                event.preventDefault();
+                                _this.ajaxService.postRequest(elementForm.action, formData)
+                                    .then(function (html) {
+                                    //@ts-ignore
+                                    targetElement_1.innerHTML = html;
+                                    /**/
+                                    _this.templatingEngine.enhance({
+                                        //@ts-ignore
+                                        element: targetElement_1,
+                                        bindingContext: _this
+                                    });
+                                    /**/
+                                })
+                                    .catch(function (error) {
+                                    _this.logger.warn('Error while submitting URL', error);
+                                });
+                            }
+                            else {
+                                _this.logger.warn('Unhandled form method : ', elementForm.method);
+                            }
+                        }
+                        // we should attach modal if needed
+                    }
+                    else {
+                        if (triggerElement && triggerElement.dataset.ajaxifyUrl) {
+                            targetUrl = triggerElement.dataset.ajaxifyUrl;
+                            //@ts-ignore
+                        }
+                        else if (triggerElement && triggerElement.href) {
+                            //@ts-ignore
+                            targetUrl = triggerElement.href;
+                        }
+                        if (targetUrl !== null) {
+                            event.preventDefault();
+                            _this.ajaxService.getRequest(targetUrl)
+                                .then(function (html) {
+                                //@ts-ignore
+                                targetElement_1.innerHTML = html;
+                                /**/
+                                _this.templatingEngine.enhance({
+                                    //@ts-ignore
+                                    element: targetElement_1,
+                                    bindingContext: _this
+                                });
+                                /**/
+                            })
+                                .catch(function (error) {
+                                _this.logger.warn('Error while requesting URL', error);
+                            });
+                        }
+                        // we should handle a regular request
+                    }
                 }
             }
         };
@@ -315,29 +398,32 @@ var BlackcubeAjaxLinkCustomAttribute = /** @class */ (function () {
         this.ajaxService = ajaxService;
         this.logger.debug('Constructor');
     }
-    BlackcubeAjaxLinkCustomAttribute.prototype.created = function (owningView, myView) {
+    BlackcubeAjaxifyCustomAttribute.prototype.created = function (owningView, myView) {
         this.logger.debug('Created');
     };
-    BlackcubeAjaxLinkCustomAttribute.prototype.bind = function (bindingContext, overrideContext) {
+    BlackcubeAjaxifyCustomAttribute.prototype.bind = function (bindingContext, overrideContext) {
         this.logger.debug('Bind');
     };
-    BlackcubeAjaxLinkCustomAttribute.prototype.attached = function () {
+    BlackcubeAjaxifyCustomAttribute.prototype.attached = function () {
         this.logger.debug('Attached');
-        this.element.addEventListener('click', this.onDelegateClick);
+        this.element.addEventListener(this.event, this.onDelegateEvent);
     };
-    BlackcubeAjaxLinkCustomAttribute.prototype.detached = function () {
+    BlackcubeAjaxifyCustomAttribute.prototype.detached = function () {
         this.logger.debug('Detached');
-        this.element.removeEventListener('click', this.onDelegateClick);
+        this.element.removeEventListener(this.event, this.onDelegateEvent);
     };
-    BlackcubeAjaxLinkCustomAttribute.prototype.unbind = function () {
+    BlackcubeAjaxifyCustomAttribute.prototype.unbind = function () {
         this.logger.debug('Unbind');
     };
-    BlackcubeAjaxLinkCustomAttribute = __decorate([
+    __decorate([
+        aurelia_framework_1.bindable({ primaryProperty: true })
+    ], BlackcubeAjaxifyCustomAttribute.prototype, "event", void 0);
+    BlackcubeAjaxifyCustomAttribute = __decorate([
         aurelia_framework_1.inject(aurelia_framework_1.DOM.Element, aurelia_framework_1.TemplatingEngine, AjaxService_1.AjaxService)
-    ], BlackcubeAjaxLinkCustomAttribute);
-    return BlackcubeAjaxLinkCustomAttribute;
+    ], BlackcubeAjaxifyCustomAttribute);
+    return BlackcubeAjaxifyCustomAttribute;
 }());
-exports.BlackcubeAjaxLinkCustomAttribute = BlackcubeAjaxLinkCustomAttribute;
+exports.BlackcubeAjaxifyCustomAttribute = BlackcubeAjaxifyCustomAttribute;
 
 
 /***/ }),
@@ -1542,7 +1628,54 @@ var BlackcubeSchemaEditorCustomElement = /** @class */ (function () {
             navigationBar: false,
             statusBar: false,
             mainMenuBar: false,
-            language: "en"
+            language: "en",
+            templates: [
+                {
+                    text: 'Email',
+                    title: 'Insert Email property',
+                    className: 'jsoneditor-type-object',
+                    value: {
+                        type: 'string',
+                        format: 'email',
+                        minLength: 6,
+                        description: 'Email'
+                    }
+                },
+                {
+                    text: 'Regexp',
+                    title: 'Insert Regexp property',
+                    className: 'jsoneditor-type-object',
+                    value: {
+                        type: 'string',
+                        pattern: '^[a-z0-9]+$',
+                        minLength: 6,
+                        description: 'Email'
+                    }
+                },
+                {
+                    text: 'Image',
+                    title: 'Insert Image property',
+                    className: 'jsoneditor-type-object',
+                    value: {
+                        type: 'string',
+                        format: 'file',
+                        fileType: 'png,jpg',
+                        imageWidth: 600,
+                        imageHeight: 200,
+                        description: 'Image size should be 600x200'
+                    }
+                },
+                {
+                    text: 'Wysiwyg',
+                    title: 'Insert Wysiwyg property',
+                    className: 'jsoneditor-type-object',
+                    value: {
+                        type: 'string',
+                        format: 'wysiwyg',
+                        description: 'Wysiwyg Editor'
+                    }
+                }
+            ]
         };
         if (this.language) {
             config.language = this.language;
@@ -1613,16 +1746,21 @@ var BlackcubeSearchCompositeCustomElement = /** @class */ (function () {
         var _this = this;
         this.logger = aurelia_framework_1.LogManager.getLogger('components.SearchComposite');
         this.composites = [];
-        this.onClickDelegate = function (evt) {
-            if (evt.target) {
-                //@ts-ignore
-                var currentButton = evt.target.closest('button[ref=compositeAdd]');
-                if (currentButton && _this.compositeAdd.contains(currentButton)) {
-                    _this.logger.debug('Submit sent');
-                    // this.compositeAdd.value = '';
-                    _this.search.value = '';
+        this.onInput = function (event) {
+            _this.compositeAdd.value = '';
+            // if (this.search.value.trim() === '') {
+            // this.composites = [];
+            // } else {
+            _this.ajaxService.getRequestJson(_this.buildSearchQuery(_this.search.value))
+                .then(function (composites) {
+                _this.composites = composites;
+                /*/
+                if (composites.length === 1) {
+                    this.onChoose(composites[0].id, composites[0].name);
                 }
-            }
+                /**/
+            });
+            // }
         };
         this.element = element;
         this.ajaxService = ajaxService;
@@ -1635,17 +1773,19 @@ var BlackcubeSearchCompositeCustomElement = /** @class */ (function () {
         this.logger.debug('Bind');
     };
     BlackcubeSearchCompositeCustomElement.prototype.attached = function () {
-        this.logger.debug('Search : ', this.search, this.searchUrl);
-        // this.search.addEventListener('input', this.onInput);
-        this.compositeAdd.addEventListener('click', this.onClickDelegate);
+        this.search.addEventListener('focus', this.onInput);
         this.logger.debug('Attached');
     };
     BlackcubeSearchCompositeCustomElement.prototype.detached = function () {
-        this.compositeAdd.removeEventListener('click', this.onClickDelegate);
+        this.search.removeEventListener('focus', this.onInput);
         this.logger.debug('Detached');
     };
     BlackcubeSearchCompositeCustomElement.prototype.unbind = function () {
         this.logger.debug('Unbind');
+    };
+    BlackcubeSearchCompositeCustomElement.prototype.onClick = function () {
+        this.logger.debug('Submit sent');
+        this.search.value = '';
     };
     BlackcubeSearchCompositeCustomElement.prototype.buildSearchQuery = function (search) {
         return this.searchUrl.replace('__query__', search);
@@ -1655,22 +1795,6 @@ var BlackcubeSearchCompositeCustomElement = /** @class */ (function () {
         this.compositeAdd.value = id;
         this.search.value = value;
         this.composites = [];
-    };
-    BlackcubeSearchCompositeCustomElement.prototype.onInput = function (event) {
-        var _this = this;
-        this.compositeAdd.value = '';
-        if (this.search.value.trim() === '') {
-            this.composites = [];
-        }
-        else {
-            this.ajaxService.getRequestJson(this.buildSearchQuery(this.search.value))
-                .then(function (composites) {
-                _this.composites = composites;
-                if (composites.length === 1) {
-                    _this.onChoose(composites[0].id, composites[0].name);
-                }
-            });
-        }
     };
     __decorate([
         aurelia_framework_1.bindable({ defaultBindingMode: aurelia_framework_1.bindingMode.fromView })
@@ -1692,7 +1816,7 @@ exports.BlackcubeSearchCompositeCustomElement = BlackcubeSearchCompositeCustomEl
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<template>\n    <div class=\"bloc bloc-tools relative\">\n        <input type=\"text\" ref=\"search\" input.delegate=\"onInput($event) & debounce:500\" class=\"border-l border-t border-b border-gray-300 rounded-l outline-none ml-2 p-2\">\n        <button type=\"button\" ref=\"compositeAdd\" name=\"compositeAdd\" class=\"button\">\n            <svg class=\"fill-current h-4 w-4\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" >\n                <path d=\"M5 3h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5c0-1.1.9-2 2-2zm0 2v14h14V5H5zm8 6h2a1 1 0 0 1 0 2h-2v2a1 1 0 0 1-2 0v-2H9a1 1 0 0 1 0-2h2V9a1 1 0 0 1 2 0v2z\"/>\n            </svg>\n        </button>\n        <ul show.bind=\"composites.length > 1\" class=\"absolute z-10 bg-gray-200 w-2/3 text-xs p-1 rounded\" style=\"top:3em;right:1em;\">\n            <li repeat.for=\"composite of composites\" click.delegate=\"onChoose(composite.id, composite.name)\" class=\"border-b border-white rounded hover:bg-blue-800 hover:text-white p-1 cursor-pointer\">\n                ${composite.name}\n            </li>\n        </ul>\n    </div>\n</template>\n";
+module.exports = "<template>\n    <div class=\"bloc bloc-tools relative\">\n        <input type=\"text\" ref=\"search\" input.delegate=\"onInput($event) & debounce:500\" class=\"border-l border-t border-b border-gray-300 rounded-l outline-none ml-2 p-2\">\n        <button type=\"button\" ref=\"compositeAdd\" click.delegate=\"onClick()\" name=\"compositeAdd\" class=\"button\">\n            <svg class=\"fill-current h-4 w-4\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\" >\n                <path d=\"M5 3h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5c0-1.1.9-2 2-2zm0 2v14h14V5H5zm8 6h2a1 1 0 0 1 0 2h-2v2a1 1 0 0 1-2 0v-2H9a1 1 0 0 1 0-2h2V9a1 1 0 0 1 2 0v2z\"/>\n            </svg>\n        </button>\n        <ul show.bind=\"composites.length > 0\" class=\"absolute z-10 bg-gray-200 w-2/3 text-xs p-1 rounded\" style=\"top:3em;right:1em;\">\n            <li repeat.for=\"composite of composites\" click.delegate=\"onChoose(composite.id, composite.name)\" class=\"border-b border-white rounded hover:bg-blue-800 hover:text-white p-1 cursor-pointer\">\n                ${composite.name}\n            </li>\n        </ul>\n    </div>\n</template>\n";
 
 /***/ }),
 
@@ -2168,12 +2292,9 @@ function configure(configure) {
     configure.globalResources([
         'components/BlackcubeSchemaEditorCustomElement',
         'components/BlackcubeToggleSlugCustomAttribute',
-        // PLATFORM.moduleName('components/BlackcubeLoaderCustomAttribute'),
-        // PLATFORM.moduleName('components/BlackcubeLoaderDoneCustomAttribute'),
         'components/BlackcubeBlocsCustomAttribute',
         'components/BlackcubeCompositesCustomAttribute',
         'components/BlackcubeAttachModalCustomAttribute',
-        'components/BlackcubeAjaxLinkCustomAttribute',
         'components/BlackcubeFileCustomElement',
         'components/BlackcubeChoicesCustomAttribute',
         'components/BlackcubePieCustomElement',
@@ -2183,7 +2304,8 @@ function configure(configure) {
         'components/BlackcubeSearchCompositeCustomElement',
         'components/BlackcubeRbacCustomAttribute',
         'components/BlackcubeSidebarCustomAttribute',
-        'components/BlackcubeEditorJsCustomElement'
+        'components/BlackcubeEditorJsCustomElement',
+        'components/BlackcubeAjaxifyCustomAttribute'
     ]);
 }
 exports.configure = configure;

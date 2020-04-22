@@ -45,51 +45,9 @@ $formatter = Yii::$app->formatter;
         <tbody>
             <?php foreach ($categoriesQuery->each() as $category): ?>
             <?php /* @var \blackcube\core\models\Category $category */ ?>
-            <tr>
-                <td>
-                    <div class="flex items-start">
-                        <p class="text-gray-900 whitespace-no-wrap">
-                            <?php if (Yii::$app->user->can(Rbac::PERMISSION_CATEGORY_UPDATE)): ?>
-                                <?php echo Html::a($category->name, ['edit', 'id' => $category->id], ['class' => 'hover:text-blue-600 py-1']); ?>
-                            <?php else: ?>
-                                <?php echo Html::tag('span', $category->name, ['class' => 'py-1']); ?>
-                            <?php endif; ?>
-                            <span class="text-xs text-gray-600 italic">(<?php echo $category->language->id; ?>)</span>
-                        </p>
-                    </div>
-                </td>
-                <td>
-                    <?php if ($category->type !== null): ?>
-                        <span class="text-xs text-gray-600 italic uppercase"><?php echo $category->type->name; ?></span>
-                    <?php else: ?>
-                        <span class="text-xs text-gray-600 italic uppercase"><?php echo Module::t('category', 'No type'); ?></span>
-                    <?php endif; ?>
-                </td>
-                <td>
-                    <?php echo Publication::widget(['element' => $category]); ?>
-                </td>
-                <td>
-                    <?php if (Yii::$app->user->can(Rbac::PERMISSION_CATEGORY_DELETE)): ?>
-                    <?php echo Html::beginForm(['delete', 'id' => $category->id], 'post', ['data-ajax-modal' => Url::to(['modal', 'id' => $category->id])]); ?>
-                    <?php if ($category->getTags()->count() > 0): ?>
-                        <span class="button disabled">
-                            <i class="fa fa-trash-alt"></i>
-                        </span>
-                    <?php else: ?>
-                        <button class="button danger">
-                            <i class="fa fa-trash-alt"></i>
-                        </button>
-                    <?php endif; ?>
-                    <?php endif; ?>
-                    <?php if (Yii::$app->user->can(Rbac::PERMISSION_CATEGORY_UPDATE)): ?>
-                    <?php echo Html::a('<i class="fa fa-pen-alt"></i>', ['edit', 'id' => $category->id], ['class' => 'button']); ?>
-                    <?php echo Html::a(($category->active?'<i class="fa fa-eye"></i>':' <i class="fa fa-eye-slash"></i>'), ['toggle', 'id' => $category->id], ['data-ajax' => '', 'class' => 'button '.($category->active ? 'published' : 'draft')]); ?>
-                    <?php endif; ?>
-                    <?php if (Yii::$app->user->can(Rbac::PERMISSION_CATEGORY_DELETE)): ?>
-                    <?php echo Html::endForm(); ?>
-                    <?php endif; ?>
-                </td>
-            </tr>
+                <?php echo Html::beginTag('tr', ['data-ajaxify-target' => 'category-toggle-active-'.$category->id]); ?>
+                <?php echo $this->render('_line', ['category' => $category]); ?>
+                <?php echo Html::endTag('tr'); ?>
             <?php endforeach; ?>
         </tbody>
     </table>

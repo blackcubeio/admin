@@ -1801,22 +1801,19 @@ main .bloc-tools .button:hover {
 
 aside {
   background-color: #f7fafc;
-  width: 50%;
   border-right-width: 1px;
-  display: none;
+  width: 10rem;
 }
 
 @media (min-width: 768px) {
   aside {
     width: 14rem;
-    display: block;
   }
 }
 
 @media (min-width: 1024px) {
   aside {
-    width: 16rem;
-    display: block;
+    width: 14rem;
   }
 }
 

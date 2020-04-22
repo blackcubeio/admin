@@ -15,6 +15,7 @@
 namespace blackcube\admin\controllers;
 
 use blackcube\admin\components\Rbac;
+use blackcube\admin\Module;
 use blackcube\core\components\PreviewManager;
 use blackcube\core\models\Category;
 use blackcube\core\models\Composite;
@@ -22,6 +23,7 @@ use blackcube\core\models\Node;
 use blackcube\core\models\Slug;
 use blackcube\core\models\Tag;
 use yii\filters\AccessControl;
+use yii\filters\AjaxFilter;
 use yii\web\Controller;
 use Yii;
 use yii\web\Response;
@@ -63,6 +65,11 @@ class DefaultController extends Controller
                 ]
             ]
         ];
+        $behaviors['forceAjax'] = [
+            'class' => AjaxFilter::class,
+            'only' => ['preview'],
+        ];
+
         return $behaviors;
     }
 
@@ -99,6 +106,10 @@ class DefaultController extends Controller
         ]);
     }
 
+    /**
+     * @return string|Response
+     * @throws \yii\base\InvalidConfigException
+     */
     public function actionPreview()
     {
         $previewManager = Yii::createObject([
@@ -108,9 +119,10 @@ class DefaultController extends Controller
             $previewManager->deactivate();
         } else {
             $previewManager->activate();
-            $previewManager->setSimulateDate('2020-04-25');
         }
-        return 'Preview Status = '.$previewManager->check();
+        return Module::t('widgets', 'Preview {icon}', [
+            'icon' => $previewManager->check() ? '<i class="fa fa-low-vision text-red-600"></i>':'<i class="fa fa-eye-slash"></i>'
+        ]);
     }
     /**
      * @return string|Response

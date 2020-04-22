@@ -167,22 +167,20 @@ class UserController extends Controller
     }
 
     /**
-     * @param null $id
+     * @param integer $id
      * @return string|Response
      */
-    public function actionToggle($id = null)
+    public function actionToggle($id)
     {
         if ($id !== null) {
-            $currenUser = Administrator::findOne(['id' => $id]);
-            if ($currenUser !== null) {
-                $currenUser->active = !$currenUser->active;
-                $currenUser->save(false, ['active']);
+            $currentUser = Administrator::findOne(['id' => $id]);
+            if ($currentUser !== null) {
+                $currentUser->active = !$currentUser->active;
+                $currentUser->save(false, ['active']);
             }
         }
-        $usersQuery = Administrator::find()
-            ->orderBy(['email' => SORT_ASC]);
-        return $this->renderPartial('_list', [
-            'usersQuery' => $usersQuery
+        return $this->renderPartial('_line', [
+            'user' => $currentUser
         ]);
     }
 
