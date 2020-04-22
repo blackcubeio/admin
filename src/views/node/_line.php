@@ -59,8 +59,16 @@ $formatter = Yii::$app->formatter;
                             <i class="fa fa-trash-alt"></i>
                         </button>
                     <?php echo Html::a('<i class="fa fa-pen-alt"></i>', ['edit', 'id' => $node->id], ['class' => 'button']); ?>
-                    <?php echo Html::a(($node->active?'<i class="fa fa-eye"></i>':' <i class="fa fa-eye-slash"></i>'), ['toggle', 'id' => $node->id], [
+                    <?php echo Html::a(($node->active?'<i class="fa fa-play"></i>':' <i class="fa fa-stop"></i>'), ['toggle', 'id' => $node->id], [
                         'data-ajaxify-source' => 'node-toggle-active-'.$node->id,
                         'class' => 'button '.($node->active ? 'published' : 'draft')]); ?>
+                    <?php if ($node->slug !== null): ?>
+                    <?php echo Html::a('<i class="fa fa-globe-americas"></i>', [$node->getRoute()], [
+                        'class' => 'button',
+                        'target' => '_blank',
+                    ]); ?>
+                    <?php else: ?>
+                    <span class="button disabled"><i class="fa fa-globe-americas"></i></span>
+                    <?php endif; ?>
                     <?php echo Html::endForm(); ?>
                 </td>

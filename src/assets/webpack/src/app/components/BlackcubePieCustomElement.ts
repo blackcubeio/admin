@@ -48,11 +48,11 @@ class BlackcubePieCustomElement implements ComponentCreated, ComponentBind, Comp
                 meta: 'Meta Three'
             }]
         }, {
-            width: '250px',
-            height: '250px',
+            width: '220px',
+            height: '220px',
             donut: true,
             labelOffset: -50,
-            donutWidth: 30,
+            donutWidth: 25,
             donutSolid: true,
             startAngle: 270,
             showLabel: true,

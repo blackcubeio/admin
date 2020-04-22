@@ -55,11 +55,20 @@ $currentCategoryId = null;
                     <?php endif; ?>
                     <?php if (Yii::$app->user->can(Rbac::PERMISSION_TAG_UPDATE)): ?>
                     <?php echo Html::a('<i class="fa fa-pen-alt"></i>', ['edit', 'id' => $tag->id], ['class' => 'button']); ?>
-                    <?php echo Html::a(($tag->active?'<i class="fa fa-eye"></i>':' <i class="fa fa-eye-slash"></i>'), ['toggle', 'id' => $tag->id], [
+                    <?php echo Html::a(($tag->active?'<i class="fa fa-play"></i>':' <i class="fa fa-stop"></i>'), ['toggle', 'id' => $tag->id], [
                             'data-ajaxify-source' => 'tag-toggle-active-'.$tag->id,
                             'class' => 'button '.($tag->active ? 'published' : 'draft')
                         ]); ?>
                     <?php endif; ?>
+                    <?php if ($tag->slug !== null): ?>
+                        <?php echo Html::a('<i class="fa fa-globe-americas"></i>', [$tag->getRoute()], [
+                            'class' => 'button',
+                            'target' => '_blank',
+                        ]); ?>
+                    <?php else: ?>
+                        <span class="button disabled"><i class="fa fa-globe-americas"></i></span>
+                    <?php endif; ?>
+
                     <?php if (Yii::$app->user->can(Rbac::PERMISSION_TAG_DELETE)): ?>
                     <?php echo Html::endForm(); ?>
                     <?php endif; ?>

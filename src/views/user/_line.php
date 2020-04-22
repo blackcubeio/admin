@@ -43,7 +43,7 @@ $formatter = Yii::$app->formatter;
                                 <?php endif; ?>
                                 <?php if (Yii::$app->user->can(Rbac::PERMISSION_USER_UPDATE)): ?>
                                 <?php echo Html::a('<i class="fa fa-pen-alt"></i>', ['edit', 'id' => $user->id], ['class' => 'button']); ?>
-                                <?php echo Html::a(($user->active?'<i class="fa fa-eye"></i>':' <i class="fa fa-eye-slash"></i>'), ['toggle', 'id' => $user->id], [
+                                <?php echo Html::a(($user->active?'<i class="fa fa-play"></i>':' <i class="fa fa-stop"></i>'), ['toggle', 'id' => $user->id], [
                                         'data-ajaxify-source' => 'user-toggle-active-'.$user->id,
                                         'class' => 'button '.($user->active ? 'published' : 'draft')]); ?>
                                 <?php endif; ?>

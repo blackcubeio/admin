@@ -47,6 +47,11 @@ class Module extends BaseModule implements BootstrapInterface
 {
 
     /**
+     * {@inheritDoc}
+     */
+    public $defaultRoute = 'dashboard';
+
+    /**
      * {@inheritdoc}
      */
     public $controllerNamespace = 'blackcube\admin\controllers';

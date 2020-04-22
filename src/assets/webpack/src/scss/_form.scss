@@ -23,7 +23,7 @@
         @apply uppercase tracking-wide text-gray-700 text-sm font-light mb-1 italic;
       }
     }
-    &-fieldset {
+    &-fieldset, &-child {
       @apply  px-3 mb-6;
       @screen md {
         @apply mb-0;
@@ -42,6 +42,12 @@
         &.error {
           @apply border-red-500;
         }
+      }
+    }
+    &-child {
+      @apply mx-0;
+      .bloc-subtitle {
+        @apply px-2 mx-0;
       }
     }
     .button {

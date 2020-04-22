@@ -25,11 +25,17 @@ use blackcube\admin\helpers\Html;
             <!-- i class="fas fa-bars p-3 text-white"></i -->
             <span class="text-white text-lg p-2">Blackcube</span>
         </div>
+        <div>
+            <?php echo Html::beginForm(['search/index'], 'post', ['class' => 'p-0 flex']); ?>
+                <input placeholder="Search" type="text" class="w-64 m-2 mr-0 p-1 pl-3 rounded-l border-0 bg-gray-100 outline-none inline-block">
+                <button class="m-2 p-1 ml-0 rounded-r pr-3 bg-gray-100 border-0 outline-none inline-block text-blue-800"><i class="fa fa-search"></i></button>
+            <?php echo Html::endForm(); ?>
+        </div>
         <div class="p-1 flex flex-row">
             <?php echo Html::a(Module::t('widgets', 'Preview {icon}', [
                     'icon' => $previewManager->check() ? '<i class="fa fa-low-vision"></i>':'<i class="fa fa-eye-slash"></i>'
-            ]), ['default/preview'], [
-                'class' => 'text-blue-800 p-2 no-underline bg-gray-300 rounded',
+            ]), ['ajax/preview'], [
+                'class' => 'text-blue-800 p-1 m-1 px-2 no-underline bg-gray-300 rounded text-center',
                 'data-ajaxify-source' => 'header-preview',
                 'data-ajaxify-target' => 'header-preview',
             ]); ?>

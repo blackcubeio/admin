@@ -1,6 +1,6 @@
 <?php
 /**
- * DefaultController.php
+ * AjaxController.php
  *
  * PHP version 7.2+
  *
@@ -29,7 +29,7 @@ use Yii;
 use yii\web\Response;
 
 /**
- * Class DefaultController
+ * Class AjaxController
  *
  * @author Philippe Gaultier <pgaultier@redcat.io>
  * @copyright 2010-2020 Redcat
@@ -38,7 +38,7 @@ use yii\web\Response;
  * @link https://www.redcat.io
  * @package blackcube\admin\controllers
  */
-class DefaultController extends Controller
+class AjaxController extends Controller
 {
     /**
      * {@inheritDoc}
@@ -49,13 +49,6 @@ class DefaultController extends Controller
         $behaviors['access'] = [
             'class' => AccessControl::class,
             'rules' => [
-                [
-                    'allow' => true,
-                    'actions' => [
-                        'index'
-                    ],
-                    'roles' => [Rbac::PERMISSION_SITE_DASHBOARD],
-                ],
                 [
                     'allow' => true,
                     'actions' => [
@@ -75,39 +68,6 @@ class DefaultController extends Controller
 
     /**
      * @return string|Response
-     */
-    public function actionIndex()
-    {
-        $countComposites = [
-            'global' => Composite::find()->count(),
-            'active' => Composite::find()->active()->count(),
-            'activeWithSlug' => Composite::find()->active()->innerJoinWith('slug')->andWhere([Slug::tableName().'.active' => true])->count(),
-        ];
-        $countNodes = [
-            'global' => Node::find()->count(),
-            'active' => Node::find()->active()->count(),
-            'activeWithSlug' => Node::find()->active()->innerJoinWith('slug')->andWhere([Slug::tableName().'.active' => true])->count(),
-        ];
-        $countCategories = [
-            'global' => Category::find()->count(),
-            'active' => Category::find()->active()->count(),
-            'activeWithSlug' => Category::find()->active()->innerJoinWith('slug')->andWhere([Slug::tableName().'.active' => true])->count(),
-        ];
-        $countTags = [
-            'global' => Tag::find()->count(),
-            'active' => Tag::find()->active()->count(),
-            'activeWithSlug' => Tag::find()->active()->innerJoinWith('slug')->andWhere([Slug::tableName().'.active' => true])->count(),
-        ];
-        return $this->render('index', [
-            'countComposites' => $countComposites,
-            'countNodes' => $countNodes,
-            'countCategories' => $countCategories,
-            'countTags' => $countTags,
-        ]);
-    }
-
-    /**
-     * @return string|Response
      * @throws \yii\base\InvalidConfigException
      */
     public function actionPreview()
@@ -123,13 +83,5 @@ class DefaultController extends Controller
         return Module::t('widgets', 'Preview {icon}', [
             'icon' => $previewManager->check() ? '<i class="fa fa-low-vision text-red-600"></i>':'<i class="fa fa-eye-slash"></i>'
         ]);
-    }
-    /**
-     * @return string|Response
-     * @todo: remove
-     */
-    public function actionTest()
-    {
-        return $this->render('test', []);
     }
 }

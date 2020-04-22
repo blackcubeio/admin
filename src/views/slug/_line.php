@@ -82,11 +82,16 @@ $formatter = Yii::$app->formatter;
                         <?php endif; ?>
                         <?php /*/ ?>
                         <?php echo Html::a('<i class="fa fa-pen-alt"></i>', ['edit', 'id' => $slug->id], ['class' => 'button']); ?>
-                    <?php echo Html::a(($slug->active?'<i class="fa fa-eye"></i>':' <i class="fa fa-eye-slash"></i>'), ['toggle', 'id' => $slug->id], [
+                    <?php echo Html::a(($slug->active?'<i class="fa fa-play"></i>':' <i class="fa fa-stop"></i>'), ['toggle', 'id' => $slug->id], [
                             'data-ajaxify-source' => 'slug-toggle-active-'.$slug->id,
                             'class' => 'button '.($slug->active ? 'published' : 'draft')
                         ]); ?>
                     <?php endif; ?>
+                        <?php echo Html::a('<i class="fa fa-globe-americas"></i>', [$slug->getRoute()], [
+                            'class' => 'button',
+                            'target' => '_blank',
+                        ]); ?>
+
                     <?php if ($slug->element === null && Yii::$app->user->can(Rbac::PERMISSION_COMPOSITE_DELETE)): ?>
                         <?php echo Html::endForm(); ?>
                     <?php endif; ?>

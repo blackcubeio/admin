@@ -64,6 +64,15 @@ $formatter = Yii::$app->formatter;
                             'data-ajaxify-source' => 'category-toggle-active-'.$category->id,
                             'class' => 'button '.($category->active ? 'published' : 'draft')]); ?>
                     <?php endif; ?>
+                    <?php if ($category->slug !== null): ?>
+                        <?php echo Html::a('<i class="fa fa-globe-americas"></i>', [$category->getRoute()], [
+                            'class' => 'button',
+                            'target' => '_blank',
+                        ]); ?>
+                    <?php else: ?>
+                        <span class="button disabled"><i class="fa fa-globe-americas"></i></span>
+                    <?php endif; ?>
+
                     <?php if (Yii::$app->user->can(Rbac::PERMISSION_CATEGORY_DELETE)): ?>
                     <?php echo Html::endForm(); ?>
                     <?php endif; ?>

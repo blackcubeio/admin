@@ -39,7 +39,7 @@ if ($exception instanceof \yii\web\HttpException) {
                     'code' => $code,
                     'definition' => $definition
                 ]); ?></p>
-                <?php echo Html::a(Module::t('error', 'Take Me Back To Home'), ['default/index'], [
+                <?php echo Html::a(Module::t('error', 'Take Me Back To Home'), ['dashboard/index'], [
                     'class' => 'px-4 py-1 text-white font-light tracking-wider bg-gray-900 rounded ml-24'
                 ]); ?>
             </div>

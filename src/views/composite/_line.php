@@ -66,10 +66,19 @@ $formatter = Yii::$app->formatter;
                     <?php endif; ?>
                     <?php if (Yii::$app->user->can(Rbac::PERMISSION_COMPOSITE_UPDATE)): ?>
                     <?php echo Html::a('<i class="fa fa-pen-alt"></i>', ['edit', 'id' => $composite->id], ['class' => 'button']); ?>
-                    <?php echo Html::a(($composite->active?'<i class="fa fa-eye"></i>':' <i class="fa fa-eye-slash"></i>'), ['toggle', 'id' => $composite->id], [
+                    <?php echo Html::a(($composite->active?'<i class="fa fa-play"></i>':' <i class="fa fa-stop"></i>'), ['toggle', 'id' => $composite->id], [
                             'data-ajaxify-source' => 'composite-toggle-active-'.$composite->id,
                             'class' => 'button '.($composite->active ? 'published' : 'draft')]); ?>
                     <?php endif; ?>
+                    <?php if ($composite->slug !== null): ?>
+                        <?php echo Html::a('<i class="fa fa-globe-americas"></i>', [$composite->getRoute()], [
+                            'class' => 'button',
+                            'target' => '_blank',
+                        ]); ?>
+                    <?php else: ?>
+                        <span class="button disabled"><i class="fa fa-globe-americas"></i></span>
+                    <?php endif; ?>
+
                     <?php if (Yii::$app->user->can(Rbac::PERMISSION_COMPOSITE_DELETE)): ?>
                     <?php echo Html::endForm(); ?>
                     <?php endif; ?>

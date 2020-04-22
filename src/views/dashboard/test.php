@@ -9,7 +9,7 @@
  * @license https://www.redcat.io/license license
  * @version XXX
  * @link https://www.redcat.io
- * @package blackcube\admin\views\default
+ * @package blackcube\admin\views\dashboard
  *
  * @var $this \yii\web\View
  */

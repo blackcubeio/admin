@@ -23,8 +23,8 @@ use yii\helpers\Url;
 <aside id="sidebar" blackcube-sidebar="">
     <ul>
         <?php  if (Yii::$app->user->can(Rbac::PERMISSION_SITE_DASHBOARD)): ?>
-        <?php echo Html::beginTag('li', ['class' => ($controller === 'default' ? 'active':'')]); ?>
-            <?php echo Html::beginTag('a', ['href' => Url::to(['default/index'])]); ?>
+        <?php echo Html::beginTag('li', ['class' => ($controller === 'dashboard' ? 'active':'')]); ?>
+            <?php echo Html::beginTag('a', ['href' => Url::to(['dashboard/index'])]); ?>
                 <i class="fas fa-tachometer-alt float-left mx-2 mt-1"></i>
                 <span><?php echo Module::t('widgets', 'Dashboard'); ?></span>
                 <span><i class="fas fa-angle-right float-right mt-2"></i></span>

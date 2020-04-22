@@ -48,7 +48,7 @@ class AuthenticationController extends Controller
             if ($administrator->validate() === true) {
                 $realAdministrator = Administrator::find()->where(['email' => $administrator->email])->one();
                 Yii::$app->user->login($realAdministrator, 60 * 60 *24 * 30);
-                return $this->redirect(['default/']);
+                return $this->redirect(['dashboard/']);
                 // $realAdministrator = $administrator::
             }
             $administrator->password = null;
