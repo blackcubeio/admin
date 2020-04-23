@@ -25,15 +25,23 @@ $formatter = Yii::$app->formatter;
 ?>
                 <td>
                     <div class="flex items-start">
-                        <p class="text-gray-900 whitespace-no-wrap">
+                        <div class="text-gray-900 whitespace-no-wrap">
                             <?php if (Yii::$app->user->can(Rbac::PERMISSION_COMPOSITE_UPDATE)): ?>
                             <?php echo Html::a($composite->name, ['edit', 'id' => $composite->id], ['class' => 'hover:text-blue-600 py-1']); ?>
                             <?php else: ?>
                                 <?php echo Html::tag('span', $composite->name, ['class' => 'py-1']); ?>
                             <?php endif; ?>
+                            <span class="text-xs text-gray-600 italic">#<?php echo $composite->id; ?></span>
                             <span class="text-xs text-gray-600 italic">(<?php echo $composite->language->id; ?>)</span>
+                            <?php if ($composite->slug !== null): ?>
+                                <div>
+                                        <span class="text-xs text-gray-600  px-2 py-0 italic border bg-gray-100 border-gray-300 rounded">
+                                            <?php echo $composite->slug->path; ?>
+                                        </span>
+                                </div>
+                            <?php endif; ?>
                             <?php if (($composite->dateStart !== null) || ($composite->dateEnd !== null)): ?>
-                                <br/>
+                                <div>
                                 <span class="text-xs text-gray-600 italic ml-2">
                                 <?php if ($composite->dateStart !== null): ?>
                                         <?php echo Module::t('composite', 'Start: {0,date,medium}', [$composite->activeDateStart]); ?>
@@ -43,8 +51,9 @@ $formatter = Yii::$app->formatter;
                                         <?php echo Module::t('composite', 'End: {0,date,medium}', [$composite->activeDateEnd]); ?>
                                 <?php endif; ?>
                                 </span>
+                                </div>
                             <?php endif; ?>
-                        </p>
+                        </div>
                     </div>
                 </td>
                 <td>

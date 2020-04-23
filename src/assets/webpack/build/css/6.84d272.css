@@ -1335,6 +1335,14 @@ main .bloc-tools .button:hover{
   font-size: 0.875rem
 }
 
+.table-container table td.subtitle{
+  text-align: center;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  padding: 0.25rem;
+  margin: 0.25rem
+}
+
 .table-container table td .button{
   background-color: #e2e8f0;
   color: #2d3748;
@@ -1359,9 +1367,19 @@ main .bloc-tools .button:hover{
   color: #fff
 }
 
+.table-container table td .button.no-action:hover{
+  background-color: #e2e8f0;
+  color: #2d3748
+}
+
 .table-container table td .button.danger:hover{
   background-color: #e53e3e;
   color: #fff
+}
+
+.table-container table td .button.danger.no-action:hover{
+  background-color: #e2e8f0;
+  color: #2d3748
 }
 
 .table-container table td .button.published{
@@ -1374,6 +1392,11 @@ main .bloc-tools .button:hover{
   color: #fff
 }
 
+.table-container table td .button.published.no-action:hover{
+  background-color: #38a169;
+  color: #fff
+}
+
 .table-container table td .button.draft{
   background-color: #e53e3e;
   color: #fff
@@ -1381,6 +1404,11 @@ main .bloc-tools .button:hover{
 
 .table-container table td .button.draft:hover{
   background-color: #38a169;
+  color: #fff
+}
+
+.table-container table td .button.draft.no-action:hover{
+  background-color: #e53e3e;
   color: #fff
 }
 

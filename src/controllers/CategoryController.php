@@ -135,7 +135,7 @@ class CategoryController extends BaseElementController
             $currentCategory = Category::findOne(['id' => $id]);
             if ($currentCategory !== null) {
                 $currentCategory->active = !$currentCategory->active;
-                $currentCategory->save(false, ['active']);
+                $currentCategory->save(false, ['active', 'dateUpdate']);
             }
         }
         return $this->renderPartial('_line', [

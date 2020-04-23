@@ -138,7 +138,7 @@ class CompositeController extends BaseElementController
             $currentComposite = Composite::findOne(['id' => $id]);
             if ($currentComposite !== null) {
                 $currentComposite->active = !$currentComposite->active;
-                $currentComposite->save(false, ['active']);
+                $currentComposite->save(false, ['active', 'dateUpdate']);
             }
         }
         return $this->renderPartial('_line', [

@@ -144,7 +144,7 @@ class TagController extends BaseElementController
             $currentTag = Tag::findOne(['id' => $id]);
             if ($currentTag !== null) {
                 $currentTag->active = !$currentTag->active;
-                $currentTag->save(false, ['active']);
+                $currentTag->save(false, ['active', 'dateUpdate']);
             }
         }
         return $this->renderPartial('_line', ['tag' => $currentTag]);

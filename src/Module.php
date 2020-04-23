@@ -20,6 +20,7 @@ use blackcube\admin\commands\InitController;
 use blackcube\admin\models\Administrator;
 use yii\base\BootstrapInterface;
 use yii\base\Module as BaseModule;
+use yii\caching\CacheInterface;
 use yii\console\controllers\MigrateController;
 use yii\db\Connection;
 use yii\di\Instance;
@@ -67,6 +68,11 @@ class Module extends BaseModule implements BootstrapInterface
     public $db = 'db';
 
     /**
+     * @var CacheInterface\array\string\null
+     */
+    public $cache;
+
+    /**
      * @var string command prefix
      */
     public $commandNameSpace = 'bca:';
@@ -79,6 +85,9 @@ class Module extends BaseModule implements BootstrapInterface
         $this->layout = 'main';
         parent::init();
         $this->db = Instance::ensure($this->db, Connection::class);
+        if ($this->cache !== null) {
+            $this->cache = Instance::ensure($this->cache, CacheInterface::class);
+        }
         $this->registerTranslations();
         $this->registerErrorHandler();
     }
@@ -93,6 +102,7 @@ class Module extends BaseModule implements BootstrapInterface
             'authManager' => [
                 'class' => DbManager::class,
                 'db' => $this->db,
+                'cache' => $this->cache,
             ],
         ]);
         if ($app instanceof ConsoleApplication) {
@@ -149,9 +159,8 @@ class Module extends BaseModule implements BootstrapInterface
                 'identityCookie' => [
                     'name' => '_blackcubeIdentity', 'httpOnly' => true
                 ]
-            ]
+            ],
         ]);
-
     }
 
     /**

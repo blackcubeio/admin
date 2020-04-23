@@ -12,10 +12,12 @@
  * @package blackcube\admin\widgets\views
  *
  * @var $previewManager \blackcube\core\components\PreviewManager
+ * @var $searchForm \blackcube\admin\models\SearchForm
  * @var $rhis \yii\web\View
  */
 
 use blackcube\admin\Module;
+use blackcube\admin\components\Rbac;
 use blackcube\admin\helpers\Html;
 ?>
 <!--Header Section Starts Here-->
@@ -25,12 +27,20 @@ use blackcube\admin\helpers\Html;
             <!-- i class="fas fa-bars p-3 text-white"></i -->
             <span class="text-white text-lg p-2">Blackcube</span>
         </div>
+        <?php if (Yii::$app->user->can(Rbac::PERMISSION_SITE_SEARCH)): ?>
         <div>
             <?php echo Html::beginForm(['search/index'], 'post', ['class' => 'p-0 flex']); ?>
-                <input placeholder="Search" type="text" class="w-64 m-2 mr-0 p-1 pl-3 rounded-l border-0 bg-gray-100 outline-none inline-block">
-                <button class="m-2 p-1 ml-0 rounded-r pr-3 bg-gray-100 border-0 outline-none inline-block text-blue-800"><i class="fa fa-search"></i></button>
+                <?php echo Html::activeTextInput($searchForm, 'search', [
+                    'class' => 'w-64 m-2 mr-0 p-1 pl-3 rounded-l border-0 bg-gray-100 outline-none inline-block text-gray-700',
+                    'placeholder' => Module::t('widgets', 'Search'),
+                ]); ?>
+                <?php echo Html::button('<i class="fa fa-search"></i>', [
+                    'class' => 'm-2 p-1 ml-0 rounded-r pr-3 bg-gray-100 border-0 outline-none inline-block text-blue-800',
+                    'type' => 'submit',
+                ]); ?>
             <?php echo Html::endForm(); ?>
         </div>
+        <?php endif; ?>
         <div class="p-1 flex flex-row">
             <?php echo Html::a(Module::t('widgets', 'Preview {icon}', [
                     'icon' => $previewManager->check() ? '<i class="fa fa-low-vision"></i>':'<i class="fa fa-eye-slash"></i>'

@@ -14,6 +14,7 @@
 
 namespace blackcube\admin\widgets;
 
+use blackcube\admin\models\SearchForm;
 use blackcube\core\components\PreviewManager;
 use yii\base\Widget;
 use Yii;
@@ -36,8 +37,10 @@ class Header extends Widget
     public function run()
     {
         $previewManager = Yii::createObject(PreviewManager::class);
+        $searchForm = Yii::createObject(SearchForm::class);
         return $this->render('header', [
             'previewManager' => $previewManager,
+            'searchForm' => $searchForm,
         ]);
     }
 }

@@ -136,7 +136,7 @@ class NodeController extends BaseElementController
             $currentNode = Node::findOne(['id' => $id]);
             if ($currentNode !== null) {
                 $currentNode->active = !$currentNode->active;
-                $currentNode->save(false, ['active']);
+                $currentNode->save(false, ['active', 'dateUpdate']);
             }
         }
         return $this->renderPartial('_line', [

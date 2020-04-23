@@ -176,7 +176,7 @@ class UserController extends Controller
             $currentUser = Administrator::findOne(['id' => $id]);
             if ($currentUser !== null) {
                 $currentUser->active = !$currentUser->active;
-                $currentUser->save(false, ['active']);
+                $currentUser->save(false, ['active', 'dateUpdate']);
             }
         }
         return $this->renderPartial('_line', [

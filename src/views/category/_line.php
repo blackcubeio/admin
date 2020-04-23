@@ -25,14 +25,22 @@ $formatter = Yii::$app->formatter;
 ?>
                 <td>
                     <div class="flex items-start">
-                        <p class="text-gray-900 whitespace-no-wrap">
+                        <div class="text-gray-900 whitespace-no-wrap">
                             <?php if (Yii::$app->user->can(Rbac::PERMISSION_CATEGORY_UPDATE)): ?>
                                 <?php echo Html::a($category->name, ['edit', 'id' => $category->id], ['class' => 'hover:text-blue-600 py-1']); ?>
                             <?php else: ?>
                                 <?php echo Html::tag('span', $category->name, ['class' => 'py-1']); ?>
                             <?php endif; ?>
+                            <span class="text-xs text-gray-600 italic">#<?php echo $category->id; ?></span>
                             <span class="text-xs text-gray-600 italic">(<?php echo $category->language->id; ?>)</span>
-                        </p>
+                            <?php if ($category->slug !== null): ?>
+                                <div>
+                                    <span class="text-xs text-gray-600  px-2 py-0 italic border bg-gray-100 border-gray-300 rounded">
+                                        <?php echo $category->slug->path; ?>
+                                    </span>
+                                </div>
+                            <?php endif; ?>
+                        </div>
                     </div>
                 </td>
                 <td>
@@ -60,7 +68,7 @@ $formatter = Yii::$app->formatter;
                     <?php endif; ?>
                     <?php if (Yii::$app->user->can(Rbac::PERMISSION_CATEGORY_UPDATE)): ?>
                     <?php echo Html::a('<i class="fa fa-pen-alt"></i>', ['edit', 'id' => $category->id], ['class' => 'button']); ?>
-                    <?php echo Html::a(($category->active?'<i class="fa fa-eye"></i>':' <i class="fa fa-eye-slash"></i>'), ['toggle', 'id' => $category->id], [
+                    <?php echo Html::a(($category->active?'<i class="fa fa-play"></i>':' <i class="fa fa-stop"></i>'), ['toggle', 'id' => $category->id], [
                             'data-ajaxify-source' => 'category-toggle-active-'.$category->id,
                             'class' => 'button '.($category->active ? 'published' : 'draft')]); ?>
                     <?php endif; ?>

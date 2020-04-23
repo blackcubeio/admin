@@ -161,7 +161,7 @@ class SlugController extends BaseElementController
             $currentSlug = Slug::findOne(['id' => $id]);
             if ($currentSlug !== null) {
                 $currentSlug->active = !$currentSlug->active;
-                $currentSlug->save(false, ['active']);
+                $currentSlug->save(false, ['active', 'dateUpdate']);
             }
         }
         return $this->renderPartial('_line', [

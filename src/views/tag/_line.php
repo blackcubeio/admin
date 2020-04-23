@@ -27,13 +27,22 @@ $currentCategoryId = null;
 
                 <td>
                     <div class="flex items-start">
-                        <p class="text-gray-900 whitespace-no-wrap">
+                        <div class="text-gray-900 whitespace-no-wrap">
                             <?php if (Yii::$app->user->can(Rbac::PERMISSION_TAG_UPDATE)): ?>
                                 <?php echo Html::a($tag->name, ['edit', 'id' => $tag->id], ['class' => 'hover:text-blue-600 py-1']); ?>
                             <?php else: ?>
                                 <?php echo Html::tag('span', $tag->name, ['class' => 'py-1']); ?>
                             <?php endif; ?>
-                        </p>
+                            <span class="text-xs text-gray-600 italic">#<?php echo $tag->id; ?></span>
+                            <span class="text-xs text-gray-600 italic">(<?php echo $tag->category->language->id; ?>)</span>
+                            <?php if ($tag->slug !== null): ?>
+                                <div>
+                                        <span class="text-xs text-gray-600  px-2 py-0 italic border bg-gray-100 border-gray-300 rounded">
+                                            <?php echo $tag->slug->path; ?>
+                                        </span>
+                                </div>
+                            <?php endif; ?>
+                        </div>
                     </div>
                 </td>
                 <td>

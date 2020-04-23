@@ -51,6 +51,7 @@ class Rbac
     public const ROLE_SITE_MANAGER = 'SITE:MANAGER';
     public const PERMISSION_SITE_PREVIEW = 'SITE:PREVIEW';
     public const PERMISSION_SITE_DASHBOARD = 'SITE:DASHBOARD';
+    public const PERMISSION_SITE_SEARCH = 'SITE:SEARCH';
 
     public const PERMISSION_USER_CREATE = 'USER:CREATE';
     public const PERMISSION_USER_DELETE = 'USER:DELETE';
