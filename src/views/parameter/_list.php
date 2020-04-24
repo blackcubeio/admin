@@ -42,9 +42,11 @@ $formatter = Yii::$app->formatter;
                 <div class="flex items-center">
                     <p class="text-gray-900 whitespace-no-wrap">
                         <?php if (Yii::$app->user->can(Rbac::PERMISSION_PARAMETER_UPDATE)): ?>
-                            <?php echo Html::a($parameter->domain.'&nbsp;::&nbsp;'.$parameter->name, ['edit', 'domain' => $parameter->domain, 'name' => $parameter->name], ['class' => 'hover:text-blue-600 py-1']); ?>
+                        <?php echo Html::beginTag('a', ['href' =>Url::to(['edit', 'domain' => $parameter->domain, 'name' => $parameter->name]), 'class' => 'hover:text-blue-600 py-1']); ?>
+                            <span><?php echo $parameter->domain; ?><i class="fa fa-caret-right px-2"></i><?php echo $parameter->name; ?></span>
+                        <?php echo Html::endTag('a'); ?>
                         <?php else: ?>
-                            <?php echo Html::tag('span', $parameter->domain.':'.$parameter->name, ['class' => 'py-1']); ?>
+                            <span class="py-1"><?php echo $parameter->domain; ?><i class="fa fa-caret-right px-2"></i><?php echo $parameter->name; ?></span>
                         <?php endif; ?>
                     </p>
                 </div>

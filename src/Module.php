@@ -29,6 +29,8 @@ use yii\rbac\DbManager;
 use yii\web\Application as WebApplication;
 use yii\web\ErrorHandler;
 use yii\web\User as WebUser;
+use yii\web\UrlRule;
+use yii\web\GroupUrlRule;
 use yii\console\Application as ConsoleApplication;
 use Yii;
 
@@ -161,6 +163,17 @@ class Module extends BaseModule implements BootstrapInterface
                 ]
             ],
         ]);
+        $app->getUrlManager()->addRules([
+            [
+                'class' => GroupUrlRule::class,
+                'prefix' => $this->id,
+                'rules' => [
+                    ['class' => UrlRule::class, 'pattern' => '', 'route' => 'dashboard/index'],
+                    ['class' => UrlRule::class, 'pattern' => '<controller:[\w\-]+>', 'route' => '<controller>'],
+                    ['class' => UrlRule::class, 'pattern' => '<controller:[\w\-]+>/<action:[\w\-]+>', 'route' => '<controller>/<action>'],
+                ],
+            ]
+        ], false);
     }
 
     /**
