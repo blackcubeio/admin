@@ -26,6 +26,7 @@ use blackcube\core\models\Tag;
 use yii\helpers\Url;
 
 $formatter = Yii::$app->formatter;
+$element = $slug->getElement()->with(['slug.seo', 'slug.sitemap'])->one();
 ?>
                 <td>
                     <div class="flex items-start">
@@ -39,27 +40,27 @@ $formatter = Yii::$app->formatter;
                     </div>
                 </td>
                 <td>
-                    <?php if ($slug->element instanceof Node): ?>
+                    <?php if ($element instanceof Node): ?>
                         <span class="text-xs text-gray-600 italic uppercase"><?php echo Module::t('slug', 'Node'); ?></span>
-                    <?php elseif ($slug->element instanceof Composite): ?>
+                    <?php elseif ($element instanceof Composite): ?>
                         <span class="text-xs text-gray-600 italic uppercase"><?php echo Module::t('slug', 'Composite'); ?></span>
-                    <?php elseif ($slug->element instanceof Category): ?>
+                    <?php elseif ($element instanceof Category): ?>
                         <span class="text-xs text-gray-600 italic uppercase"><?php echo Module::t('slug', 'Category'); ?></span>
-                    <?php elseif ($slug->element instanceof Tag): ?>
+                    <?php elseif ($element instanceof Tag): ?>
                         <span class="text-xs text-gray-600 italic uppercase"><?php echo Module::t('slug', 'Tag'); ?></span>
                     <?php else: ?>
                         <span class="text-xs text-gray-600 italic uppercase"><?php echo Module::t('slug', 'Redirect'); ?></span>
                     <?php endif; ?>
                 </td>
                 <td>
-                    <?php if ($slug->element !== null): ?>
-                        <?php echo Publication::widget(['element' => $slug->element]); ?>
+                    <?php if ($element !== null): ?>
+                        <?php echo Publication::widget(['element' => $element]); ?>
                     <?php else: ?>
                         <?php echo Publication::widget(['element' => $slug]); ?>
                     <?php endif; ?>
                 </td>
                 <td>
-                    <?php if ($slug->element === null && Yii::$app->user->can(Rbac::PERMISSION_COMPOSITE_DELETE)): ?>
+                    <?php if ($element === null && Yii::$app->user->can(Rbac::PERMISSION_COMPOSITE_DELETE)): ?>
                         <?php echo Html::beginForm(['delete', 'id' => $slug->id], 'post', ['data-ajax-modal' => Url::to(['modal', 'id' => $slug->id])]); ?>
                         <button class="button danger">
                             <i class="fa fa-trash-alt"></i>
@@ -82,7 +83,7 @@ $formatter = Yii::$app->formatter;
                         <?php endif; ?>
                         <?php /*/ ?>
                         <?php echo Html::a('<i class="fa fa-pen-alt"></i>', ['edit', 'id' => $slug->id], ['class' => 'button']); ?>
-                    <?php echo Html::a(($slug->active?'<i class="fa fa-play"></i>':' <i class="fa fa-stop"></i>'), ['toggle', 'id' => $slug->id], [
+                    <?php echo Html::a(($slug->active?'<i class="fa fa-play"></i>':' <i class="fa fa-pause"></i>'), ['toggle', 'id' => $slug->id], [
                             'data-ajaxify-source' => 'slug-toggle-active-'.$slug->id,
                             'class' => 'button '.($slug->active ? 'published' : 'draft')
                         ]); ?>
@@ -92,7 +93,7 @@ $formatter = Yii::$app->formatter;
                             'target' => '_blank',
                         ]); ?>
 
-                    <?php if ($slug->element === null && Yii::$app->user->can(Rbac::PERMISSION_COMPOSITE_DELETE)): ?>
+                    <?php if ($element === null && Yii::$app->user->can(Rbac::PERMISSION_COMPOSITE_DELETE)): ?>
                         <?php echo Html::endForm(); ?>
                     <?php endif; ?>
 

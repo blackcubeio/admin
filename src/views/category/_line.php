@@ -68,7 +68,7 @@ $formatter = Yii::$app->formatter;
                     <?php endif; ?>
                     <?php if (Yii::$app->user->can(Rbac::PERMISSION_CATEGORY_UPDATE)): ?>
                     <?php echo Html::a('<i class="fa fa-pen-alt"></i>', ['edit', 'id' => $category->id], ['class' => 'button']); ?>
-                    <?php echo Html::a(($category->active?'<i class="fa fa-play"></i>':' <i class="fa fa-stop"></i>'), ['toggle', 'id' => $category->id], [
+                    <?php echo Html::a(($category->active?'<i class="fa fa-play"></i>':' <i class="fa fa-pause"></i>'), ['toggle', 'id' => $category->id], [
                             'data-ajaxify-source' => 'category-toggle-active-'.$category->id,
                             'class' => 'button '.($category->active ? 'published' : 'draft')]); ?>
                     <?php endif; ?>

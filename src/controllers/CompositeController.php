@@ -14,6 +14,7 @@
 
 namespace blackcube\admin\controllers;
 
+use blackcube\admin\actions\ToggleAction;
 use blackcube\admin\models\SlugForm;
 use blackcube\admin\actions\BlocAction;
 use blackcube\admin\actions\ModalAction;
@@ -23,8 +24,10 @@ use blackcube\core\models\Composite;
 use blackcube\core\models\Node;
 use blackcube\core\models\NodeComposite;
 use blackcube\core\models\Language;
+use blackcube\core\models\Slug;
 use blackcube\core\models\Type;
 use yii\base\ErrorException;
+use yii\data\ActiveDataProvider;
 use yii\filters\AccessControl;
 use yii\filters\AjaxFilter;
 use yii\web\NotFoundHttpException;
@@ -110,6 +113,11 @@ class CompositeController extends BaseElementController
             'class' => ModalAction::class,
             'elementClass' => Composite::class
         ];
+        $actions['toggle'] = [
+            'class' => ToggleAction::class,
+            'elementClass' => Composite::class,
+            'elementName' => 'composite',
+        ];
         return $actions;
     }
 
@@ -120,29 +128,40 @@ class CompositeController extends BaseElementController
     public function actionIndex()
     {
         $compositesQuery = Composite::find()
+            ->joinWith('type', true)
+            ->joinWith('slug', true)
             ->with('slug.seo')
-            ->with('slug.sitemap')
-            ->orderBy(['name' => SORT_ASC]);
-        return $this->render('index', [
-            'compositesQuery' => $compositesQuery
-        ]);
-    }
-
-    /**
-     * @param integer $id
-     * @return string|Response
-     */
-    public function actionToggle($id)
-    {
-        if ($id !== null) {
-            $currentComposite = Composite::findOne(['id' => $id]);
-            if ($currentComposite !== null) {
-                $currentComposite->active = !$currentComposite->active;
-                $currentComposite->save(false, ['active', 'dateUpdate']);
-            }
+            ->with('slug.sitemap');
+        $search = Yii::$app->request->getQueryParam('search', null);
+        if ($search !== null) {
+            $compositesQuery->andWhere(['or',
+                ['like', Composite::tableName().'.[[name]]', $search],
+                ['like', Type::tableName().'.[[name]]', $search],
+                ['like', Slug::tableName().'.[[path]]', $search],
+            ]);
         }
-        return $this->renderPartial('_line', [
-            'composite' => $currentComposite
+        $compositesProvider = Yii::createObject([
+            'class' => ActiveDataProvider::class,
+            'query' => $compositesQuery,
+            'pagination' => [
+                'pageSize' => 20,
+            ],
+            'sort' => [
+                'defaultOrder' => [
+                    'name' => SORT_ASC
+                ],
+                'attributes' => [
+                    'name',
+                    'active',
+                    'type' => [
+                        'asc' => [Type::tableName().'.[[name]]' => SORT_ASC],
+                        'desc' => [Type::tableName().'.[[name]]' => SORT_DESC],
+                    ],
+                ]
+            ],
+        ]);
+        return $this->render('index', [
+            'compositesProvider' => $compositesProvider
         ]);
     }
 

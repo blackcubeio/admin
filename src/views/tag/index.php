@@ -11,7 +11,7 @@
  * @link https://www.redcat.io
  * @package blackcube\admin\views\tag
  *
- * @var $tagsQuery \blackcube\core\models\FilterActiveQuery
+ * @var $tagsProvider \yii\data\ActiveDataProvider
  * @var $this \yii\web\View
  */
 
@@ -19,6 +19,7 @@ use blackcube\admin\Module;
 use blackcube\admin\components\Rbac;
 use blackcube\admin\helpers\Html;
 use blackcube\admin\widgets\Sidebar;
+use yii\widgets\LinkPager;
 
 ?>
 <div class="flex flex-1">
@@ -26,7 +27,16 @@ use blackcube\admin\widgets\Sidebar;
     <main class="overflow-hidden">
         <div class="table-container">
             <div blackcube-ajaxify="click" blackcube-attach-modal="" >
-                <?php echo $this->render('_list', ['tagsQuery' => $tagsQuery]); ?>
+                <?php echo $this->render('_list', ['tagsProvider' => $tagsProvider]); ?>
+            </div>
+            <div class="text-center">
+                <?php echo LinkPager::widget([
+                    'pagination' => $tagsProvider->pagination,
+                    'prevPageLabel' => '<i class="fa fa-angle-left"></i>',
+                    'firstPageLabel' => '<i class="fa fa-angle-double-left"></i>',
+                    'nextPageLabel' => '<i class="fa fa-angle-right"></i>',
+                    'lastPageLabel' => '<i class="fa fa-angle-double-right"></i>',
+                ]); ?>
             </div>
             <div class="buttons">
                 <?php if (Yii::$app->user->can(Rbac::PERMISSION_TAG_CREATE)): ?>

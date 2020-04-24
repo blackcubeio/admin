@@ -76,7 +76,7 @@ $formatter = Yii::$app->formatter;
                     <?php endif; ?>
                     <?php if (Yii::$app->user->can(Rbac::PERMISSION_NODE_UPDATE)): ?>
                     <?php echo Html::a('<i class="fa fa-pen-alt"></i>', ['edit', 'id' => $node->id], ['class' => 'button']); ?>
-                    <?php echo Html::a(($node->active?'<i class="fa fa-play"></i>':' <i class="fa fa-stop"></i>'), ['toggle', 'id' => $node->id], [
+                    <?php echo Html::a(($node->active?'<i class="fa fa-play"></i>':' <i class="fa fa-pause"></i>'), ['toggle', 'id' => $node->id], [
                         'data-ajaxify-source' => 'node-toggle-active-'.$node->id,
                         'class' => 'button '.($node->active ? 'published' : 'draft')]); ?>
                     <?php endif; ?>

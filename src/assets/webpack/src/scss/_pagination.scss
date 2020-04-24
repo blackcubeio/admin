@@ -1,0 +1,29 @@
+
+.pagination {
+  @apply inline-block;
+  li {
+    @apply inline-block;
+    a, span {
+      @apply inline-block border rounded bg-gray-100 border-gray-300 p-1 px-2 m-1 text-xs text-gray-800;
+    }
+    a:hover {
+      @apply text-white bg-blue-700 border-blue-800;
+    }
+    &.prev {
+
+    }
+    &.next {
+
+    }
+    &.active {
+      a, span {
+        @apply text-white bg-blue-700 border-blue-800;
+      }
+    }
+    &.disabled {
+      a, span {
+        @apply opacity-75;
+      }
+    }
+  }
+}

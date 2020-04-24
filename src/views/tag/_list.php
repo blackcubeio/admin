@@ -11,7 +11,7 @@
  * @link https://www.redcat.io
  * @package blackcube\admin\views\tag
  *
- * @var $tagsQuery \blackcube\core\models\FilterActiveQuery
+ * @var $tagsProvider \yii\data\ActiveDataProvider
  * @var $this \yii\web\View
  */
 
@@ -22,40 +22,56 @@ use blackcube\admin\widgets\Publication;
 use yii\helpers\Url;
 
 $formatter = Yii::$app->formatter;
-$currentCategoryId = null;
 ?>
     <table class="w-48">
         <thead>
             <tr>
                 <th>
-                    <?php echo Module::t('tag', 'Name'); ?>
-                    <!-- input type="text" class="appearance-none bg-gray-200 text-gray-700 border border-gray-300 rounded py-1 px-4 mb-1 leading-tight"
-                    placeholder="<?php echo Module::t('tag', 'Name'); ?>" -->
+                    <?php echo Html::a(Module::t('tag', 'Name'),
+                        $tagsProvider->sort->createUrl('name'),
+                        []
+                    ); ?>
                 </th>
                 <th class="type">
-                    <?php echo Module::t('tag', 'Type'); ?>
+                    <?php echo Html::a(Module::t('tag', 'Type'),
+                        $tagsProvider->sort->createUrl('type'),
+                        []
+                    ); ?>
                 </th>
                 <th class="status">
-                    <?php echo Module::t('tag', 'Status'); ?>
+                    <?php echo Html::a(Module::t('tag', 'Status'),
+                        $tagsProvider->sort->createUrl('active'),
+                        []
+                    ); ?>
                 </th>
                 <th class="tools">
                     <?php echo Module::t('tag', 'Action'); ?>
                 </th>
             </tr>
+            <tr>
+                <td colspan="4">
+                    <?php echo Html::beginForm(['index'], 'get', [
+                        'class' => 'flex border border-gray-600 rounded'
+                    ]); ?>
+                    <?php echo Html::textInput('search', Yii::$app->request->getQueryParam('search'), [
+                        'class' => 'outline-none focus:outline-none flex-1 m-0 p-3'
+                    ]); ?>
+                    <?php echo Html::a('<i class="fa fa-times"></i>', ['index', 'sort' => Yii::$app->request->getQueryParam('sort')], [
+                        'class' => 'outline-none focus:outline-none  flex-none m-0 p-3 bg-gray-200 hover:bg-red-600 hover:text-white'
+                    ]); ?>
+                    <button type="submit" class="outline-none focus:outline-none  flex-none m-0 p-3 bg-gray-200 hover:bg-blue-800 hover:text-white">
+                        <i class="fa fa-search"></i>
+                    </button>
+                    <?php if (empty(Yii::$app->request->getQueryParam('sort')) === false): ?>
+                        <?php echo Html::hiddenInput('sort', Yii::$app->request->getQueryParam('sort')); ?>
+                    <?php endif; ?>
+                    <?php echo Html::endForm(); ?>
+                </td>
+            </tr>
         </thead>
         <tbody>
-            <?php foreach ($tagsQuery->each() as $tag): ?>
+            <?php foreach ($tagsProvider->getModels() as $tag): ?>
             <?php /* @var \blackcube\core\models\Tag $tag */ ?>
-            <?php if ($currentCategoryId !== $tag->categoryId): ?>
-                <?php $currentCategoryId = $tag->categoryId; ?>
-                <tr>
-                    <td colspan="4" class="category">
-                        <?php echo $tag->category->name; ?>
-                        <span class="text-xs italic">(<?php echo $tag->category->language->id; ?>)</span>
-                        <?php /*/ if($tag->category->active): ?><span class="text-xxs text-white bg-green-600 rounded-full p-1 ml-4"><i class="fa fa-eye"></i></span><?php else: ?><span class="text-xxs text-white bg-red-600 rounded-full p-1 ml-4"><i class="fa fa-eye-slash"></i></span><?php endif; /**/ ?>
-                    </td>
-                </tr>
-            <?php endif; ?>
                 <?php echo Html::beginTag('tr', ['data-ajaxify-target' => 'tag-toggle-active-'.$tag->id]); ?>
                     <?php echo $this->render('_line', ['tag' => $tag]); ?>
                 <?php echo Html::endTag('tr'); ?>

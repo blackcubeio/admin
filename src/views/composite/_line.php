@@ -75,7 +75,7 @@ $formatter = Yii::$app->formatter;
                     <?php endif; ?>
                     <?php if (Yii::$app->user->can(Rbac::PERMISSION_COMPOSITE_UPDATE)): ?>
                     <?php echo Html::a('<i class="fa fa-pen-alt"></i>', ['edit', 'id' => $composite->id], ['class' => 'button']); ?>
-                    <?php echo Html::a(($composite->active?'<i class="fa fa-play"></i>':' <i class="fa fa-stop"></i>'), ['toggle', 'id' => $composite->id], [
+                    <?php echo Html::a(($composite->active?'<i class="fa fa-play"></i>':' <i class="fa fa-pause"></i>'), ['toggle', 'id' => $composite->id], [
                             'data-ajaxify-source' => 'composite-toggle-active-'.$composite->id,
                             'class' => 'button '.($composite->active ? 'published' : 'draft')]); ?>
                     <?php endif; ?>

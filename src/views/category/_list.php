@@ -11,7 +11,7 @@
  * @link https://www.redcat.io
  * @package blackcube\admin\views\category
  *
- * @var $categoriesQuery \blackcube\core\models\FilterActiveQuery
+ * @var $categoriesProvider \yii\data\ActiveDataProvider
  * @var $this \yii\web\View
  */
 
@@ -27,23 +27,51 @@ $formatter = Yii::$app->formatter;
         <thead>
             <tr>
                 <th>
-                    <?php echo Module::t('category', 'Name'); ?>
-                    <!-- input type="text" class="appearance-none bg-gray-200 text-gray-700 border border-gray-300 rounded py-1 px-4 mb-1 leading-tight"
-                    placeholder="<?php echo Module::t('category', 'Name'); ?>" -->
+                    <?php echo Html::a(Module::t('category', 'Name'),
+                        $categoriesProvider->sort->createUrl('name'),
+                        []
+                    ); ?>
                 </th>
                 <th class="type">
-                    <?php echo Module::t('category', 'Type'); ?>
+                    <?php echo Html::a(Module::t('category', 'Type'),
+                        $categoriesProvider->sort->createUrl('type'),
+                        []
+                    ); ?>
                 </th>
                 <th class="status">
-                    <?php echo Module::t('category', 'Status'); ?>
+                    <?php echo Html::a(Module::t('category', 'Status'),
+                        $categoriesProvider->sort->createUrl('active'),
+                        []
+                    ); ?>
                 </th>
                 <th class="tools">
                     <?php echo Module::t('category', 'Action'); ?>
                 </th>
             </tr>
+            <tr>
+                <td colspan="4">
+                    <?php echo Html::beginForm(['index'], 'get', [
+                        'class' => 'flex border border-gray-600 rounded'
+                    ]); ?>
+                    <?php echo Html::textInput('search', Yii::$app->request->getQueryParam('search'), [
+                        'class' => 'outline-none focus:outline-none flex-1 m-0 p-3'
+                    ]); ?>
+                    <?php echo Html::a('<i class="fa fa-times"></i>', ['index', 'sort' => Yii::$app->request->getQueryParam('sort')], [
+                        'class' => 'outline-none focus:outline-none  flex-none m-0 p-3 bg-gray-200 hover:bg-red-600 hover:text-white'
+                    ]); ?>
+                    <button type="submit" class="outline-none focus:outline-none  flex-none m-0 p-3 bg-gray-200 hover:bg-blue-800 hover:text-white">
+                        <i class="fa fa-search"></i>
+                    </button>
+                    <?php if (empty(Yii::$app->request->getQueryParam('sort')) === false): ?>
+                        <?php echo Html::hiddenInput('sort', Yii::$app->request->getQueryParam('sort')); ?>
+                    <?php endif; ?>
+                    <?php echo Html::endForm(); ?>
+                </td>
+            </tr>
+
         </thead>
         <tbody>
-            <?php foreach ($categoriesQuery->each() as $category): ?>
+            <?php foreach ($categoriesProvider->getModels() as $category): ?>
             <?php /* @var \blackcube\core\models\Category $category */ ?>
                 <?php echo Html::beginTag('tr', ['data-ajaxify-target' => 'category-toggle-active-'.$category->id]); ?>
                 <?php echo $this->render('_line', ['category' => $category]); ?>

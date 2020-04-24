@@ -58,6 +58,7 @@ if ($slugForm->isStandalone === false) {
     <?php echo Html::beginTag('div', ['class' => ''.(($slugForm->isStandalone === false)?'toggle-target hidden':'')]); ?>
         <?php echo Html::activeHiddenInput($slugForm, 'openedSlug', ['class' => 'slug-status']); ?>
         <div class="bloc">
+            <?php if ($slugForm->getIsRedirectSlug()): ?>
             <div class="w-full bloc-fieldset md:w-1/12">
                 <?php echo Html::activeLabel($slug, 'active', ['class' => 'label']); ?>
                 <?php echo Html::activeCheckbox($slug, 'active', ['label' => false, 'class' => 'checkbox']); ?>
@@ -72,10 +73,26 @@ if ($slugForm->isStandalone === false) {
                     </div>
                 </div>
             </div>
-            <div class="w-full bloc-fieldset md:w-8/12">
-                <?php echo Html::activeLabel($slug, 'path', ['class' => 'label']); ?>
-                <?php echo Html::activeTextInput($slug, 'path', ['class' => 'textfield'.($slug->hasErrors('path')?' error':'')]); ?>
+                <div class="w-full bloc-fieldset md:w-8/12">
+                    <?php echo Html::activeLabel($slug, 'path', ['class' => 'label']); ?>
+                    <?php echo Html::activeTextInput($slug, 'path', ['class' => 'textfield'.($slug->hasErrors('path')?' error':'')]); ?>
+                </div>
+            <?php else: ?>
+            <div class="w-full bloc-fieldset md:w-3/12">
+                <?php echo Html::activeLabel($slug, 'host', ['class' => 'label']); ?>
+                <div class="dropdown">
+                    <?php echo Html::activeDropDownList($slug, 'host', ArrayHelper::map(Parameter::getAllowedHosts(), 'id', 'value'), [
+                    ]); ?>
+                    <div class="arrow">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
+                    </div>
+                </div>
             </div>
+                <div class="w-full bloc-fieldset md:w-9/12">
+                    <?php echo Html::activeLabel($slug, 'path', ['class' => 'label']); ?>
+                    <?php echo Html::activeTextInput($slug, 'path', ['class' => 'textfield'.($slug->hasErrors('path')?' error':'')]); ?>
+                </div>
+            <?php endif; ?>
         </div>
         <?php if($slugForm->getIsRedirectSlug() === true): ?>
         <div class="bloc">

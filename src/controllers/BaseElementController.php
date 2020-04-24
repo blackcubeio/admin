@@ -76,7 +76,9 @@ abstract class BaseElementController extends Controller
             Model::loadMultiple($blocs, Yii::$app->request->bodyParams);
             $element->load(Yii::$app->request->bodyParams);
             $slugForm->multiLoad(Yii::$app->request->bodyParams);
-
+            if ($slugForm->getSlug() !== null) {
+                $slugForm->getSlug()->active = $element->active;
+            }
             if ($element->validate() && $slugForm->preValidate() && Model::validateMultiple($blocs)) {
                 $transaction = Module::getInstance()->db->beginTransaction();
                 $slugFormStatus = $slugForm->save();

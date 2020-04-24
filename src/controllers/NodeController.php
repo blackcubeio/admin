@@ -14,6 +14,7 @@
 
 namespace blackcube\admin\controllers;
 
+use blackcube\admin\actions\ToggleAction;
 use blackcube\admin\models\SlugForm;
 use blackcube\admin\actions\BlocAction;
 use blackcube\admin\actions\ModalAction;
@@ -22,8 +23,10 @@ use blackcube\admin\Module;
 use blackcube\core\models\Composite;
 use blackcube\core\models\Node;
 use blackcube\core\models\Language;
+use blackcube\core\models\Slug;
 use blackcube\core\models\Type;
 use yii\base\ErrorException;
+use yii\data\ActiveDataProvider;
 use yii\filters\AccessControl;
 use yii\filters\AjaxFilter;
 use yii\web\NotFoundHttpException;
@@ -109,6 +112,11 @@ class NodeController extends BaseElementController
             'class' => ModalAction::class,
             'elementClass' => Node::class
         ];
+        $actions['toggle'] = [
+            'class' => ToggleAction::class,
+            'elementClass' => Node::class,
+            'elementName' => 'node',
+        ];
         return $actions;
     }
 
@@ -118,29 +126,45 @@ class NodeController extends BaseElementController
     public function actionIndex()
     {
         $nodesQuery = Node::find()
+            ->joinWith('type', true)
+            ->joinWith('slug', true)
             ->with('slug.seo')
-            ->with('slug.sitemap')
-            ->orderBy(['left' => SORT_ASC]);
-        return $this->render('index', [
-            'nodesQuery' => $nodesQuery
-        ]);
-    }
-
-    /**
-     * @param integer $id
-     * @return string|Response
-     */
-    public function actionToggle($id)
-    {
-        if ($id !== null) {
-            $currentNode = Node::findOne(['id' => $id]);
-            if ($currentNode !== null) {
-                $currentNode->active = !$currentNode->active;
-                $currentNode->save(false, ['active', 'dateUpdate']);
-            }
+            ->with('slug.sitemap');
+        $search = Yii::$app->request->getQueryParam('search', null);
+        if ($search !== null) {
+            $nodesQuery->andWhere(['or',
+                ['like', Node::tableName().'.[[name]]', $search],
+                ['like', Type::tableName().'.[[name]]', $search],
+                ['like', Slug::tableName().'.[[path]]', $search],
+            ]);
         }
-        return $this->renderPartial('_line', [
-            'node' => $currentNode
+        $nodesProvider = Yii::createObject([
+            'class' => ActiveDataProvider::class,
+            'query' => $nodesQuery,
+            'pagination' => [
+                'pageSize' => 20,
+            ],
+            'sort' => [
+                'defaultOrder' => [
+                    'tree' => SORT_ASC
+                ],
+                'attributes' => [
+                    'name',
+                    'active',
+                    'type' => [
+                        'asc' => [Type::tableName().'.[[name]]' => SORT_ASC],
+                        'desc' => [Type::tableName().'.[[name]]' => SORT_DESC],
+                    ],
+                    'tree' => [
+                        'asc' => ['left' => SORT_ASC],
+                        'desc' => ['left' => SORT_DESC],
+                    ]
+                ]
+            ],
+        ]);
+
+        return $this->render('index', [
+            'nodesProvider' => $nodesProvider
         ]);
     }
 

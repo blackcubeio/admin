@@ -14,15 +14,18 @@
 
 namespace blackcube\admin\controllers;
 
+use blackcube\admin\actions\ToggleAction;
 use blackcube\admin\models\SlugForm;
 use blackcube\admin\actions\BlocAction;
 use blackcube\admin\actions\ModalAction;
 use blackcube\admin\components\Rbac;
 use blackcube\admin\Module;
 use blackcube\core\models\Category;
+use blackcube\core\models\Slug;
 use blackcube\core\models\Tag;
 use blackcube\core\models\Type;
 use yii\base\ErrorException;
+use yii\data\ActiveDataProvider;
 use yii\filters\AccessControl;
 use yii\filters\AjaxFilter;
 use yii\web\NotFoundHttpException;
@@ -108,46 +111,57 @@ class TagController extends BaseElementController
             'class' => ModalAction::class,
             'elementClass' => Tag::class
         ];
+        $actions['toggle'] = [
+            'class' => ToggleAction::class,
+            'elementClass' => Tag::class,
+            'elementName' => 'tag',
+        ];
         return $actions;
     }
 
     /**
-     * @param string|null $categoryId
      * @return string
      */
-    public function actionIndex($categoryId = null)
+    public function actionIndex()
     {
         $tagsQuery = Tag::find()
             ->innerJoinWith('category', true)
+            ->joinWith('type', true)
+            ->joinWith('slug', true)
             ->with('slug.seo')
-            ->with('slug.sitemap')
-            ->orderBy([
-                Category::tableName().'.name' => SORT_ASC,
-                'name' => SORT_ASC
+            ->with('slug.sitemap');
+        $search = Yii::$app->request->getQueryParam('search', null);
+        if ($search !== null) {
+            $tagsQuery->andWhere(['or',
+                ['like', Tag::tableName().'.[[name]]', $search],
+                ['like', Category::tableName().'.[[name]]', $search],
+                ['like', Type::tableName().'.[[name]]', $search],
+                ['like', Slug::tableName().'.[[path]]', $search],
             ]);
-
-        if ($categoryId !== null) {
-            $tagsQuery->andWhere(['categoryId' => $categoryId]);
         }
-        return $this->render('index', [
-            'tagsQuery' => $tagsQuery
+        $tagsProvider = Yii::createObject([
+            'class' => ActiveDataProvider::class,
+            'query' => $tagsQuery,
+            'pagination' => [
+                'pageSize' => 20,
+            ],
+            'sort' => [
+                'defaultOrder' => [
+                    'name' => SORT_ASC
+                ],
+                'attributes' => [
+                    'name',
+                    'active',
+                    'type' => [
+                        'asc' => [Type::tableName().'.[[name]]' => SORT_ASC],
+                        'desc' => [Type::tableName().'.[[name]]' => SORT_DESC],
+                    ],
+                ]
+            ],
         ]);
-    }
-
-    /**
-     * @param integer $id
-     * @return string|Response
-     */
-    public function actionToggle($id)
-    {
-        if ($id !== null) {
-            $currentTag = Tag::findOne(['id' => $id]);
-            if ($currentTag !== null) {
-                $currentTag->active = !$currentTag->active;
-                $currentTag->save(false, ['active', 'dateUpdate']);
-            }
-        }
-        return $this->renderPartial('_line', ['tag' => $currentTag]);
+        return $this->render('index', [
+            'tagsProvider' => $tagsProvider
+        ]);
     }
 
     /**

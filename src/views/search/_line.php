@@ -118,7 +118,7 @@ if ($elementType === Node::getElementType()) {
         </td>
         <td>
             <?php echo Html::a('<i class="fa fa-pen-alt"></i>', [$controller.'/edit', 'id' => $element->id], ['class' => 'button']); ?>
-            <?php echo Html::tag('span', $element->active?'<i class="fa fa-play"></i>':' <i class="fa fa-stop"></i>', [
+            <?php echo Html::tag('span', $element->active?'<i class="fa fa-play"></i>':' <i class="fa fa-pause"></i>', [
                 'class' => 'button no-action '.($element->active ? 'published' : 'draft')]); ?>
             <?php if ($element instanceof Slug): ?>
                 <?php echo Html::a('<i class="fa fa-globe-americas"></i>', [$element->getRoute()], [

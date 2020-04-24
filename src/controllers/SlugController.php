@@ -20,6 +20,7 @@ use blackcube\admin\models\SlugForm;
 use blackcube\admin\Module;
 use blackcube\core\models\Slug;
 use yii\base\ErrorException;
+use yii\data\ActiveDataProvider;
 use yii\filters\AccessControl;
 use yii\filters\AjaxFilter;
 use yii\web\NotFoundHttpException;
@@ -98,10 +99,32 @@ class SlugController extends BaseElementController
     {
         $slugsQuery = Slug::find()
             ->with('seo')
-            ->with('sitemap')
-            ->orderBy(['path' => SORT_ASC]);
+            ->with('sitemap');
+        $search = Yii::$app->request->getQueryParam('search', null);
+        if ($search !== null) {
+            $slugsQuery->andWhere(['or',
+                ['like', Slug::tableName().'.[[path]]', $search],
+            ]);
+        }
+        $slugsProvider = Yii::createObject([
+            'class' => ActiveDataProvider::class,
+            'query' => $slugsQuery,
+            'pagination' => [
+                'pageSize' => 20,
+            ],
+            'sort' => [
+                'defaultOrder' => [
+                    'path' => SORT_ASC
+                ],
+                'attributes' => [
+                    'path',
+                    'active',
+                ]
+            ],
+        ]);
+
         return $this->render('index', [
-            'slugsQuery' => $slugsQuery
+            'slugsProvider' => $slugsProvider
         ]);
     }
 
@@ -161,7 +184,25 @@ class SlugController extends BaseElementController
             $currentSlug = Slug::findOne(['id' => $id]);
             if ($currentSlug !== null) {
                 $currentSlug->active = !$currentSlug->active;
-                $currentSlug->save(false, ['active', 'dateUpdate']);
+                if ($currentSlug->element !== null) {
+                    $currentSlug->element->active = $currentSlug->active;
+                }
+                $transaction = Module::getInstance()->db->beginTransaction();
+                try {
+                    $slugStatus = $currentSlug->save(false, ['active', 'dateUpdate']);
+                    if ($currentSlug->element !== null) {
+                        $elementStatus = $currentSlug->element->save(false, ['active', 'dateUpdate']);
+                    } else {
+                        $elementStatus = true;
+                    }
+                    if ($slugStatus && $elementStatus) {
+                        $transaction->commit();
+                    } else {
+                        $transaction->rollBack();
+                    }
+                } catch(\Exception $e) {
+                    $transaction->rollBack();
+                }
             }
         }
         return $this->renderPartial('_line', [

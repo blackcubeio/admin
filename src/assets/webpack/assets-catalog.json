@@ -9,20 +9,20 @@
     "js": "js/aurelia.aaee6e.js"
   },
   "chartist": {
-    "css": "css/3.84d272.css",
+    "css": "css/3.19e86a.css",
     "js": "js/chartist.2a186e.js"
   },
   "fontawesome": {
-    "css": "css/4.84d272.css",
+    "css": "css/4.19e86a.css",
     "js": "js/fontawesome.d78ad1.js"
   },
   "jsoneditor": {
-    "css": "css/5.84d272.css",
+    "css": "css/5.19e86a.css",
     "js": "js/jsoneditor.b12d9d.js"
   },
   "main": {
-    "css": "css/6.84d272.css",
-    "js": "js/main.7041dd.js"
+    "css": "css/6.19e86a.css",
+    "js": "js/main.4ee5df.js"
   },
   "vendor": {
     "js": "js/vendor.654b28.js"
