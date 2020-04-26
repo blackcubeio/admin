@@ -21,7 +21,7 @@ use blackcube\core\models\BlocType;
 use blackcube\core\models\Type;
 use blackcube\core\models\TypeBlocType;
 use blackcube\core\Module as CoreModule;
-use blackcube\core\web\controllers\BlackcubeController;
+use blackcube\core\interfaces\BlackcubeControllerInterface;
 use yii\base\Model;
 use yii\filters\AccessControl;
 use yii\filters\AjaxFilter;
@@ -276,7 +276,7 @@ class TypeController extends Controller
                         $controllerId = Inflector::camel2id($matches[2]);
                         $targetClass = $info['namespace'].'\\'.$matches[1];
                         $ref = new \ReflectionClass($targetClass);
-                        if (/**/$ref->isSubclassOf(BlackcubeController::class) && /**/ $ref->isAbstract() === false) {
+                        if (/**/$ref->implementsInterface(BlackcubeControllerInterface::class) && /**/ $ref->isAbstract() === false) {
                             $defaultAction = $ref->getProperty('defaultAction')->getValue($ref->newInstanceWithoutConstructor());
                             foreach ($ref->getMethods(\ReflectionMethod::IS_PUBLIC) as $method) {
                                 if (strncmp('action', $method->name, 6) === 0 && ($method->name !== 'actions')) {
