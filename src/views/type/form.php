@@ -14,8 +14,7 @@
  * @var $type \blackcube\core\models\Type
  * @var $blocTypesQuery \blackcube\core\models\FilterActiveQuery
  * @var $typeBlocTypes \blackcube\core\models\TypeBlocType[]
- * @var $controllers array
- * @var $actions array
+ * @var $routes array
  * @var $this \yii\web\View
  */
 
@@ -49,45 +48,26 @@ use yii\helpers\Url;
                     <?php echo Html::activeTextInput($type, 'name', ['class' => 'textfield'.($type->hasErrors('name')?' error':'')]); ?>
                 </div>
             </div>
-            <?php echo Html::beginTag('div', [
-                    'class' => 'bloc',
-                    'blackcube-controller-action' => Url::to(['actions', 'controller' => '__controller__'])
-            ]); ?>
-                <div class="w-full bloc-fieldset md:w-4/12">
-                    <?php echo Html::activeLabel($type, 'controller', ['class' => 'label']); ?>
+            <div class="bloc">
+                <div class="w-full bloc-fieldset md:w-6/12">
+                    <?php echo Html::activeLabel($type, 'route', ['class' => 'label']); ?>
                     <div class="dropdown">
-                        <?php echo Html::activeDropDownList($type, 'controller', ArrayHelper::map($controllers, 'id', 'name'), [
-                            'data-controller-action' => 'source'
+                        <?php echo Html::activeDropDownList($type, 'route', $routes, [
                         ]); ?>
                         <div class="arrow">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
                         </div>
                     </div>
                 </div>
-                <div class="w-full bloc-fieldset md:w-4/12">
-                    <?php echo Html::activeLabel($type, 'action', ['class' => 'label']); ?>
-                    <div class="dropdown">
-                        <?php echo Html::activeDropDownList($type, 'action', ArrayHelper::map($actions, 'id', 'name'), [
-                            'data-controller-action' => 'target',
-                        ]); ?>
-                        <div class="arrow">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
-                        </div>
-                    </div>
-                </div>
-                <!-- div class="w-full bloc-fieldset md:w-4/12">
-                    <?php echo Html::activeLabel($type, 'action', ['class' => 'label']); ?>
-                    <?php echo Html::activeTextInput($type, 'action', ['class' => 'textfield'.($type->hasErrors('action')?' error':'')]); ?>
-                </div -->
-                <div class="w-full bloc-fieldset md:w-2/12">
+                <div class="w-full bloc-fieldset md:w-3/12">
                     <?php echo Html::activeLabel($type, 'minBlocs', ['class' => 'label']); ?>
                     <?php echo Html::activeTextInput($type, 'minBlocs', ['class' => 'textfield'.($type->hasErrors('minBlocs')?' error':'')]); ?>
                 </div>
-                <div class="w-full bloc-fieldset md:w-2/12">
+                <div class="w-full bloc-fieldset md:w-3/12">
                     <?php echo Html::activeLabel($type, 'maxBlocs', ['class' => 'label']); ?>
                     <?php echo Html::activeTextInput($type, 'maxBlocs', ['class' => 'textfield'.($type->hasErrors('maxBlocs')?' error':'')]); ?>
                 </div>
-            <?php echo Html::endTag('div'); ?>
+            </div>
 
             <div class="bloc">
                 <div class="bloc-title">

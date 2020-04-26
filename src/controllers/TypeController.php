@@ -147,7 +147,7 @@ class TypeController extends Controller
                         }
                         if ($typeStatus && $status) {
                             $transaction->commit();
-                            return $this->redirect(['type/index']);
+                            return $this->redirect(['edit', 'id' => $type->id]);
                         }
                     }
                     $transaction->rollBack();
@@ -159,8 +159,7 @@ class TypeController extends Controller
         return $this->render('form', [
             'type' => $type,
             'typeBlocTypes' => $typeBlocTypes,
-            'controllers' => $this->findControllers(),
-            'actions' => $this->findActions($type->controller)
+            'routes' => $this->findRoutes(),
         ]);
     }
 
@@ -179,24 +178,20 @@ class TypeController extends Controller
         $typeBlocTypes = $this->getTypeBlocTypes($id);
         if (Yii::$app->request->isPost) {
             $type->load(Yii::$app->request->bodyParams);
-            if ($type->action === 'default') {
-                $type->action = null;
-            }
             Model::loadMultiple($typeBlocTypes, Yii::$app->request->bodyParams);
             if ($type->validate() === true && Model::validateMultiple($typeBlocTypes)) {
                 if ($type->save()) {
                     foreach ($typeBlocTypes as $typeBlocType) {
                         $typeBlocType->save();
                     }
-                    return $this->redirect(['index']);
+                    return $this->redirect(['edit', 'id' => $type->id]);
                 }
             }
         }
         return $this->render('form', [
             'type' => $type,
             'typeBlocTypes' => $typeBlocTypes,
-            'controllers' => $this->findControllers(),
-            'actions' => $this->findActions($type->controller)
+            'routes' => $this->findRoutes(),
         ]);
     }
 
@@ -248,90 +243,71 @@ class TypeController extends Controller
         return $typeBlocTypes;
     }
 
-    /**
-     * @param $controller
-     * @return array
-     * @throws MethodNotAllowedHttpException
-     */
-    public function actionActions($controller)
+    protected function findRoutes()
     {
-        Yii::$app->response->format = Response::FORMAT_JSON;
-        return $this->findActions($controller);
-    }
-
-    /**
-     * @param null $controller
-     * @return array
-     */
-    protected function findActions($controller = null)
-    {
-        $actions = [];
-        $actions[] = [
-            'id' => 'default',
-            'name' => '*'
-        ];
-        if ($controller !== null) {
-            try {
-                $controllerNamespace = CoreModule::getInstance()->cmsControllerNamespace;
-                $controllerClass = $controllerNamespace.'\\'.$controller.'Controller';
-                $ref = new \ReflectionClass($controllerClass);
-                foreach ($ref->getMethods(\ReflectionMethod::IS_PUBLIC) as $method) {
-                    if (strncmp('action', $method->name, 6) === 0 && ($method->name !== 'actions')) {
-                        $realMethod = str_replace('action', '', $method->name);
-                        $actions[] = [
-                            'id' => Inflector::camel2id($realMethod),
-                            'name' => Inflector::camel2id($realMethod),
-                        ];
-                    }
+        $modulesAllowed = CoreModule::getInstance()->cmsEnabledmodules;
+        $controllerPaths = [];
+        foreach($modulesAllowed as $moduleId) {
+            $controllerPath = null;
+            if (empty($moduleId) === true) {
+                $controllerPath = Yii::$app->controllerPath;
+                $controllerNS = Yii::$app->controllerNamespace;
+            } else {
+                $realModule = Yii::$app->getModule($moduleId);
+                if ($realModule !== null) {
+                    $controllerPath = $realModule->controllerPath;
+                    $controllerNS = $realModule->controllerNamespace;
                 }
-                if ($ref->hasMethod('actions')) {
-                    $currentController = $ref->newInstanceWithoutConstructor();
-                    $externalActions = $currentController->actions();
-                    foreach($externalActions as $id => $config) {
-                        $actions[] = [
-                            'id' => $id,
-                            'name' => $id
-                        ];
-                    }
-
-                }
-            } catch (\Exception $e) {
-
+            }
+            if ($controllerPath !== null && $controllerNS !== null) {
+                $controllerPaths[] = [
+                    'moduleId' => $moduleId,
+                    'path' => $controllerPath,
+                    'namespace' => $controllerNS,
+                ];
             }
         }
-        return $actions;
-    }
+        $routes = [];
+        foreach($controllerPaths as $info) {
+            $files = scandir($info['path']);
+            foreach($files as $file) {
+                if (preg_match('/^((.+)Controller).php$/', $file, $matches) > 0) {
+                    if ($matches[2] !== 'Blackcube') {
+                        $controllerId = Inflector::camel2id($matches[2]);
+                        $targetClass = $info['namespace'].'\\'.$matches[1];
+                        $ref = new \ReflectionClass($targetClass);
+                        if (/**/$ref->isSubclassOf(BlackcubeController::class) && /**/ $ref->isAbstract() === false) {
+                            $defaultAction = $ref->getProperty('defaultAction')->getValue($ref->newInstanceWithoutConstructor());
+                            foreach ($ref->getMethods(\ReflectionMethod::IS_PUBLIC) as $method) {
+                                if (strncmp('action', $method->name, 6) === 0 && ($method->name !== 'actions')) {
+                                    $realMethod = str_replace('action', '', $method->name);
+                                    $actionId = Inflector::camel2id($realMethod);
+                                    if ($actionId === $defaultAction) {
+                                        $actionId = '';
+                                    }
+                                    $route = trim($info['moduleId'].'/'.$controllerId.'/'.$actionId, '/');
+                                    $routes[$route] = $route;
+                                }
+                            }
+                            if ($ref->hasMethod('actions')) {
+                                $currentController = $ref->newInstanceWithoutConstructor();
+                                $externalActions = $currentController->actions();
+                                foreach($externalActions as $actionId => $config) {
+                                    if ($actionId === $defaultAction) {
+                                        $actionId = '';
+                                    }
+                                    $route = trim($info['moduleId'].'/'.$controllerId.'/'.$actionId, '/');
+                                    $routes[$route] = $route;
+                                }
 
-    /**
-     * @return array
-     * @throws \ReflectionException
-     */
-    protected function findControllers()
-    {
-        $controllerNamespace = CoreModule::getInstance()->cmsControllerNamespace;
-        $controllerAlias = '@'.str_replace('\\', '/', $controllerNamespace);
-        $controllerPath = Yii::getAlias($controllerAlias);
-        $files = scandir($controllerPath);
-        $controllers = [];
-        $controllers[] = [
-            'id' => CoreModule::getInstance()->cmsDefaultController,
-            'name' => '*'
-        ];
-        foreach($files as $file) {
-            if (preg_match('/^((.+)Controller).php$/', $file, $matches) > 0) {
-                if ($matches[2] !== 'Blackcube') {
-                    $targetClass = $controllerNamespace.'\\'.$matches[1];
-                    $ref = new \ReflectionClass($targetClass);
-                    if ($ref->isSubclassOf(BlackcubeController::class) && $ref->isAbstract() === false) {
-                        $controllers[] = [
-                            'id' => $matches[2],
-                            'name' => Inflector::camel2id($matches[2]),
-                        ];
+                            }
+
+                        }
                     }
-
                 }
             }
         }
-        return $controllers;
+        return $routes;
+
     }
 }
