@@ -249,14 +249,19 @@ class TypeController extends Controller
         $controllerPaths = [];
         foreach($modulesAllowed as $moduleId) {
             $controllerPath = null;
+            $controllerNS = null;
             if (empty($moduleId) === true) {
                 $controllerPath = Yii::$app->controllerPath;
                 $controllerNS = Yii::$app->controllerNamespace;
             } else {
-                $realModule = Yii::$app->getModule($moduleId);
-                if ($realModule !== null) {
-                    $controllerPath = $realModule->controllerPath;
-                    $controllerNS = $realModule->controllerNamespace;
+                try {
+                    $realModule = Yii::$app->getModule($moduleId);
+                    if ($realModule !== null) {
+                        $controllerPath = $realModule->controllerPath;
+                        $controllerNS = $realModule->controllerNamespace;
+                    }
+                } catch(\Exception $e) {
+                    Yii::error(Module::t('type', 'Module "{moduleId}" does not exist.', ['moduleId' => $moduleId]));
                 }
             }
             if ($controllerPath !== null && $controllerNS !== null) {
