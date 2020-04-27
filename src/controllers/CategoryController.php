@@ -127,6 +127,7 @@ class CategoryController extends BaseElementController
         $categoriesQuery = Category::find()
             ->joinWith('type', true)
             ->joinWith('slug', true)
+            // ->joinWith('tags', true)
             ->with('slug.seo')
             ->with('slug.sitemap');
         $search = Yii::$app->request->getQueryParam('search', null);

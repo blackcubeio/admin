@@ -19,6 +19,7 @@ use blackcube\admin\Module;
 use blackcube\admin\components\Rbac;
 use blackcube\admin\helpers\Html;
 use blackcube\admin\widgets\Publication;
+use blackcube\core\helpers\QueryCache;
 use blackcube\core\models\Node;
 use blackcube\core\models\Composite;
 use blackcube\core\models\Category;
@@ -26,7 +27,12 @@ use blackcube\core\models\Tag;
 use yii\helpers\Url;
 
 $formatter = Yii::$app->formatter;
-$element = $slug->getElement()->with(['slug.seo', 'slug.sitemap'])->one();
+$element = $slug->getElement()
+    ->joinWith('slug.seo', true)
+    ->joinWith('slug.sitemap', true)
+    //->with(['slug.seo', 'slug.sitemap'])
+    ->cache(3600, QueryCache::getCmsDependencies())
+    ->one();
 ?>
                 <td>
                     <div class="flex items-start">

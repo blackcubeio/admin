@@ -98,8 +98,8 @@ class SlugController extends BaseElementController
     public function actionIndex()
     {
         $slugsQuery = Slug::find()
-            ->with('seo')
-            ->with('sitemap');
+            ->joinWith('seo', true)
+            ->joinWith('sitemap', true);
         $search = Yii::$app->request->getQueryParam('search', null);
         if ($search !== null) {
             $slugsQuery->andWhere(['or',
