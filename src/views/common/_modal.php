@@ -41,7 +41,7 @@ if ($element instanceof Administrator) {
                 </p>
                     <strong class="uppercase text-sm"><?php echo $elementName; ?></strong>
                 <p>
-                    <?php echo Module::t('common', 'Do you really want to conitnue ?'); ?>
+                    <?php echo Module::t('common', 'Do you really want to continue ?'); ?>
                 </p>
             </div>
             <div class="footer">

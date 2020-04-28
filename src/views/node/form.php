@@ -109,7 +109,7 @@ use yii\helpers\Url;
                     </div>
                 </div>
                 <div class="w-full bloc-fieldset md:w-8/12" data-dependency="">
-                    <?php echo Html::label(Module::t('node', 'Target Node'), 'moveNodeTarget', ['class' => 'label']); ?>
+                    <?php echo Html::label(Module::t('node', 'Target node'), 'moveNodeTarget', ['class' => 'label']); ?>
                     <div class="dropdown">
                         <?php $mapNodes = ArrayHelper::map(
                                 $targetNodesQuery->select(['id', 'name', 'level', 'left', 'right'])->asArray()->all(),
