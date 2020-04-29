@@ -184,7 +184,7 @@ class Module extends BaseModule implements BootstrapInterface
         Yii::$app->i18n->translations['blackcube/admin/*'] = [
             'class' => GettextMessageSource::class,
             'sourceLanguage' => 'en',
-            'useMoFile' => false,
+            'useMoFile' => true,
             'basePath' => '@blackcube/admin/i18n',
         ];
     }

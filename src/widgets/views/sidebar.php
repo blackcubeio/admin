@@ -43,6 +43,15 @@ use yii\helpers\Url;
                     <span><i class="fa fa-angle-down float-right mt-2 arrow"></i></span>
                 <?php echo Html::endTag('span'); ?>
                 <ul class="hidden">
+                    <?php  if (Yii::$app->user->can(Rbac::PERMISSION_USER_VIEW)): ?>
+                        <?php echo Html::beginTag('li', ['class' => ($controller === 'user' ? 'active':'')]); ?>
+                        <?php echo Html::beginTag('a', ['href' => Url::to(['user/index'])]); ?>
+                        <i class="fa fa-user-alt float-left mx-2 mt-2"></i>
+                        <?php echo Module::t('widgets', 'Users'); ?>
+                        <span><i class="fa fa-angle-right angle"></i></span>
+                        <?php echo Html::endTag('a'); ?>
+                        <?php echo Html::endTag('li'); ?>
+                    <?php endif; ?>
                     <?php  if (Yii::$app->user->can(Rbac::PERMISSION_PARAMETER_VIEW)): ?>
                         <?php echo Html::beginTag('li', ['class' => ($controller === 'parameter' ? 'active':'')]); ?>
                             <?php echo Html::beginTag('a', ['href' => Url::to(['parameter/index'])]); ?>
@@ -50,15 +59,6 @@ use yii\helpers\Url;
                                 <?php echo Module::t('widgets', 'Parameters'); ?>
                                 <span><i class="fa fa-angle-right angle"></i></span>
                             <?php echo Html::endTag('a'); ?>
-                    <?php echo Html::endTag('li'); ?>
-                <?php endif; ?>
-                <?php  if (Yii::$app->user->can(Rbac::PERMISSION_USER_VIEW)): ?>
-                    <?php echo Html::beginTag('li', ['class' => ($controller === 'user' ? 'active':'')]); ?>
-                        <?php echo Html::beginTag('a', ['href' => Url::to(['user/index'])]); ?>
-                            <i class="fa fa-user-alt float-left mx-2 mt-2"></i>
-                            <?php echo Module::t('widgets', 'Users'); ?>
-                            <span><i class="fa fa-angle-right angle"></i></span>
-                        <?php echo Html::endTag('a'); ?>
                     <?php echo Html::endTag('li'); ?>
                 <?php endif; ?>
                 <?php  if (Yii::$app->user->can(Rbac::PERMISSION_TYPE_VIEW)): ?>
@@ -94,24 +94,6 @@ use yii\helpers\Url;
             <span><i class="fa fa-angle-down float-right mt-2 arrow"></i></span>
             <?php echo Html::endTag('span'); ?>
             <ul class="hidden">
-                <?php  if (Yii::$app->user->can(Rbac::PERMISSION_SLUG_VIEW)): ?>
-                    <?php echo Html::beginTag('li', ['class' => ($controller === 'slug' ? 'active':'')]); ?>
-                    <?php echo Html::beginTag('a', ['href' => Url::to(['slug/index'])]); ?>
-                    <i class="fa fa-globe-americas float-left mx-2 mt-2"></i>
-                    <?php echo Module::t('widgets', 'Slugs'); ?>
-                    <span><i class="fa fa-angle-right angle"></i></span>
-                    <?php echo Html::endTag('a'); ?>
-                    <?php echo Html::endTag('li'); ?>
-                <?php endif; ?>
-                <?php  if (Yii::$app->user->can(Rbac::PERMISSION_COMPOSITE_VIEW)): ?>
-                    <?php echo Html::beginTag('li', ['class' => ($controller === 'composite' ? 'active':'')]); ?>
-                        <?php echo Html::beginTag('a', ['href' => Url::to(['composite/index'])]); ?>
-                            <i class="fa fa-file float-left mx-2 mt-2"></i>
-                            <?php echo Module::t('widgets', 'Composites'); ?>
-                            <span><i class="fa fa-angle-right angle"></i></span>
-                        <?php echo Html::endTag('a'); ?>
-                    <?php echo Html::endTag('li'); ?>
-                <?php endif; ?>
                 <?php  if (Yii::$app->user->can(Rbac::PERMISSION_NODE_VIEW)): ?>
                     <?php echo Html::beginTag('li', ['class' => ($controller === 'node' ? 'active':'')]); ?>
                         <?php echo Html::beginTag('a', ['href' => Url::to(['node/index'])]); ?>
@@ -119,6 +101,15 @@ use yii\helpers\Url;
                             <?php echo Module::t('widgets', 'Nodes'); ?>
                             <span><i class="fa fa-angle-right angle"></i></span>
                         <?php echo Html::endTag('a'); ?>
+                    <?php echo Html::endTag('li'); ?>
+                <?php endif; ?>
+                <?php  if (Yii::$app->user->can(Rbac::PERMISSION_COMPOSITE_VIEW)): ?>
+                    <?php echo Html::beginTag('li', ['class' => ($controller === 'composite' ? 'active':'')]); ?>
+                    <?php echo Html::beginTag('a', ['href' => Url::to(['composite/index'])]); ?>
+                    <i class="fa fa-file float-left mx-2 mt-2"></i>
+                    <?php echo Module::t('widgets', 'Composites'); ?>
+                    <span><i class="fa fa-angle-right angle"></i></span>
+                    <?php echo Html::endTag('a'); ?>
                     <?php echo Html::endTag('li'); ?>
                 <?php endif; ?>
                 <?php  if (Yii::$app->user->can(Rbac::PERMISSION_CATEGORY_VIEW)): ?>
@@ -137,6 +128,15 @@ use yii\helpers\Url;
                             <?php echo Module::t('widgets', 'Tags'); ?>
                             <span><i class="fa fa-angle-right angle"></i></span>
                         <?php echo Html::endTag('a'); ?>
+                    <?php echo Html::endTag('li'); ?>
+                <?php endif; ?>
+                <?php  if (Yii::$app->user->can(Rbac::PERMISSION_SLUG_VIEW)): ?>
+                    <?php echo Html::beginTag('li', ['class' => ($controller === 'slug' ? 'active':'')]); ?>
+                    <?php echo Html::beginTag('a', ['href' => Url::to(['slug/index'])]); ?>
+                    <i class="fa fa-globe-americas float-left mx-2 mt-2"></i>
+                    <?php echo Module::t('widgets', 'Slugs'); ?>
+                    <span><i class="fa fa-angle-right angle"></i></span>
+                    <?php echo Html::endTag('a'); ?>
                     <?php echo Html::endTag('li'); ?>
                 <?php endif; ?>
             </ul>

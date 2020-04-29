@@ -194,11 +194,11 @@ msgstr "mot de passe"
 
 msgctxt "blackcube/admin/dashboard"
 msgid "Active ({count})"
-msgstr "Actif ({Count})"
+msgstr "Actif ({count})"
 
 msgctxt "blackcube/admin/dashboard"
 msgid "Active no URL ({count})"
-msgstr "Actif sans URL ({Count})"
+msgstr "Actif sans URL ({count})"
 
 msgctxt "blackcube/admin/dashboard"
 msgid "Categories stats ({count})"
