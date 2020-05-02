@@ -17,6 +17,9 @@
 
 use blackcube\admin\assets\WebpackAsset;
 use blackcube\admin\helpers\Html;
+use blackcube\admin\widgets\Sidebar;
+use blackcube\admin\widgets\Header;
+use blackcube\admin\widgets\Footer;
 
 WebpackAsset::register($this);
 
@@ -42,11 +45,14 @@ $this->beginPage(); ?><!DOCTYPE html>
         <div class="mx-auto">
             <!--Screen-->
             <div class="min-h-screen flex flex-col">
-                <?php echo \blackcube\admin\widgets\Header::widget(); ?>
+                <?php echo Header::widget(); ?>
+                <div class="flex flex-1">
+                    <?php echo Sidebar::widget(); ?>
 
                 <?php echo $content; ?>
+                </div>
 
-                <?php echo \blackcube\admin\widgets\Footer::widget(); ?>
+                <?php echo Footer::widget(); ?>
             </div>
             <!--Screen-->
         </div>

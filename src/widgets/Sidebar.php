@@ -14,6 +14,8 @@
 
 namespace blackcube\admin\widgets;
 
+use blackcube\admin\interfaces\MenuInterface;
+use blackcube\admin\Module;
 use yii\base\Widget;
 use Yii;
 
@@ -35,8 +37,24 @@ class Sidebar extends Widget
      */
     public function run()
     {
+        $modules = Module::getInstance()->getModules();
+        $adminModuleId = Module::getInstance()->getUniqueId();
+        $widgets = [];
+        foreach($modules as $id => $module) {
+            if (is_array($module) === true) {
+                $moduleClass = $module['class'];
+            } else {
+                $moduleClass = get_class($module);
+            }
+            if (is_subclass_of($moduleClass, MenuInterface::class) === true) {
+                $widgets[] = $moduleClass::getMenuWidget($adminModuleId.'/'.$id);
+            }
+        }
+        //TODO: add current module uniqueId + controllerId to match display to avoid collide with external modules
         return $this->render('sidebar', [
-            'controller' => Yii::$app->controller->id,
+            'adminUid' => Module::getInstance()->getUniqueId(),
+            'controllerUid' => Yii::$app->controller->getUniqueId(),
+            'widgets' => $widgets,
         ]);
     }
 }

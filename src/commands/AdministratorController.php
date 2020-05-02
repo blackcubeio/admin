@@ -14,6 +14,7 @@
 
 namespace blackcube\admin\commands;
 
+use blackcube\admin\components\Rbac;
 use blackcube\admin\models\Administrator;
 use blackcube\admin\Module;
 use yii\console\Controller;
@@ -50,6 +51,11 @@ class AdministratorController extends Controller
             ])."\n");
         } else {
             $this->stdout(Module::t('console','Administrator is invalid')."\n");
+            return ExitCode::UNSPECIFIED_ERROR;
+        }
+        $role = Yii::$app->authManager->getRole(Rbac::ROLE_ADMIN);
+        if ($role !== null) {
+            Yii::$app->authManager->assign($role, $administrator->id);
         }
         return ExitCode::OK;
     }

@@ -24,8 +24,6 @@ use blackcube\admin\widgets\Sidebar;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Url;
 ?>
-<div class="flex flex-1">
-    <?php echo Sidebar::widget(); ?>
     <main>
         <?php echo Html::beginForm('', 'post', ['class' => 'form']); ?>
             <ul class="header">
@@ -97,4 +95,3 @@ use yii\helpers\Url;
             </div>
         <?php echo Html::endForm(); ?>
     </main>
-</div>

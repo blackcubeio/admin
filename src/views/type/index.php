@@ -23,8 +23,6 @@ use yii\helpers\Url;
 
 $formatter = Yii::$app->formatter;
 ?>
-<div class="flex flex-1">
-    <?php echo Sidebar::widget(); ?>
     <main class="overflow-hidden">
         <div class="table-container" >
             <div blackcube-attach-modal="">
@@ -37,4 +35,3 @@ $formatter = Yii::$app->formatter;
             </div>
         </div>
     </main>
-</div>

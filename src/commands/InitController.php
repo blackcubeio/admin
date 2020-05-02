@@ -15,6 +15,8 @@
 namespace blackcube\admin\commands;
 
 use blackcube\admin\components\Rbac;
+use blackcube\admin\interfaces\MenuInterface;
+use blackcube\admin\interfaces\RbacableInterface;
 use blackcube\admin\models\Administrator;
 use blackcube\admin\Module;
 use yii\console\Controller;
@@ -45,23 +47,59 @@ class InitController extends Controller
         $this->stdout(Module::t('console', 'Init permissions and roles'."\n"));
 
         $authManager = Yii::$app->authManager;
-        $originalRights = new ReflectionClass(Rbac::class);
+        $modules = Module::getInstance()->getModules();
+        $rbacClasses = [Rbac::class];
+        foreach($modules as $id => $module) {
+            $moduleClass = $module['class'];
+            if (is_subclass_of($moduleClass, RbacableInterface::class) === true) {
+                $rbacClasses[] = $moduleClass::getRbacClass();
+            }
+        }
         $roles = [];
         $permissions = [];
-        foreach ($originalRights->getConstants() as $name => $value) {
-            if (strncmp($name, 'PERMISSION_', 11) === 0) {
-                $permissions[] = $value;
-                $permission = $authManager->getPermission($value);
-                if ($permission === null) {
-                    $permission = $authManager->createPermission($value);
-                    $authManager->add($permission);
+        foreach ($rbacClasses as $rbacClass) {
+            $originalRights = new ReflectionClass($rbacClass);
+            foreach ($originalRights->getConstants() as $name => $value) {
+                if (strncmp($name, 'PERMISSION_', 11) === 0) {
+                    $permissions[] = $value;
+                    $permission = $authManager->getPermission($value);
+                    if ($permission === null) {
+                        $permission = $authManager->createPermission($value);
+                        $authManager->add($permission);
+                    }
+                } elseif (strncmp($name, 'ROLE_', 5) === 0) {
+                    $roles[] = $value;
+                    $role = $authManager->getRole($value);
+                    if ($role === null) {
+                        $role = $authManager->createRole($value);
+                        $authManager->add($role);
+                    }
                 }
-            } elseif (strncmp($name, 'ROLE_', 5) === 0) {
-                $roles[] = $value;
-                $role = $authManager->getRole($value);
-                if ($role === null) {
-                    $role = $authManager->createRole($value);
-                    $authManager->add($role);
+            }
+            foreach($roles as $role) {
+                if (strpos($role, ':') !== false) {
+                    list($roleType, $roleKind) = explode(':', $role);
+                    foreach($permissions as $permission) {
+                        if (strpos($permission, ':') !== false) {
+                            list($permissionType, $permissionKind) = explode(':', $permission);
+                            if ($roleType === $permissionType) {
+                                $realRole = $authManager->getRole($role);
+                                $realPermission = $authManager->getPermission($permission);
+
+                                if ($authManager->canAddChild($realRole, $realPermission) && $authManager->hasChild($realRole, $realPermission) === false) {
+                                    $authManager->addChild($realRole, $realPermission);
+                                }
+                            }
+                        }
+                    }
+                } elseif ($role === Rbac::ROLE_ADMIN) {
+                    $currentRole = Yii::$app->authManager->getRole($role);
+                    foreach ($roles as $innerRole) {
+                        $realRole = $authManager->getRole($innerRole);
+                        if ($authManager->canAddChild($currentRole, $realRole) && $authManager->hasChild($currentRole, $realRole) === false) {
+                            $authManager->addChild($currentRole, $realRole);
+                        }
+                    }
                 }
             }
         }
@@ -78,32 +116,6 @@ class InitController extends Controller
             }
         }
 
-        foreach($roles as $role) {
-            if (strpos($role, ':') !== false) {
-                list($roleType, $roleKind) = explode(':', $role);
-                foreach($permissions as $permission) {
-                    if (strpos($permission, ':') !== false) {
-                        list($permissionType, $permissionKind) = explode(':', $permission);
-                        if ($roleType === $permissionType) {
-                            $realRole = $authManager->getRole($role);
-                            $realPermission = $authManager->getPermission($permission);
-
-                            if ($authManager->canAddChild($realRole, $realPermission) && $authManager->hasChild($realRole, $realPermission) === false) {
-                                $authManager->addChild($realRole, $realPermission);
-                            }
-                        }
-                    }
-                }
-            } elseif ($role === Rbac::ROLE_ADMIN) {
-                $currentRole = Yii::$app->authManager->getRole($role);
-                foreach ($roles as $role) {
-                    $realRole = $authManager->getRole($role);
-                    if ($authManager->canAddChild($currentRole, $realRole) && $authManager->hasChild($currentRole, $realRole) === false) {
-                        $authManager->addChild($currentRole, $realRole);
-                    }
-                }
-            }
-        }
         return ExitCode::OK;
     }
 }

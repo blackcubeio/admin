@@ -20,6 +20,7 @@ use blackcube\core\interfaces\ElementInterface;
 use blackcube\core\interfaces\TaggableInterface;
 use blackcube\core\models\Bloc;
 use blackcube\core\models\Category;
+use blackcube\core\models\Node;
 use blackcube\core\models\Tag;
 use blackcube\core\web\actions\ResumableUploadAction;
 use blackcube\core\web\actions\ResumablePreviewAction;

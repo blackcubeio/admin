@@ -21,8 +21,6 @@ use blackcube\admin\helpers\Html;
 use blackcube\admin\widgets\Sidebar;
 
 ?>
-<div class="flex flex-1">
-    <?php echo Sidebar::widget(); ?>
     <main>
         <?php echo Html::beginForm('', 'post', ['class' => 'form']); ?>
         <ul class="header">
@@ -83,4 +81,3 @@ use blackcube\admin\widgets\Sidebar;
         </div>
         <?php echo Html::endForm(); ?>
     </main>
-</div>

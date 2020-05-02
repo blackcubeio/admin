@@ -26,6 +26,7 @@ use blackcube\core\models\Language;
 use blackcube\core\models\Slug;
 use blackcube\core\models\Type;
 use yii\base\ErrorException;
+use yii\base\InvalidConfigException;
 use yii\data\ActiveDataProvider;
 use yii\filters\AccessControl;
 use yii\filters\AjaxFilter;
@@ -183,6 +184,24 @@ class NodeController extends BaseElementController
         ]);
         $blocs = $node->getBlocs()->all();
         $compositesQuery = $node->getComposites();
+        if (Yii::$app->request->isPost) {
+            $targetId = Yii::$app->request->getBodyParam('moveNodeTarget');
+            $saveNodeMode =  Yii::$app->request->getBodyParam('moveNodeMode', 'into');
+            $targetNode = Node::findOne(['id' => $targetId]);
+            $node->load(Yii::$app->request->bodyParams);
+            switch ($saveNodeMode) {
+                case 'into':
+                    $node->saveInto($targetNode);
+                    break;
+                case 'before':
+                    $node->saveBefore($targetNode);
+                    break;
+                case 'after':
+                    $node->saveAfter($targetNode);
+                    break;
+            }
+
+        }
         $result = $this->saveElement($node, $blocs, $slugForm);
         if ($result === true) {
             $selectedTags = Yii::$app->request->getBodyParam('selectedTags', []);
@@ -201,7 +220,7 @@ class NodeController extends BaseElementController
             'selectTagsData' => $selectTagsData,
             'targetNodesQuery' => $targetNodesQuery,
             'blocs' => $blocs,
-            'compositesQueyr' => $compositesQuery,
+            'compositesQuery' => $compositesQuery,
             'languagesQuery' => $languagesQuery,
         ]);
     }

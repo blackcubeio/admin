@@ -24,8 +24,6 @@ use yii\helpers\Url;
 
 $allowedParameterDomains = CoreModule::getInstance()->allowedParameterDomains;
 ?>
-<div class="flex flex-1">
-    <?php echo Sidebar::widget(); ?>
     <main>
         <?php echo Html::beginForm('', 'post', ['class' => 'form']); ?>
             <ul class="header">
@@ -83,4 +81,4 @@ $allowedParameterDomains = CoreModule::getInstance()->allowedParameterDomains;
             </div>
         <?php echo Html::endForm(); ?>
     </main>
-</div>
+

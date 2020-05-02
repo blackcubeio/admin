@@ -22,8 +22,6 @@ use blackcube\admin\widgets\Sidebar;
 use yii\widgets\LinkPager;
 
 ?>
-<div class="flex flex-1">
-    <?php echo Sidebar::widget(); ?>
     <main class="overflow-hidden">
         <div class="table-container">
             <div blackcube-ajaxify="click" blackcube-attach-modal="" >
@@ -45,4 +43,4 @@ use yii\widgets\LinkPager;
             </div>
         </div>
     </main>
-</div>
+

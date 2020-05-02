@@ -130,9 +130,6 @@ class TypeController extends Controller
         $typeBlocTypes = $this->getTypeBlocTypes();
         if (Yii::$app->request->isPost) {
             $type->load(Yii::$app->request->bodyParams);
-            if ($type->action === 'default') {
-                $type->action = null;
-            }
             Model::loadMultiple($typeBlocTypes, Yii::$app->request->bodyParams);
             if ($type->validate() === true && Model::validateMultiple($typeBlocTypes)) {
                 $transaction = Module::getInstance()->db->beginTransaction();

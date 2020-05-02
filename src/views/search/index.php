@@ -33,8 +33,6 @@ use blackcube\core\models\Tag;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Url;
 ?>
-<div class="flex flex-1">
-    <?php echo Sidebar::widget(); ?>
     <main class="overflow-hidden">
         <?php echo Html::beginForm('', 'post', ['class' => 'form']); ?>
         <div class="bloc">
@@ -163,4 +161,3 @@ use yii\helpers\Url;
             </table>
         </div>
     </main>
-</div>

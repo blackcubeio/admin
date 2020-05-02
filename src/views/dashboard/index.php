@@ -28,8 +28,6 @@ use blackcube\admin\Module;
 
 $formatter = Yii::$app->formatter;
 ?>
-<div class="flex flex-1">
-    <?php echo Sidebar::widget(); ?>
     <main class="overflow-hidden">
         <div class="form">
             <div class="bloc">
@@ -178,4 +176,4 @@ $formatter = Yii::$app->formatter;
             </div>
         </div>
     </main>
-</div>
+

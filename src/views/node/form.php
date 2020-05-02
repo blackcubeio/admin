@@ -30,8 +30,6 @@ use blackcube\admin\widgets\SlugForm;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Url;
 ?>
-<div class="flex flex-1">
-    <?php echo Sidebar::widget(); ?>
     <main>
         <?php echo Html::beginForm('', 'post', ['class' => 'form']); ?>
         <ul class="header">
@@ -90,10 +88,17 @@ use yii\helpers\Url;
                 </div>
             </div>
 
-            <div class="bloc" blackcube-toggle-dependencies="">
+
+            <?php echo Html::beginTag('div', ['class' => 'bloc', 'blackcube-toggle-dependencies' => $node->isNewRecord ? null : '']); ?>
                 <div class="w-full bloc-fieldset md:w-1/12">
+                    <?php if ($node->isNewRecord === false) : ?>
                     <?php echo Html::label(Module::t('node', 'Move Node'), 'moveNode', ['class' => 'label']); ?>
                     <?php echo Html::checkbox('moveNode', false, ['label' => false, 'class' => 'checkbox']); ?>
+                    <?php else : ?>
+                        <?php echo Html::label(Module::t('node', 'Create Node'), 'moveNode', ['class' => 'label']); ?>
+                        <?php echo Html::checkbox('fake', true, ['label' => false, 'class' => 'checkbox', 'disabled' => 'disabled']); ?>
+                    <?php echo Html::hiddenInput('moveNode', 1); ?>
+                    <?php endif; ?>
                 </div>
                 <div class="w-full bloc-fieldset md:w-3/12" data-dependency="">
                     <?php echo Html::label(Module::t('node', 'Mode'), 'moveNodeMode', ['class' => 'label']); ?>
@@ -129,7 +134,12 @@ use yii\helpers\Url;
                                     }
                                     return $option;
                                 });
-                            $options = ['prompt' => Module::t('node', 'Target node'), 'options' => $mapNodesOptions];
+                            if ($node->isNewRecord === false) {
+                                $options = ['prompt' => Module::t('node', 'Target node'), 'options' => $mapNodesOptions];
+                            } else {
+                                $options = ['options' => $mapNodesOptions];
+                            }
+
                         ?>
                         <?php echo Html::dropDownList('moveNodeTarget', null, $mapNodes, $options); ?>
                         <div class="arrow">
@@ -137,7 +147,7 @@ use yii\helpers\Url;
                         </div>
                     </div>
                 </div>
-            </div>
+            <?php echo Html::endTag('div'); ?>
             <div class="bloc">
                 <div class="w-full bloc-fieldset md:w-10/12">
                     <?php echo Html::activeLabel($node, 'name', ['class' => 'label']); ?>
@@ -244,4 +254,4 @@ use yii\helpers\Url;
             </div>
         <?php echo Html::endForm(); ?>
     </main>
-</div>
+

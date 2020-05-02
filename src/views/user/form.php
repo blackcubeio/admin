@@ -26,8 +26,6 @@ use blackcube\admin\widgets\Sidebar;
 $authManager = Yii::$app->authManager;
 
 ?>
-<div class="flex flex-1">
-    <?php echo Sidebar::widget(); ?>
     <main>
         <?php echo Html::beginForm('', 'post', ['class' => 'form']); ?>
         <ul class="header">
@@ -100,4 +98,3 @@ $authManager = Yii::$app->authManager;
         </div>
         <?php echo Html::endForm(); ?>
     </main>
-</div>
