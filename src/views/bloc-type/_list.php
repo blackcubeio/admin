@@ -21,6 +21,7 @@ use blackcube\admin\helpers\Html;
 use blackcube\admin\widgets\Sidebar;
 use yii\helpers\Url;
 
+$pathAlias = Module::getInstance()->adminTemplatesAlias;
 
 $formatter = Yii::$app->formatter;
 ?>
@@ -40,13 +41,20 @@ $formatter = Yii::$app->formatter;
         <tr>
             <td>
                 <div class="flex items-center">
-                    <p class="text-gray-900 whitespace-no-wrap">
+                    <div class="text-gray-900 whitespace-no-wrap">
                         <?php if (Yii::$app->user->can(Rbac::PERMISSION_BLOCTYPE_UPDATE)): ?>
                             <?php echo Html::a($blocType->name, ['edit', 'id' => $blocType->id], ['class' => 'hover:text-blue-600 py-1']); ?>
                         <?php else: ?>
                             <?php echo Html::tag('span', $blocType->name, ['class' => 'py-1']); ?>
                         <?php endif; ?>
-                    </p>
+                        <span class="text-xs text-gray-600 italic">#<?php echo $blocType->id; ?></span>
+                            <div>
+                                <span class="text-xs text-gray-600  px-2 py-0 italic border bg-gray-100 border-gray-300 rounded">
+                                    <?php echo Module::t('bloc-type', 'Admin view: {adminView}', ['adminView' => $blocType->getAdminView($pathAlias, true)]); ?>
+                                </span>
+                            </div>
+
+                    </div>
                 </div>
             </td>
             <td>

@@ -21,6 +21,7 @@ use blackcube\admin\helpers\Html;
 use blackcube\admin\widgets\Sidebar;
 use yii\helpers\Url;
 
+$pathAlias = Module::getInstance()->adminTemplatesAlias;
 $formatter = Yii::$app->formatter;
 ?>
 <table>
@@ -40,13 +41,20 @@ $formatter = Yii::$app->formatter;
         <tr>
             <td>
                 <div class="flex items-center">
-                    <p class="text-gray-900 whitespace-no-wrap">
+                    <div class="text-gray-900 whitespace-no-wrap">
                         <?php if (Yii::$app->user->can(Rbac::PERMISSION_TYPE_UPDATE)): ?>
                             <?php echo Html::a($type->name, ['edit', 'id' => $type->id], ['class' => 'hover:text-blue-600 py-1']); ?>
                         <?php else: ?>
                             <?php echo Html::tag('span', $type->name, ['class' => 'py-1']); ?>
                         <?php endif; ?>
-                    </p>
+                        <span class="text-xs text-gray-600 italic">#<?php echo $type->id; ?></span>
+                        <div>
+                                <span class="text-xs text-gray-600  px-2 py-0 italic border bg-gray-100 border-gray-300 rounded">
+                                    <?php echo Module::t('type', 'Route: {route}', ['route' => $type->route]); ?>
+                                </span>
+                        </div>
+
+                    </div>
                 </div>
             </td>
             <td>
