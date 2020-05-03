@@ -57,7 +57,10 @@ class BlackcubeBlocsCustomAttribute implements ComponentCreated, ComponentBind, 
                                     this.templatingEngine.enhance({
                                         element: this.ajaxTarget,
                                         bindingContext: this
-                                    })
+                                    });
+                                    let event = new Event('blackcube-bloc-ready', {bubbles: true});
+                                    this.element.dispatchEvent(event);
+                                    this.logger.debug('Event Sent');
                                 })
                             }
                         });
