@@ -49,9 +49,10 @@ $formatter = Yii::$app->formatter;
                         <?php endif; ?>
                         <span class="text-xs text-gray-600 italic">#<?php echo $blocType->id; ?></span>
                             <div>
-                                <span class="text-xs text-gray-600  px-2 py-0 italic border bg-gray-100 border-gray-300 rounded">
+                                <?php $adminView = $blocType->getAdminView($pathAlias); ?>
+                                <?php echo Html::beginTag('span', ['class' => 'text-xs text-gray-600  px-2 py-0 italic border border-gray-300 rounded'. (($adminView === false) ? ' bg-gray-100' : ' bg-green-100')]); ?>
                                     <?php echo Module::t('bloc-type', 'Admin view: {adminView}', ['adminView' => $blocType->getAdminView($pathAlias, true)]); ?>
-                                </span>
+                                <?php echo Html::endTag('span'); ?>
                             </div>
 
                     </div>

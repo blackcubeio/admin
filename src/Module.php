@@ -90,7 +90,6 @@ class Module extends BaseModule implements BootstrapInterface
         if ($this->cache !== null) {
             $this->cache = Instance::ensure($this->cache, CacheInterface::class);
         }
-        $this->registerTranslations();
         $this->registerErrorHandler();
     }
 
@@ -107,6 +106,7 @@ class Module extends BaseModule implements BootstrapInterface
                 'cache' => $this->cache,
             ],
         ]);
+        $this->registerTranslations();
         if ($app instanceof ConsoleApplication) {
             $this->bootstrapConsole($app);
         } elseif ($app instanceof WebApplication) {
