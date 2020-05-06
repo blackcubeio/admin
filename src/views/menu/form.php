@@ -70,6 +70,7 @@ use yii\helpers\Url;
             ]); ?>
         </div>
         <?php echo Html::endForm(); ?>
+        <?php if ($menu->getIsNewrecord() === false): ?>
         <div class="form" blackcube-ajaxify="click" blackcube-attach-modal="" data-ajaxify-target="menu-item-list">
             <?php echo $this->render('_form_list', [
                 'menu' => $menu,
@@ -77,5 +78,6 @@ use yii\helpers\Url;
                 'menuItemsQuery' => $menuItemsQuery,
             ]); ?>
         </div>
+        <?php endif; ?>
     </main>
 
