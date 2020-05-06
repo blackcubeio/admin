@@ -87,7 +87,8 @@ use yii\helpers\Url;
             || Yii::$app->user->can(Rbac::PERMISSION_NODE_VIEW)
             || Yii::$app->user->can(Rbac::PERMISSION_CATEGORY_VIEW)
             || Yii::$app->user->can(Rbac::PERMISSION_TAG_VIEW)
-            || Yii::$app->user->can(Rbac::PERMISSION_SLUG_VIEW)): ?>
+            || Yii::$app->user->can(Rbac::PERMISSION_SLUG_VIEW)
+            || Yii::$app->user->can(Rbac::PERMISSION_MENU_VIEW)): ?>
         <li>
             <?php echo Html::beginTag('span', ['class' => 'section', 'data-blackcube-section' => 'management']); ?>
             <i class="fa fa-book float-left mx-2 mt-2"></i>
@@ -95,6 +96,15 @@ use yii\helpers\Url;
             <span><i class="fa fa-angle-down float-right mt-2 arrow"></i></span>
             <?php echo Html::endTag('span'); ?>
             <ul class="hidden">
+                <?php  if (Yii::$app->user->can(Rbac::PERMISSION_MENU_VIEW)): ?>
+                    <?php echo Html::beginTag('li', ['class' => ($controllerUid === $adminUid.'/menu' ? 'active':'')]); ?>
+                    <?php echo Html::beginTag('a', ['href' => Url::to(['/'.$adminUid.'/menu/index'])]); ?>
+                    <i class="fa fa-list float-left mx-2 mt-2"></i>
+                    <?php echo Module::t('widgets', 'Menus'); ?>
+                    <span><i class="fa fa-angle-right angle"></i></span>
+                    <?php echo Html::endTag('a'); ?>
+                    <?php echo Html::endTag('li'); ?>
+                <?php endif; ?>
                 <?php  if (Yii::$app->user->can(Rbac::PERMISSION_NODE_VIEW)): ?>
                     <?php echo Html::beginTag('li', ['class' => ($controllerUid === $adminUid.'/node' ? 'active':'')]); ?>
                         <?php echo Html::beginTag('a', ['href' => Url::to(['/'.$adminUid.'/node/index'])]); ?>
