@@ -15,6 +15,7 @@
 namespace blackcube\admin\actions;
 
 use blackcube\admin\Module;
+use blackcube\core\interfaces\ElementInterface;
 use yii\base\Action;
 use yii\base\InvalidArgumentException;
 use yii\web\NotFoundHttpException;
@@ -64,21 +65,25 @@ class ToggleAction extends Action
             throw new NotFoundHttpException();
         }
         $element->active = !$element->active;
-        if ($element->slug !== null) {
+        if ($element instanceof ElementInterface && $element->slug !== null) {
             $element->slug->active = $element->active;
         }
         $transaction = Module::getInstance()->db->beginTransaction();
         try {
             $elementStatus = $element->save(false, ['active', 'dateUpdate']);
-            if ($element->slug !== null) {
-                $slugStatus = $element->slug->save(false, ['active', 'dateUpdate']);
+            if ($element instanceof ElementInterface) {
+                if ($element->slug !== null) {
+                    $slugStatus = $element->slug->save(false, ['active', 'dateUpdate']);
+                } else {
+                    $slugStatus = true;
+                }
+                if ($elementStatus && $slugStatus) {
+                    $transaction->commit();
+                } else {
+                    $transaction->rollBack();
+                }
             } else {
-                $slugStatus = true;
-            }
-            if ($elementStatus && $slugStatus) {
                 $transaction->commit();
-            } else {
-                $transaction->rollBack();
             }
         } catch(\Exception $e) {
             $transaction->rollBack();
