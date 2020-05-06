@@ -149,20 +149,6 @@ class Module extends BaseModule implements BootstrapInterface
      */
     protected function bootstrapWeb(WebApplication $app)
     {
-        $app->setComponents([
-            'user' => [
-                'class' => WebUser::class,
-                'identityClass' => Administrator::class,
-                'enableAutoLogin' => true,
-                'autoRenewCookie' => true,
-                'loginUrl' => ['admin/authentication/login'],
-                'idParam' => '__blackcubeId',
-                'returnUrlParam' => '__blackcubeReturnUrl',
-                'identityCookie' => [
-                    'name' => '_blackcubeIdentity', 'httpOnly' => true
-                ]
-            ],
-        ]);
         $app->getUrlManager()->addRules([
             [
                 'class' => GroupUrlRule::class,
@@ -174,6 +160,23 @@ class Module extends BaseModule implements BootstrapInterface
                 ],
             ]
         ], false);
+        list($route,) = $app->urlManager->parseRequest($app->request);
+        if (preg_match('#'.$this->uniqueId.'/#', $route) > 0) {
+            $app->setComponents([
+                'user' => [
+                    'class' => WebUser::class,
+                    'identityClass' => Administrator::class,
+                    'enableAutoLogin' => true,
+                    'autoRenewCookie' => true,
+                    'loginUrl' => [$this->uniqueId.'/authentication/login'],
+                    'idParam' => '__blackcubeId',
+                    'returnUrlParam' => '__blackcubeReturnUrl',
+                    'identityCookie' => [
+                        'name' => '_blackcubeIdentity', 'httpOnly' => true
+                    ]
+                ],
+            ]);
+        }
     }
 
     /**
@@ -197,12 +200,12 @@ class Module extends BaseModule implements BootstrapInterface
     {
         if (Yii::$app instanceof WebApplication) {
             list($route,) = Yii::$app->urlManager->parseRequest(Yii::$app->request);
-            if (preg_match('/'.$this->id.'\//', $route) > 0) {
+            if (preg_match('#'.$this->uniqueId.'/#', $route) > 0) {
                 Yii::configure($this, [
                     'components' => [
                         'errorHandler' => [
                             'class' => ErrorHandler::class,
-                            'errorAction' => $this->id.'/technical/error',
+                            'errorAction' => $this->uniqueId.'/technical/error',
                         ]
                     ],
                 ]);
