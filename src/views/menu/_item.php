@@ -18,7 +18,7 @@
 
 use blackcube\admin\Module;
 use blackcube\admin\components\Rbac;
-use blackcube\core\components\RouteEncoder;
+use blackcube\core\components\Element;
 use blackcube\core\models\Composite;
 use blackcube\core\models\Node;
 use blackcube\core\models\Tag;
@@ -31,21 +31,8 @@ use yii\helpers\Url;
 $formatter = Yii::$app->formatter;
 $route = $menuItem->route;
 try {
-    $result = RouteEncoder::decode($menuItem->route);
-    switch ($result['type']) {
-        case 'tag':
-            $route = Tag::find()->andWhere(['id' => $result['id']])->select('name')->scalar();
-            break;
-        case 'composite':
-            $route = Composite::find()->andWhere(['id' => $result['id']])->select('name')->scalar();
-        break;
-        case 'node':
-            $route = Node::find()->andWhere(['id' => $result['id']])->select('name')->scalar();
-        break;
-        case 'category':
-            $route = Category::find()->andWhere(['id' => $result['id']])->select('name')->scalar();
-            break;
-    }
+    $element = Element::instanciate($menuItem->route, false);
+    $elementClass = get_class($element);
 } catch(Exception $e) {
 
 }
@@ -57,7 +44,36 @@ try {
         <?php echo Html::endTag('span'); ?>
     </td>
     <td>
-        <span><?php echo $route; ?></span>
+        <?php if (isset($element, $elementClass)):?>
+            <?php switch ($elementClass::getElementType()) {
+                case 'tag':
+                    $type = Module::t('menu', 'Tag');
+                    break;
+                case 'category':
+                    $type = Module::t('menu', 'Category');
+                    break;
+                case 'node':
+                    $type = Module::t('menu', 'Node');
+                    break;
+                case 'composite':
+                    $type = Module::t('menu', 'Composite');
+                    break;
+                default:
+                    $type = Module::t('menu', 'Unknown');
+                    break;
+            }?>
+            <?php echo $type; ?>
+        <?php else: ?>
+            <?php echo Module::t('menu', 'Regular'); ?>
+        <?php endif; ?>
+    </td>
+    <td>
+        <?php if (isset($element)): ?>
+            <span><?php echo $element->name; ?></span>
+            <span class="text-xs text-gray-600 italic">#<?php echo $element->id; ?></span>
+        <?php else: ?>
+            <span><?php echo $menuItem->route; ?></span>
+        <?php endif; ?>
     </td>
     <td>
         <?php if (Yii::$app->user->can(Rbac::PERMISSION_MENU_DELETE)): ?>
@@ -73,7 +89,8 @@ try {
             <?php else: ?>
                 <span class="button up inactive"><i class="fa fa-angle-up"></i></span>
             <?php endif; ?>
-            <?php if ($menuItem->order < MenuItem::find()->andWhere(['parentId' => $menuItem->parentId])->count()): ?>
+            <?php $itemCount =  MenuItem::find()->andWhere(['menuId' => $menuItem->menuId, 'parentId' => $menuItem->parentId])->count(); ?>
+            <?php if ($menuItem->order < $itemCount): ?>
             <?php echo Html::a('<i class="fa fa-angle-down"></i>', ['down-item', 'id' => $menuItem->id], ['class' => 'button down', 'data-ajaxify-source' => 'menu-item-list']); ?>
             <?php else: ?>
                 <span class="button down inactive"><i class="fa fa-angle-down"></i></span>

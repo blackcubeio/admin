@@ -276,6 +276,14 @@ msgid "Cancel"
 msgstr ""
 
 msgctxt "blackcube/admin/menu"
+msgid "Category"
+msgstr ""
+
+msgctxt "blackcube/admin/menu"
+msgid "Composite"
+msgstr ""
+
+msgctxt "blackcube/admin/menu"
 msgid "Create"
 msgstr ""
 
@@ -300,6 +308,10 @@ msgid "Name"
 msgstr ""
 
 msgctxt "blackcube/admin/menu"
+msgid "Node"
+msgstr ""
+
+msgctxt "blackcube/admin/menu"
 msgid "Regular"
 msgstr ""
 
@@ -317,6 +329,18 @@ msgstr ""
 
 msgctxt "blackcube/admin/menu"
 msgid "Select a route"
+msgstr ""
+
+msgctxt "blackcube/admin/menu"
+msgid "Tag"
+msgstr ""
+
+msgctxt "blackcube/admin/menu"
+msgid "Type"
+msgstr ""
+
+msgctxt "blackcube/admin/menu"
+msgid "Unknown"
 msgstr ""
 
 msgctxt "blackcube/admin/models"

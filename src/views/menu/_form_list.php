@@ -37,6 +37,9 @@ use yii\helpers\Url;
                     <?php echo Module::t('menu', 'Name'); ?>
                 </th>
                 <th>
+                    <?php echo Module::t('menu', 'Type'); ?>
+                </th>
+                <th>
                     <?php echo Module::t('menu', 'Route'); ?>
                 </th>
                 <th class="tools">
