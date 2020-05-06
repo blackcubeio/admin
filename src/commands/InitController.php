@@ -50,7 +50,11 @@ class InitController extends Controller
         $modules = Module::getInstance()->getModules();
         $rbacClasses = [Rbac::class];
         foreach($modules as $id => $module) {
-            $moduleClass = $module['class'];
+            if (is_array($module) === true) {
+                $moduleClass = $module['class'];
+            } else {
+                $moduleClass = get_class($module);
+            }
             if (is_subclass_of($moduleClass, RbacableInterface::class) === true) {
                 $rbacClasses[] = $moduleClass::getRbacClass();
             }
