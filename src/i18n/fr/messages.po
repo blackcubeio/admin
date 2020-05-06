@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2020-04-28 10:30+0200\n"
+"POT-Creation-Date: \n"
 "PO-Revision-Date: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -14,11 +14,15 @@ msgstr ""
 
 msgctxt "blackcube/admin/authentication"
 msgid "Forgot Password?"
-msgstr ""
+msgstr "Mot de passe oublié?"
 
 msgctxt "blackcube/admin/bloc-type"
 msgid "Action"
 msgstr "Action"
+
+msgctxt "blackcube/admin/bloc-type"
+msgid "Admin view: {adminView}"
+msgstr "Vue administration: {adminView}"
 
 msgctxt "blackcube/admin/bloc-type"
 msgid "Associated types"
@@ -240,9 +244,81 @@ msgctxt "blackcube/admin/dashboard"
 msgid "Tags stats ({count})"
 msgstr "Stats des tags ({count})"
 
-msgctxt "blackcube/admin/error"
-msgid "Take Me Back To Home"
-msgstr "Retour à la page d’accueil"
+msgctxt "blackcube/admin/menu"
+msgid "Action"
+msgstr "Action"
+
+msgctxt "blackcube/admin/menu"
+msgid "Add item"
+msgstr "Ajouter un élément"
+
+msgctxt "blackcube/admin/menu"
+msgid "Back"
+msgstr "Retour"
+
+msgctxt "blackcube/admin/menu"
+msgid "CMS Category"
+msgstr "CMS: Catégorie"
+
+msgctxt "blackcube/admin/menu"
+msgid "CMS Composite"
+msgstr "CMS: Article"
+
+msgctxt "blackcube/admin/menu"
+msgid "CMS Node"
+msgstr "CMS: Rubrique"
+
+msgctxt "blackcube/admin/menu"
+msgid "CMS Tag"
+msgstr "CMS: Tag"
+
+msgctxt "blackcube/admin/menu"
+msgid "Cancel"
+msgstr "Annuler"
+
+msgctxt "blackcube/admin/menu"
+msgid "Create"
+msgstr "Créer"
+
+msgctxt "blackcube/admin/menu"
+msgid "Items"
+msgstr "Elément"
+
+msgctxt "blackcube/admin/menu"
+msgid "Menu"
+msgstr "Menu"
+
+msgctxt "blackcube/admin/menu"
+msgid "Menu item"
+msgstr "Elément"
+
+msgctxt "blackcube/admin/menu"
+msgid "Module \"{moduleId}\" does not exist."
+msgstr "Le module « {moduleId} » n’existe pas."
+
+msgctxt "blackcube/admin/menu"
+msgid "Name"
+msgstr "Nom"
+
+msgctxt "blackcube/admin/menu"
+msgid "Regular"
+msgstr "Standard"
+
+msgctxt "blackcube/admin/menu"
+msgid "Root"
+msgstr "Racine"
+
+msgctxt "blackcube/admin/menu"
+msgid "Route"
+msgstr "Route"
+
+msgctxt "blackcube/admin/menu"
+msgid "Save"
+msgstr "Enregistrer"
+
+msgctxt "blackcube/admin/menu"
+msgid "Select a route"
+msgstr "Séléctionner une route"
 
 msgctxt "blackcube/admin/models"
 msgid "Active"
@@ -343,6 +419,10 @@ msgstr "Contenu"
 msgctxt "blackcube/admin/node"
 msgid "Create"
 msgstr "Créer"
+
+msgctxt "blackcube/admin/node"
+msgid "Create Node"
+msgstr "Créer une rubrique"
 
 msgctxt "blackcube/admin/node"
 msgid "End: {0,date,medium}"
@@ -633,6 +713,10 @@ msgid "Name"
 msgstr "Nom"
 
 msgctxt "blackcube/admin/type"
+msgid "Route: {route}"
+msgstr "Route: {route}"
+
+msgctxt "blackcube/admin/type"
 msgid "Save"
 msgstr "Enregistrer"
 
@@ -709,6 +793,10 @@ msgid "Management"
 msgstr "Gestion"
 
 msgctxt "blackcube/admin/widgets"
+msgid "Menus"
+msgstr "Menus"
+
+msgctxt "blackcube/admin/widgets"
 msgid "Nodes"
 msgstr "Rubriques"
 
@@ -783,3 +871,7 @@ msgstr "Utilisateurs"
 msgctxt "blackcube/admin/widgets"
 msgid "Website"
 msgstr "Site"
+
+msgctxt "blackcube/admin/error"
+msgid "Take Me Back To Home"
+msgstr "Retour à la page d’accueil"
