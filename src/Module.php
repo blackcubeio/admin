@@ -80,6 +80,13 @@ class Module extends BaseModule implements BootstrapInterface
     public $commandNameSpace = 'bca:';
 
     /**
+     * @var array list off assets to add to the admin page
+     * ['\app\assets\StaticAsset', '\app\assets\OtherAsset' => ['blocTypeId', 'otherBlockTypeId']
+     * in this case, StaticAsset will be registered in all pages while OtherAsset will be only registered when blocTypeId and otherBlocTypeId can be used
+     */
+    public $additionalAssets = [];
+
+    /**
      * @inheritdoc
      */
     public function init()

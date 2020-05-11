@@ -18,10 +18,12 @@
 
 use blackcube\admin\Module;
 use blackcube\admin\helpers\Html;
+use blackcube\admin\helpers\Bo;
 use yii\helpers\Url;
 
 $blocsCount = count($blocs);
 $pathAlias = Module::getInstance()->adminTemplatesAlias;
+Bo::registerExternalAssets($element, $this);
 ?>
 
 <?php foreach($blocs as $i => $bloc): ?>
