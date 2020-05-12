@@ -15,14 +15,13 @@
 namespace blackcube\admin\helpers;
 
 use blackcube\admin\Module;
-use blackcube\core\interfaces\ElasticInterface;
-use yii\base\InvalidArgumentException;
-use yii\base\InvalidConfigException;
-use yii\base\Model;
-use yii\base\NotSupportedException;
-use yii\helpers\Inflector;
-use yii\helpers\Json;
+use blackcube\core\interfaces\ElementInterface;
+use blackcube\core\models\Category;
+use blackcube\core\models\Composite;
+use blackcube\core\models\Node;
+use blackcube\core\models\Tag;
 use yii\web\View;
+use Yii;
 
 /**
  * Class Bo
@@ -36,12 +35,22 @@ use yii\web\View;
  */
 class Bo
 {
+    /**
+     * Register additional assets needed by admin interface.
+     * @param ElementInterface|Tag|Category|Node|Composite $element
+     * @param View $view
+     */
     public static function registerExternalAssets($element, View $view) {
         $additionalAssets = Module::getInstance()->additionalAssets;
         foreach($additionalAssets as $key => $types) {
             if (is_int($key) && is_string($types)) {
                 $className = $types;
-                $className::register($view);
+                if (class_exists($className) === true) {
+                    $className::register($view);
+                } else {
+                    Yii::error(Module::t('helpers', 'Class "{classname}" does not exist.', ['classname' => $className]));
+                }
+
             } elseif (is_string($key) && is_array($types)) {
                 if ($element->type !== null) {
                     $register = false;
@@ -54,7 +63,11 @@ class Bo
                     }
                     if ($register === true) {
                         $className = $key;
-                        $className::register($view);
+                        if (class_exists($className) === true) {
+                            $className::register($view);
+                        } else {
+                            Yii::error(Module::t('helpers', 'Class "{classname}" does not exist.', ['classname' => $className]));
+                        }
                     }
                 }
             }

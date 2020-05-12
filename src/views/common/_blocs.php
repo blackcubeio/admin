@@ -27,6 +27,7 @@ Bo::registerExternalAssets($element, $this);
 ?>
 
 <?php foreach($blocs as $i => $bloc): ?>
+    <div class="bloc-surround">
     <?php if (($adminTemplate = $bloc->getAdminView($pathAlias)) !== false): ?>
         <?php echo Html::activeHiddenInput($bloc, '['.$i.']id'); ?>
         <?php echo $this->render($adminTemplate, ['i' => $i, 'bloc' => $bloc, 'element' => $element]); ?>
@@ -51,7 +52,7 @@ Bo::registerExternalAssets($element, $this);
             <!-- AJAX TARGET TO SET THE BLOCS -->
         <?php echo Html::endTag('div'); ?>
     <?php endif; ?>
-    <div class="bloc justify-end mx-3 pb-2 border-b border-gray-200">
+    <div class="bloc justify-end mx-3">
             <?php echo Html::beginTag('button', [
                 'type' => 'button',
                 'name' => 'blocDelete',
@@ -93,5 +94,6 @@ Bo::registerExternalAssets($element, $this);
                 <?php echo Html::endTag('button'); ?>
             <?php endif; ?>
 
+    </div>
     </div>
 <?php endforeach; ?>

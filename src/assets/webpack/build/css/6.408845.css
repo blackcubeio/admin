@@ -911,6 +911,26 @@ video {
   margin-bottom: 0.5rem
 }
 
+.form .bloc-surround{
+  border-width: 1px;
+  border-radius: 0.25rem;
+  border-color: #e2e8f0;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+  padding-bottom: 0.5rem;
+  margin-left: 0.75rem;
+  margin-right: 0.75rem
+}
+
+.form .bloc-surround:nth-child(odd){
+  background-color: #f7fafc
+}
+
+.form .bloc-surround .bloc-subtitle{
+  margin-left: 0;
+  margin-right: 0
+}
+
 .form .bloc-title,.form .bloc-subtitle{
   width: 100%;
   padding-left: 0.5rem;
