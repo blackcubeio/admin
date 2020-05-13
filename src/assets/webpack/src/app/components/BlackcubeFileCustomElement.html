@@ -8,7 +8,7 @@
             <button click.delegate="onRemove(handledFile)" class="absolute top-0 right-0 rounded-full p-1 text-center bg-white border-gray-600 border h-6 w-6 flex items-center justify-center text-xs">
                 <i class="fa fa-trash-alt"></i>
             </button>
-            <img class="object-contain h-24" src.bind="handledFile.previewUrl" title.bind="handledFile.shortname">
+            <img class="object-contain max-h-24" src.bind="handledFile.previewUrl" title.bind="handledFile.shortname">
         </li>
     </ul>
 </template>

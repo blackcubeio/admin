@@ -3,26 +3,26 @@
     "js": "js/manifest.cdcc31.js"
   },
   "app": {
-    "js": "js/app.99dc20.js"
+    "js": "js/app.eefb67.js"
   },
   "aurelia": {
     "js": "js/aurelia.aaee6e.js"
   },
   "chartist": {
-    "css": "css/3.408845.css",
+    "css": "css/3.3bcf0b.css",
     "js": "js/chartist.2a186e.js"
   },
   "fontawesome": {
-    "css": "css/4.408845.css",
+    "css": "css/4.3bcf0b.css",
     "js": "js/fontawesome.d78ad1.js"
   },
   "jsoneditor": {
-    "css": "css/5.408845.css",
+    "css": "css/5.3bcf0b.css",
     "js": "js/jsoneditor.b12d9d.js"
   },
   "main": {
-    "css": "css/6.408845.css",
-    "js": "js/main.4aeac2.js"
+    "css": "css/6.3bcf0b.css",
+    "js": "js/main.c39174.js"
   },
   "vendor": {
     "js": "js/vendor.654b28.js"
