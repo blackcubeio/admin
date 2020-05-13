@@ -146,7 +146,7 @@ class ParameterController extends Controller
             $parameter->load(Yii::$app->request->bodyParams);
             if ($parameter->validate() === true) {
                 if ($parameter->save()) {
-                    return $this->redirect(['edit', 'id' => $parameter->id]);
+                    return $this->redirect(['edit', 'domain' => $parameter->domain, 'name' => $parameter->name]);
                 }
             }
         }
