@@ -157,7 +157,8 @@ class BlackcubeFileCustomElement implements ComponentCreated, ComponentBind, Com
         this.parentForm = <HTMLFormElement>this.element.closest('form');
         this.logger.debug('Multiple', this.multiple);
         let resumableConfig:Resumable.ConfigurationHash = {
-            target: this.uploadUrl
+            target: this.uploadUrl,
+            chunkSize: 512 * 1024
         };
         let fileTypes = this.fileType.split(/\s*,\s*/).filter((value:string, index:number) => {
             return value.trim() !== '';
