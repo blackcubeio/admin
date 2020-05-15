@@ -238,15 +238,10 @@ class Administrator extends \yii\db\ActiveRecord implements IdentityInterface
     public function beforeSave($insert)
     {
         //TODO: better check with password_get_info($this->password) => ['algoName' => 'unknown'] not hashed;
-        if ($this->scenario === static::SCENARIO_CREATE || $this->scenario === static::SCENARIO_CREATE_ONLINE) {
-            $this->password = static::hashPassword($this->password);
-        }
-        if ($this->scenario === static::SCENARIO_UPDATE) {
-            if (empty($this->password) === false) {
-                $passwordInfo = password_get_info($this->password);
-                if ($passwordInfo['algoName'] === 'unknown') {
-                    $this->password = static::hashPassword($this->password);
-                }
+        if (empty($this->password) === false) {
+            $passwordInfo = password_get_info($this->password);
+            if ($passwordInfo['algoName'] === 'unknown') {
+                $this->password = static::hashPassword($this->password);
             }
         }
         if (empty($this->authKey) === true) {

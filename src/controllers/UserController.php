@@ -118,7 +118,6 @@ class UserController extends Controller
         if (Yii::$app->request->isPost) {
             $user->setScenario(Administrator::SCENARIO_CREATE_ONLINE);
             $user->load(Yii::$app->request->bodyParams);
-            $user->load(Yii::$app->request->bodyParams);
             if ($user->validate() === true) {
                 $user->password = $user->newPassword;
                 if ($user->save()) {
