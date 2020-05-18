@@ -1,7 +1,7 @@
 <template>
     <!-- div ref="dropTarget" style="border:1px solid red; width:200px; height:200px;"></div -->
     <button type="button" ref="browseButton" class="uploader">
-        <i class="fa fa-cloud-upload-alt"></i>
+        <i class="fa fa-cloud-upload-alt" ref="uploadIcon"></i>
     </button>
     <ul class="w-full">
         <li class="inline-block text-gray-600 text-center p-2 relative" repeat.for="handledFile of handledFiles">

@@ -24,7 +24,8 @@ class BlackcubeFileCustomElement implements ComponentCreated, ComponentBind, Com
     private handledFiles:UploadedFile[];
     private ajaxService:AjaxService;
     private csfr:Csrf;
-
+    private uploadCount = 0;
+    public uploadIcon:HTMLElement;
 
     @bindable({ defaultBindingMode: bindingMode.fromView}) public uploadUrl: string;
     @bindable({ defaultBindingMode: bindingMode.fromView}) public previewUrl: string;
@@ -209,6 +210,26 @@ class BlackcubeFileCustomElement implements ComponentCreated, ComponentBind, Com
         this.logger.debug('Attached');
     }
 
+    protected handleUploadIcon(count:number)
+    {
+        this.uploadCount = this.uploadCount + count;
+        if (this.uploadCount > 0) {
+            if (this.uploadIcon.classList.contains('fa-cloud-upload-alt')) {
+                this.uploadIcon.classList.remove('fa-cloud-upload-alt');
+            }
+            if (this.uploadIcon.classList.contains('fa-circle-notch') === false) {
+                this.uploadIcon.classList.add('fa-circle-notch', 'fa-spin', 'fa-5x');
+            }
+        } else {
+            if (this.uploadIcon.classList.contains('fa-cloud-upload-alt') === false) {
+                this.uploadIcon.classList.add('fa-cloud-upload-alt');
+            }
+            if (this.uploadIcon.classList.contains('fa-circle-notch')) {
+                this.uploadIcon.classList.remove('fa-circle-notch', 'fa-spin', 'fa-5x');
+            }
+
+        }
+    }
     protected onDragEnter = (evt:DragEvent) => {
         evt.preventDefault();
         let el = <HTMLElement>evt.currentTarget;
@@ -256,9 +277,11 @@ class BlackcubeFileCustomElement implements ComponentCreated, ComponentBind, Com
     };
     protected onUploadStart = () => {
         this.logger.debug('onUploadStart');
+        this.handleUploadIcon(1);
     };
     protected onComplete = () => {
         this.logger.debug('onComplete');
+        this.handleUploadIcon(-1);
     };
     protected onProgress = () => {
         this.logger.debug('onProgress');
@@ -274,6 +297,7 @@ class BlackcubeFileCustomElement implements ComponentCreated, ComponentBind, Com
     };
     protected onCancel = () => {
         this.logger.debug('onCancel');
+        this.handleUploadIcon(-1);
     };
     protected onChunkingStart = (file:Resumable.ResumableFile) => {
         this.logger.debug('onChunkingStart', file);
