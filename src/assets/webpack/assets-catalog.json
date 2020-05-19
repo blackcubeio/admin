@@ -3,25 +3,25 @@
     "js": "js/manifest.cdcc31.js"
   },
   "app": {
-    "js": "js/app.f326a7.js"
+    "js": "js/app.731979.js"
   },
   "aurelia": {
     "js": "js/aurelia.aaee6e.js"
   },
   "chartist": {
-    "css": "css/3.d64e14.css",
+    "css": "css/3.cfbf2d.css",
     "js": "js/chartist.2a186e.js"
   },
   "fontawesome": {
-    "css": "css/4.d64e14.css",
+    "css": "css/4.cfbf2d.css",
     "js": "js/fontawesome.d78ad1.js"
   },
   "jsoneditor": {
-    "css": "css/5.d64e14.css",
+    "css": "css/5.cfbf2d.css",
     "js": "js/jsoneditor.b12d9d.js"
   },
   "main": {
-    "css": "css/6.d64e14.css",
+    "css": "css/6.cfbf2d.css",
     "js": "js/main.c39174.js"
   },
   "vendor": {

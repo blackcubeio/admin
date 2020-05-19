@@ -81,13 +81,17 @@ class BlackcubeAjaxifyCustomAttribute implements ComponentCreated, ComponentBind
                                 .then((html:string) => {
                                     //@ts-ignore
                                     targetElement.innerHTML = html;
-                                    /**/
-                                    this.templatingEngine.enhance({
-                                        //@ts-ignore
-                                        element:targetElement,
-                                        bindingContext: this
-                                    })
-                                    /**/
+                                    let isAlreadyEnhanced = this.element.isSameNode(targetElement);
+                                    //TODO: should probably enhance children
+                                    if (isAlreadyEnhanced === false) {
+                                        /**/
+                                        this.templatingEngine.enhance({
+                                            //@ts-ignore
+                                            element:targetElement,
+                                            bindingContext: this
+                                        });
+                                        /**/
+                                    }
                                 })
                                 .catch((error:any) => {
                                     this.logger.warn('Error while submitting URL', error);
@@ -111,13 +115,17 @@ class BlackcubeAjaxifyCustomAttribute implements ComponentCreated, ComponentBind
                             .then((html:string) => {
                                 //@ts-ignore
                                 targetElement.innerHTML = html;
-                                /**/
-                                this.templatingEngine.enhance({
-                                    //@ts-ignore
-                                    element:targetElement,
-                                    bindingContext: this
-                                })
-                                /**/
+                                let isAlreadyEnhanced = this.element.isSameNode(targetElement);
+                                //TODO: should probably enhance children
+                                if (isAlreadyEnhanced === false) {
+                                    /**/
+                                    this.templatingEngine.enhance({
+                                        //@ts-ignore
+                                        element:targetElement,
+                                        bindingContext: this
+                                    });
+                                    /**/
+                                }
                             })
                             .catch((error:any) => {
                                 this.logger.warn('Error while requesting URL', error);
