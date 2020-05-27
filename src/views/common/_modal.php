@@ -24,8 +24,12 @@ if ($element instanceof Administrator) {
     $elementName = $element->email;
 } elseif ($element instanceof Slug) {
     $elementName = $element->path;
-} else {
+} elseif (isset($element->name) === true) {
     $elementName = $element->name;
+} elseif (isset($element->id) === true) {
+    $elementName = $element->id;
+} else {
+    $elementName = '???';
 }
 ?>
 <div class="modal" id="modal-delete">
