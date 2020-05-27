@@ -823,6 +823,10 @@ msgid "Menus"
 msgstr ""
 
 msgctxt "blackcube/admin/widgets"
+msgid "Modules"
+msgstr ""
+
+msgctxt "blackcube/admin/widgets"
 msgid "Nodes"
 msgstr ""
 

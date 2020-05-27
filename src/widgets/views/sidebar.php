@@ -13,6 +13,8 @@
  *
  * @var string $controllerUid
  * @var string $adminUid
+ * @var array $widgets
+ * @var array $modulesWidgets
  */
 
 use blackcube\admin\Module;
@@ -153,6 +155,23 @@ use yii\helpers\Url;
             </ul>
         </li>
         <?php endif; ?>
+        <?php if (count($modulesWidgets) > 0): ?>
+        <li>
+            <?php echo Html::beginTag('span', ['class' => 'section', 'data-blackcube-section' => 'modules']); ?>
+            <i class="fa fa-box-open float-left mx-2 mt-2"></i>
+            <?php echo Module::t('widgets', 'Modules'); ?>
+            <span><i class="fa fa-angle-down float-right mt-2 arrow"></i></span>
+            <?php echo Html::endTag('span'); ?>
+            <ul class="hidden">
+                <?php foreach ($modulesWidgets as $moduleWidgetConfig) {
+                    $moduleWidgetClass = $moduleWidgetConfig['class'];
+                    unset($moduleWidgetConfig['class']);
+                    echo $moduleWidgetClass::widget($moduleWidgetConfig);
+                } ?>
+            </ul>
+        </li>
+        <?php endif; ?>
+
         <?php foreach ($widgets as $widgetConfig) {
             $widgetClass = $widgetConfig['class'];
             unset($widgetConfig['class']);

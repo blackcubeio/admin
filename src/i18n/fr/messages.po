@@ -825,6 +825,10 @@ msgid "Menus"
 msgstr "Menus"
 
 msgctxt "blackcube/admin/widgets"
+msgid "Modules"
+msgstr "Modules"
+
+msgctxt "blackcube/admin/widgets"
 msgid "Nodes"
 msgstr "Rubriques"
 
