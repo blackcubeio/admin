@@ -14,6 +14,7 @@
 
 namespace blackcube\admin\models;
 
+use blackcube\core\components\PreviewManager;
 use yii\db\ActiveQuery;
 use Yii;
 
@@ -29,14 +30,29 @@ use Yii;
  */
 class FilterActiveQuery extends ActiveQuery
 {
+    /**
+     * @var PreviewManager
+     */
+    private $previewManager;
+
+    /**
+     * {@inheritDoc}
+     */
+    public function init()
+    {
+        parent::init();
+        $this->previewManager = Yii::createObject(PreviewManager::class);
+    }
 
     /**
      * @return \yii\db\ActiveQuery
      */
     public function active() {
-        $this->andWhere([
-            '[[active]]' => true,
-        ]);
+        if ($this->previewManager->check() === false) {
+            $this->andWhere([
+                '[[active]]' => true,
+            ]);
+        }
         return $this;
     }
 }
