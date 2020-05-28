@@ -112,6 +112,10 @@ msgctxt "blackcube/admin/common"
 msgid "Do you really want to continue ?"
 msgstr "Souhaitez-vous continuer ?"
 
+msgctxt "blackcube/admin/common"
+msgid "Unknown"
+msgstr "Inconnu"
+
 msgctxt "blackcube/admin/composite"
 msgid "Action"
 msgstr "Action"

@@ -29,7 +29,7 @@ if ($element instanceof Administrator) {
 } elseif (isset($element->id) === true) {
     $elementName = $element->id;
 } else {
-    $elementName = '???';
+    $elementName = Module::t('common', 'Unknown');
 }
 ?>
 <div class="modal" id="modal-delete">
