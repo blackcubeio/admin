@@ -17,6 +17,7 @@ namespace blackcube\admin;
 use blackcube\admin\commands\AdministratorController;
 use blackcube\admin\commands\IconsController;
 use blackcube\admin\commands\InitController;
+use blackcube\admin\interfaces\MigrableInterface;
 use blackcube\admin\models\Administrator;
 use yii\base\BootstrapInterface;
 use yii\base\Module as BaseModule;
@@ -137,9 +138,7 @@ class Module extends BaseModule implements BootstrapInterface
         ];
         $app->controllerMap[$this->commandNameSpace.'migrate'] = [
             'class' => MigrateController::class,
-            'migrationNamespaces' => [
-                'blackcube\admin\migrations',
-            ],
+            'migrationNamespaces' => $this->buildMigrationNamespaces(),
             'migrationPath' => [
                 '@yii/rbac/migrations',
             ],
@@ -252,5 +251,31 @@ class Module extends BaseModule implements BootstrapInterface
     public static function t($category, $message, $params = [], $language = null)
     {
         return Yii::t('blackcube/admin/' . $category, $message, $params, $language);
+    }
+
+    /**
+     * @return array migration namespaces
+     */
+    protected function buildMigrationNamespaces()
+    {
+        $modules = static::getInstance()->getModules();
+        $migrationNamespaces = [
+            'blackcube\admin\migrations',
+        ];
+        foreach($modules as $id => $module) {
+            if (is_array($module) === true) {
+                $moduleClass = $module['class'];
+            } else {
+                $moduleClass = get_class($module);
+            }
+            if (is_subclass_of($moduleClass, MigrableInterface::class) === true) {
+                $namespaces = $moduleClass::getMigrationNamespaces();
+                if (is_string($namespaces) === true) {
+                    $namespaces = [$namespaces];
+                    $migrationNamespaces = array_merge($migrationNamespaces, $namespaces);
+                }
+            }
+        }
+        return $migrationNamespaces;
     }
 }
