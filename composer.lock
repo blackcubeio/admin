@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "7cffe8ca06b3fd9d92a100e7e419cb12",
+    "content-hash": "e3b22f540a228ceeadc7f96507d2ded8",
     "packages": [
         {
             "name": "aws/aws-sdk-php",
-            "version": "3.138.9",
+            "version": "3.138.10",
             "source": {
                 "type": "git",
                 "url": "https://github.com/aws/aws-sdk-php.git",
-                "reference": "aaee8d1639e0f92a9617c4842c4fb8e527281d2a"
+                "reference": "cf197a033ad75cd9e3a90a207cf5ec8935aafa48"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/aaee8d1639e0f92a9617c4842c4fb8e527281d2a",
-                "reference": "aaee8d1639e0f92a9617c4842c4fb8e527281d2a",
+                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/cf197a033ad75cd9e3a90a207cf5ec8935aafa48",
+                "reference": "cf197a033ad75cd9e3a90a207cf5ec8935aafa48",
                 "shasum": ""
             },
             "require": {
@@ -88,15 +88,15 @@
                 "s3",
                 "sdk"
             ],
-            "time": "2020-05-27T18:13:35+00:00"
+            "time": "2020-05-28T18:12:07+00:00"
         },
         {
             "name": "blackcube/core",
-            "version": "dev-devel",
+            "version": "1.0.0",
             "source": {
                 "type": "git",
                 "url": "https://autodeploy:34VgAitrEDfFhWJ8szuD@code.redcat.io/blackcube/core.git",
-                "reference": "3582fd4cf8e7a46419c82713930e2bd52f321bd4"
+                "reference": "11e4a143000c58ec581bd7a0f841850db3363b87"
             },
             "require": {
                 "creocoder/yii2-flysystem": "~0.9",
@@ -158,7 +158,7 @@
                 "wiki": "https://code.redcat.io/blackcube/core/wikis/home",
                 "source": "https://code.redcat.io/blackcube/core/tree/devel"
             },
-            "time": "2020-05-13T10:59:35+00:00"
+            "time": "2020-05-29T07:29:57+00:00"
         },
         {
             "name": "bower-asset/inputmask",
@@ -5419,18 +5419,9 @@
             "time": "2020-05-02T11:59:43+00:00"
         }
     ],
-    "aliases": [
-        {
-            "alias": "1.0.x-dev",
-            "alias_normalized": "1.0.9999999.9999999-dev",
-            "version": "dev-devel",
-            "package": "blackcube/core"
-        }
-    ],
+    "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {
-        "blackcube/core": 20
-    },
+    "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
