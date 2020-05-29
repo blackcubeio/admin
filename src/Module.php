@@ -272,8 +272,8 @@ class Module extends BaseModule implements BootstrapInterface
                 $namespaces = $moduleClass::getMigrationNamespaces();
                 if (is_string($namespaces) === true) {
                     $namespaces = [$namespaces];
-                    $migrationNamespaces = array_merge($migrationNamespaces, $namespaces);
                 }
+                $migrationNamespaces = array_merge($migrationNamespaces, $namespaces);
             }
         }
         return $migrationNamespaces;
