@@ -22,7 +22,7 @@ use yii\console\ExitCode;
 use Yii;
 
 /**
- * Class AdministratorController
+ * Blackcube admin Administrator manager
  *
  * @author Philippe Gaultier <pgaultier@redcat.io>
  * @copyright 2010-2020 Redcat
@@ -34,6 +34,32 @@ use Yii;
 class AdministratorController extends Controller
 {
 
+    /**
+     * List registered administrators
+     * @return int
+     * @throws \yii\base\InvalidConfigException
+     */
+    public function actionIndex()
+    {
+        $this->stdout(Module::t('console', 'Administrators list'."\n"));
+        $administratorsQuery = Administrator::find()->orderBy(['email' => SORT_ASC]);
+        foreach($administratorsQuery->each() as $administrator) {
+            /* @var $administrator Administrator */
+            $this->stdout($administrator->email.' ( ');
+            if ($administrator->active == true) {
+                $this->stdout( Module::t('console', 'Active'));
+            } else {
+                $this->stdout( Module::t('console', 'Inactive'));
+            }
+            $this->stdout( " )\n");
+        }
+        return ExitCode::OK;
+    }
+    /**
+     * Create a new administrator with role ADMIN
+     * @return int
+     * @throws \yii\base\InvalidConfigException
+     */
     public function actionCreate()
     {
         $this->stdout(Module::t('console', 'Create new administrator'."\n"));

@@ -16,7 +16,7 @@ namespace blackcube\admin;
 
 use blackcube\admin\commands\AdministratorController;
 use blackcube\admin\commands\IconsController;
-use blackcube\admin\commands\InitController;
+use blackcube\admin\commands\RbacController;
 use blackcube\admin\interfaces\MigrableInterface;
 use blackcube\admin\models\Administrator;
 use yii\base\BootstrapInterface;
@@ -78,7 +78,7 @@ class Module extends BaseModule implements BootstrapInterface
     /**
      * @var string command prefix
      */
-    public $commandNameSpace = 'bca:';
+    public $commandNameSpace = 'badmin:';
 
     /**
      * @var array list off assets to add to the admin page
@@ -133,8 +133,8 @@ class Module extends BaseModule implements BootstrapInterface
         $app->controllerMap[$this->commandNameSpace.'admin'] = [
             'class' => AdministratorController::class,
         ];
-        $app->controllerMap[$this->commandNameSpace.'init'] = [
-            'class' => InitController::class,
+        $app->controllerMap[$this->commandNameSpace.'rbac'] = [
+            'class' => RbacController::class,
         ];
         $app->controllerMap[$this->commandNameSpace.'migrate'] = [
             'class' => MigrateController::class,
