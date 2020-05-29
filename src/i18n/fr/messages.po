@@ -177,12 +177,24 @@ msgid "Type"
 msgstr "Type"
 
 msgctxt "blackcube/admin/console"
+msgid "Active"
+msgstr "Actif"
+
+msgctxt "blackcube/admin/console"
 msgid "Administrator is invalid"
 msgstr "Administrateur invalide"
 
 msgctxt "blackcube/admin/console"
+msgid "Administrators list\n"
+msgstr "Liste des administrateurs\n"
+
+msgctxt "blackcube/admin/console"
 msgid "Create new administrator\n"
 msgstr "Créer un nouvel administrateur\n"
+
+msgctxt "blackcube/admin/console"
+msgid "Inactive"
+msgstr "Inactif"
 
 msgctxt "blackcube/admin/console"
 msgid "Init permissions and roles\n"
