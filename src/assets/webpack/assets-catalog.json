@@ -1,0 +1,39 @@
+{
+  "manifest": {
+    "js": "js/manifest.cdcc31.js"
+  },
+  "app": {
+    "js": "js/app.731979.js"
+  },
+  "aurelia": {
+    "js": "js/aurelia.aaee6e.js"
+  },
+  "chartist": {
+    "css": "css/3.cfbf2d.css",
+    "js": "js/chartist.2a186e.js"
+  },
+  "fontawesome": {
+    "css": "css/4.cfbf2d.css",
+    "js": "js/fontawesome.d78ad1.js"
+  },
+  "jsoneditor": {
+    "css": "css/5.cfbf2d.css",
+    "js": "js/jsoneditor.b12d9d.js"
+  },
+  "main": {
+    "css": "css/6.cfbf2d.css",
+    "js": "js/main.c39174.js"
+  },
+  "vendor": {
+    "js": "js/vendor.654b28.js"
+  },
+  "": {
+    "gz": "js/vendor.654b28.js.gz",
+    "svg": "webfonts/fa-solid-900.svg",
+    "jpg": "img/login.jpg",
+    "eot": "webfonts/fa-solid-900.eot",
+    "ttf": "webfonts/fa-solid-900.ttf",
+    "woff": "webfonts/fa-solid-900.woff",
+    "woff2": "webfonts/fa-solid-900.woff2"
+  }
+}

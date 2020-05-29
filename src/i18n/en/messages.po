@@ -1,0 +1,922 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: en\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 2.3\n"
+
+msgctxt "blackcube/admin/authentication"
+msgid "Forgot Password?"
+msgstr ""
+
+msgctxt "blackcube/admin/bloc-type"
+msgid "Action"
+msgstr ""
+
+msgctxt "blackcube/admin/bloc-type"
+msgid "Admin view: {adminView}"
+msgstr ""
+
+msgctxt "blackcube/admin/bloc-type"
+msgid "Associated types"
+msgstr ""
+
+msgctxt "blackcube/admin/bloc-type"
+msgid "Back"
+msgstr ""
+
+msgctxt "blackcube/admin/bloc-type"
+msgid "Bloc type"
+msgstr ""
+
+msgctxt "blackcube/admin/bloc-type"
+msgid "Cancel"
+msgstr ""
+
+msgctxt "blackcube/admin/bloc-type"
+msgid "Create"
+msgstr ""
+
+msgctxt "blackcube/admin/bloc-type"
+msgid "Name"
+msgstr ""
+
+msgctxt "blackcube/admin/bloc-type"
+msgid "Save"
+msgstr ""
+
+msgctxt "blackcube/admin/category"
+msgid "Action"
+msgstr ""
+
+msgctxt "blackcube/admin/category"
+msgid "Back"
+msgstr ""
+
+msgctxt "blackcube/admin/category"
+msgid "Cancel"
+msgstr ""
+
+msgctxt "blackcube/admin/category"
+msgid "Category"
+msgstr ""
+
+msgctxt "blackcube/admin/category"
+msgid "Content"
+msgstr ""
+
+msgctxt "blackcube/admin/category"
+msgid "Create"
+msgstr ""
+
+msgctxt "blackcube/admin/category"
+msgid "Name"
+msgstr ""
+
+msgctxt "blackcube/admin/category"
+msgid "No type"
+msgstr ""
+
+msgctxt "blackcube/admin/category"
+msgid "Save"
+msgstr ""
+
+msgctxt "blackcube/admin/category"
+msgid "Status"
+msgstr ""
+
+msgctxt "blackcube/admin/category"
+msgid "Type"
+msgstr ""
+
+msgctxt "blackcube/admin/common"
+msgid "Beware, you are going to delete the element:"
+msgstr ""
+
+msgctxt "blackcube/admin/common"
+msgid "Cancel"
+msgstr ""
+
+msgctxt "blackcube/admin/common"
+msgid "Delete"
+msgstr ""
+
+msgctxt "blackcube/admin/common"
+msgid "Do you really want to continue ?"
+msgstr ""
+
+msgctxt "blackcube/admin/common"
+msgid "Unknown"
+msgstr ""
+
+msgctxt "blackcube/admin/composite"
+msgid "Action"
+msgstr ""
+
+msgctxt "blackcube/admin/composite"
+msgid "Back"
+msgstr ""
+
+msgctxt "blackcube/admin/composite"
+msgid "Cancel"
+msgstr ""
+
+msgctxt "blackcube/admin/composite"
+msgid "Composite"
+msgstr ""
+
+msgctxt "blackcube/admin/composite"
+msgid "Content"
+msgstr ""
+
+msgctxt "blackcube/admin/composite"
+msgid "Create"
+msgstr ""
+
+msgctxt "blackcube/admin/composite"
+msgid "End: {0,date,medium}"
+msgstr ""
+
+msgctxt "blackcube/admin/composite"
+msgid "Name"
+msgstr ""
+
+msgctxt "blackcube/admin/composite"
+msgid "No type"
+msgstr ""
+
+msgctxt "blackcube/admin/composite"
+msgid "Orphan"
+msgstr ""
+
+msgctxt "blackcube/admin/composite"
+msgid "Save"
+msgstr ""
+
+msgctxt "blackcube/admin/composite"
+msgid "Start: {0,date,medium}"
+msgstr ""
+
+msgctxt "blackcube/admin/composite"
+msgid "Status"
+msgstr ""
+
+msgctxt "blackcube/admin/composite"
+msgid "Tags"
+msgstr ""
+
+msgctxt "blackcube/admin/composite"
+msgid "Type"
+msgstr ""
+
+msgctxt "blackcube/admin/console"
+msgid "Active"
+msgstr ""
+
+msgctxt "blackcube/admin/console"
+msgid "Administrator is invalid"
+msgstr ""
+
+msgctxt "blackcube/admin/console"
+msgid "Administrators list\n"
+msgstr ""
+
+msgctxt "blackcube/admin/console"
+msgid "Create new administrator\n"
+msgstr ""
+
+msgctxt "blackcube/admin/console"
+msgid "Inactive"
+msgstr ""
+
+msgctxt "blackcube/admin/console"
+msgid "Init permissions and roles\n"
+msgstr ""
+
+msgctxt "blackcube/admin/console"
+msgid "Save administrator {email} {hash}"
+msgstr ""
+
+msgctxt "blackcube/admin/console"
+msgid "email"
+msgstr ""
+
+msgctxt "blackcube/admin/console"
+msgid "password"
+msgstr ""
+
+msgctxt "blackcube/admin/dashboard"
+msgid "Active ({count})"
+msgstr ""
+
+msgctxt "blackcube/admin/dashboard"
+msgid "Active no URL ({count})"
+msgstr ""
+
+msgctxt "blackcube/admin/dashboard"
+msgid "Categories stats ({count})"
+msgstr ""
+
+msgctxt "blackcube/admin/dashboard"
+msgid "Composites stats ({count})"
+msgstr ""
+
+msgctxt "blackcube/admin/dashboard"
+msgid "Dashboard"
+msgstr ""
+
+msgctxt "blackcube/admin/dashboard"
+msgid "Inactive ({count})"
+msgstr ""
+
+msgctxt "blackcube/admin/dashboard"
+msgid "Last updated categories"
+msgstr ""
+
+msgctxt "blackcube/admin/dashboard"
+msgid "Last updated composites"
+msgstr ""
+
+msgctxt "blackcube/admin/dashboard"
+msgid "Last updated nodes"
+msgstr ""
+
+msgctxt "blackcube/admin/dashboard"
+msgid "Last updated tags"
+msgstr ""
+
+msgctxt "blackcube/admin/dashboard"
+msgid "Nodes stats ({count})"
+msgstr ""
+
+msgctxt "blackcube/admin/dashboard"
+msgid "Tags stats ({count})"
+msgstr ""
+
+msgctxt "blackcube/admin/error"
+msgid "Take Me Back To Home"
+msgstr ""
+
+msgctxt "blackcube/admin/menu"
+msgid "Action"
+msgstr ""
+
+msgctxt "blackcube/admin/menu"
+msgid "Add item"
+msgstr ""
+
+msgctxt "blackcube/admin/menu"
+msgid "Back"
+msgstr ""
+
+msgctxt "blackcube/admin/menu"
+msgid "CMS Category"
+msgstr ""
+
+msgctxt "blackcube/admin/menu"
+msgid "CMS Composite"
+msgstr ""
+
+msgctxt "blackcube/admin/menu"
+msgid "CMS Node"
+msgstr ""
+
+msgctxt "blackcube/admin/menu"
+msgid "CMS Tag"
+msgstr ""
+
+msgctxt "blackcube/admin/menu"
+msgid "Cancel"
+msgstr ""
+
+msgctxt "blackcube/admin/menu"
+msgid "Category"
+msgstr ""
+
+msgctxt "blackcube/admin/menu"
+msgid "Composite"
+msgstr ""
+
+msgctxt "blackcube/admin/menu"
+msgid "Create"
+msgstr ""
+
+msgctxt "blackcube/admin/menu"
+msgid "Items"
+msgstr ""
+
+msgctxt "blackcube/admin/menu"
+msgid "Menu"
+msgstr ""
+
+msgctxt "blackcube/admin/menu"
+msgid "Menu item"
+msgstr ""
+
+msgctxt "blackcube/admin/menu"
+msgid "Module \"{moduleId}\" does not exist."
+msgstr ""
+
+msgctxt "blackcube/admin/menu"
+msgid "Name"
+msgstr ""
+
+msgctxt "blackcube/admin/menu"
+msgid "Node"
+msgstr ""
+
+msgctxt "blackcube/admin/menu"
+msgid "Regular"
+msgstr ""
+
+msgctxt "blackcube/admin/menu"
+msgid "Root"
+msgstr ""
+
+msgctxt "blackcube/admin/menu"
+msgid "Route"
+msgstr ""
+
+msgctxt "blackcube/admin/menu"
+msgid "Save"
+msgstr ""
+
+msgctxt "blackcube/admin/menu"
+msgid "Select a route"
+msgstr ""
+
+msgctxt "blackcube/admin/menu"
+msgid "Tag"
+msgstr ""
+
+msgctxt "blackcube/admin/menu"
+msgid "Type"
+msgstr ""
+
+msgctxt "blackcube/admin/menu"
+msgid "Unknown"
+msgstr ""
+
+msgctxt "blackcube/admin/models"
+msgid "Active"
+msgstr ""
+
+msgctxt "blackcube/admin/models"
+msgid "Auth Key"
+msgstr ""
+
+msgctxt "blackcube/admin/models"
+msgid "Categories"
+msgstr ""
+
+msgctxt "blackcube/admin/models"
+msgid "Composites"
+msgstr ""
+
+msgctxt "blackcube/admin/models"
+msgid "Date Create"
+msgstr ""
+
+msgctxt "blackcube/admin/models"
+msgid "Date Update"
+msgstr ""
+
+msgctxt "blackcube/admin/models"
+msgid "Email"
+msgstr ""
+
+msgctxt "blackcube/admin/models"
+msgid "ID"
+msgstr ""
+
+msgctxt "blackcube/admin/models"
+msgid "New Password"
+msgstr ""
+
+msgctxt "blackcube/admin/models"
+msgid "Nodes"
+msgstr ""
+
+msgctxt "blackcube/admin/models"
+msgid "Password"
+msgstr ""
+
+msgctxt "blackcube/admin/models"
+msgid "Password Verification"
+msgstr ""
+
+msgctxt "blackcube/admin/models"
+msgid "Search"
+msgstr ""
+
+msgctxt "blackcube/admin/models"
+msgid "Slugs"
+msgstr ""
+
+msgctxt "blackcube/admin/models"
+msgid "Tags"
+msgstr ""
+
+msgctxt "blackcube/admin/models"
+msgid "Token"
+msgstr ""
+
+msgctxt "blackcube/admin/models"
+msgid "Token Type"
+msgstr ""
+
+msgctxt "blackcube/admin/node"
+msgid "Action"
+msgstr ""
+
+msgctxt "blackcube/admin/node"
+msgid "After"
+msgstr ""
+
+msgctxt "blackcube/admin/node"
+msgid "Back"
+msgstr ""
+
+msgctxt "blackcube/admin/node"
+msgid "Before"
+msgstr ""
+
+msgctxt "blackcube/admin/node"
+msgid "Cancel"
+msgstr ""
+
+msgctxt "blackcube/admin/node"
+msgid "Composites"
+msgstr ""
+
+msgctxt "blackcube/admin/node"
+msgid "Content"
+msgstr ""
+
+msgctxt "blackcube/admin/node"
+msgid "Create"
+msgstr ""
+
+msgctxt "blackcube/admin/node"
+msgid "Create Node"
+msgstr ""
+
+msgctxt "blackcube/admin/node"
+msgid "End: {0,date,medium}"
+msgstr ""
+
+msgctxt "blackcube/admin/node"
+msgid "Into"
+msgstr ""
+
+msgctxt "blackcube/admin/node"
+msgid "Mode"
+msgstr ""
+
+msgctxt "blackcube/admin/node"
+msgid "Move Node"
+msgstr ""
+
+msgctxt "blackcube/admin/node"
+msgid "Name"
+msgstr ""
+
+msgctxt "blackcube/admin/node"
+msgid "No type"
+msgstr ""
+
+msgctxt "blackcube/admin/node"
+msgid "Node"
+msgstr ""
+
+msgctxt "blackcube/admin/node"
+msgid "Save"
+msgstr ""
+
+msgctxt "blackcube/admin/node"
+msgid "Start: {0,date,medium}"
+msgstr ""
+
+msgctxt "blackcube/admin/node"
+msgid "Status"
+msgstr ""
+
+msgctxt "blackcube/admin/node"
+msgid "Tags"
+msgstr ""
+
+msgctxt "blackcube/admin/node"
+msgid "Target node"
+msgstr ""
+
+msgctxt "blackcube/admin/node"
+msgid "Type"
+msgstr ""
+
+msgctxt "blackcube/admin/parameter"
+msgid "Action"
+msgstr ""
+
+msgctxt "blackcube/admin/parameter"
+msgid "Back"
+msgstr ""
+
+msgctxt "blackcube/admin/parameter"
+msgid "Cancel"
+msgstr ""
+
+msgctxt "blackcube/admin/parameter"
+msgid "Create"
+msgstr ""
+
+msgctxt "blackcube/admin/parameter"
+msgid "Name"
+msgstr ""
+
+msgctxt "blackcube/admin/parameter"
+msgid "Parameter"
+msgstr ""
+
+msgctxt "blackcube/admin/parameter"
+msgid "Save"
+msgstr ""
+
+msgctxt "blackcube/admin/search"
+msgid "Action"
+msgstr ""
+
+msgctxt "blackcube/admin/search"
+msgid "Categories"
+msgstr ""
+
+msgctxt "blackcube/admin/search"
+msgid "Category"
+msgstr ""
+
+msgctxt "blackcube/admin/search"
+msgid "Composite"
+msgstr ""
+
+msgctxt "blackcube/admin/search"
+msgid "Composites"
+msgstr ""
+
+msgctxt "blackcube/admin/search"
+msgid "End: {0,date,medium}"
+msgstr ""
+
+msgctxt "blackcube/admin/search"
+msgid "Name"
+msgstr ""
+
+msgctxt "blackcube/admin/search"
+msgid "Node"
+msgstr ""
+
+msgctxt "blackcube/admin/search"
+msgid "Nodes"
+msgstr ""
+
+msgctxt "blackcube/admin/search"
+msgid "Search"
+msgstr ""
+
+msgctxt "blackcube/admin/search"
+msgid "Slug"
+msgstr ""
+
+msgctxt "blackcube/admin/search"
+msgid "Slugs"
+msgstr ""
+
+msgctxt "blackcube/admin/search"
+msgid "Start: {0,date,medium}"
+msgstr ""
+
+msgctxt "blackcube/admin/search"
+msgid "Status"
+msgstr ""
+
+msgctxt "blackcube/admin/search"
+msgid "Tag"
+msgstr ""
+
+msgctxt "blackcube/admin/search"
+msgid "Tags"
+msgstr ""
+
+msgctxt "blackcube/admin/search"
+msgid "Type"
+msgstr ""
+
+msgctxt "blackcube/admin/slug"
+msgid "Action"
+msgstr ""
+
+msgctxt "blackcube/admin/slug"
+msgid "Back"
+msgstr ""
+
+msgctxt "blackcube/admin/slug"
+msgid "Cancel"
+msgstr ""
+
+msgctxt "blackcube/admin/slug"
+msgid "Category"
+msgstr ""
+
+msgctxt "blackcube/admin/slug"
+msgid "Composite"
+msgstr ""
+
+msgctxt "blackcube/admin/slug"
+msgid "Found (#{code})"
+msgstr ""
+
+msgctxt "blackcube/admin/slug"
+msgid "Moved Permanently (#{code})"
+msgstr ""
+
+msgctxt "blackcube/admin/slug"
+msgid "Node"
+msgstr ""
+
+msgctxt "blackcube/admin/slug"
+msgid "Redirect"
+msgstr ""
+
+msgctxt "blackcube/admin/slug"
+msgid "Save"
+msgstr ""
+
+msgctxt "blackcube/admin/slug"
+msgid "Select HTTP Code"
+msgstr ""
+
+msgctxt "blackcube/admin/slug"
+msgid "Status"
+msgstr ""
+
+msgctxt "blackcube/admin/slug"
+msgid "Tag"
+msgstr ""
+
+msgctxt "blackcube/admin/slug"
+msgid "Type"
+msgstr ""
+
+msgctxt "blackcube/admin/slug"
+msgid "Url"
+msgstr ""
+
+msgctxt "blackcube/admin/tag"
+msgid "Action"
+msgstr ""
+
+msgctxt "blackcube/admin/tag"
+msgid "Back"
+msgstr ""
+
+msgctxt "blackcube/admin/tag"
+msgid "Cancel"
+msgstr ""
+
+msgctxt "blackcube/admin/tag"
+msgid "Content"
+msgstr ""
+
+msgctxt "blackcube/admin/tag"
+msgid "Create"
+msgstr ""
+
+msgctxt "blackcube/admin/tag"
+msgid "Name"
+msgstr ""
+
+msgctxt "blackcube/admin/tag"
+msgid "No type"
+msgstr ""
+
+msgctxt "blackcube/admin/tag"
+msgid "Save"
+msgstr ""
+
+msgctxt "blackcube/admin/tag"
+msgid "Status"
+msgstr ""
+
+msgctxt "blackcube/admin/tag"
+msgid "Tag"
+msgstr ""
+
+msgctxt "blackcube/admin/tag"
+msgid "Type"
+msgstr ""
+
+msgctxt "blackcube/admin/technical"
+msgid "Website is in maintenance mode"
+msgstr ""
+
+msgctxt "blackcube/admin/technical"
+msgid "{code} - {definition}"
+msgstr ""
+
+msgctxt "blackcube/admin/type"
+msgid "Action"
+msgstr ""
+
+msgctxt "blackcube/admin/type"
+msgid "Allowed bloc types"
+msgstr ""
+
+msgctxt "blackcube/admin/type"
+msgid "Back"
+msgstr ""
+
+msgctxt "blackcube/admin/type"
+msgid "Cancel"
+msgstr ""
+
+msgctxt "blackcube/admin/type"
+msgid "Create"
+msgstr ""
+
+msgctxt "blackcube/admin/type"
+msgid "Module \"{moduleId}\" does not exist."
+msgstr ""
+
+msgctxt "blackcube/admin/type"
+msgid "Name"
+msgstr ""
+
+msgctxt "blackcube/admin/type"
+msgid "Route: {route}"
+msgstr ""
+
+msgctxt "blackcube/admin/type"
+msgid "Save"
+msgstr ""
+
+msgctxt "blackcube/admin/type"
+msgid "Type"
+msgstr ""
+
+msgctxt "blackcube/admin/user"
+msgid "Authorizations"
+msgstr ""
+
+msgctxt "blackcube/admin/user"
+msgid "Back"
+msgstr ""
+
+msgctxt "blackcube/admin/user"
+msgid "Cancel"
+msgstr ""
+
+msgctxt "blackcube/admin/user"
+msgid "Create"
+msgstr ""
+
+msgctxt "blackcube/admin/user"
+msgid "Save"
+msgstr ""
+
+msgctxt "blackcube/admin/user"
+msgid "User"
+msgstr ""
+
+msgctxt "blackcube/admin/user"
+msgid "authorizations are updated on the fly"
+msgstr ""
+
+msgctxt "blackcube/admin/validators"
+msgid "Administrator does not exist"
+msgstr ""
+
+msgctxt "blackcube/admin/validators"
+msgid "Password is invalid"
+msgstr ""
+
+msgctxt "blackcube/admin/validators"
+msgid "User is invalid"
+msgstr ""
+
+msgctxt "blackcube/admin/widgets"
+msgid "Bloc types"
+msgstr ""
+
+msgctxt "blackcube/admin/widgets"
+msgid "Categories"
+msgstr ""
+
+msgctxt "blackcube/admin/widgets"
+msgid "Composites"
+msgstr ""
+
+msgctxt "blackcube/admin/widgets"
+msgid "Dashboard"
+msgstr ""
+
+msgctxt "blackcube/admin/widgets"
+msgid "Image size should be 1200x630"
+msgstr ""
+
+msgctxt "blackcube/admin/widgets"
+msgid "Logout"
+msgstr ""
+
+msgctxt "blackcube/admin/widgets"
+msgid "Management"
+msgstr ""
+
+msgctxt "blackcube/admin/widgets"
+msgid "Menus"
+msgstr ""
+
+msgctxt "blackcube/admin/widgets"
+msgid "Modules"
+msgstr ""
+
+msgctxt "blackcube/admin/widgets"
+msgid "Nodes"
+msgstr ""
+
+msgctxt "blackcube/admin/widgets"
+msgid "Parameters"
+msgstr ""
+
+msgctxt "blackcube/admin/widgets"
+msgid "Preview {icon}"
+msgstr ""
+
+msgctxt "blackcube/admin/widgets"
+msgid "SEO"
+msgstr ""
+
+msgctxt "blackcube/admin/widgets"
+msgid "SEO integration"
+msgstr ""
+
+msgctxt "blackcube/admin/widgets"
+msgid "Search"
+msgstr ""
+
+msgctxt "blackcube/admin/widgets"
+msgid "Sitemap"
+msgstr ""
+
+msgctxt "blackcube/admin/widgets"
+msgid ""
+"Sitemap and SEO elements are Slug dependant. They will be activated for the "
+"website only if Slug is active"
+msgstr ""
+
+msgctxt "blackcube/admin/widgets"
+msgid "Sitemap integration"
+msgstr ""
+
+msgctxt "blackcube/admin/widgets"
+msgid "Slug"
+msgstr ""
+
+msgctxt "blackcube/admin/widgets"
+msgid "Slugs"
+msgstr ""
+
+msgctxt "blackcube/admin/widgets"
+msgid "Summary"
+msgstr ""
+
+msgctxt "blackcube/admin/widgets"
+msgid "Summary large image"
+msgstr ""
+
+msgctxt "blackcube/admin/widgets"
+msgid "Tags"
+msgstr ""
+
+msgctxt "blackcube/admin/widgets"
+msgid "Types"
+msgstr ""
+
+msgctxt "blackcube/admin/widgets"
+msgid "URL Status"
+msgstr ""
+
+msgctxt "blackcube/admin/widgets"
+msgid "Users"
+msgstr ""
+
+msgctxt "blackcube/admin/widgets"
+msgid "Website"
+msgstr ""
+
+msgctxt "blackcube/admin/helpers"
+msgid "Class \"{classname}\" does not exist."
+msgstr ""

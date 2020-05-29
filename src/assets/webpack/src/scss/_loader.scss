@@ -1,0 +1,7 @@
+.loader {
+  @apply w-full h-full fixed block top-0 left-0 bg-white opacity-100 z-50;
+  span {
+    @apply text-blue-500 opacity-75 mx-auto block relative w-0 h-0;
+    top: 45%;
+  }
+}

@@ -1,0 +1,41 @@
+import {bootstrap} from "aurelia-bootstrapper";
+import {Aurelia, PLATFORM} from 'aurelia-framework';
+
+declare var PRODUCTION:boolean;
+
+bootstrap((aurelia: Aurelia) => {
+    aurelia.use
+        .standardConfiguration()
+        .plugin(PLATFORM.moduleName('aurelia-validation'))
+        .plugin(PLATFORM.moduleName('components/index'))
+    ;
+    if (PRODUCTION == false) {
+        aurelia.use.developmentLogging();
+    }
+    /* full aurelia app /
+    let baseApp = document.querySelector('[data-app]');
+    // @ts-ignore
+    aurelia.start().then(() => aurelia.setRoot(PLATFORM.moduleName('App'), baseApp));
+    /* full aurelia app */
+    /* enhance aurelia app */
+    aurelia.start().then(() =>
+        aurelia.enhance(document)
+    );
+    /* enhance aurelia app */
+    if (!Element.prototype.matches) {
+        // @ts-ignore
+        Element.prototype.matches = Element.prototype.msMatchesSelector || Element.prototype.webkitMatchesSelector;
+    }
+    if (!Element.prototype.closest) {
+        Element.prototype.closest = (s:any) => {
+            let el = this;
+            // @ts-ignore
+            if (!document.documentElement.contains(el)) return null;
+            do {
+                if (el.matches(s)) return el;
+                el = el.parentElement || el.parentNode;
+            } while (el !== null && el.nodeType == 1);
+            return null;
+        };
+    }
+});

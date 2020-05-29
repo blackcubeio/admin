@@ -1,0 +1,112 @@
+.form {
+  @apply w-full pt-3 pb-6 px-6;
+  .header {
+    @apply flex justify-between mb-2 mx-3 ;
+    .button {
+      @apply inline-block border border-gray-700 rounded py-1 px-4 bg-gray-700 text-white w-full text-xs uppercase;
+      &:hover {
+        @apply bg-blue-800;
+      }
+    }
+  }
+  .bloc {
+    &-surround {
+      @apply border rounded border-gray-300 my-2 pb-2 mx-3;
+      &:nth-child(odd) {
+        @apply bg-gray-100;
+      }
+      &:nth-child(event) {
+
+      }
+      & .bloc-subtitle {
+        @apply mx-0;
+      }
+    }
+
+    @apply flex flex-wrap mb-2;
+    &-title, &-subtitle {
+      @apply w-full px-2 mx-3 mb-1 border rounded border-gray-300 bg-gray-700;
+      .title {
+        @apply uppercase tracking-wide text-gray-100 text-lg font-light mb-1;
+      }
+    }
+    &-subtitle {
+      @apply w-full px-2 mx-3 mb-1 border rounded border-gray-300 bg-gray-400;
+      .title {
+        @apply uppercase tracking-wide text-gray-700 text-sm font-light mb-1 italic;
+      }
+    }
+    &-fieldset, &-child {
+      @apply  px-3 mb-6;
+      @screen md {
+        @apply mb-0;
+      }
+      .label {
+        @apply block uppercase tracking-wide text-gray-700 text-xs font-light mb-1;
+      }
+      .checkbox {
+        @apply mr-2 leading-tight;
+      }
+      .textfield {
+        @apply appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-300 rounded py-3 px-4 mb-3 leading-tight;
+        &:focus {
+          @apply outline-none bg-white;
+        }
+        &.error {
+          @apply border-red-500;
+        }
+      }
+    }
+    &-child {
+      @apply mx-0;
+      .bloc-subtitle {
+        @apply px-2 mx-0;
+      }
+    }
+    .button {
+      @apply p-1 font-light text-xs tracking-wider text-gray-700 bg-gray-200 outline-none inline-flex;
+      &:focus {
+        @apply outline-none;
+      }
+      &:hover {
+        @apply text-white bg-blue-800;
+      }
+      &.delete {
+        @apply mr-4 rounded;
+        &:hover {
+          @apply bg-red-600 text-white;
+        }
+      }
+      &.up {
+        @apply rounded-l ml-2;
+      }
+      &.down {
+        @apply rounded-r mr-0;
+      }
+      &.inactive {
+        @apply opacity-25;
+        &:hover {
+          @apply text-gray-700 bg-gray-200;
+        }
+      }
+    }
+  }
+  .dropdown {
+    @apply relative;
+    select {
+      @apply block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 pl-4 pr-6 mb-3 rounded leading-tight;
+      &:focus {
+        @apply outline-none bg-white border-gray-500;
+      }
+      &.error {
+        @apply border-red-500;
+      }
+    }
+    .arrow {
+      @apply pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700;
+      svg {
+        @apply fill-current h-4 w-4;
+      }
+    }
+  }
+}

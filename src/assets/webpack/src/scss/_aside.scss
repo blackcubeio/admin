@@ -1,0 +1,42 @@
+aside {
+  @apply bg-gray-100 border-r w-40;
+  @screen md {
+    @apply w-56;
+  }
+  @screen lg {
+    @apply w-56;
+  }
+  &>ul {
+    & i.angle {
+      @apply float-right mt-2;
+    }
+    @apply list-none flex flex-col bg-gray-100;
+    & > li {
+      @apply w-full h-full py-3 px-2 border-b;
+      &:last-child {
+        @apply border-b-0;
+      }
+      & a {
+        @apply font-sans font-hairline text-sm no-underline;
+        &:hover {
+          @apply font-normal;
+        }
+      }
+      & span.section  {
+        @apply font-sans font-hairline text-sm no-underline cursor-pointer;
+      }
+      &.child {
+        // @apply pb-0 mb-2;
+      }
+      & > ul {
+        @apply pl-2 mt-3 -mx-2 bg-gray-200;
+        & > li {
+          @apply w-full h-full py-3 px-2 border-b;
+        }
+      }
+    }
+    & li.active {
+        @apply bg-white;
+    }
+  }
+}

@@ -1,0 +1,43 @@
+main {
+  @apply bg-white flex-1 p-3;
+  .bloc {
+    @apply flex flex-wrap mb-2;
+    @apply text-gray-700 text-sm;
+    &-title {
+      @apply w-full px-0 mx-3 mb-1 border-b border-gray-300 bg-gray-100;
+      .title {
+        @apply uppercase tracking-wide text-gray-900 text-sm font-light mb-1;
+      }
+    }
+    &-regular {
+      @apply px-3 mb-6;
+      @screen md {
+        @apply mb-0;
+      }
+    }
+  }
+  .bloc-tools {
+    @apply mb-4 justify-end;
+    .dropdown-tool {
+      @apply relative border border-gray-200 rounded-l bg-gray-200;
+      select {
+        @apply block font-light appearance-none w-full bg-gray-200 text-gray-700 py-2 pl-4 pr-8  leading-tight;
+        &:focus {
+          @apply outline-none;
+        }
+      }
+      &-arrow {
+        @apply pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700;
+      }
+    }
+    .button {
+      @apply p-1 font-light tracking-wider rounded-r mr-3 text-gray-700 bg-gray-200;
+      &:focus {
+        @apply outline-none;
+      }
+      &:hover {
+        @apply text-white bg-blue-800;
+      }
+    }
+  }
+}
