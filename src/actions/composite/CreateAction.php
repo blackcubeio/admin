@@ -44,6 +44,11 @@ class CreateAction extends Action
     public $view = 'form';
 
     /**
+     * @var string where to redirect
+     */
+    public $targetAction = 'edit';
+
+    /**
      * @return string|Response
      * @throws NotFoundHttpException
      * @throws \yii\base\InvalidConfigException
@@ -57,20 +62,16 @@ class CreateAction extends Action
         ]);
         $blocs = $composite->getBlocs()->all();
         $nodeComposite = Yii::createObject(NodeComposite::class);
-        // $result = $this->saveElement($composite, $blocs, $slugForm);
         $result = CompositeHelper::saveElement($composite, $blocs, $slugForm);
         if ($result === true) {
             $nodeComposite->compositeId = $composite->id;
             $selectedTags = Yii::$app->request->getBodyParam('selectedTags', []);
             CompositeHelper::handleTags($composite, $selectedTags);
-            // $this->handleTags($composite, $selectedTags);
             CompositeHelper::handleNodes($composite, $nodeComposite);
-            // $this->handleNodes($composite, $nodeComposite);
-            return $this->controller->redirect(['edit', 'id' => $composite->id]);
+            return $this->controller->redirect([$this->targetAction, 'id' => $composite->id]);
         }
         $languagesQuery = Language::find()->active()->orderBy(['name' => SORT_ASC]);
         $typesQuery = Type::find()->orderBy(['name' => SORT_ASC]);
-        // $selectTagsData =  $this->prepareTags();
         $selectTagsData =  CompositeHelper::prepareTags();
         $nodesQuery = Node::find()->orderBy(['left' => SORT_ASC]);
 

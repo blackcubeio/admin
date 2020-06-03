@@ -34,7 +34,7 @@ use Yii;
 class DeleteAction extends Action
 {
     /**
-     * @var string where to redirect after delete
+     * @var string where to redirect
      */
     public $targetAction = 'index';
 
