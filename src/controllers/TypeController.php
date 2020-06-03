@@ -15,7 +15,7 @@
 namespace blackcube\admin\controllers;
 
 use blackcube\admin\actions\ModalAction;
-use blackcube\admin\actions\tag\CreateAction;
+use blackcube\admin\actions\type\CreateAction;
 use blackcube\admin\actions\type\DeleteAction;
 use blackcube\admin\actions\type\EditAction;
 use blackcube\admin\actions\type\IndexAction;

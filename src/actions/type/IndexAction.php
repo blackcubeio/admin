@@ -46,7 +46,7 @@ class IndexAction extends Action
     {
         $typesQuery = Type::find()
             ->orderBy(['name' => SORT_ASC]);
-        return $this->render($this->view, [
+        return $this->controller->render($this->view, [
             'typesQuery' => $typesQuery
         ]);
     }
