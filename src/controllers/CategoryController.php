@@ -14,6 +14,10 @@
 
 namespace blackcube\admin\controllers;
 
+use blackcube\admin\actions\category\CreateAction;
+use blackcube\admin\actions\category\DeleteAction;
+use blackcube\admin\actions\category\EditAction;
+use blackcube\admin\actions\category\IndexAction;
 use blackcube\admin\actions\ModalAction;
 use blackcube\admin\actions\ToggleAction;
 use blackcube\admin\models\SlugForm;
@@ -116,147 +120,19 @@ class CategoryController extends BaseElementController
             'elementClass' => Category::class,
             'elementName' => 'category',
         ];
+        $actions['index'] = [
+            'class' => IndexAction::class
+        ];
+        $actions['create'] = [
+            'class' => CreateAction::class
+        ];
+        $actions['edit'] = [
+            'class' => EditAction::class
+        ];
+        $actions['delete'] = [
+            'class' => DeleteAction::class
+        ];
         return $actions;
-    }
-
-    /**
-     * @return string|Response
-     */
-    public function actionIndex()
-    {
-        $categoriesQuery = Category::find()
-            ->joinWith('type', true)
-            ->joinWith('slug', true)
-            // ->joinWith('tags', true)
-            ->with('slug.seo')
-            ->with('slug.sitemap');
-        $search = Yii::$app->request->getQueryParam('search', null);
-        if ($search !== null) {
-            $categoriesQuery->andWhere(['or',
-                ['like', Category::tableName().'.[[name]]', $search],
-                ['like', Type::tableName().'.[[name]]', $search],
-                ['like', Slug::tableName().'.[[path]]', $search],
-            ]);
-        }
-        $categoriesProvider = Yii::createObject([
-            'class' => ActiveDataProvider::class,
-            'query' => $categoriesQuery,
-            'pagination' => [
-                'pageSize' => 20,
-            ],
-            'sort' => [
-                'defaultOrder' => [
-                    'name' => SORT_ASC
-                ],
-                'attributes' => [
-                    'name',
-                    'active',
-                    'type' => [
-                        'asc' => [Type::tableName().'.[[name]]' => SORT_ASC],
-                        'desc' => [Type::tableName().'.[[name]]' => SORT_DESC],
-                    ],
-                ]
-            ],
-        ]);
-        return $this->render('index', [
-            'categoriesProvider' => $categoriesProvider,
-        ]);
-    }
-
-    /**
-     * @return string|Response
-     * @throws ErrorException
-     * @throws \yii\base\InvalidConfigException
-     * @throws \yii\db\Exception
-     */
-    public function actionCreate()
-    {
-        $category = Yii::createObject(Category::class);
-        $slugForm = Yii::createObject([
-            'class' => SlugForm::class,
-            'element' => $category
-        ]);
-        $blocs = $category->getBlocs()->all();
-        $result = $this->saveElement($category, $blocs, $slugForm);
-        if ($result === true) {
-            return $this->redirect(['category/edit', 'id' => $category->id]);
-        }
-        $languagesQuery = Language::find()->active()->orderBy(['name' => SORT_ASC]);
-        $typesQuery = Type::find()->orderBy(['name' => SORT_ASC]);
-        return $this->render('form', [
-            'category' => $category,
-            'slugForm' => $slugForm,
-            'typesQuery' => $typesQuery,
-            'blocs' => $blocs,
-            'languagesQuery' => $languagesQuery,
-        ]);
-    }
-
-    /**
-     * @param integer $id
-     * @return string|Response
-     * @throws ErrorException
-     * @throws NotFoundHttpException
-     * @throws \yii\base\InvalidConfigException
-     * @throws \yii\db\Exception
-     */
-    public function actionEdit($id)
-    {
-        $category = Category::findOne(['id' => $id]);
-        if ($category === null) {
-            throw new NotFoundHttpException();
-        }
-        $slugForm = Yii::createObject([
-            'class' => SlugForm::class,
-            'element' => $category
-        ]);
-        $blocs = $category->getBlocs()->all();
-        $result = $this->saveElement($category, $blocs, $slugForm);
-        if ($result === true) {
-            return $this->redirect(['category/edit', 'id' => $category->id]);
-        }
-        $languagesQuery = Language::find()->active()->orderBy(['name' => SORT_ASC]);
-        $typesQuery = Type::find()->orderBy(['name' => SORT_ASC]);
-        return $this->render('form', [
-            'category' => $category,
-            'slugForm' => $slugForm,
-            'typesQuery' => $typesQuery,
-            'blocs' => $blocs,
-            'languagesQuery' => $languagesQuery,
-        ]);
-    }
-
-    /**
-     * @param integer $id
-     * @return string|Response
-     * @throws NotFoundHttpException
-     * @throws \Throwable
-     * @throws \yii\db\StaleObjectException
-     */
-    public function actionDelete($id)
-    {
-        $category = Category::findOne(['id' => $id]);
-        if ($category === null) {
-            throw new NotFoundHttpException();
-        }
-        if (Yii::$app->request->isPost) {
-            $transaction = Module::getInstance()->db->beginTransaction();
-            try {
-                $slug = $category->getSlug()->one();
-                if ($slug !== null) {
-                    $slug->delete();
-                }
-                $blocsQuery = $category->getBlocs();
-                foreach($blocsQuery->each() as $bloc) {
-                    $bloc->delete();
-                }
-                $category->delete();
-                $transaction->commit();
-            } catch (\Exception $e) {
-                $transaction->rollBack();
-            }
-        }
-        return $this->redirect(['category/index']);
     }
 
 }
