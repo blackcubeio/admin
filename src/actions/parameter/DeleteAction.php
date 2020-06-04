@@ -9,12 +9,12 @@
  * @license https://www.redcat.io/license license
  * @version XXX
  * @link https://www.redcat.io
- * @package blackcube\admin\actions\type
+ * @package blackcube\admin\actions\parameter
  */
 
-namespace blackcube\admin\actions\type;
+namespace blackcube\admin\actions\parameter;
 
-use blackcube\core\models\Type;
+use blackcube\core\models\Parameter;
 use yii\base\Action;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
@@ -28,7 +28,7 @@ use Yii;
  * @license https://www.redcat.io/license license
  * @version XXX
  * @link https://www.redcat.io
- * @package blackcube\admin\actions\type
+ * @package blackcube\admin\actions\parameter
  */
 class DeleteAction extends Action
 {
@@ -38,19 +38,20 @@ class DeleteAction extends Action
     public $targetAction = 'index';
 
     /**
-     * @param string $id
+     * @param string $domain
+     * @param string $name
      * @return string|Response
      * @throws NotFoundHttpException
      * @throws \yii\base\InvalidConfigException
      */
-    public function run($id)
+    public function run($domain, $name)
     {
-        $type = Type::findOne(['id' => $id]);
-        if ($type === null) {
+        $parameter = Parameter::findOne(['domain' => $domain, 'name' => $name]);
+        if ($parameter === null) {
             throw new NotFoundHttpException();
         }
         if (Yii::$app->request->isPost) {
-            $type->delete();
+            $parameter->delete();
         }
         return $this->controller->redirect([$this->targetAction]);
     }

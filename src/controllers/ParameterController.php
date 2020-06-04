@@ -15,15 +15,16 @@
 namespace blackcube\admin\controllers;
 
 use blackcube\admin\actions\ModalAction;
+use blackcube\admin\actions\parameter\CreateAction;
+use blackcube\admin\actions\parameter\DeleteAction;
+use blackcube\admin\actions\parameter\EditAction;
+use blackcube\admin\actions\parameter\IndexAction;
 use blackcube\admin\components\Rbac;
-use blackcube\admin\Module;
 use blackcube\core\models\Parameter;
 use yii\filters\AccessControl;
 use yii\filters\AjaxFilter;
 use yii\web\Controller;
-use yii\web\NotFoundHttpException;
 use Yii;
-use yii\web\Response;
 
 /**
  * Class ParameterController
@@ -94,83 +95,19 @@ class ParameterController extends Controller
             'class' => ModalAction::class,
             'elementClass' => Parameter::class
         ];
+        $actions['index'] = [
+            'class' => IndexAction::class,
+        ];
+        $actions['create'] = [
+            'class' => CreateAction::class,
+        ];
+        $actions['edit'] = [
+            'class' => EditAction::class,
+        ];
+        $actions['delete'] = [
+            'class' => DeleteAction::class,
+        ];
         return $actions;
     }
 
-    /**
-     * @param null $id
-     * @return string|Response
-     */
-    public function actionIndex()
-    {
-        $parametersQuery = Parameter::find()
-            ->orderBy(['domain' => SORT_ASC, 'name' => SORT_ASC]);
-        return $this->render('index', [
-            'parametersQuery' => $parametersQuery
-        ]);
-    }
-
-    /**
-     * @return string|Response
-     * @throws \yii\base\InvalidConfigException
-     */
-    public function actionCreate()
-    {
-        $parameter = Yii::createObject(Parameter::class);
-        if (Yii::$app->request->isPost) {
-            $parameter->load(Yii::$app->request->bodyParams);
-            if ($parameter->validate() === true) {
-                if ($parameter->save()) {
-                    return $this->redirect(['edit', 'domain' => $parameter->domain, 'name' => $parameter->name]);
-                }
-            }
-        }
-        return $this->render('form', [
-            'parameter' => $parameter,
-        ]);
-    }
-
-    /**
-     * @param $id
-     * @return string|Response
-     * @throws NotFoundHttpException
-     * @throws \yii\base\InvalidConfigException
-     */
-    public function actionEdit($domain, $name)
-    {
-        $parameter = Parameter::findOne(['domain' => $domain, 'name' => $name]);
-        if ($parameter === null) {
-            throw new NotFoundHttpException();
-        }
-        if (Yii::$app->request->isPost) {
-            $parameter->load(Yii::$app->request->bodyParams);
-            if ($parameter->validate() === true) {
-                if ($parameter->save()) {
-                    return $this->redirect(['edit', 'domain' => $parameter->domain, 'name' => $parameter->name]);
-                }
-            }
-        }
-        return $this->render('form', [
-            'parameter' => $parameter,
-        ]);
-    }
-
-    /**
-     * @param $id
-     * @return string|Response
-     * @throws NotFoundHttpException
-     * @throws \Throwable
-     * @throws \yii\db\StaleObjectException
-     */
-    public function actionDelete($domain, $name)
-    {
-        $parameter = Parameter::findOne(['domain' => $domain, 'name' => $name]);
-        if ($parameter === null) {
-            throw new NotFoundHttpException();
-        }
-        if (Yii::$app->request->isPost) {
-            $parameter->delete();
-        }
-        return $this->redirect(['index']);
-    }
 }

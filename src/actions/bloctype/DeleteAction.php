@@ -9,12 +9,12 @@
  * @license https://www.redcat.io/license license
  * @version XXX
  * @link https://www.redcat.io
- * @package blackcube\admin\actions\type
+ * @package blackcube\admin\actions\bloctype
  */
 
-namespace blackcube\admin\actions\type;
+namespace blackcube\admin\actions\bloctype;
 
-use blackcube\core\models\Type;
+use blackcube\core\models\BlocType;
 use yii\base\Action;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
@@ -28,7 +28,7 @@ use Yii;
  * @license https://www.redcat.io/license license
  * @version XXX
  * @link https://www.redcat.io
- * @package blackcube\admin\actions\type
+ * @package blackcube\admin\actions\bloctype
  */
 class DeleteAction extends Action
 {
@@ -45,12 +45,12 @@ class DeleteAction extends Action
      */
     public function run($id)
     {
-        $type = Type::findOne(['id' => $id]);
-        if ($type === null) {
+        $blocType = BlocType::findOne(['id' => $id]);
+        if ($blocType === null) {
             throw new NotFoundHttpException();
         }
         if (Yii::$app->request->isPost) {
-            $type->delete();
+            $blocType->delete();
         }
         return $this->controller->redirect([$this->targetAction]);
     }

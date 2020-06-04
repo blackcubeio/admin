@@ -1,6 +1,6 @@
 <?php
 /**
- * DeleteAction.php
+ * IndexAction.php
  *
  * PHP version 7.2+
  *
@@ -9,49 +9,45 @@
  * @license https://www.redcat.io/license license
  * @version XXX
  * @link https://www.redcat.io
- * @package blackcube\admin\actions\type
+ * @package blackcube\admin\actions\bloctype
  */
 
-namespace blackcube\admin\actions\type;
+namespace blackcube\admin\actions\bloctype;
 
-use blackcube\core\models\Type;
+use blackcube\core\models\BlocType;
 use yii\base\Action;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
 use Yii;
 
 /**
- * Class DeleteAction
+ * Class IndexAction
  *
  * @author Philippe Gaultier <pgaultier@redcat.io>
  * @copyright 2010-2020 Redcat
  * @license https://www.redcat.io/license license
  * @version XXX
  * @link https://www.redcat.io
- * @package blackcube\admin\actions\type
+ * @package blackcube\admin\actions\bloctype
  */
-class DeleteAction extends Action
+class IndexAction extends Action
 {
     /**
-     * @var string where to redirect
+     * @var string view
      */
-    public $targetAction = 'index';
+    public $view = 'index';
 
     /**
-     * @param string $id
      * @return string|Response
      * @throws NotFoundHttpException
      * @throws \yii\base\InvalidConfigException
      */
-    public function run($id)
+    public function run()
     {
-        $type = Type::findOne(['id' => $id]);
-        if ($type === null) {
-            throw new NotFoundHttpException();
-        }
-        if (Yii::$app->request->isPost) {
-            $type->delete();
-        }
-        return $this->controller->redirect([$this->targetAction]);
+        $blocTypesQuery = BlocType::find()
+            ->orderBy(['name' => SORT_ASC]);
+        return $this->controller->render($this->view, [
+            'blocTypesQuery' => $blocTypesQuery
+        ]);
     }
 }

@@ -14,6 +14,7 @@
 
 namespace blackcube\admin\controllers;
 
+use blackcube\admin\actions\search\IndexAction;
 use blackcube\admin\components\Rbac;
 use blackcube\admin\models\SearchForm;
 use blackcube\admin\Module;
@@ -64,63 +65,15 @@ class SearchController extends Controller
     }
 
     /**
-     * @return string|Response
+     * {@inheritDoc}
      */
-    public function actionIndex()
+    public function actions()
     {
-        $searchForm = Yii::createObject(SearchForm::class);
-        $nodesQuery = null;
-        $compositesQuery = null;
-        $categoriesQuery = null;
-        $tagsQuery = null;
-        $slugsQuery = null;
-        if (Yii::$app->request->isPost) {
-            $searchForm->load(Yii::$app->request->bodyParams);
-            if ($searchForm->validate() === true) {
-                if ($searchForm->nodes && Yii::$app->user->can(Rbac::PERMISSION_NODE_VIEW)) {
-                    $nodesQuery = Node::find()
-                        ->andWhere(['like', 'name', $searchForm->search])
-                        ->with(['slug', 'slug.seo', 'slug.sitemap', 'type', 'language'])
-                        ->orderBy(['name' => SORT_ASC]);
-                }
-                if ($searchForm->composites && Yii::$app->user->can(Rbac::PERMISSION_COMPOSITE_VIEW)) {
-                    $compositesQuery = Composite::find()
-                        ->andWhere(['like', 'name', $searchForm->search])
-                        ->with(['slug', 'slug.seo', 'slug.sitemap', 'type', 'language'])
-                        ->orderBy(['name' => SORT_ASC]);
-                }
-                if ($searchForm->categories && Yii::$app->user->can(Rbac::PERMISSION_CATEGORY_VIEW)) {
-                    $categoriesQuery = Category::find()
-                        ->andWhere(['like', 'name', $searchForm->search])
-                        ->with(['slug', 'slug.seo', 'slug.sitemap', 'type', 'language'])
-                        ->orderBy(['name' => SORT_ASC]);
-                }
-                if ($searchForm->tags && Yii::$app->user->can(Rbac::PERMISSION_TAG_VIEW)) {
-                    $tagsQuery = Tag::find()
-                        ->andWhere(['like', 'name', $searchForm->search])
-                        ->with(['slug', 'slug.seo', 'slug.sitemap', 'type', 'category', 'category.language'])
-                        ->orderBy(['name' => SORT_ASC]);
-                }
-                if ($searchForm->slugs && Yii::$app->user->can(Rbac::PERMISSION_SLUG_VIEW)) {
-                    $slugsQuery = Slug::find()
-                        ->andWhere(['like', 'path', $searchForm->search])
-                        ->andWhere(['is not', 'targetUrl', null])
-                        ->with(['seo', 'sitemap'])
-                        ->orderBy(['path' => SORT_ASC]);
-                }
-            }
-        } else {
-            $searchForm->validate();
-            $searchForm->clearErrors();
-        }
-        return $this->render('index', [
-            'searchForm' => $searchForm,
-            'nodesQuery' => $nodesQuery,
-            'compositesQuery' => $compositesQuery,
-            'categoriesQuery' => $categoriesQuery,
-            'tagsQuery' => $tagsQuery,
-            'slugsQuery' => $slugsQuery,
-        ]);
+        $actions = parent::actions();
+        $actions['index'] = [
+            'class' => IndexAction::class,
+        ];
+        return $actions;
     }
 
 }
