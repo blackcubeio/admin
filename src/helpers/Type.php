@@ -16,7 +16,7 @@ namespace blackcube\admin\helpers;
 
 use blackcube\admin\Module;
 use blackcube\core\interfaces\TaggableInterface;
-use blackcube\core\models\NodeComposite;
+use blackcube\core\models\Type as TypeModel;
 use blackcube\core\models\TypeBlocType;
 use Yii;
 
@@ -39,7 +39,7 @@ class Type {
      */
     public static function getTypeBlocTypes($id = null)
     {
-        $typeQuery = Type::find()->orderBy(['name' => SORT_ASC]);
+        $typeQuery = TypeModel::find()->orderBy(['name' => SORT_ASC]);
         $typeBlocTypes = [];
         foreach($typeQuery->each() as $type) {
             /* @var $type \blackcube\core\models\Type */

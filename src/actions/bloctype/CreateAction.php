@@ -14,6 +14,7 @@
 
 namespace blackcube\admin\actions\bloctype;
 
+use blackcube\admin\helpers\Type as TypeHelper;
 use blackcube\admin\Module;
 use blackcube\core\models\BlocType;
 use blackcube\core\models\TypeBlocType;
@@ -54,7 +55,7 @@ class CreateAction extends Action
     {
         $blocType = Yii::createObject(BlocType::class);
         $blocType->template = '{"type": "object", "properties": {"text": {"type": "string"}}, "required": []}';
-        $typeBlocTypes = $this->getTypeBlocTypes();
+        $typeBlocTypes = TypeHelper::getTypeBlocTypes();
         if (Yii::$app->request->isPost) {
             $blocType->load(Yii::$app->request->bodyParams);
             foreach($typeBlocTypes as $typeBlocType) {
@@ -70,7 +71,7 @@ class CreateAction extends Action
                             $typeBlocType->save();
                         }
                         $transaction->commit();
-                        return $this->controller->redirect([$this->targetAction]);
+                        return $this->controller->redirect([$this->targetAction, 'id' => $blocType->id]);
                     }
                     $transaction->rollBack();
                 } catch (\Exception $e) {

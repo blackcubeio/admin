@@ -65,7 +65,7 @@ class EditAction extends Action
                     foreach($typeBlocTypes as $typeBlocType) {
                         $typeBlocType->save();
                     }
-                    return $this->controller->redirect([$this->targetAction]);
+                    return $this->controller->redirect([$this->targetAction, 'id' => $blocType->id]);
                 }
             }
         }

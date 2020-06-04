@@ -15,6 +15,7 @@
 namespace blackcube\admin\controllers;
 
 use blackcube\admin\actions\bloctype\CreateAction;
+use blackcube\admin\actions\bloctype\DeleteAction;
 use blackcube\admin\actions\bloctype\EditAction;
 use blackcube\admin\actions\bloctype\IndexAction;
 use blackcube\admin\actions\ModalAction;
@@ -104,7 +105,7 @@ class BlocTypeController extends Controller
             'class' => EditAction::class,
         ];
         $actions['delete'] = [
-            'class' => EditAction::class,
+            'class' => DeleteAction::class,
         ];
         return $actions;
     }
