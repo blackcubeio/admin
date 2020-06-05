@@ -14,6 +14,7 @@
 
 namespace blackcube\admin\actions;
 
+use blackcube\admin\Module;
 use yii\base\Action;
 use yii\base\InvalidArgumentException;
 use yii\web\NotFoundHttpException;
@@ -50,7 +51,7 @@ class ModalAction extends Action
     public function run($id = null)
     {
         if ($this->elementClass === null) {
-            throw new InvalidArgumentException();
+            throw new InvalidArgumentException(Module::t('actions', 'Property "elementClass" must be defined'));
         }
         $elementClass = $this->elementClass;
         if ($id !== null) {

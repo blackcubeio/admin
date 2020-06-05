@@ -14,6 +14,7 @@
 
 namespace blackcube\admin\actions;
 
+use blackcube\admin\Module;
 use blackcube\core\models\Bloc;
 use yii\base\Action;
 use yii\base\InvalidArgumentException;
@@ -53,7 +54,7 @@ class BlocAction extends Action
     public function run($id = null)
     {
         if ($this->elementClass === null) {
-            throw new InvalidArgumentException();
+            throw new InvalidArgumentException(Module::t('actions', 'Property "elementClass" must be defined'));
         }
         if (Yii::$app->request->isPost) {
             $elementClass = $this->elementClass;
