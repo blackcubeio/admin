@@ -14,8 +14,10 @@
 
 namespace blackcube\admin\actions;
 
+use blackcube\core\models\Category;
 use blackcube\core\models\Composite;
 use blackcube\core\models\Node;
+use blackcube\core\models\Tag;
 use blackcube\core\models\Type;
 use yii\base\Action;
 use yii\db\ActiveQuery;
@@ -57,6 +59,31 @@ abstract class BaseElementAction extends Action
      * @var callable
      */
     public $targetNodesQuery;
+
+    /**
+     * @var callable
+     */
+    public $categoryQuery;
+
+    /**
+     * @var callable
+     */
+    public $categoriesQuery;
+
+    /**
+     * @var callable
+     */
+    public $tagQuery;
+
+    /**
+     * @var callable
+     */
+    public $tagsQuery;
+
+    /**
+     * @var callable
+     */
+    public $typeQuery;
 
     /**
      * @var callable
@@ -141,6 +168,21 @@ abstract class BaseElementAction extends Action
     /**
      * @return \blackcube\core\models\FilterActiveQuery|mixed|ActiveQuery
      */
+    public function getTypeQuery()
+    {
+        $typeQuery = null;
+        if (is_callable($this->typeQuery) === true) {
+            $typeQuery = call_user_func($this->typeQuery);
+        }
+        if ($typeQuery === null || (($typeQuery instanceof ActiveQuery) === false)) {
+            $typeQuery = Type::find();
+        }
+        return $typeQuery;
+    }
+
+    /**
+     * @return \blackcube\core\models\FilterActiveQuery|mixed|ActiveQuery
+     */
     public function getTypesQuery()
     {
         $typesQuery = null;
@@ -151,6 +193,66 @@ abstract class BaseElementAction extends Action
             $typesQuery = Type::find();
         }
         return $typesQuery;
+    }
+
+    /**
+     * @return \blackcube\core\models\FilterActiveQuery|mixed|ActiveQuery
+     */
+    public function getCategoryQuery()
+    {
+        $categoryQuery = null;
+        if (is_callable($this->categoryQuery) === true) {
+            $categoryQuery = call_user_func($this->categoryQuery);
+        }
+        if ($categoryQuery === null || (($categoryQuery instanceof ActiveQuery) === false)) {
+            $categoryQuery = Category::find();
+        }
+        return $categoryQuery;
+    }
+
+    /**
+     * @return \blackcube\core\models\FilterActiveQuery|mixed|ActiveQuery
+     */
+    public function getCategoriesQuery()
+    {
+        $categoriesQuery = null;
+        if (is_callable($this->categoriesQuery) === true) {
+            $categoriesQuery = call_user_func($this->categoriesQuery);
+        }
+        if ($categoriesQuery === null || (($categoriesQuery instanceof ActiveQuery) === false)) {
+            $categoriesQuery = Category::find();
+        }
+        return $categoriesQuery;
+    }
+
+    /**
+     * @return \blackcube\core\models\FilterActiveQuery|mixed|ActiveQuery
+     */
+    public function getTagQuery()
+    {
+        $tagQuery = null;
+        if (is_callable($this->tagQuery) === true) {
+            $tagQuery = call_user_func($this->tagQuery);
+        }
+        if ($tagQuery === null || (($tagQuery instanceof ActiveQuery) === false)) {
+            $tagQuery = Tag::find();
+        }
+        return $tagQuery;
+    }
+
+    /**
+     * @return \blackcube\core\models\FilterActiveQuery|mixed|ActiveQuery
+     */
+    public function getTagsQuery()
+    {
+        $tagsQuery = null;
+        if (is_callable($this->tagsQuery) === true) {
+            $tagsQuery = call_user_func($this->tagsQuery);
+        }
+        if ($tagsQuery === null || (($tagsQuery instanceof ActiveQuery) === false)) {
+            $tagsQuery = Tag::find();
+        }
+        return $tagsQuery;
     }
 
 }

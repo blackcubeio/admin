@@ -14,6 +14,7 @@
 
 namespace blackcube\admin\actions\category;
 
+use blackcube\admin\actions\BaseElementAction;
 use blackcube\admin\Module;
 use blackcube\core\models\Category;
 use yii\base\Action;
@@ -31,7 +32,7 @@ use Yii;
  * @link https://www.redcat.io
  * @package blackcube\admin\actions\category
  */
-class DeleteAction extends Action
+class DeleteAction extends BaseElementAction
 {
     /**
      * @var string where to redirect
@@ -46,7 +47,9 @@ class DeleteAction extends Action
      */
     public function run($id)
     {
-        $category = Category::findOne(['id' => $id]);
+        $category = $this->getCategoryQuery()
+            ->andWhere(['id' => $id])
+            ->one();
         if ($category === null) {
             throw new NotFoundHttpException();
         }

@@ -14,6 +14,7 @@
 
 namespace blackcube\admin\actions\category;
 
+use blackcube\admin\actions\BaseElementAction;
 use blackcube\admin\helpers\Category as CategoryHelper;
 use blackcube\admin\models\SlugForm;
 use blackcube\core\models\Category;
@@ -34,7 +35,7 @@ use Yii;
  * @link https://www.redcat.io
  * @package blackcube\admin\actions\category
  */
-class CreateAction extends Action
+class CreateAction extends BaseElementAction
 {
     /**
      * @var string view
@@ -64,7 +65,8 @@ class CreateAction extends Action
             return $this->controller->redirect([$this->targetAction, 'id' => $category->id]);
         }
         $languagesQuery = Language::find()->active()->orderBy(['name' => SORT_ASC]);
-        $typesQuery = Type::find()->orderBy(['name' => SORT_ASC]);
+        $typesQuery = $this->getTypesQuery()
+            ->orderBy(['name' => SORT_ASC]);
         return $this->controller->render($this->view, [
             'category' => $category,
             'slugForm' => $slugForm,

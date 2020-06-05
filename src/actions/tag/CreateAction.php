@@ -14,6 +14,7 @@
 
 namespace blackcube\admin\actions\tag;
 
+use blackcube\admin\actions\BaseElementAction;
 use blackcube\admin\helpers\Tag as TagHelper;
 use blackcube\admin\models\SlugForm;
 use blackcube\core\models\Category;
@@ -34,7 +35,7 @@ use Yii;
  * @link https://www.redcat.io
  * @package blackcube\admin\actions\tag
  */
-class CreateAction extends Action
+class CreateAction extends BaseElementAction
 {
     /**
      * @var string view
@@ -63,8 +64,10 @@ class CreateAction extends Action
         if ($result === true) {
             return $this->controller->redirect([$this->targetAction, 'id' => $tag->id]);
         }
-        $categoriesQuery = Category::find()->orderBy(['name' => SORT_ASC]);
-        $typesQuery = Type::find()->orderBy(['name' => SORT_ASC]);
+        $categoriesQuery = $this->getCategoriesQuery()
+            ->orderBy(['name' => SORT_ASC]);
+        $typesQuery = $this->getTypesQuery()
+            ->orderBy(['name' => SORT_ASC]);
         return $this->controller->render($this->view, [
             'tag' => $tag,
             'slugForm' => $slugForm,

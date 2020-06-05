@@ -14,6 +14,7 @@
 
 namespace blackcube\admin\actions\category;
 
+use blackcube\admin\actions\BaseElementAction;
 use blackcube\core\models\Category;
 use blackcube\core\models\Slug;
 use blackcube\core\models\Type;
@@ -33,7 +34,7 @@ use Yii;
  * @link https://www.redcat.io
  * @package blackcube\admin\actions\category
  */
-class IndexAction extends Action
+class IndexAction extends BaseElementAction
 {
     /**
      * @var string view
@@ -47,7 +48,8 @@ class IndexAction extends Action
      */
     public function run()
     {
-        $categoriesQuery = Category::find()
+        $categoriesQuery = $this->getCategoriesQuery();
+        $categoriesQuery
             ->joinWith('type', true)
             ->joinWith('slug', true)
             // ->joinWith('tags', true)

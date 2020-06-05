@@ -14,6 +14,7 @@
 
 namespace blackcube\admin\actions\tag;
 
+use blackcube\admin\actions\BaseElementAction;
 use blackcube\admin\Module;
 use blackcube\core\models\Tag;
 use yii\base\Action;
@@ -31,7 +32,7 @@ use Yii;
  * @link https://www.redcat.io
  * @package blackcube\admin\actions\tag
  */
-class DeleteAction extends Action
+class DeleteAction extends BaseElementAction
 {
     /**
      * @var string where to redirect
@@ -46,7 +47,9 @@ class DeleteAction extends Action
      */
     public function run($id)
     {
-        $tag = Tag::findOne(['id' => $id]);
+        $tag = $this->getTagQuery()
+            ->andWhere(['id' => $id])
+            ->one();
         if ($tag === null) {
             throw new NotFoundHttpException();
         }

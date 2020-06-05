@@ -15,9 +15,6 @@
 namespace blackcube\admin\actions\node;
 
 use blackcube\admin\actions\BaseElementAction;
-use blackcube\core\models\Composite;
-use yii\base\Action;
-use yii\db\ActiveQuery;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
 use Yii;
