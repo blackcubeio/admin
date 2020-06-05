@@ -14,6 +14,7 @@
 
 namespace blackcube\admin\actions\node;
 
+use blackcube\admin\actions\BaseElementAction;
 use blackcube\core\models\Composite;
 use yii\base\Action;
 use yii\db\ActiveQuery;
@@ -31,13 +32,8 @@ use Yii;
  * @link https://www.redcat.io
  * @package blackcube\admin\actions\node
  */
-class SearchAction extends Action
+class SearchAction extends BaseElementAction
 {
-
-    /**
-     * @var callable
-     */
-    public $compositesQuery;
 
     /**
      * @param string query
@@ -48,15 +44,7 @@ class SearchAction extends Action
     public function run($query)
     {
         Yii::$app->response->format = Response::FORMAT_JSON;
-        $compositesQuery = null;
-        if (is_callable($this->compositesQuery) === true) {
-            $compositesQuery = call_user_func($this->compositesQuery);
-        }
-        if ($compositesQuery === null || (($compositesQuery instanceof ActiveQuery) === false)) {
-            $compositesQuery = Composite::findOrphans();
-        }
-
-        $compositesQuery
+        $compositesQuery = $this->getCompositesQuery()
             ->orderBy(['name' => SORT_ASC])
             ->andWhere(['like', 'name', $query]);
         return $compositesQuery

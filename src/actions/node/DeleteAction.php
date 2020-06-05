@@ -14,6 +14,7 @@
 
 namespace blackcube\admin\actions\node;
 
+use blackcube\admin\actions\BaseElementAction;
 use blackcube\admin\Module;
 use blackcube\core\models\Node;
 use yii\base\Action;
@@ -32,17 +33,12 @@ use Yii;
  * @link https://www.redcat.io
  * @package blackcube\admin\actions\node
  */
-class DeleteAction extends Action
+class DeleteAction extends BaseElementAction
 {
     /**
      * @var string where to redirect
      */
     public $targetAction = 'index';
-
-    /**
-     * @var callable
-     */
-    public $nodeQuery;
 
     /**
      * @param string $id
@@ -52,14 +48,7 @@ class DeleteAction extends Action
      */
     public function run($id)
     {
-        $nodeQuery = null;
-        if (is_callable($this->nodeQuery) === true) {
-            $nodeQuery = call_user_func($this->nodeQuery);
-        }
-        if ($nodeQuery === null || (($nodeQuery instanceof ActiveQuery) === false)) {
-            $nodeQuery = Node::find();
-        }
-        $node = $nodeQuery->andWhere(['id' => $id])->one();
+        $node = $this->getNodeQuery()->andWhere(['id' => $id])->one();
 
         if ($node === null) {
             throw new NotFoundHttpException();

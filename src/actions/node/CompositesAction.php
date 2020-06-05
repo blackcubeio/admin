@@ -14,6 +14,7 @@
 
 namespace blackcube\admin\actions\node;
 
+use blackcube\admin\actions\BaseElementAction;
 use blackcube\core\models\Composite;
 use blackcube\core\models\Node;
 use yii\base\Action;
@@ -32,22 +33,12 @@ use Yii;
  * @link https://www.redcat.io
  * @package blackcube\admin\actions\node
  */
-class CompositesAction extends Action
+class CompositesAction extends BaseElementAction
 {
     /**
      * @var string view
      */
     public $view = '_composites';
-
-    /**
-     * @var callable
-     */
-    public $nodeQuery;
-
-    /**
-     * @var callable
-     */
-    public $compositeQuery;
 
     /**
      * @param string $id
@@ -58,14 +49,7 @@ class CompositesAction extends Action
     public function run($id)
     {
         if (Yii::$app->request->isPost) {
-            $nodeQuery = null;
-            if (is_callable($this->nodeQuery) === true) {
-                $nodeQuery = call_user_func($this->nodeQuery);
-            }
-            if ($nodeQuery === null || (($nodeQuery instanceof ActiveQuery) === false)) {
-                $nodeQuery = Node::find();
-            }
-            $node = $nodeQuery->andWhere(['id' => $id])->one();
+            $node = $this->getNodeQuery()->andWhere(['id' => $id])->one();
             if ($node === null) {
                 throw new NotFoundHttpException();
             }
@@ -104,20 +88,5 @@ class CompositesAction extends Action
                 'element' => $node
             ]);
         }
-    }
-
-    /**
-     * @return \blackcube\core\models\FilterActiveQuery|mixed|ActiveQuery|null
-     */
-    private function getCompositeQuery()
-    {
-        $compositeQuery = null;
-        if (is_callable($this->compositeQuery) === true) {
-            $compositeQuery = call_user_func($this->compositeQuery);
-        }
-        if ($compositeQuery === null || (($compositeQuery instanceof ActiveQuery) === false)) {
-            $compositeQuery = Composite::find();
-        }
-        return $compositeQuery;
     }
 }

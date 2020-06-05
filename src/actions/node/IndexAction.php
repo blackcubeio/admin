@@ -14,6 +14,7 @@
 
 namespace blackcube\admin\actions\node;
 
+use blackcube\admin\actions\BaseElementAction;
 use blackcube\core\models\Node;
 use blackcube\core\models\Slug;
 use blackcube\core\models\Type;
@@ -34,17 +35,12 @@ use Yii;
  * @link https://www.redcat.io
  * @package blackcube\admin\actions\node
  */
-class IndexAction extends Action
+class IndexAction extends BaseElementAction
 {
     /**
      * @var string view
      */
     public $view = 'index';
-
-    /**
-     * @var callable
-     */
-    public $nodesQuery;
 
     /**
      * @return string|Response
@@ -53,15 +49,7 @@ class IndexAction extends Action
      */
     public function run()
     {
-        $nodesQuery = null;
-        if (is_callable($this->nodesQuery) === true) {
-            $nodesQuery = call_user_func($this->nodesQuery);
-        }
-        if ($nodesQuery === null || (($nodesQuery instanceof ActiveQuery) === false)) {
-            $nodesQuery = Node::find();
-        }
-
-        $nodesQuery
+        $nodesQuery = $this->getNodesQuery()
             ->joinWith('type', true)
             ->joinWith('slug', true)
             ->with('slug.seo')

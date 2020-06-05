@@ -14,6 +14,7 @@
 
 namespace blackcube\admin\actions\node;
 
+use blackcube\admin\actions\BaseElementAction;
 use blackcube\admin\helpers\Node as NodeHelper;
 use blackcube\admin\models\SlugForm;
 use blackcube\admin\Module;
@@ -36,7 +37,7 @@ use Yii;
  * @link https://www.redcat.io
  * @package blackcube\admin\actions\node
  */
-class EditAction extends Action
+class EditAction extends BaseElementAction
 {
     /**
      * @var string view
@@ -49,21 +50,6 @@ class EditAction extends Action
     public $targetAction = 'edit';
 
     /**
-     * @var callable
-     */
-    public $nodeQuery;
-
-    /**
-     * @var callable
-     */
-    public $typesQuery;
-
-    /**
-     * @var callable
-     */
-    public $targetNodesQuery;
-
-    /**
      * @param string $id
      * @return string|Response
      * @throws NotFoundHttpException
@@ -71,14 +57,9 @@ class EditAction extends Action
      */
     public function run($id)
     {
-        $nodeQuery = null;
-        if (is_callable($this->nodeQuery) === true) {
-            $nodeQuery = call_user_func($this->nodeQuery);
-        }
-        if ($nodeQuery === null || (($nodeQuery instanceof ActiveQuery) === false)) {
-            $nodeQuery = Node::find();
-        }
-        $node = $nodeQuery->andWhere(['id' => $id])->one();
+        $node = $this->getNodeQuery()
+            ->andWhere(['id' => $id])
+            ->one();
 
         if ($node === null) {
             throw new NotFoundHttpException();
@@ -135,23 +116,12 @@ class EditAction extends Action
             return $this->controller->redirect([$this->targetAction, 'id' => $node->id]);
         }
         $languagesQuery = Language::find()->active()->orderBy(['name' => SORT_ASC]);
-        $targetNodesQuery = null;
-        if (is_callable($this->targetNodesQuery) === true) {
-            $targetNodesQuery = call_user_func($this->targetNodesQuery);
-        }
-        if ($targetNodesQuery === null || (($targetNodesQuery instanceof ActiveQuery) === false)) {
-            $targetNodesQuery =  Node::find();
-        }
-        $targetNodesQuery->orderBy(['left' => SORT_ASC]);
 
-        $typesQuery = null;
-        if (is_callable($this->typesQuery) === true) {
-            $typesQuery = call_user_func($this->typesQuery);
-        }
-        if ($typesQuery === null || (($typesQuery instanceof ActiveQuery) === false)) {
-            $typesQuery = Type::find();
-        }
-        $typesQuery->orderBy(['name' => SORT_ASC]);
+        $targetNodesQuery = $this->getTargetNodesQuery()
+            ->orderBy(['left' => SORT_ASC]);
+
+        $typesQuery = $this->getTypesQuery()
+            ->orderBy(['name' => SORT_ASC]);
 
         $selectTagsData = NodeHelper::prepareTags();
 

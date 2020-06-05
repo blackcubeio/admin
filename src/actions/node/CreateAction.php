@@ -14,6 +14,7 @@
 
 namespace blackcube\admin\actions\node;
 
+use blackcube\admin\actions\BaseElementAction;
 use blackcube\admin\helpers\Node as NodeHelper;
 use blackcube\admin\models\SlugForm;
 use blackcube\core\models\Language;
@@ -35,7 +36,7 @@ use Yii;
  * @link https://www.redcat.io
  * @package blackcube\admin\actions\node
  */
-class CreateAction extends Action
+class CreateAction extends BaseElementAction
 {
     /**
      * @var string view
@@ -46,16 +47,6 @@ class CreateAction extends Action
      * @var string where to redirect
      */
     public $targetAction = 'edit';
-
-    /**
-     * @var callable
-     */
-    public $typesQuery;
-
-    /**
-     * @var callable
-     */
-    public $targetNodesQuery;
 
     /**
      * @return string|Response
@@ -97,23 +88,11 @@ class CreateAction extends Action
         }
         $languagesQuery = Language::find()->active()->orderBy(['name' => SORT_ASC]);
 
-        $targetNodesQuery = null;
-        if (is_callable($this->targetNodesQuery) === true) {
-            $targetNodesQuery = call_user_func($this->targetNodesQuery);
-        }
-        if ($targetNodesQuery === null || (($targetNodesQuery instanceof ActiveQuery) === false)) {
-            $targetNodesQuery =  Node::find();
-        }
-        $targetNodesQuery->orderBy(['left' => SORT_ASC]);
+        $targetNodesQuery = $this->getTargetNodesQuery()
+            ->orderBy(['left' => SORT_ASC]);
 
-        $typesQuery = null;
-        if (is_callable($this->typesQuery) === true) {
-            $typesQuery = call_user_func($this->typesQuery);
-        }
-        if ($typesQuery === null || (($typesQuery instanceof ActiveQuery) === false)) {
-            $typesQuery = Type::find();
-        }
-        $typesQuery->orderBy(['name' => SORT_ASC]);
+        $typesQuery = $this->getTypesQuery()
+            ->orderBy(['name' => SORT_ASC]);
 
         $selectTagsData =  NodeHelper::prepareTags();
 
