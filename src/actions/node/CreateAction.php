@@ -20,6 +20,7 @@ use blackcube\core\models\Language;
 use blackcube\core\models\Node;
 use blackcube\core\models\Type;
 use yii\base\Action;
+use yii\db\ActiveQuery;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
 use Yii;
@@ -45,6 +46,16 @@ class CreateAction extends Action
      * @var string where to redirect
      */
     public $targetAction = 'edit';
+
+    /**
+     * @var callable
+     */
+    public $typesQuery;
+
+    /**
+     * @var callable
+     */
+    public $targetNodesQuery;
 
     /**
      * @return string|Response
@@ -85,8 +96,25 @@ class CreateAction extends Action
             return $this->controller->redirect([$this->targetAction, 'id' => $node->id]);
         }
         $languagesQuery = Language::find()->active()->orderBy(['name' => SORT_ASC]);
-        $targetNodesQuery = Node::find()->orderBy(['left' => SORT_ASC]);
-        $typesQuery = Type::find()->orderBy(['name' => SORT_ASC]);
+
+        $targetNodesQuery = null;
+        if (is_callable($this->targetNodesQuery) === true) {
+            $targetNodesQuery = call_user_func($this->targetNodesQuery);
+        }
+        if ($targetNodesQuery === null || (($targetNodesQuery instanceof ActiveQuery) === false)) {
+            $targetNodesQuery =  Node::find();
+        }
+        $targetNodesQuery->orderBy(['left' => SORT_ASC]);
+
+        $typesQuery = null;
+        if (is_callable($this->typesQuery) === true) {
+            $typesQuery = call_user_func($this->typesQuery);
+        }
+        if ($typesQuery === null || (($typesQuery instanceof ActiveQuery) === false)) {
+            $typesQuery = Type::find();
+        }
+        $typesQuery->orderBy(['name' => SORT_ASC]);
+
         $selectTagsData =  NodeHelper::prepareTags();
 
         return $this->controller->render($this->view, [

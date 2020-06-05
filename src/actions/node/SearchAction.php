@@ -16,6 +16,7 @@ namespace blackcube\admin\actions\node;
 
 use blackcube\core\models\Composite;
 use yii\base\Action;
+use yii\db\ActiveQuery;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
 use Yii;
@@ -34,6 +35,11 @@ class SearchAction extends Action
 {
 
     /**
+     * @var callable
+     */
+    public $compositesQuery;
+
+    /**
      * @param string query
      * @return string|Response
      * @throws NotFoundHttpException
@@ -42,10 +48,18 @@ class SearchAction extends Action
     public function run($query)
     {
         Yii::$app->response->format = Response::FORMAT_JSON;
-        $compositeQuery = Composite::findOrphans()
+        $compositesQuery = null;
+        if (is_callable($this->compositesQuery) === true) {
+            $compositesQuery = call_user_func($this->compositesQuery);
+        }
+        if ($compositesQuery === null || (($compositesQuery instanceof ActiveQuery) === false)) {
+            $compositesQuery = Composite::findOrphans();
+        }
+
+        $compositesQuery
             ->orderBy(['name' => SORT_ASC])
             ->andWhere(['like', 'name', $query]);
-        return $compositeQuery
+        return $compositesQuery
             ->select(['id', 'name'])
             ->all();
     }

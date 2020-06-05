@@ -89,8 +89,9 @@ class CreateAction extends Action
             $typesQuery = call_user_func($this->typesQuery);
         }
         if ($typesQuery === null || (($typesQuery instanceof ActiveQuery) === false)) {
-            $typesQuery = Type::find()->orderBy(['name' => SORT_ASC]);
+            $typesQuery = Type::find();
         }
+        $typesQuery->orderBy(['name' => SORT_ASC]);
 
         $selectTagsData =  CompositeHelper::prepareTags();
 
@@ -99,8 +100,9 @@ class CreateAction extends Action
             $nodesQuery = call_user_func($this->nodesQuery);
         }
         if ($nodesQuery === null || (($nodesQuery instanceof ActiveQuery) === false)) {
-            $nodesQuery = Node::find()->orderBy(['left' => SORT_ASC]);
+            $nodesQuery = Node::find();
         }
+        $nodesQuery->orderBy(['left' => SORT_ASC]);
 
         return $this->controller->render($this->view, [
             'composite' => $composite,

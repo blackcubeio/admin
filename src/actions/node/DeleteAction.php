@@ -17,6 +17,7 @@ namespace blackcube\admin\actions\node;
 use blackcube\admin\Module;
 use blackcube\core\models\Node;
 use yii\base\Action;
+use yii\db\ActiveQuery;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
 use Yii;
@@ -39,6 +40,11 @@ class DeleteAction extends Action
     public $targetAction = 'index';
 
     /**
+     * @var callable
+     */
+    public $nodeQuery;
+
+    /**
      * @param string $id
      * @return string|Response
      * @throws NotFoundHttpException
@@ -46,7 +52,15 @@ class DeleteAction extends Action
      */
     public function run($id)
     {
-        $node = Node::findOne(['id' => $id]);
+        $nodeQuery = null;
+        if (is_callable($this->nodeQuery) === true) {
+            $nodeQuery = call_user_func($this->nodeQuery);
+        }
+        if ($nodeQuery === null || (($nodeQuery instanceof ActiveQuery) === false)) {
+            $nodeQuery = Node::find();
+        }
+        $node = $nodeQuery->andWhere(['id' => $id])->one();
+
         if ($node === null) {
             throw new NotFoundHttpException();
         }

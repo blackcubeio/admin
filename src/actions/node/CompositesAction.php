@@ -17,6 +17,7 @@ namespace blackcube\admin\actions\node;
 use blackcube\core\models\Composite;
 use blackcube\core\models\Node;
 use yii\base\Action;
+use yii\db\ActiveQuery;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
 use Yii;
@@ -39,6 +40,16 @@ class CompositesAction extends Action
     public $view = '_composites';
 
     /**
+     * @var callable
+     */
+    public $nodeQuery;
+
+    /**
+     * @var callable
+     */
+    public $compositeQuery;
+
+    /**
      * @param string $id
      * @return string|Response
      * @throws NotFoundHttpException
@@ -47,27 +58,42 @@ class CompositesAction extends Action
     public function run($id)
     {
         if (Yii::$app->request->isPost) {
-            $node = Node::findOne(['id' => $id]);
+            $nodeQuery = null;
+            if (is_callable($this->nodeQuery) === true) {
+                $nodeQuery = call_user_func($this->nodeQuery);
+            }
+            if ($nodeQuery === null || (($nodeQuery instanceof ActiveQuery) === false)) {
+                $nodeQuery = Node::find();
+            }
+            $node = $nodeQuery->andWhere(['id' => $id])->one();
             if ($node === null) {
                 throw new NotFoundHttpException();
             }
             if (isset(Yii::$app->request->bodyParams['compositeAdd'])) {
-                $composite = Composite::find()->andWhere(['id' => Yii::$app->request->bodyParams['compositeAdd']])->one();
+                $compositeQuery = $this->getCompositeQuery();
+                $composite = $compositeQuery
+                    ->andWhere(['id' => Yii::$app->request->bodyParams['compositeAdd']])->one();
                 if ($composite !== null) {
                     $node->attachComposite($composite, -1);
                 }
             } elseif (isset(Yii::$app->request->bodyParams['compositeDelete'])) {
-                $composite = Composite::find()->andWhere(['id' => Yii::$app->request->bodyParams['compositeDelete']])->one();
+                $compositeQuery = $this->getCompositeQuery();
+                $composite = $compositeQuery
+                    ->andWhere(['id' => Yii::$app->request->bodyParams['compositeDelete']])->one();
                 if ($composite !== null) {
                     $node->detachComposite($composite);
                 }
             } elseif (isset(Yii::$app->request->bodyParams['compositeUp'])) {
-                $composite = Composite::find()->andWhere(['id' => Yii::$app->request->bodyParams['compositeUp']])->one();
+                $compositeQuery = $this->getCompositeQuery();
+                $composite = $compositeQuery
+                    ->andWhere(['id' => Yii::$app->request->bodyParams['compositeUp']])->one();
                 if ($composite !== null) {
                     $node->moveCompositeUp($composite);
                 }
             } elseif (isset(Yii::$app->request->bodyParams['compositeDown'])) {
-                $composite = Composite::find()->andWhere(['id' => Yii::$app->request->bodyParams['compositeDown']])->one();
+                $compositeQuery = $this->getCompositeQuery();
+                $composite = $compositeQuery
+                    ->andWhere(['id' => Yii::$app->request->bodyParams['compositeDown']])->one();
                 if ($composite !== null) {
                     $node->moveCompositeDown($composite);
                 }
@@ -78,5 +104,20 @@ class CompositesAction extends Action
                 'element' => $node
             ]);
         }
+    }
+
+    /**
+     * @return \blackcube\core\models\FilterActiveQuery|mixed|ActiveQuery|null
+     */
+    private function getCompositeQuery()
+    {
+        $compositeQuery = null;
+        if (is_callable($this->compositeQuery) === true) {
+            $compositeQuery = call_user_func($this->compositeQuery);
+        }
+        if ($compositeQuery === null || (($compositeQuery instanceof ActiveQuery) === false)) {
+            $compositeQuery = Composite::find();
+        }
+        return $compositeQuery;
     }
 }

@@ -19,6 +19,7 @@ use blackcube\core\models\Slug;
 use blackcube\core\models\Type;
 use yii\base\Action;
 use yii\data\ActiveDataProvider;
+use yii\db\ActiveQuery;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
 use Yii;
@@ -41,13 +42,26 @@ class IndexAction extends Action
     public $view = 'index';
 
     /**
+     * @var callable
+     */
+    public $nodesQuery;
+
+    /**
      * @return string|Response
      * @throws NotFoundHttpException
      * @throws \yii\base\InvalidConfigException
      */
     public function run()
     {
-        $nodesQuery = Node::find()
+        $nodesQuery = null;
+        if (is_callable($this->nodesQuery) === true) {
+            $nodesQuery = call_user_func($this->nodesQuery);
+        }
+        if ($nodesQuery === null || (($nodesQuery instanceof ActiveQuery) === false)) {
+            $nodesQuery = Node::find();
+        }
+
+        $nodesQuery
             ->joinWith('type', true)
             ->joinWith('slug', true)
             ->with('slug.seo')
