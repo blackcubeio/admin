@@ -22,6 +22,7 @@ use blackcube\core\models\Node;
 use blackcube\core\models\NodeComposite;
 use blackcube\core\models\Type;
 use yii\base\Action;
+use yii\db\ActiveQuery;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
 use Yii;
@@ -49,6 +50,21 @@ class EditAction extends Action
     public $targetAction = 'edit';
 
     /**
+     * @var callable
+     */
+    public $typesQuery;
+
+    /**
+     * @var callable
+     */
+    public $nodesQuery;
+
+    /**
+     * @var callable
+     */
+    public $compositeQuery;
+
+    /**
      * @param string $id
      * @return string|Response
      * @throws NotFoundHttpException
@@ -56,7 +72,15 @@ class EditAction extends Action
      */
     public function run($id)
     {
-        $composite = Composite::findOne(['id' => $id]);
+        $compositeQuery = null;
+        if (is_callable($this->compositeQuery) === true) {
+            $compositeQuery = call_user_func($this->compositeQuery);
+        }
+        if ($compositeQuery === null || (($compositeQuery instanceof ActiveQuery) === false)) {
+            $compositeQuery = Composite::find();
+        }
+        $composite = $compositeQuery->andWhere(['id' => $id])->one();
+
         if ($composite === null) {
             throw new NotFoundHttpException();
         }
@@ -83,9 +107,25 @@ class EditAction extends Action
             return $this->controller->redirect([$this->targetAction, 'id' => $composite->id]);
         }
         $languagesQuery = Language::find()->active()->orderBy(['name' => SORT_ASC]);
-        $typesQuery = Type::find()->orderBy(['name' => SORT_ASC]);
+
+        $typesQuery = null;
+        if (is_callable($this->typesQuery) === true) {
+            $typesQuery = call_user_func($this->typesQuery);
+        }
+        if ($typesQuery === null || (($typesQuery instanceof ActiveQuery) === false)) {
+            $typesQuery = Type::find()->orderBy(['name' => SORT_ASC]);
+        }
+
         $selectTagsData =  CompositeHelper::prepareTags();
-        $nodesQuery = Node::find()->orderBy(['left' => SORT_ASC]);
+
+        $nodesQuery = null;
+        if (is_callable($this->nodesQuery) === true) {
+            $nodesQuery = call_user_func($this->nodesQuery);
+        }
+        if ($nodesQuery === null || (($nodesQuery instanceof ActiveQuery) === false)) {
+            $nodesQuery = Node::find()->orderBy(['left' => SORT_ASC]);
+        }
+
 
         return $this->controller->render($this->view, [
             'composite' => $composite,

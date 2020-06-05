@@ -17,6 +17,7 @@ namespace blackcube\admin\actions\composite;
 use blackcube\admin\Module;
 use blackcube\core\models\Composite;
 use yii\base\Action;
+use yii\db\ActiveQuery;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
 use Yii;
@@ -39,6 +40,11 @@ class DeleteAction extends Action
     public $targetAction = 'index';
 
     /**
+     * @var callable
+     */
+    public $compositeQuery;
+
+    /**
      * @param string $id
      * @return string|Response
      * @throws NotFoundHttpException
@@ -46,7 +52,15 @@ class DeleteAction extends Action
      */
     public function run($id)
     {
-        $composite = Composite::findOne(['id' => $id]);
+        $compositeQuery = null;
+        if (is_callable($this->compositeQuery) === true) {
+            $compositeQuery = call_user_func($this->compositeQuery);
+        }
+        if ($compositeQuery === null || (($compositeQuery instanceof ActiveQuery) === false)) {
+            $compositeQuery = Composite::find();
+        }
+        $composite = $compositeQuery->andWhere(['id' => $id])->one();
+
         if ($composite === null) {
             throw new NotFoundHttpException();
         }

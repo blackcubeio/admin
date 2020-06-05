@@ -17,6 +17,7 @@ namespace blackcube\admin\helpers;
 use blackcube\admin\Module;
 use blackcube\core\interfaces\TaggableInterface;
 use blackcube\core\models\NodeComposite;
+use blackcube\core\models\Composite as CompositeModel;
 use Yii;
 
 /**
@@ -33,7 +34,7 @@ use Yii;
 class Composite extends Element {
     /**
      * Handle composite / node (re)attach
-     * @param $composite Composite
+     * @param $composite CompositeModel
      * @param $nodeComposite NodeComposite
      * @return bool
      */

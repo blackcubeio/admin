@@ -35,7 +35,7 @@ use Yii;
 class BlocType {
     /**
      * @param integer|null $id TypeId
-     * @return TypeBlocType[]
+     * @return TypeBlocTypeModel[]
      * @throws \yii\base\InvalidConfigException
      */
     public static function getTypeBlocTypes($id = null)

@@ -15,6 +15,7 @@
 namespace blackcube\admin\actions\composite;
 
 use blackcube\admin\helpers\Composite as CompositeHelper;
+use blackcube\admin\models\FilterActiveQuery;
 use blackcube\admin\models\SlugForm;
 use blackcube\core\models\Composite;
 use blackcube\core\models\Language;
@@ -22,6 +23,7 @@ use blackcube\core\models\Node;
 use blackcube\core\models\NodeComposite;
 use blackcube\core\models\Type;
 use yii\base\Action;
+use yii\db\ActiveQuery;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
 use Yii;
@@ -49,6 +51,16 @@ class CreateAction extends Action
     public $targetAction = 'edit';
 
     /**
+     * @var callable
+     */
+    public $typesQuery;
+
+    /**
+     * @var callable
+     */
+    public $nodesQuery;
+
+    /**
      * @return string|Response
      * @throws NotFoundHttpException
      * @throws \yii\base\InvalidConfigException
@@ -71,9 +83,24 @@ class CreateAction extends Action
             return $this->controller->redirect([$this->targetAction, 'id' => $composite->id]);
         }
         $languagesQuery = Language::find()->active()->orderBy(['name' => SORT_ASC]);
-        $typesQuery = Type::find()->orderBy(['name' => SORT_ASC]);
+
+        $typesQuery = null;
+        if (is_callable($this->typesQuery) === true) {
+            $typesQuery = call_user_func($this->typesQuery);
+        }
+        if ($typesQuery === null || (($typesQuery instanceof ActiveQuery) === false)) {
+            $typesQuery = Type::find()->orderBy(['name' => SORT_ASC]);
+        }
+
         $selectTagsData =  CompositeHelper::prepareTags();
-        $nodesQuery = Node::find()->orderBy(['left' => SORT_ASC]);
+
+        $nodesQuery = null;
+        if (is_callable($this->nodesQuery) === true) {
+            $nodesQuery = call_user_func($this->nodesQuery);
+        }
+        if ($nodesQuery === null || (($nodesQuery instanceof ActiveQuery) === false)) {
+            $nodesQuery = Node::find()->orderBy(['left' => SORT_ASC]);
+        }
 
         return $this->controller->render($this->view, [
             'composite' => $composite,
