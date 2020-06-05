@@ -15,6 +15,10 @@
 namespace blackcube\admin\controllers;
 
 use blackcube\admin\actions\ModalAction;
+use blackcube\admin\actions\slug\DeleteAction;
+use blackcube\admin\actions\slug\EditAction;
+use blackcube\admin\actions\slug\IndexAction;
+use blackcube\admin\actions\slug\ToggleAction;
 use blackcube\admin\components\Rbac;
 use blackcube\admin\models\SlugForm;
 use blackcube\admin\Module;
@@ -89,125 +93,20 @@ class SlugController extends BaseElementController
             'class' => ModalAction::class,
             'elementClass' => Slug::class
         ];
+        $actions['index'] = [
+            'class' => IndexAction::class,
+        ];
+        $actions['edit'] = [
+            'class' => EditAction::class,
+        ];
+        $actions['delete'] = [
+            'class' => DeleteAction::class,
+        ];
+        $actions['toggle'] = [
+            'class' => ToggleAction::class,
+        ];
         return $actions;
     }
 
-    /**
-     * @return string|Response
-     */
-    public function actionIndex()
-    {
-        $slugsQuery = Slug::find()
-            ->joinWith('seo', true)
-            ->joinWith('sitemap', true);
-        $search = Yii::$app->request->getQueryParam('search', null);
-        if ($search !== null) {
-            $slugsQuery->andWhere(['or',
-                ['like', Slug::tableName().'.[[path]]', $search],
-            ]);
-        }
-        $slugsProvider = Yii::createObject([
-            'class' => ActiveDataProvider::class,
-            'query' => $slugsQuery,
-            'pagination' => [
-                'pageSize' => 20,
-            ],
-            'sort' => [
-                'defaultOrder' => [
-                    'path' => SORT_ASC
-                ],
-                'attributes' => [
-                    'path',
-                    'active',
-                ]
-            ],
-        ]);
-
-        return $this->render('index', [
-            'slugsProvider' => $slugsProvider
-        ]);
-    }
-
-    public function actionEdit($id)
-    {
-        $slug = Slug::findOne(['id' => $id]);
-        if ($slug === null) {
-            throw new NotFoundHttpException();
-        }
-        if ($slug->element === null) {
-            $slug->setScenario(Slug::SCENARIO_REDIRECT);
-        }
-        $slugForm = Yii::createObject([
-            'class' => SlugForm::class,
-            'element' => $slug,
-        ]);
-
-        if (Yii::$app->request->isPost) {
-            $slugForm->multiLoad(Yii::$app->request->bodyParams);
-            if ($slugForm->preValidate()) {
-                if ($slugForm->save()) {
-                    return $this->redirect(['edit', 'id' => $slug->id]);
-                }
-            }
-        }
-        return $this->render('form', [
-            'slugForm' => $slugForm,
-        ]);
-    }
-
-    /**
-     * @param integer $id
-     * @return string|Response
-     * @throws NotFoundHttpException
-     * @throws \Throwable
-     * @throws \yii\db\StaleObjectException
-     */
-    public function actionDelete($id)
-    {
-        $slug = Slug::find()->with(['seo', 'sitemap'])->andWhere(['id' => $id])->one();
-        if ($slug === null) {
-            throw new NotFoundHttpException();
-        }
-        if (Yii::$app->request->isPost) {
-            $slug->delete();
-        }
-        return $this->redirect(['index']);
-    }
-
-    /**
-     * @param integer $id
-     * @return string|Response
-     */
-    public function actionToggle($id)
-    {
-        if ($id !== null) {
-            $currentSlug = Slug::findOne(['id' => $id]);
-            if ($currentSlug !== null) {
-                $currentSlug->active = !$currentSlug->active;
-                if ($currentSlug->element !== null) {
-                    $currentSlug->element->active = $currentSlug->active;
-                }
-                $transaction = Module::getInstance()->db->beginTransaction();
-                try {
-                    $slugStatus = $currentSlug->save(false, ['active', 'dateUpdate']);
-                    if ($currentSlug->element !== null) {
-                        $elementStatus = $currentSlug->element->save(false, ['active', 'dateUpdate']);
-                    } else {
-                        $elementStatus = true;
-                    }
-                    if ($slugStatus && $elementStatus) {
-                        $transaction->commit();
-                    } else {
-                        $transaction->rollBack();
-                    }
-                } catch(\Exception $e) {
-                    $transaction->rollBack();
-                }
-            }
-        }
-        return $this->renderPartial('_line', [
-            'slug' => $currentSlug
-        ]);
-    }
 
 }
