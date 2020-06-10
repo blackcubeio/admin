@@ -50,7 +50,7 @@ $formatter = Yii::$app->formatter;
                         <span class="text-xs text-gray-600 italic">#<?php echo $type->id; ?></span>
                         <div>
                                 <span class="text-xs text-gray-600  px-2 py-0 italic border bg-gray-100 border-gray-300 rounded">
-                                    <?php echo Module::t('type', 'Route: {route}', ['route' => $type->route]); ?>
+                                    <?php echo Module::t('type', 'Route: {route}', ['route' => ($type->route === null) ? Module::t('type', 'no route') : $type->route]); ?>
                                 </span>
                         </div>
 

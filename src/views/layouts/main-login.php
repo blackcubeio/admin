@@ -24,14 +24,6 @@ $this->beginPage(); ?><!DOCTYPE html>
 <html lang="fr">
     <head>
         <meta charset="utf-8">
-        <!--Import Google Icon Font-->
-        <!-- link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" -->
-        <!-- Compiled and minified CSS -->
-        <!-- link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" -->
-        <!-- Compiled and minified JavaScript -->
-        <!-- script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script -->
-        <!--Let browser know website is optimized for mobile-->
-        <!-- link href="//unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet" -->
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         <?php echo Html::tag('meta', '', ['name' => 'X-Version', 'content' => Yii::$app->version]); ?>
         <title>

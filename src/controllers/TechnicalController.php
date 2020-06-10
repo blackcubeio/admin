@@ -50,6 +50,6 @@ class TechnicalController extends Controller
      */
     public function actionMaintenance()
     {
-        return $this->render('maintenance');
+        return $this->render('maintenance', []);
     }
 }
