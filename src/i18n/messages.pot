@@ -743,7 +743,15 @@ msgid "Save"
 msgstr ""
 
 msgctxt "blackcube/admin/type"
+msgid "Select a route"
+msgstr ""
+
+msgctxt "blackcube/admin/type"
 msgid "Type"
+msgstr ""
+
+msgctxt "blackcube/admin/type"
+msgid "no route"
 msgstr ""
 
 msgctxt "blackcube/admin/user"

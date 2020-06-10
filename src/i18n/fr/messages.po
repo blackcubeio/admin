@@ -10,7 +10,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Poedit 2.3\n"
+"X-Generator: Poedit 2.3.1\n"
 
 msgctxt "blackcube/admin/actions"
 msgid "Property \"elementClass\" must be defined"
@@ -745,8 +745,16 @@ msgid "Save"
 msgstr "Enregistrer"
 
 msgctxt "blackcube/admin/type"
+msgid "Select a route"
+msgstr "Séléctionner une route"
+
+msgctxt "blackcube/admin/type"
 msgid "Type"
 msgstr "Type"
+
+msgctxt "blackcube/admin/type"
+msgid "no route"
+msgstr "pas de route"
 
 msgctxt "blackcube/admin/user"
 msgid "Authorizations"
