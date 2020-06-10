@@ -14,24 +14,19 @@
 
 namespace blackcube\admin\controllers;
 
+use blackcube\admin\actions\composite\CreateAction;
+use blackcube\admin\actions\composite\DeleteAction;
+use blackcube\admin\actions\composite\EditAction;
+use blackcube\admin\actions\composite\IndexAction;
 use blackcube\admin\actions\ToggleAction;
-use blackcube\admin\models\SlugForm;
 use blackcube\admin\actions\BlocAction;
 use blackcube\admin\actions\ModalAction;
 use blackcube\admin\components\Rbac;
-use blackcube\admin\Module;
 use blackcube\core\models\Composite;
-use blackcube\core\models\Node;
-use blackcube\core\models\NodeComposite;
-use blackcube\core\models\Language;
-use blackcube\core\models\Slug;
 use blackcube\core\models\Type;
-use yii\base\ErrorException;
-use yii\data\ActiveDataProvider;
 use yii\filters\AccessControl;
 use yii\filters\AjaxFilter;
-use yii\web\NotFoundHttpException;
-use yii\web\Response;
+use yii\web\Controller;
 use Yii;
 
 /**
@@ -44,7 +39,7 @@ use Yii;
  * @link https://www.redcat.io
  * @package blackcube\admin\controllers
  */
-class CompositeController extends BaseElementController
+class CompositeController extends Controller
 {
     /**
      * {@inheritDoc}
@@ -118,217 +113,19 @@ class CompositeController extends BaseElementController
             'elementClass' => Composite::class,
             'elementName' => 'composite',
         ];
+        $actions['index'] = [
+            'class' => IndexAction::class,
+        ];
+        $actions['create'] = [
+            'class' => CreateAction::class,
+        ];
+        $actions['edit'] = [
+            'class' => EditAction::class,
+        ];
+        $actions['delete'] = [
+            'class' => DeleteAction::class,
+        ];
         return $actions;
-    }
-
-    /**
-     * @param string|null $id
-     * @return string|Response
-     */
-    public function actionIndex()
-    {
-        $compositesQuery = Composite::find()
-            ->joinWith('type', true)
-            ->joinWith('slug', true)
-            ->with('slug.seo')
-            ->with('slug.sitemap');
-        $search = Yii::$app->request->getQueryParam('search', null);
-        if ($search !== null) {
-            $compositesQuery->andWhere(['or',
-                ['like', Composite::tableName().'.[[name]]', $search],
-                ['like', Type::tableName().'.[[name]]', $search],
-                ['like', Slug::tableName().'.[[path]]', $search],
-            ]);
-        }
-        $compositesProvider = Yii::createObject([
-            'class' => ActiveDataProvider::class,
-            'query' => $compositesQuery,
-            'pagination' => [
-                'pageSize' => 20,
-            ],
-            'sort' => [
-                'defaultOrder' => [
-                    'name' => SORT_ASC
-                ],
-                'attributes' => [
-                    'name',
-                    'active',
-                    'type' => [
-                        'asc' => [Type::tableName().'.[[name]]' => SORT_ASC],
-                        'desc' => [Type::tableName().'.[[name]]' => SORT_DESC],
-                    ],
-                ]
-            ],
-        ]);
-        return $this->render('index', [
-            'compositesProvider' => $compositesProvider
-        ]);
-    }
-
-    /**
-     * @return string|Response
-     * @throws ErrorException
-     * @throws \yii\base\InvalidConfigException
-     * @throws \yii\db\Exception
-     */
-    public function actionCreate()
-    {
-        $composite = Yii::createObject(Composite::class);
-        $slugForm = Yii::createObject([
-            'class' => SlugForm::class,
-            'element' => $composite
-        ]);
-        $blocs = $composite->getBlocs()->all();
-        $nodeComposite = Yii::createObject(NodeComposite::class);
-        $result = $this->saveElement($composite, $blocs, $slugForm);
-        if ($result === true) {
-            $nodeComposite->compositeId = $composite->id;
-            $selectedTags = Yii::$app->request->getBodyParam('selectedTags', []);
-            $this->handleTags($composite, $selectedTags);
-            $this->handleNodes($composite, $nodeComposite);
-            return $this->redirect(['edit', 'id' => $composite->id]);
-        }
-        $languagesQuery = Language::find()->active()->orderBy(['name' => SORT_ASC]);
-        $typesQuery = Type::find()->orderBy(['name' => SORT_ASC]);
-        $selectTagsData =  $this->prepareTags();
-        $nodesQuery = Node::find()->orderBy(['left' => SORT_ASC]);
-
-        return $this->render('form', [
-            'composite' => $composite,
-            'slugForm' => $slugForm,
-            'typesQuery' => $typesQuery,
-            'nodesQuery' => $nodesQuery,
-            'nodeComposite' => $nodeComposite,
-            'selectTagsData' => $selectTagsData,
-            'blocs' => $blocs,
-            'languagesQuery' => $languagesQuery,
-        ]);
-    }
-
-    /**
-     * @param integer $id
-     * @return string|Response
-     * @throws ErrorException
-     * @throws NotFoundHttpException
-     * @throws \yii\base\InvalidConfigException
-     * @throws \yii\db\Exception
-     */
-    public function actionEdit($id)
-    {
-        $composite = Composite::findOne(['id' => $id]);
-        if ($composite === null) {
-            throw new NotFoundHttpException();
-        }
-        $slugForm = Yii::createObject([
-            'class' => SlugForm::class,
-            'element' => $composite
-        ]);
-        $blocs = $composite->getBlocs()->all();
-        $nodeComposite = NodeComposite::find()
-            ->andWhere(['compositeId' => $composite->id])
-            ->orderBy(['order' => SORT_ASC])
-            ->one();
-        if ($nodeComposite === null) {
-            $nodeComposite = Yii::createObject(NodeComposite::class);
-            $nodeComposite->compositeId = $composite->id;
-        }
-
-        $result = $this->saveElement($composite, $blocs, $slugForm);
-        if ($result === true) {
-            $selectedTags = Yii::$app->request->getBodyParam('selectedTags', []);
-            $this->handleTags($composite, $selectedTags);
-            $this->handleNodes($composite, $nodeComposite);
-            return $this->redirect(['edit', 'id' => $composite->id]);
-        }
-        $languagesQuery = Language::find()->active()->orderBy(['name' => SORT_ASC]);
-        $typesQuery = Type::find()->orderBy(['name' => SORT_ASC]);
-        $selectTagsData =  $this->prepareTags();
-        $nodesQuery = Node::find()->orderBy(['left' => SORT_ASC]);
-
-        return $this->render('form', [
-            'composite' => $composite,
-            'slugForm' => $slugForm,
-            'typesQuery' => $typesQuery,
-            'nodesQuery' => $nodesQuery,
-            'nodeComposite' => $nodeComposite,
-            'selectTagsData' => $selectTagsData,
-            'blocs' => $blocs,
-            'languagesQuery' => $languagesQuery,
-        ]);
-    }
-
-    /**
-     * @param integer $id
-     * @return string|Response
-     * @throws NotFoundHttpException
-     * @throws \Throwable
-     * @throws \yii\db\StaleObjectException
-     */
-    public function actionDelete($id)
-    {
-        $composite = Composite::findOne(['id' => $id]);
-        if ($composite === null) {
-            throw new NotFoundHttpException();
-        }
-        if (Yii::$app->request->isPost) {
-            $transaction = Module::getInstance()->db->beginTransaction();
-            try {
-                $slug = $composite->getSlug()->one();
-                if ($slug !== null) {
-                    $slug->delete();
-                }
-                $blocsQuery = $composite->getBlocs();
-                foreach($blocsQuery->each() as $bloc) {
-                    $bloc->delete();
-                }
-                $composite->delete();
-                $transaction->commit();
-            } catch (\Exception $e) {
-                $transaction->rollBack();
-            }
-        }
-        return $this->redirect(['index']);
-    }
-
-    /**
-     * @param $composite Composite
-     * @param $nodeComposite NodeComposite
-     * @return bool
-     */
-    protected function handleNodes($composite, $nodeComposite)
-    {
-        $status = true;
-        if (Yii::$app->request->isPost) {
-            try {
-                $transaction = Module::getInstance()->db->beginTransaction();
-                $currentAttachedNode = $nodeComposite->node;
-                $nodeComposite->load(Yii::$app->request->bodyParams);
-                $newAttachedNode = $nodeComposite->node;
-                if (($currentAttachedNode !== null) && ($newAttachedNode === null)) {
-                    $currentAttachedNode->detachComposite($composite);
-                } elseif (($currentAttachedNode !== null) && ($newAttachedNode !== null)) {
-                    if ($currentAttachedNode->id !== $newAttachedNode->id) {
-                        $currentAttachedNode->detachComposite($composite);
-                        $newAttachedNode->attachComposite($composite);
-                    }
-                } elseif (($currentAttachedNode === null) && ($newAttachedNode !== null)) {
-                    $newAttachedNode->attachComposite($composite);
-                }
-                $nodeComposite = NodeComposite::find()
-                    ->andWhere(['compositeId' => $composite->id])
-                    ->orderBy(['order' => SORT_ASC])
-                    ->one();
-                if ($nodeComposite === null) {
-                    $nodeComposite = Yii::createObject(NodeComposite::class);
-                    $nodeComposite->compositeId = $composite->id;
-                }
-                $transaction->commit();
-            } catch(\Exception $e) {
-                $status = false;
-                $transaction->rollBack();
-            }
-        }
-        return $status;
     }
 
 }

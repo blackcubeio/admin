@@ -57,7 +57,7 @@ class ToggleAction extends Action
     public function run($id)
     {
         if ($this->elementClass === null) {
-            throw new InvalidArgumentException();
+            throw new InvalidArgumentException(Module::t('actions', 'Property "elementClass" must be defined'));
         }
         $elementClass = $this->elementClass;
         $element = $elementClass::findOne(['id' => $id]);

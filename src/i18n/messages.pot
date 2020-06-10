@@ -10,6 +10,10 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
+msgctxt "blackcube/admin/actions"
+msgid "Property \"elementClass\" must be defined"
+msgstr ""
+
 msgctxt "blackcube/admin/authentication"
 msgid "Forgot Password?"
 msgstr ""
@@ -275,22 +279,6 @@ msgid "Back"
 msgstr ""
 
 msgctxt "blackcube/admin/menu"
-msgid "CMS Category"
-msgstr ""
-
-msgctxt "blackcube/admin/menu"
-msgid "CMS Composite"
-msgstr ""
-
-msgctxt "blackcube/admin/menu"
-msgid "CMS Node"
-msgstr ""
-
-msgctxt "blackcube/admin/menu"
-msgid "CMS Tag"
-msgstr ""
-
-msgctxt "blackcube/admin/menu"
 msgid "Cancel"
 msgstr ""
 
@@ -316,10 +304,6 @@ msgstr ""
 
 msgctxt "blackcube/admin/menu"
 msgid "Menu item"
-msgstr ""
-
-msgctxt "blackcube/admin/menu"
-msgid "Module \"{moduleId}\" does not exist."
 msgstr ""
 
 msgctxt "blackcube/admin/menu"
@@ -747,10 +731,6 @@ msgid "Create"
 msgstr ""
 
 msgctxt "blackcube/admin/type"
-msgid "Module \"{moduleId}\" does not exist."
-msgstr ""
-
-msgctxt "blackcube/admin/type"
 msgid "Name"
 msgstr ""
 
@@ -763,7 +743,15 @@ msgid "Save"
 msgstr ""
 
 msgctxt "blackcube/admin/type"
+msgid "Select a route"
+msgstr ""
+
+msgctxt "blackcube/admin/type"
 msgid "Type"
+msgstr ""
+
+msgctxt "blackcube/admin/type"
+msgid "no route"
 msgstr ""
 
 msgctxt "blackcube/admin/user"
@@ -915,6 +903,30 @@ msgid "Website"
 msgstr ""
 
 msgctxt "blackcube/admin/helpers"
+msgid "CMS Category"
+msgstr ""
+
+msgctxt "blackcube/admin/helpers"
+msgid "CMS Composite"
+msgstr ""
+
+msgctxt "blackcube/admin/helpers"
+msgid "CMS Node"
+msgstr ""
+
+msgctxt "blackcube/admin/helpers"
+msgid "CMS Tag"
+msgstr ""
+
+msgctxt "blackcube/admin/helpers"
 msgid "Class \"{classname}\" does not exist."
+msgstr ""
+
+msgctxt "blackcube/admin/helpers"
+msgid "Module \"{moduleId}\" does not exist."
+msgstr ""
+
+msgctxt "blackcube/admin/helpers"
+msgid "Regular"
 msgstr ""
 

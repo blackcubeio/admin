@@ -14,19 +14,11 @@
 
 namespace blackcube\admin\controllers;
 
+use blackcube\admin\actions\dashboard\IndexAction;
 use blackcube\admin\components\Rbac;
-use blackcube\admin\Module;
-use blackcube\core\components\PreviewManager;
-use blackcube\core\models\Category;
-use blackcube\core\models\Composite;
-use blackcube\core\models\Node;
-use blackcube\core\models\Slug;
-use blackcube\core\models\Tag;
 use yii\filters\AccessControl;
-use yii\filters\AjaxFilter;
 use yii\web\Controller;
 use Yii;
-use yii\web\Response;
 
 /**
  * Class DashboardController
@@ -63,53 +55,14 @@ class DashboardController extends Controller
     }
 
     /**
-     * @return string|Response
+     * {@inheritDoc}
      */
-    public function actionIndex()
+    public function actions()
     {
-        $compositesQuery = Composite::find()
-            ->orderBy(['dateUpdate' => SORT_DESC, 'dateCreate' => SORT_DESC])
-            ->limit(5);
-        $nodesQuery = Node::find()
-            ->orderBy(['dateUpdate' => SORT_DESC, 'dateCreate' => SORT_DESC])
-            ->limit(5);
-        $categoriesQuery = Category::find()
-            ->orderBy(['dateUpdate' => SORT_DESC, 'dateCreate' => SORT_DESC])
-            ->limit(5);
-        $tagsQuery = Tag::find()
-            ->orderBy(['dateUpdate' => SORT_DESC, 'dateCreate' => SORT_DESC])
-            ->limit(5);
-
-        $countComposites = [
-            'global' => Composite::find()->count(),
-            'active' => Composite::find()->active()->count(),
-            'activeWithSlug' => Composite::find()->active()->innerJoinWith('slug')->andWhere([Slug::tableName().'.active' => true])->count(),
+        $actions = parent::actions();
+        $actions['index'] = [
+            'class' => IndexAction::class
         ];
-        $countNodes = [
-            'global' => Node::find()->count(),
-            'active' => Node::find()->active()->count(),
-            'activeWithSlug' => Node::find()->active()->innerJoinWith('slug')->andWhere([Slug::tableName().'.active' => true])->count(),
-        ];
-        $countCategories = [
-            'global' => Category::find()->count(),
-            'active' => Category::find()->active()->count(),
-            'activeWithSlug' => Category::find()->active()->innerJoinWith('slug')->andWhere([Slug::tableName().'.active' => true])->count(),
-        ];
-        $countTags = [
-            'global' => Tag::find()->count(),
-            'active' => Tag::find()->active()->count(),
-            'activeWithSlug' => Tag::find()->active()->innerJoinWith('slug')->andWhere([Slug::tableName().'.active' => true])->count(),
-        ];
-        return $this->render('index', [
-            'countComposites' => $countComposites,
-            'countNodes' => $countNodes,
-            'countCategories' => $countCategories,
-            'countTags' => $countTags,
-            'nodesQuery' => $nodesQuery,
-            'compositesQuery' => $compositesQuery,
-            'categoriesQuery' => $categoriesQuery,
-            'tagsQuery' => $tagsQuery,
-        ]);
+        return $actions;
     }
-
 }
