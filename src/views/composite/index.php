@@ -11,6 +11,7 @@
  * @link https://www.redcat.io
  * @package blackcube\admin\views\composite
  *
+ * @var $pluginsHandler \blackcube\core\interfaces\PluginsHandlerInterface
  * @var $compositesProvider \yii\data\ActiveDataProvider
  * @var $this \yii\web\View
  */
@@ -18,16 +19,39 @@
 use blackcube\admin\Module;
 use blackcube\admin\components\Rbac;
 use blackcube\admin\helpers\Html;
-use blackcube\admin\widgets\Sidebar;
+use blackcube\core\interfaces\PluginsHandlerInterface;
+use blackcube\admin\interfaces\PluginAdminHookInterface;
 use yii\widgets\LinkPager;
 
 $formatter = Yii::$app->formatter;
 ?>
     <main class="overflow-hidden">
+        <?php if ($pluginsHandler instanceof PluginsHandlerInterface): ?>
+            <?php $widgets = $pluginsHandler->runWidgetHook(PluginAdminHookInterface::PLUGIN_HOOK_WIDGET_COMPOSITE_LIST_HEAD); ?>
+            <?php foreach ($widgets as $widget): ?>
+                <?php echo $widget; ?>
+            <?php endforeach; ?>
+        <?php endif; ?>
         <div class="table-container">
+            <?php if ($pluginsHandler instanceof PluginsHandlerInterface): ?>
+                <?php $widgets = $pluginsHandler->runWidgetHook(PluginAdminHookInterface::PLUGIN_HOOK_WIDGET_COMPOSITE_LIST_BEFORE_LIST); ?>
+                <?php foreach ($widgets as $widget): ?>
+                    <?php echo $widget; ?>
+                <?php endforeach; ?>
+            <?php endif; ?>
+
             <div blackcube-ajaxify="click" blackcube-attach-modal="">
-                <?php echo $this->render('_list', ['compositesProvider' => $compositesProvider]); ?>
+                <?php echo $this->render('_list', [
+                    'pluginsHandler' => $pluginsHandler,
+                    'compositesProvider' => $compositesProvider
+                ]); ?>
             </div>
+            <?php if ($pluginsHandler instanceof PluginsHandlerInterface): ?>
+                <?php $widgets = $pluginsHandler->runWidgetHook(PluginAdminHookInterface::PLUGIN_HOOK_WIDGET_COMPOSITE_LIST_AFTER_LIST); ?>
+                <?php foreach ($widgets as $widget): ?>
+                    <?php echo $widget; ?>
+                <?php endforeach; ?>
+            <?php endif; ?>
             <div class="text-center">
                 <?php echo LinkPager::widget([
                     'pagination' => $compositesProvider->pagination,

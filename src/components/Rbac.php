@@ -70,6 +70,11 @@ class Rbac
     public const PERMISSION_SLUG_VIEW = 'SLUG:VIEW';
     public const ROLE_SLUG_MANAGER = 'SLUG:MANAGER';
 
+    public const PERMISSION_PLUGIN_DELETE = 'PLUGIN:DELETE';
+    public const PERMISSION_PLUGIN_UPDATE = 'PLUGIN:UPDATE';
+    public const PERMISSION_PLUGIN_VIEW = 'PLUGIN:VIEW';
+    public const ROLE_PLUGIN_MANAGER = 'PLUGIN:MANAGER';
+
     public const ROLE_ADMIN = 'ADMIN';
 
     /**

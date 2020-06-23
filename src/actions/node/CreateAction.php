@@ -17,6 +17,9 @@ namespace blackcube\admin\actions\node;
 use blackcube\admin\actions\BaseElementAction;
 use blackcube\admin\helpers\Node as NodeHelper;
 use blackcube\admin\models\SlugForm;
+use blackcube\admin\Module;
+use blackcube\core\interfaces\PluginHookInterface;
+use blackcube\core\interfaces\PluginsHandlerInterface;
 use blackcube\core\models\Language;
 use blackcube\core\models\Node;
 use blackcube\core\models\Type;
@@ -60,8 +63,13 @@ class CreateAction extends BaseElementAction
             'class' => SlugForm::class,
             'element' => $node
         ]);
+        $pluginsHandler = Yii::createObject(PluginsHandlerInterface::class);
+        /* @var $pluginsHandler \blackcube\core\interfaces\PluginsHandlerInterface */
+        $pluginsHandler->runHook(PluginHookInterface::PLUGIN_HOOK_LOAD, $node);
+
         $blocs = $node->getBlocs()->all();
         $compositesQuery = $node->getComposites();
+        $transaction = Module::getInstance()->db->beginTransaction();
         if (Yii::$app->request->isPost) {
             $targetId = Yii::$app->request->getBodyParam('moveNodeTarget');
             $saveNodeMode =  Yii::$app->request->getBodyParam('moveNodeMode', 'into');
@@ -81,11 +89,23 @@ class CreateAction extends BaseElementAction
 
         }
         $result = NodeHelper::saveElement($node, $blocs, $slugForm);
-        if ($result === true) {
+        $validatePlugins = $pluginsHandler->runHook(PluginHookInterface::PLUGIN_HOOK_VALIDATE, $node);
+        $validatePlugins = array_reduce($validatePlugins, function($accumulator, $item) {
+            return $accumulator && $item;
+        }, true);
+        if ($result === true && $validatePlugins === true) {
             $selectedTags = Yii::$app->request->getBodyParam('selectedTags', []);
             NodeHelper::handleTags($node, $selectedTags);
-            return $this->controller->redirect([$this->targetAction, 'id' => $node->id]);
+            $savePlugins = $pluginsHandler->runHook(PluginHookInterface::PLUGIN_HOOK_SAVE, $node);
+            $savePlugins = array_reduce($savePlugins, function($accumulator, $item) {
+                return $accumulator && $item;
+            }, true);
+            if ($savePlugins === true) {
+                $transaction->commit();
+                return $this->controller->redirect([$this->targetAction, 'id' => $node->id]);
+            }
         }
+        $transaction->rollBack();
         $languagesQuery = Language::find()->active()->orderBy(['name' => SORT_ASC]);
 
         $targetNodesQuery = $this->getTargetNodesQuery()
@@ -97,6 +117,7 @@ class CreateAction extends BaseElementAction
         $selectTagsData =  NodeHelper::prepareTags();
 
         return $this->controller->render($this->view, [
+            'pluginsHandler' => $pluginsHandler,
             'node' => $node,
             'slugForm' => $slugForm,
             'typesQuery' => $typesQuery,

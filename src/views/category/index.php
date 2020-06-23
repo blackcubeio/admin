@@ -11,6 +11,7 @@
  * @link https://www.redcat.io
  * @package blackcube\admin\views\category
  *
+ * @var $pluginsHandler \blackcube\core\interfaces\PluginsHandlerInterface
  * @var $categoriesProvider \yii\data\ActiveDataProvider
  * @var $this \yii\web\View
  */
@@ -19,15 +20,38 @@ use blackcube\admin\Module;
 use blackcube\admin\components\Rbac;
 use blackcube\admin\helpers\Html;
 use blackcube\admin\widgets\Sidebar;
+use blackcube\core\interfaces\PluginsHandlerInterface;
+use blackcube\admin\interfaces\PluginAdminHookInterface;
 use yii\widgets\LinkPager;
 
 $formatter = Yii::$app->formatter;
 ?>
     <main class="overflow-hidden">
+        <?php if ($pluginsHandler instanceof PluginsHandlerInterface): ?>
+            <?php $widgets = $pluginsHandler->runWidgetHook(\blackcube\admin\interfaces\PluginAdminHookInterface::PLUGIN_HOOK_WIDGET_CATEGORY_LIST_HEAD); ?>
+            <?php foreach ($widgets as $widget): ?>
+                <?php echo $widget; ?>
+            <?php endforeach; ?>
+        <?php endif; ?>
         <div class="table-container">
+            <?php if ($pluginsHandler instanceof PluginsHandlerInterface): ?>
+                <?php $widgets = $pluginsHandler->runWidgetHook(PluginAdminHookInterface::PLUGIN_HOOK_WIDGET_CATEGORY_LIST_BEFORE_LIST); ?>
+                <?php foreach ($widgets as $widget): ?>
+                    <?php echo $widget; ?>
+                <?php endforeach; ?>
+            <?php endif; ?>
             <div blackcube-ajaxify="click"  blackcube-attach-modal="">
-                <?php echo $this->render('_list', ['categoriesProvider' => $categoriesProvider]); ?>
+                <?php echo $this->render('_list', [
+                    'pluginsHandler' => $pluginsHandler,
+                    'categoriesProvider' => $categoriesProvider
+                ]); ?>
             </div>
+            <?php if ($pluginsHandler instanceof PluginsHandlerInterface): ?>
+                <?php $widgets = $pluginsHandler->runWidgetHook(PluginAdminHookInterface::PLUGIN_HOOK_WIDGET_CATEGORY_LIST_AFTER_LIST); ?>
+                <?php foreach ($widgets as $widget): ?>
+                    <?php echo $widget; ?>
+                <?php endforeach; ?>
+            <?php endif; ?>
             <div class="text-center">
                 <?php echo LinkPager::widget([
                     'pagination' => $categoriesProvider->pagination,

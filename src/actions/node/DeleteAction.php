@@ -16,6 +16,8 @@ namespace blackcube\admin\actions\node;
 
 use blackcube\admin\actions\BaseElementAction;
 use blackcube\admin\Module;
+use blackcube\core\interfaces\PluginHookInterface;
+use blackcube\core\interfaces\PluginsHandlerInterface;
 use blackcube\core\models\Node;
 use yii\base\Action;
 use yii\db\ActiveQuery;
@@ -55,8 +57,16 @@ class DeleteAction extends BaseElementAction
         }
         if (Yii::$app->request->isPost) {
             $transaction = Module::getInstance()->db->beginTransaction();
+            $pluginsHandler = Yii::createObject(PluginsHandlerInterface::class);
+            /* @var $pluginsHandler \blackcube\core\interfaces\PluginsHandlerInterface */
+
             try {
                 $slug = $node->getSlug()->one();
+                $deletePlugins = $pluginsHandler->runHook(PluginHookInterface::PLUGIN_HOOK_DELETE, $node);
+                $deletePlugins = array_reduce($deletePlugins, function($accumulator, $item) {
+                    return $accumulator && $item;
+                }, true);
+
                 if ($slug !== null) {
                     $slug->delete();
                 }
