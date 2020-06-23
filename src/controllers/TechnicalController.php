@@ -15,10 +15,8 @@
 namespace blackcube\admin\controllers;
 
 use yii\web\Controller;
-use Yii;
 use yii\web\ErrorAction;
-use yii\web\GoneHttpException;
-use yii\web\NotFoundHttpException;
+use Yii;
 
 /**
  * Class TechnicalController

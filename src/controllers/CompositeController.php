@@ -23,7 +23,6 @@ use blackcube\admin\actions\BlocAction;
 use blackcube\admin\actions\ModalAction;
 use blackcube\admin\components\Rbac;
 use blackcube\core\models\Composite;
-use blackcube\core\models\Type;
 use yii\filters\AccessControl;
 use yii\filters\AjaxFilter;
 use yii\web\Controller;

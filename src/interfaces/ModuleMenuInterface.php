@@ -15,7 +15,6 @@
 namespace blackcube\admin\interfaces;
 
 use Yii;
-use yii\base\Widget;
 
 /**
  * Interface ModuleMenuInterface

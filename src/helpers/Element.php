@@ -20,9 +20,9 @@ use blackcube\core\interfaces\ElementInterface;
 use blackcube\core\interfaces\TaggableInterface;
 use blackcube\core\models\Category;
 use blackcube\core\models\Tag;
-use Yii;
 use yii\base\ErrorException;
 use yii\base\Model;
+use Yii;
 
 /**
  * Class Element

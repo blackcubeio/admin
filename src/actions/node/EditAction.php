@@ -18,11 +18,10 @@ use blackcube\admin\actions\BaseElementAction;
 use blackcube\admin\helpers\Node as NodeHelper;
 use blackcube\admin\models\SlugForm;
 use blackcube\admin\Module;
+use blackcube\core\interfaces\PluginHookInterface;
+use blackcube\core\interfaces\PluginsHandlerInterface;
 use blackcube\core\models\Language;
 use blackcube\core\models\Node;
-use blackcube\core\models\Type;
-use yii\base\Action;
-use yii\db\ActiveQuery;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
 use Yii;
@@ -64,6 +63,10 @@ class EditAction extends BaseElementAction
         if ($node === null) {
             throw new NotFoundHttpException();
         }
+        $pluginsHandler = Yii::createObject(PluginsHandlerInterface::class);
+        /* @var $pluginsHandler \blackcube\core\interfaces\PluginsHandlerInterface */
+        $pluginsHandler->runHook(PluginHookInterface::PLUGIN_HOOK_LOAD, $node);
+
         $slugForm = Yii::createObject([
             'class' => SlugForm::class,
             'element' => $node
@@ -110,11 +113,24 @@ class EditAction extends BaseElementAction
                 $transaction->rollBack();
             }
         }
-        if ($result === true) {
+        $transaction = Module::getInstance()->db->beginTransaction();
+        $validatePlugins = $pluginsHandler->runHook(PluginHookInterface::PLUGIN_HOOK_VALIDATE, $node);
+        $validatePlugins = array_reduce($validatePlugins, function($accumulator, $item) {
+            return $accumulator && $item;
+        }, true);
+        if ($result === true && $validatePlugins === true) {
             $selectedTags = Yii::$app->request->getBodyParam('selectedTags', []);
             NodeHelper::handleTags($node, $selectedTags);
-            return $this->controller->redirect([$this->targetAction, 'id' => $node->id]);
+            $savePlugins = $pluginsHandler->runHook(PluginHookInterface::PLUGIN_HOOK_SAVE, $node);
+            $savePlugins = array_reduce($savePlugins, function($accumulator, $item) {
+                return $accumulator && $item;
+            }, true);
+            if ($savePlugins === true) {
+                $transaction->commit();
+                return $this->controller->redirect([$this->targetAction, 'id' => $node->id]);
+            }
         }
+        $transaction->rollBack();
         $languagesQuery = Language::find()->active()->orderBy(['name' => SORT_ASC]);
 
         $targetNodesQuery = $this->getTargetNodesQuery()
@@ -126,6 +142,7 @@ class EditAction extends BaseElementAction
         $selectTagsData = NodeHelper::prepareTags();
 
         return $this->controller->render($this->view, [
+            'pluginsHandler' => $pluginsHandler,
             'node' => $node,
             'parentNode' => $parentNode,
             'slugForm' => $slugForm,

@@ -15,7 +15,6 @@
 namespace blackcube\admin;
 
 use blackcube\admin\commands\AdministratorController;
-use blackcube\admin\commands\IconsController;
 use blackcube\admin\commands\RbacController;
 use blackcube\admin\interfaces\MigrableInterface;
 use blackcube\admin\models\Administrator;
@@ -94,6 +93,7 @@ class Module extends BaseModule implements BootstrapInterface
     {
         $this->layout = 'main';
         parent::init();
+        //TODO: should inherit db from Core
         $this->db = Instance::ensure($this->db, Connection::class);
         if ($this->cache !== null) {
             $this->cache = Instance::ensure($this->cache, CacheInterface::class);

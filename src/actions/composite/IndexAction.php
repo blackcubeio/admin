@@ -15,6 +15,7 @@
 namespace blackcube\admin\actions\composite;
 
 use blackcube\admin\actions\BaseElementAction;
+use blackcube\core\interfaces\PluginsHandlerInterface;
 use blackcube\core\models\Composite;
 use blackcube\core\models\Slug;
 use blackcube\core\models\Type;
@@ -81,7 +82,11 @@ class IndexAction extends BaseElementAction
                 ]
             ],
         ]);
+        $pluginsHandler = Yii::createObject(PluginsHandlerInterface::class);
+        /* @var $pluginsHandler \blackcube\core\interfaces\PluginsHandlerInterface */
+
         return $this->controller->render($this->view, [
+            'pluginsHandler' => $pluginsHandler,
             'compositesProvider' => $compositesProvider
         ]);
     }

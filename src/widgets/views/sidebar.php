@@ -155,6 +155,24 @@ use yii\helpers\Url;
             </ul>
         </li>
         <?php endif; ?>
+        <?php if (Yii::$app->user->can(Rbac::PERMISSION_PLUGIN_VIEW)): ?>
+        <li>
+            <?php echo Html::beginTag('span', ['class' => 'section', 'data-blackcube-section' => 'plugin']); ?>
+            <i class="fa fa-plug float-left mx-2 mt-2"></i>
+            <?php echo Module::t('widgets', 'Plugins'); ?>
+            <span><i class="fa fa-angle-down float-right mt-2 arrow"></i></span>
+            <?php echo Html::endTag('span'); ?>
+            <ul class="hidden">
+                <?php echo Html::beginTag('li', ['class' => ($controllerUid === $adminUid.'/plugin' ? 'active':'')]); ?>
+                    <?php echo Html::beginTag('a', ['href' => Url::to(['/'.$adminUid.'/plugin/index'])]); ?>
+                        <i class="fa fa-screwdriver float-left mx-2 mt-2"></i>
+                        <?php echo Module::t('widgets', 'Configuration'); ?>
+                        <span><i class="fa fa-angle-right angle"></i></span>
+                    <?php echo Html::endTag('a'); ?>
+                <?php echo Html::endTag('li'); ?>
+            </ul>
+        </li>
+        <?php endif; ?>
         <?php if (count($modulesWidgets) > 0): ?>
         <li>
             <?php echo Html::beginTag('span', ['class' => 'section', 'data-blackcube-section' => 'modules']); ?>

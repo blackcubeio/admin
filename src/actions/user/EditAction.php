@@ -14,13 +14,8 @@
 
 namespace blackcube\admin\actions\user;
 
-use blackcube\admin\helpers\Tag as TagHelper;
 use blackcube\admin\helpers\User as UserHelper;
 use blackcube\admin\models\Administrator;
-use blackcube\admin\models\SlugForm;
-use blackcube\core\models\Category;
-use blackcube\core\models\Tag;
-use blackcube\core\models\Type;
 use yii\base\Action;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;

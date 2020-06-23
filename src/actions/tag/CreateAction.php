@@ -17,10 +17,10 @@ namespace blackcube\admin\actions\tag;
 use blackcube\admin\actions\BaseElementAction;
 use blackcube\admin\helpers\Tag as TagHelper;
 use blackcube\admin\models\SlugForm;
-use blackcube\core\models\Category;
+use blackcube\admin\Module;
+use blackcube\core\interfaces\PluginHookInterface;
+use blackcube\core\interfaces\PluginsHandlerInterface;
 use blackcube\core\models\Tag;
-use blackcube\core\models\Type;
-use yii\base\Action;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
 use Yii;
@@ -59,16 +59,34 @@ class CreateAction extends BaseElementAction
             'class' => SlugForm::class,
             'element' => $tag,
         ]);
+        $pluginsHandler = Yii::createObject(PluginsHandlerInterface::class);
+        /* @var $pluginsHandler \blackcube\core\interfaces\PluginsHandlerInterface */
+        $pluginsHandler->runHook(PluginHookInterface::PLUGIN_HOOK_LOAD, $tag);
+
         $blocs = $tag->getBlocs()->all();
+        $transaction = Module::getInstance()->db->beginTransaction();
         $result = TagHelper::saveElement($tag, $blocs, $slugForm);
-        if ($result === true) {
-            return $this->controller->redirect([$this->targetAction, 'id' => $tag->id]);
+        $validatePlugins = $pluginsHandler->runHook(PluginHookInterface::PLUGIN_HOOK_VALIDATE, $tag);
+        $validatePlugins = array_reduce($validatePlugins, function($accumulator, $item) {
+            return $accumulator && $item;
+        }, true);
+        if ($result === true && $validatePlugins === true) {
+            $savePlugins = $pluginsHandler->runHook(PluginHookInterface::PLUGIN_HOOK_SAVE, $tag);
+            $savePlugins = array_reduce($savePlugins, function($accumulator, $item) {
+                return $accumulator && $item;
+            }, true);
+            if ($savePlugins === true) {
+                $transaction->commit();
+                return $this->controller->redirect([$this->targetAction, 'id' => $tag->id]);
+            }
         }
+        $transaction->rollBack();
         $categoriesQuery = $this->getCategoriesQuery()
             ->orderBy(['name' => SORT_ASC]);
         $typesQuery = $this->getTypesQuery()
             ->orderBy(['name' => SORT_ASC]);
         return $this->controller->render($this->view, [
+            'pluginsHandler' => $pluginsHandler,
             'tag' => $tag,
             'slugForm' => $slugForm,
             'typesQuery' => $typesQuery,

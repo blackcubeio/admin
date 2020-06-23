@@ -26,8 +26,6 @@ use blackcube\admin\models\Administrator;
 use yii\filters\AccessControl;
 use yii\filters\AjaxFilter;
 use yii\web\Controller;
-use yii\web\NotFoundHttpException;
-use yii\web\Response;
 use Yii;
 
 /**

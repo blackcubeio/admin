@@ -15,9 +15,9 @@
 namespace blackcube\admin\actions\type;
 
 use blackcube\admin\Module;
-use blackcube\core\models\Type;
 use blackcube\admin\helpers\BlocType as BlocTypeHelper;
 use blackcube\admin\helpers\Route as RouteHelper;
+use blackcube\core\models\Type;
 use blackcube\core\models\TypeBlocType;
 use yii\base\Action;
 use yii\base\Model;
