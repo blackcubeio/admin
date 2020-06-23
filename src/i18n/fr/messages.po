@@ -532,6 +532,14 @@ msgctxt "blackcube/admin/parameter"
 msgid "Save"
 msgstr "Enregistrer"
 
+msgctxt "blackcube/admin/plugin"
+msgid "Action"
+msgstr "Action"
+
+msgctxt "blackcube/admin/plugin"
+msgid "Name"
+msgstr "Nom"
+
 msgctxt "blackcube/admin/search"
 msgid "Action"
 msgstr "Action"
@@ -809,6 +817,10 @@ msgid "Composites"
 msgstr "Articles"
 
 msgctxt "blackcube/admin/widgets"
+msgid "Configuration"
+msgstr "Configuration"
+
+msgctxt "blackcube/admin/widgets"
 msgid "Dashboard"
 msgstr "Tableau de bord"
 
@@ -839,6 +851,10 @@ msgstr "Rubriques"
 msgctxt "blackcube/admin/widgets"
 msgid "Parameters"
 msgstr "Paramètres"
+
+msgctxt "blackcube/admin/widgets"
+msgid "Plugins"
+msgstr "Plugins"
 
 msgctxt "blackcube/admin/widgets"
 msgid "Preview {icon}"
