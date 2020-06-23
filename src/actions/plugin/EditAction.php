@@ -9,13 +9,11 @@
  * @license https://www.redcat.io/license license
  * @version XXX
  * @link https://www.redcat.io
- * @package blackcube\admin\actions\bloctype
+ * @package blackcube\admin\actions\plugin
  */
 
-namespace blackcube\admin\actions\bloctype;
+namespace blackcube\admin\actions\plugin;
 
-use blackcube\admin\helpers\Type as TypeHelper;
-use blackcube\core\models\BlocType;
 use yii\base\Action;
 use yii\base\Model;
 use yii\web\NotFoundHttpException;
@@ -30,7 +28,7 @@ use Yii;
  * @license https://www.redcat.io/license license
  * @version XXX
  * @link https://www.redcat.io
- * @package blackcube\admin\actions\bloctype
+ * @package blackcube\admin\actions\plugin
  */
 class EditAction extends Action
 {
@@ -52,26 +50,27 @@ class EditAction extends Action
      */
     public function run($id)
     {
-        $blocType = BlocType::findOne(['id' => $id]);
-        if ($blocType === null) {
+        $type = Type::findOne(['id' => $id]);
+        if ($type === null) {
             throw new NotFoundHttpException();
         }
-        $typeBlocTypes = TypeHelper::getTypeBlocTypes($id);
+        $typeBlocTypes = BlocTypeHelper::getTypeBlocTypes($id);
         if (Yii::$app->request->isPost) {
-            $blocType->load(Yii::$app->request->bodyParams);
+            $type->load(Yii::$app->request->bodyParams);
             Model::loadMultiple($typeBlocTypes, Yii::$app->request->bodyParams);
-            if ($blocType->validate() === true && Model::validateMultiple($typeBlocTypes)) {
-                if ($blocType->save()) {
-                    foreach($typeBlocTypes as $typeBlocType) {
+            if ($type->validate() === true && Model::validateMultiple($typeBlocTypes)) {
+                if ($type->save()) {
+                    foreach ($typeBlocTypes as $typeBlocType) {
                         $typeBlocType->save();
                     }
-                    return $this->controller->redirect([$this->targetAction, 'id' => $blocType->id]);
+                    return $this->controller->redirect([$this->targetAction, 'id' => $type->id]);
                 }
             }
         }
         return $this->controller->render($this->view, [
-            'blocType' => $blocType,
+            'type' => $type,
             'typeBlocTypes' => $typeBlocTypes,
+            'routes' => RouteHelper::findRoutes(),
         ]);
     }
 }

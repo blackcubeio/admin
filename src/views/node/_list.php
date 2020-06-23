@@ -11,12 +11,15 @@
  * @link https://www.redcat.io
  * @package blackcube\admin\views\node
  *
+ * @var $pluginsHandler \blackcube\core\interfaces\PluginsHandlerInterface
  * @var $nodesProvider \yii\data\ActiveDataProvider
  * @var $this \yii\web\View
  */
 
 use blackcube\admin\Module;
 use blackcube\admin\helpers\Html;
+use blackcube\core\interfaces\PluginsHandlerInterface;
+use blackcube\admin\interfaces\PluginAdminHookInterface;
 use blackcube\admin\widgets\Publication;
 use yii\helpers\Url;
 

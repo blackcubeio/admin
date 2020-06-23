@@ -9,12 +9,12 @@
  * @license https://www.redcat.io/license license
  * @version XXX
  * @link https://www.redcat.io
- * @package blackcube\admin\actions\user
+ * @package blackcube\admin\actions\plugin
  */
 
-namespace blackcube\admin\actions\user;
+namespace blackcube\admin\actions\plugin;
 
-use blackcube\admin\models\Administrator;
+use blackcube\core\interfaces\PluginsHandlerInterface;
 use yii\base\Action;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
@@ -28,7 +28,7 @@ use Yii;
  * @license https://www.redcat.io/license license
  * @version XXX
  * @link https://www.redcat.io
- * @package blackcube\admin\actions\user
+ * @package blackcube\admin\actions\type
  */
 class IndexAction extends Action
 {
@@ -44,10 +44,11 @@ class IndexAction extends Action
      */
     public function run()
     {
-        $usersQuery = Administrator::find()
-            ->orderBy(['email' => SORT_ASC]);
+        $pluginsHandler = Yii::createObject(PluginsHandlerInterface::class);
+        /* @var $pluginsHandler \blackcube\core\interfaces\PluginsHandlerInterface */
+        $pluginManagers = $pluginsHandler->getPluginManagers();
         return $this->controller->render($this->view, [
-            'usersQuery' => $usersQuery
+            'pluginManagers' => $pluginManagers,
         ]);
     }
 }

@@ -11,6 +11,7 @@
  * @link https://www.redcat.io
  * @package blackcube\admin\views\node
  *
+ * @var $pluginsHandler \blackcube\core\interfaces\PluginsHandlerInterface
  * @var $node \blackcube\core\models\Node
  * @var $parentNode \blackcube\core\models\Node
  * @var $slugForm \blackcube\admin\models\SlugForm
@@ -27,11 +28,22 @@ use blackcube\admin\Module;
 use blackcube\admin\helpers\Html;
 use blackcube\admin\widgets\Sidebar;
 use blackcube\admin\widgets\SlugForm;
+use blackcube\core\interfaces\PluginsHandlerInterface;
+use blackcube\admin\interfaces\PluginAdminHookInterface;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Url;
 ?>
     <main>
         <?php echo Html::beginForm('', 'post', ['class' => 'form']); ?>
+        <?php if ($pluginsHandler instanceof PluginsHandlerInterface): ?>
+            <?php $widgets = $pluginsHandler->runWidgetHook(
+                $node->isNewRecord ? PluginAdminHookInterface::PLUGIN_HOOK_WIDGET_NODE_CREATE_HEAD : PluginAdminHookInterface::PLUGIN_HOOK_WIDGET_NODE_UPDATE_HEAD,
+                $node
+            ); ?>
+            <?php foreach ($widgets as $widget): ?>
+                <?php echo $widget; ?>
+            <?php endforeach; ?>
+        <?php endif; ?>
         <ul class="header">
             <li>
                 <?php echo Html::a('<i class="fa fa-angle-left mr-2"></i> '.Module::t('node', 'Back'), ['index'], ['class' => 'button']); ?>
@@ -178,6 +190,16 @@ use yii\helpers\Url;
                 </div>
             <?php echo Html::endTag('div'); ?>
 
+            <?php if ($pluginsHandler instanceof PluginsHandlerInterface): ?>
+                <?php $widgets = $pluginsHandler->runWidgetHook(
+                    $node->isNewRecord ? PluginAdminHookInterface::PLUGIN_HOOK_WIDGET_NODE_CREATE_BEFORE_BLOCS : PluginAdminHookInterface::PLUGIN_HOOK_WIDGET_NODE_UPDATE_BEFORE_BLOCS,
+                    $node
+                ); ?>
+                <?php foreach ($widgets as $widget): ?>
+                    <?php echo $widget; ?>
+                <?php endforeach; ?>
+            <?php endif; ?>
+
             <?php if ($node->id !== null && $node->type !== null): ?>
                 <?php echo Html::beginTag('div', ['blackcube-toggle-element' => Html::bindAureliaAttributes([
                     'elementType' => \blackcube\core\models\Node::getElementType(),
@@ -242,6 +264,15 @@ use yii\helpers\Url;
                 </div>
             <?php echo Html::endTag('div'); ?>
         <?php echo Html::endTag('div'); ?>
+        <?php if ($pluginsHandler instanceof PluginsHandlerInterface): ?>
+            <?php $widgets = $pluginsHandler->runWidgetHook(
+                $node->isNewRecord ? PluginAdminHookInterface::PLUGIN_HOOK_WIDGET_NODE_CREATE_TAIL : PluginAdminHookInterface::PLUGIN_HOOK_WIDGET_NODE_UPDATE_TAIL,
+                $node
+            ); ?>
+            <?php foreach ($widgets as $widget): ?>
+                <?php echo $widget; ?>
+            <?php endforeach; ?>
+        <?php endif; ?>
 
         <div class="buttons">
                 <?php echo Html::a('<i class="fa fa-times mr-2"></i> '.Module::t('node', 'Cancel'), ['index'], [

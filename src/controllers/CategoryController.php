@@ -20,20 +20,11 @@ use blackcube\admin\actions\category\EditAction;
 use blackcube\admin\actions\category\IndexAction;
 use blackcube\admin\actions\ModalAction;
 use blackcube\admin\actions\ToggleAction;
-use blackcube\admin\models\SlugForm;
 use blackcube\admin\actions\BlocAction;
 use blackcube\admin\components\Rbac;
-use blackcube\admin\Module;
 use blackcube\core\models\Category;
-use blackcube\core\models\Language;
-use blackcube\core\models\Slug;
-use blackcube\core\models\Type;
-use yii\base\ErrorException;
-use yii\data\ActiveDataProvider;
 use yii\filters\AccessControl;
 use yii\filters\AjaxFilter;
-use yii\web\NotFoundHttpException;
-use yii\web\Response;
 use Yii;
 
 /**

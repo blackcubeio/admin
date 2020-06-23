@@ -14,9 +14,9 @@
 
 namespace blackcube\admin\actions\menu;
 
+use blackcube\admin\helpers\Route as RouteHelper;
 use blackcube\core\models\Menu;
 use blackcube\core\models\MenuItem;
-use blackcube\admin\helpers\Route as RouteHelper;
 use yii\base\Action;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;

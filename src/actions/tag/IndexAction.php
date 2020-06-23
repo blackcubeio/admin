@@ -15,11 +15,11 @@
 namespace blackcube\admin\actions\tag;
 
 use blackcube\admin\actions\BaseElementAction;
+use blackcube\core\interfaces\PluginsHandlerInterface;
 use blackcube\core\models\Category;
 use blackcube\core\models\Slug;
 use blackcube\core\models\Tag;
 use blackcube\core\models\Type;
-use yii\base\Action;
 use yii\data\ActiveDataProvider;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
@@ -85,7 +85,10 @@ class IndexAction extends BaseElementAction
                 ]
             ],
         ]);
+        $pluginsHandler = Yii::createObject(PluginsHandlerInterface::class);
+        /* @var $pluginsHandler \blackcube\core\interfaces\PluginsHandlerInterface */
         return $this->controller->render('index', [
+            'pluginsHandler' => $pluginsHandler,
             'tagsProvider' => $tagsProvider
         ]);
     }

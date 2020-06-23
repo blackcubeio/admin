@@ -14,9 +14,6 @@
 
 namespace blackcube\admin\helpers;
 
-use blackcube\admin\Module;
-use blackcube\core\interfaces\TaggableInterface;
-use blackcube\core\models\NodeComposite;
 use blackcube\core\models\BlocType as BlocTypeModel;
 use blackcube\core\models\TypeBlocType as TypeBlocTypeModel;
 use Yii;

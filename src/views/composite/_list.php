@@ -11,6 +11,7 @@
  * @link https://www.redcat.io
  * @package blackcube\admin\views\composite
  *
+ * @var $pluginsHandler \blackcube\core\interfaces\PluginsHandlerInterface
  * @var $compositesProvider \yii\data\ActiveDataProvider
  * @var $this \yii\web\View
  */
@@ -19,6 +20,8 @@ use blackcube\admin\Module;
 use blackcube\admin\components\Rbac;
 use blackcube\admin\helpers\Html;
 use blackcube\admin\widgets\Publication;
+use blackcube\core\interfaces\PluginsHandlerInterface;
+use blackcube\admin\interfaces\PluginAdminHookInterface;
 use yii\helpers\Url;
 
 $formatter = Yii::$app->formatter;

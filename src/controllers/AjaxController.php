@@ -17,16 +17,11 @@ namespace blackcube\admin\controllers;
 use blackcube\admin\components\Rbac;
 use blackcube\admin\Module;
 use blackcube\core\components\PreviewManager;
-use blackcube\core\models\Category;
-use blackcube\core\models\Composite;
-use blackcube\core\models\Node;
-use blackcube\core\models\Slug;
-use blackcube\core\models\Tag;
 use yii\filters\AccessControl;
 use yii\filters\AjaxFilter;
 use yii\web\Controller;
-use Yii;
 use yii\web\Response;
+use Yii;
 
 /**
  * Class AjaxController

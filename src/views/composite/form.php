@@ -11,6 +11,7 @@
  * @link https://www.redcat.io
  * @package blackcube\admin\views\composite
  *
+ * @var $pluginsHandler \blackcube\core\interfaces\PluginsHandlerInterface
  * @var $composite \blackcube\core\models\Composite
  * @var $slugForm \blackcube\admin\models\SlugForm
  * @var $typesQuery \blackcube\core\models\FilterActiveQuery
@@ -26,11 +27,22 @@ use blackcube\admin\Module;
 use blackcube\admin\helpers\Html;
 use blackcube\admin\widgets\Sidebar;
 use blackcube\admin\widgets\SlugForm;
+use blackcube\core\interfaces\PluginsHandlerInterface;
+use blackcube\admin\interfaces\PluginAdminHookInterface;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Url;
 ?>
     <main>
         <?php echo Html::beginForm('', 'post', ['class' => 'form']); ?>
+        <?php if ($pluginsHandler instanceof PluginsHandlerInterface): ?>
+            <?php $widgets = $pluginsHandler->runWidgetHook(
+            $composite->isNewRecord ? PluginAdminHookInterface::PLUGIN_HOOK_WIDGET_COMPOSITE_CREATE_HEAD : PluginAdminHookInterface::PLUGIN_HOOK_WIDGET_COMPOSITE_UPDATE_HEAD,
+                $composite
+            ); ?>
+            <?php foreach ($widgets as $widget): ?>
+                <?php echo $widget; ?>
+            <?php endforeach; ?>
+        <?php endif; ?>
         <ul class="header">
             <li>
                 <?php echo Html::a('<i class="fa fa-angle-left mr-2"></i> '.Module::t('composite', 'Back'), ['index'], ['class' => 'button']); ?>
@@ -134,6 +146,16 @@ use yii\helpers\Url;
                 </div>
             <?php echo Html::endTag('div'); ?>
 
+            <?php if ($pluginsHandler instanceof PluginsHandlerInterface): ?>
+                <?php $widgets = $pluginsHandler->runWidgetHook(
+                    $composite->isNewRecord ? PluginAdminHookInterface::PLUGIN_HOOK_WIDGET_COMPOSITE_CREATE_BEFORE_BLOCS : PluginAdminHookInterface::PLUGIN_HOOK_WIDGET_COMPOSITE_UPDATE_BEFORE_BLOCS,
+                        $composite
+                ); ?>
+                <?php foreach ($widgets as $widget): ?>
+                    <?php echo $widget; ?>
+                <?php endforeach; ?>
+            <?php endif; ?>
+
             <?php if ($composite->id !== null && $composite->type !== null): ?>
                 <?php echo Html::beginTag('div', ['blackcube-toggle-element' => Html::bindAureliaAttributes([
                     'elementType' => \blackcube\core\models\Composite::getElementType(),
@@ -172,6 +194,16 @@ use yii\helpers\Url;
                     <?php echo Html::endTag('div'); ?>
                 <?php echo Html::endTag('div'); ?>
 
+            <?php endif; ?>
+
+            <?php if ($pluginsHandler instanceof PluginsHandlerInterface): ?>
+                <?php $widgets = $pluginsHandler->runWidgetHook(
+                $composite->isNewRecord ? PluginAdminHookInterface::PLUGIN_HOOK_WIDGET_COMPOSITE_CREATE_TAIL : PluginAdminHookInterface::PLUGIN_HOOK_WIDGET_COMPOSITE_UPDATE_TAIL,
+                    $composite
+                ); ?>
+                <?php foreach ($widgets as $widget): ?>
+                    <?php echo $widget; ?>
+                <?php endforeach; ?>
             <?php endif; ?>
 
             <div class="buttons">

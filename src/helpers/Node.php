@@ -15,7 +15,6 @@
 namespace blackcube\admin\helpers;
 
 use blackcube\admin\Module;
-use blackcube\core\interfaces\TaggableInterface;
 use blackcube\core\models\NodeComposite;
 use Yii;
 

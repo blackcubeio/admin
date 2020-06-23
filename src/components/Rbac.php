@@ -1,9 +1,31 @@
 <?php
+/**
+ * Rbac.php
+ *
+ * PHP version 7.2+
+ *
+ * @author Philippe Gaultier <pgaultier@redcat.io>
+ * @copyright 2010-2020 Redcat
+ * @license https://www.redcat.io/license license
+ * @version XXX
+ * @link https://www.redcat.io
+ * @package blackcube\admin\components
+ */
 
 namespace blackcube\admin\components;
 
 use yii\helpers\Inflector;
 
+/**
+ * Class Rbac
+ *
+ * @author Philippe Gaultier <pgaultier@redcat.io>
+ * @copyright 2010-2020 Redcat
+ * @license https://www.redcat.io/license license
+ * @version XXX
+ * @link https://www.redcat.io
+ * @package blackcube\admin\components
+ */
 class Rbac
 {
     public const PERMISSION_CATEGORY_CREATE = 'CATEGORY:CREATE';
@@ -70,6 +92,11 @@ class Rbac
     public const PERMISSION_SLUG_VIEW = 'SLUG:VIEW';
     public const ROLE_SLUG_MANAGER = 'SLUG:MANAGER';
 
+    public const PERMISSION_PLUGIN_DELETE = 'PLUGIN:DELETE';
+    public const PERMISSION_PLUGIN_UPDATE = 'PLUGIN:UPDATE';
+    public const PERMISSION_PLUGIN_VIEW = 'PLUGIN:VIEW';
+    public const ROLE_PLUGIN_MANAGER = 'PLUGIN:MANAGER';
+
     public const ROLE_ADMIN = 'ADMIN';
 
     /**
@@ -86,6 +113,10 @@ class Rbac
         return $name;
     }
 
+    /**
+     * @param string $role
+     * @return string
+     */
     public static function extractRole($role)
     {
         if (strpos($role, ':') !== false) {
@@ -96,6 +127,10 @@ class Rbac
         return $name;
     }
 
+    /**
+     * @param string $item
+     * @return string
+     */
     public static function rbac2Id($item)
     {
         $item = strtolower(str_replace(':', '_', $item));
@@ -103,12 +138,20 @@ class Rbac
         return Inflector::camel2id($item);
     }
 
+    /**
+     * @param string $item
+     * @return string
+     */
     public static function rbac2Name($item)
     {
         $item = strtolower(str_replace(':', '_', $item));
         return Inflector::camelize($item);
     }
 
+    /**
+     * @param string $name
+     * @return string
+     */
     public static function name2Rbac($name)
     {
         $name = Inflector::titleize($name, true);

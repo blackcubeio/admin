@@ -1,6 +1,16 @@
 Blackcube Admin - CHANGELOG 
 ===========================
 
+Release 1.2.0 June, 23th 2020 <pgaultier@redcat.io>
+---------------------------------------------------
+
+ * Add plugins management
+ * Enable plugins in `node`, `composite`, `category` and `tag`
+ * Enable plugins widgets in `node`, `composite`, `category` and `tag`
+ * Update Rbac roles and permissions
+ * Update locale according to new code
+ * Update dependencies
+ 
 Release 1.1.0 June, 10th 2020 <pgaultier@redcat.io>
 ---------------------------------------------------
 

@@ -17,6 +17,10 @@ namespace blackcube\admin\actions\composite;
 use blackcube\admin\actions\BaseElementAction;
 use blackcube\admin\helpers\Composite as CompositeHelper;
 use blackcube\admin\models\SlugForm;
+use blackcube\admin\Module;
+use blackcube\core\interfaces\PluginHookInterface;
+use blackcube\core\interfaces\PluginsHandlerInterface;
+use blackcube\core\models\Composite;
 use blackcube\core\models\Language;
 use blackcube\core\models\NodeComposite;
 use yii\web\NotFoundHttpException;
@@ -56,10 +60,15 @@ class EditAction extends BaseElementAction
         $composite = $this->getCompositeQuery()
             ->andWhere(['id' => $id])
             ->one();
+        /* @var $composite Composite */
 
         if ($composite === null) {
             throw new NotFoundHttpException();
         }
+        $pluginsHandler = Yii::createObject(PluginsHandlerInterface::class);
+        /* @var $pluginsHandler \blackcube\core\interfaces\PluginsHandlerInterface */
+        $pluginsHandler->runHook(PluginHookInterface::PLUGIN_HOOK_LOAD, $composite);
+
         $slugForm = Yii::createObject([
             'class' => SlugForm::class,
             'element' => $composite
@@ -75,13 +84,26 @@ class EditAction extends BaseElementAction
         }
 
         // $result = $this->saveElement($composite, $blocs, $slugForm);
+        $transaction = Module::getInstance()->db->beginTransaction();
         $result = CompositeHelper::saveElement($composite, $blocs, $slugForm);
-        if ($result === true) {
+        $validatePlugins = $pluginsHandler->runHook(PluginHookInterface::PLUGIN_HOOK_VALIDATE, $composite);
+        $validatePlugins = array_reduce($validatePlugins, function($accumulator, $item) {
+            return $accumulator && $item;
+        }, true);
+        if ($result === true && $validatePlugins === true) {
             $selectedTags = Yii::$app->request->getBodyParam('selectedTags', []);
             CompositeHelper::handleTags($composite, $selectedTags);
             CompositeHelper::handleNodes($composite, $nodeComposite);
-            return $this->controller->redirect([$this->targetAction, 'id' => $composite->id]);
+            $savePlugins = $pluginsHandler->runHook(PluginHookInterface::PLUGIN_HOOK_SAVE, $composite);
+            $savePlugins = array_reduce($savePlugins, function($accumulator, $item) {
+                return $accumulator && $item;
+            }, true);
+            if ($savePlugins === true) {
+                $transaction->commit();
+                return $this->controller->redirect([$this->targetAction, 'id' => $composite->id]);
+            }
         }
+        $transaction->rollBack();
         $languagesQuery = Language::find()->active()->orderBy(['name' => SORT_ASC]);
 
         $typesQuery = $this->getTypesQuery()
@@ -94,6 +116,7 @@ class EditAction extends BaseElementAction
 
 
         return $this->controller->render($this->view, [
+            'pluginsHandler' => $pluginsHandler,
             'composite' => $composite,
             'slugForm' => $slugForm,
             'typesQuery' => $typesQuery,

@@ -11,6 +11,7 @@
  * @link https://www.redcat.io
  * @package blackcube\admin\views\category
  *
+ * @var $pluginsHandler \blackcube\core\interfaces\PluginsHandlerInterface
  * @var $categoriesProvider \yii\data\ActiveDataProvider
  * @var $this \yii\web\View
  */
