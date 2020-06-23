@@ -14,7 +14,6 @@
 
 namespace blackcube\admin\actions\plugin;
 
-use blackcube\core\models\Plugin;
 use yii\base\Action;
 use yii\base\Model;
 use yii\web\NotFoundHttpException;

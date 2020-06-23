@@ -14,13 +14,8 @@
 
 namespace blackcube\admin\actions\plugin;
 
-use blackcube\core\components\Plugins;
 use blackcube\core\interfaces\PluginsHandlerInterface;
-use blackcube\core\Module as CoreModule;
-use blackcube\core\interfaces\ElementInterface;
-use blackcube\core\models\Plugin;
 use yii\base\Action;
-use yii\base\InvalidArgumentException;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
 use Yii;

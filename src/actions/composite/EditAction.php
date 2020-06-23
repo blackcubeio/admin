@@ -15,15 +15,12 @@
 namespace blackcube\admin\actions\composite;
 
 use blackcube\admin\actions\BaseElementAction;
-use blackcube\admin\components\Plugins;
 use blackcube\admin\helpers\Composite as CompositeHelper;
 use blackcube\admin\models\SlugForm;
 use blackcube\admin\Module;
 use blackcube\core\interfaces\PluginHookInterface;
-use blackcube\core\interfaces\PluginManagerInterface;
 use blackcube\core\interfaces\PluginsHandlerInterface;
 use blackcube\core\models\Composite;
-use blackcube\core\Module as CoreModule;
 use blackcube\core\models\Language;
 use blackcube\core\models\NodeComposite;
 use yii\web\NotFoundHttpException;

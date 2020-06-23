@@ -15,8 +15,6 @@
 namespace blackcube\admin\actions\user;
 
 use blackcube\admin\models\Administrator;
-use blackcube\admin\Module;
-use blackcube\core\models\Slug;
 use yii\base\Action;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;

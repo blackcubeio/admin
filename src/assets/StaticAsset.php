@@ -14,13 +14,8 @@
 
 namespace blackcube\admin\assets;
 
-use yii\caching\Cache;
-use yii\caching\FileDependency;
-use yii\di\Instance;
-use yii\helpers\Json;
 use yii\web\AssetBundle;
 use yii\web\View;
-use Exception;
 use Yii;
 
 /**

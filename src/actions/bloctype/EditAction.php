@@ -14,8 +14,8 @@
 
 namespace blackcube\admin\actions\bloctype;
 
-use blackcube\core\models\BlocType;
 use blackcube\admin\helpers\Type as TypeHelper;
+use blackcube\core\models\BlocType;
 use yii\base\Action;
 use yii\base\Model;
 use yii\web\NotFoundHttpException;

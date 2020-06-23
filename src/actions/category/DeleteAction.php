@@ -18,8 +18,6 @@ use blackcube\admin\actions\BaseElementAction;
 use blackcube\admin\Module;
 use blackcube\core\interfaces\PluginHookInterface;
 use blackcube\core\interfaces\PluginsHandlerInterface;
-use blackcube\core\models\Category;
-use yii\base\Action;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
 use Yii;

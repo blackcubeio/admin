@@ -19,7 +19,6 @@ use blackcube\core\interfaces\PluginsHandlerInterface;
 use blackcube\core\models\Category;
 use blackcube\core\models\Slug;
 use blackcube\core\models\Type;
-use yii\base\Action;
 use yii\data\ActiveDataProvider;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;

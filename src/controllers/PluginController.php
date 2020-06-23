@@ -15,16 +15,12 @@
 namespace blackcube\admin\controllers;
 
 use blackcube\admin\actions\ModalAction;
-use blackcube\admin\actions\plugin\EditAction;
 use blackcube\admin\actions\plugin\IndexAction;
 use blackcube\admin\actions\plugin\ToggleAction;
 use blackcube\admin\actions\plugin\ToggleRegisterAction;
 use blackcube\admin\components\Rbac;
-use blackcube\admin\interfaces\PluginAdminServiceInterface;
-use blackcube\core\components\Plugins;
 use blackcube\core\interfaces\PluginManagerConfigurableInterface;
 use blackcube\core\interfaces\PluginsHandlerInterface;
-use blackcube\core\Module as CoreModule;
 use blackcube\core\models\Plugin;
 use yii\filters\AccessControl;
 use yii\filters\AjaxFilter;

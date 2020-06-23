@@ -21,8 +21,6 @@ use blackcube\core\interfaces\PluginHookInterface;
 use blackcube\core\interfaces\PluginsHandlerInterface;
 use blackcube\core\models\Category;
 use blackcube\core\models\Language;
-use blackcube\core\models\Type;
-use yii\base\Action;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
 use Yii;

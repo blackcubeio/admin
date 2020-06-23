@@ -16,8 +16,6 @@ namespace blackcube\admin\actions\tag;
 
 use blackcube\admin\actions\BaseElementAction;
 use blackcube\admin\Module;
-use blackcube\core\models\Tag;
-use yii\base\Action;
 use blackcube\core\interfaces\PluginHookInterface;
 use blackcube\core\interfaces\PluginsHandlerInterface;
 use yii\web\NotFoundHttpException;
