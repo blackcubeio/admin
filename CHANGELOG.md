@@ -1,6 +1,11 @@
 Blackcube Admin - CHANGELOG 
 ===========================
 
+Release 1.2.1 June, 25th 2020 <pgaultier@redcat.io>
+---------------------------------------------------
+
+ * Fix `CompositeController` to handle uplads as expected
+
 Release 1.2.0 June, 23th 2020 <pgaultier@redcat.io>
 ---------------------------------------------------
 
