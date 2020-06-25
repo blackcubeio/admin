@@ -25,7 +25,6 @@ use blackcube\admin\components\Rbac;
 use blackcube\core\models\Composite;
 use yii\filters\AccessControl;
 use yii\filters\AjaxFilter;
-use yii\web\Controller;
 use Yii;
 
 /**
@@ -38,7 +37,7 @@ use Yii;
  * @link https://www.redcat.io
  * @package blackcube\admin\controllers
  */
-class CompositeController extends Controller
+class CompositeController extends BaseElementController
 {
     /**
      * {@inheritDoc}
