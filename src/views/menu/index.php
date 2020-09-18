@@ -24,6 +24,11 @@ use yii\widgets\LinkPager;
 ?>
     <main class="overflow-hidden">
         <div class="table-container">
+            <div class="buttons">
+                <?php if (Yii::$app->user->can(Rbac::PERMISSION_MENU_CREATE)): ?>
+                    <?php echo Html::a('<i class="fa fa-plus mr-2"></i> '.Module::t('menu', 'Create'), ['create'], ['class' => 'button-submit']); ?>
+                <?php endif; ?>
+            </div>
             <div blackcube-ajaxify="click" blackcube-attach-modal="" >
                 <?php echo $this->render('_list', ['menusProvider' => $menusProvider]); ?>
             </div>

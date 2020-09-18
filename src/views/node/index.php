@@ -17,6 +17,7 @@
  */
 
 use blackcube\admin\Module;
+use blackcube\admin\components\Rbac;
 use blackcube\admin\helpers\Html;
 use blackcube\admin\widgets\Sidebar;
 use blackcube\core\interfaces\PluginsHandlerInterface;
@@ -33,6 +34,11 @@ $formatter = Yii::$app->formatter;
             <?php endforeach; ?>
         <?php endif; ?>
         <div class="table-container">
+            <div class="buttons">
+                <?php if (Yii::$app->user->can(Rbac::PERMISSION_NODE_CREATE)): ?>
+                    <?php echo Html::a('<i class="fa fa-plus mr-2"></i> '.Module::t('node', 'Create'), ['create'], ['class' => 'button-submit']); ?>
+                <?php endif; ?>
+            </div>
             <?php if ($pluginsHandler instanceof PluginsHandlerInterface): ?>
                 <?php $widgets = $pluginsHandler->runWidgetHook(PluginAdminHookInterface::PLUGIN_HOOK_WIDGET_NODE_LIST_BEFORE_LIST); ?>
                 <?php foreach ($widgets as $widget): ?>
@@ -61,7 +67,9 @@ $formatter = Yii::$app->formatter;
                 ]); ?>
             </div>
             <div class="buttons">
-                <?php echo Html::a('<i class="fa fa-plus mr-2"></i> '.Module::t('node', 'Create'), ['create'], ['class' => 'button-submit']); ?>
+                <?php if (Yii::$app->user->can(Rbac::PERMISSION_NODE_CREATE)): ?>
+                    <?php echo Html::a('<i class="fa fa-plus mr-2"></i> '.Module::t('node', 'Create'), ['create'], ['class' => 'button-submit']); ?>
+                <?php endif; ?>
             </div>
         </div>
     </main>
