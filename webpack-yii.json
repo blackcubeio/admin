@@ -7,12 +7,7 @@
         "chartist": "./scss/chartist.scss",
         "app": ["./boot.ts", "./app.ts"]
     },
-    "commonBundles": [
-        "manifest"
-    ],
     "externals": {
-    },
-    "alias": {
     },
     "subDirectories": {
         "sources": "src",
