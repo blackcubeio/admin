@@ -16,11 +16,13 @@
  */
 
 use blackcube\admin\assets\WebpackAsset;
+use blackcube\admin\assets\FaviconAsset;
 use blackcube\admin\helpers\Html;
 use blackcube\admin\widgets\Sidebar;
 use blackcube\admin\widgets\Header;
 use blackcube\admin\widgets\Footer;
 
+FaviconAsset::register($this);
 WebpackAsset::register($this);
 
 $this->beginPage(); ?><!DOCTYPE html>
