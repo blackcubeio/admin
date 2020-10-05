@@ -1,6 +1,9 @@
 Blackcube Admin - CHANGELOG 
 ===========================
 
+Release 1.2.2 September, 5th 2020 <pgaultier@redcat.io>
+-------------------------------------------------------
+
  * Enh: update `create` buttons
  * Enh: adding favicons
  * Enh: upgrade `Webpack` and `package.json`
