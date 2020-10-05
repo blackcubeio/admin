@@ -4,6 +4,7 @@ Blackcube Admin - CHANGELOG
  * Enh: update `create` buttons
  * Enh: adding favicons
  * Enh: upgrade `Webpack` and `package.json`
+ * Enh: upgrade `composer.json`
  
 Release 1.2.1 June, 25th 2020 <pgaultier@redcat.io>
 ---------------------------------------------------
