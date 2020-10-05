@@ -93,11 +93,11 @@
         },
         {
             "name": "blackcube/core",
-            "version": "1.2.1",
+            "version": "1.2.2",
             "source": {
                 "type": "git",
                 "url": "https://autodeploy:34VgAitrEDfFhWJ8szuD@code.redcat.io/blackcube/core.git",
-                "reference": "2f45399b47d9e356093ead874c3dd1f4641f35e7"
+                "reference": "a012b59a22e0184ec950c025de8cc8cf38c703e4"
             },
             "require": {
                 "creocoder/yii2-flysystem": "~0.9",
@@ -159,7 +159,7 @@
                 "wiki": "https://code.redcat.io/blackcube/core/wikis/home",
                 "source": "https://code.redcat.io/blackcube/core/tree/devel"
             },
-            "time": "2020-06-23T12:34:34+00:00"
+            "time": "2020-10-05T11:36:01+00:00"
         },
         {
             "name": "bower-asset/inputmask",
