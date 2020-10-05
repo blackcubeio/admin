@@ -17,7 +17,9 @@
 
 use blackcube\admin\helpers\Html;
 use blackcube\admin\assets\WebpackAsset;
+use blackcube\admin\assets\FaviconAsset;
 
+FaviconAsset::register($this);
 WebpackAsset::register($this);
 
 $this->beginPage(); ?><!DOCTYPE html>

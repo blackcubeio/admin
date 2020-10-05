@@ -33,6 +33,11 @@ use yii\widgets\LinkPager;
             <?php endforeach; ?>
         <?php endif; ?>
         <div class="table-container">
+            <div class="buttons">
+                <?php if (Yii::$app->user->can(Rbac::PERMISSION_TAG_CREATE)): ?>
+                    <?php echo Html::a('<i class="fa fa-plus mr-2"></i> '.Module::t('tag', 'Create'), ['create'], ['class' => 'button-submit']); ?>
+                <?php endif; ?>
+            </div>
             <?php if ($pluginsHandler instanceof PluginsHandlerInterface): ?>
                 <?php $widgets = $pluginsHandler->runWidgetHook(PluginAdminHookInterface::PLUGIN_HOOK_WIDGET_TAG_LIST_BEFORE_LIST); ?>
                 <?php foreach ($widgets as $widget): ?>

@@ -73,8 +73,7 @@ class WebpackAsset extends AssetBundle
      */
     public $webpackBundles = [
         'manifest',
-        'vendor',
-        'aurelia',
+        'vendors',
         'jsoneditor',
         'fontawesome',
         'chartist',
@@ -97,8 +96,7 @@ class WebpackAsset extends AssetBundle
      */
     public $jsOnly = [
         'manifest',
-        'vendor',
-        'aurelia',
+        'vendors',
         'app',
     ];
 

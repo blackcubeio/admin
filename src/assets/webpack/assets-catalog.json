@@ -1,39 +1,27 @@
 {
   "manifest": {
-    "js": "js/manifest.cdcc31.js"
+    "js": "js/manifest.7860b61c.js"
   },
   "app": {
-    "js": "js/app.731979.js"
-  },
-  "aurelia": {
-    "js": "js/aurelia.aaee6e.js"
+    "js": "js/app.f37de87b.js"
   },
   "chartist": {
-    "css": "css/3.cfbf2d.css",
-    "js": "js/chartist.2a186e.js"
+    "css": "css/chartist.a8ad21c3.css",
+    "js": "js/chartist.a8ad21c3.js"
   },
   "fontawesome": {
-    "css": "css/4.cfbf2d.css",
-    "js": "js/fontawesome.d78ad1.js"
+    "css": "css/fontawesome.09da0f5f.css",
+    "js": "js/fontawesome.09da0f5f.js"
   },
   "jsoneditor": {
-    "css": "css/5.cfbf2d.css",
-    "js": "js/jsoneditor.b12d9d.js"
+    "css": "css/jsoneditor.6aefff92.css",
+    "js": "js/jsoneditor.6aefff92.js"
   },
   "main": {
-    "css": "css/6.cfbf2d.css",
-    "js": "js/main.c39174.js"
+    "css": "css/main.d4dba1c8.css",
+    "js": "js/main.d4dba1c8.js"
   },
-  "vendor": {
-    "js": "js/vendor.654b28.js"
-  },
-  "": {
-    "gz": "js/vendor.654b28.js.gz",
-    "svg": "webfonts/fa-solid-900.svg",
-    "jpg": "img/login.jpg",
-    "eot": "webfonts/fa-solid-900.eot",
-    "ttf": "webfonts/fa-solid-900.ttf",
-    "woff": "webfonts/fa-solid-900.woff",
-    "woff2": "webfonts/fa-solid-900.woff2"
+  "vendors": {
+    "js": "js/vendors.de8b9d44.js"
   }
 }

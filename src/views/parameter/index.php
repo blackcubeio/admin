@@ -25,6 +25,11 @@ $formatter = Yii::$app->formatter;
 ?>
     <main class="overflow-hidden">
         <div class="table-container" >
+            <div class="buttons">
+                <?php if (Yii::$app->user->can(Rbac::PERMISSION_PARAMETER_CREATE)): ?>
+                    <?php echo Html::a('<i class="fa fa-plus mr-2"></i> '.Module::t('parameter', 'Create'), ['create'], ['class' => 'button-submit']); ?>
+                <?php endif; ?>
+            </div>
             <div blackcube-attach-modal="">
                 <?php echo $this->render('_list', ['parametersQuery' => $parametersQuery]); ?>
             </div>
