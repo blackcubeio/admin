@@ -28,12 +28,17 @@ bootstrap((aurelia: Aurelia) => {
     }
     if (!Element.prototype.closest) {
         Element.prototype.closest = (s:any) => {
+            // @ts-ignore
+            Element.prototype.matches = Element.prototype.msMatchesSelector || Element.prototype.webkitMatchesSelector;
             let el = this;
             // @ts-ignore
             if (!document.documentElement.contains(el)) return null;
             do {
+                // @ts-ignore
                 if (el.matches(s)) return el;
+                // @ts-ignore
                 el = el.parentElement || el.parentNode;
+                // @ts-ignore
             } while (el !== null && el.nodeType == 1);
             return null;
         };

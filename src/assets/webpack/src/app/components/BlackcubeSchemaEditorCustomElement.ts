@@ -61,10 +61,11 @@ class BlackcubeSchemaEditorCustomElement implements ComponentCreated, ComponentB
     {
         let config:any = {
             mode: "tree",
+            modes: ["tree", "text"],
             search: false,
             navigationBar: false,
             statusBar: false,
-            mainMenuBar: false,
+            mainMenuBar: true,
             language: "en",
             templates: [
                 {
