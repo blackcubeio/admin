@@ -18,6 +18,7 @@
 use blackcube\admin\Module;
 use blackcube\admin\components\Rbac;
 use blackcube\admin\helpers\Html;
+use blackcube\core\interfaces\PluginManagerConfigurableInterface;
 use blackcube\admin\widgets\Publication;
 use yii\helpers\Url;
 
@@ -28,7 +29,7 @@ $currentCategoryId = null;
     <td>
         <div class="flex items-center">
             <div class="text-gray-900 whitespace-no-wrap">
-                <?php if (Yii::$app->user->can(Rbac::PERMISSION_PLUGIN_UPDATE) && $pluginManager->getIsRegistered() && $pluginManager->getConfigureAction() !== null): ?>
+                <?php if (Yii::$app->user->can(Rbac::PERMISSION_PLUGIN_UPDATE) && $pluginManager->getIsRegistered() && $pluginManager instanceof PluginManagerConfigurableInterface): ?>
                     <?php echo Html::a($pluginManager->getName(), ['edit', 'id' => $pluginManager->getId()], ['class' => 'hover:text-blue-600 py-1']); ?>
                 <?php else: ?>
                     <?php echo Html::tag('span', $pluginManager->getName(), ['class' => 'py-1']); ?>
@@ -39,7 +40,7 @@ $currentCategoryId = null;
     </td>
     <td>
         <?php if (Yii::$app->user->can(Rbac::PERMISSION_PLUGIN_UPDATE)): ?>
-            <?php if ($pluginManager->getIsRegistered() && $pluginManager->getConfigureAction() !== null): ?>
+            <?php if ($pluginManager->getIsRegistered() && $pluginManager instanceof PluginManagerConfigurableInterface): ?>
                 <?php echo Html::a('<i class="fa fa-pen-alt"></i>', ['edit', 'id' => $pluginManager->getId()], ['class' => 'button']); ?>
             <?php else: ?>
                 <span class="button disabled"><i class="fa fa-pen-alt"></i></span>
