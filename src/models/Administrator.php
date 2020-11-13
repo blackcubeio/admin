@@ -120,7 +120,7 @@ class Administrator extends \yii\db\ActiveRecord implements IdentityInterface
             [['email'], 'unique', 'on' => [static::SCENARIO_CREATE, static::SCENARIO_CREATE_ONLINE, static::SCENARIO_UPDATE]],
             [['active'], 'boolean'],
             [['dateCreate', 'dateUpdate'], 'safe'],
-            [['email', 'password', 'authKey', 'token', 'tokenType'], 'string', 'max' => 255],
+            [['email', 'password', 'authKey', 'token', 'tokenType'], 'string', 'max' => 190],
         ];
     }
 
