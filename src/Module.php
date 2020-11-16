@@ -17,7 +17,9 @@ namespace blackcube\admin;
 use blackcube\admin\commands\AdministratorController;
 use blackcube\admin\commands\RbacController;
 use blackcube\admin\interfaces\MigrableInterface;
+use blackcube\admin\interfaces\PluginBootstrapInterface;
 use blackcube\admin\models\Administrator;
+use blackcube\core\interfaces\PluginsHandlerInterface;
 use yii\base\BootstrapInterface;
 use yii\base\Module as BaseModule;
 use yii\caching\CacheInterface;
@@ -70,7 +72,7 @@ class Module extends BaseModule implements BootstrapInterface
     public $db = 'db';
 
     /**
-     * @var CacheInterface\array\string\null
+     * @var CacheInterface|array|string|null
      */
     public $cache;
 
@@ -119,6 +121,21 @@ class Module extends BaseModule implements BootstrapInterface
             $this->bootstrapConsole($app);
         } elseif ($app instanceof WebApplication) {
             $this->bootstrapWeb($app);
+        }
+        $this->registerPlugins($app);
+    }
+
+    public function registerPlugins($app)
+    {
+        if ($app instanceof WebApplication) {
+            $pluginHandler = Yii::createObject(PluginsHandlerInterface::class);
+            /* @var $pluginHandler PluginsHandlerInterface */
+            foreach ($pluginHandler->getRegisteredPluginManagers() as $pluginManager) {
+                // foreach($pluginHandler->getActivePluginManagers() as $pluginManager) {
+                if ($pluginManager instanceof PluginBootstrapInterface) {
+                    $pluginManager->bootstrapAdmin($this->getUniqueId(), $app);
+                }
+            }
         }
     }
 

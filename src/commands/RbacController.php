@@ -15,8 +15,10 @@
 namespace blackcube\admin\commands;
 
 use blackcube\admin\components\Rbac;
+use blackcube\admin\interfaces\PluginBootstrapInterface;
 use blackcube\admin\interfaces\RbacableInterface;
 use blackcube\admin\Module;
+use blackcube\core\interfaces\PluginsHandlerInterface;
 use yii\console\Controller;
 use yii\console\ExitCode;
 use ReflectionClass;
@@ -57,6 +59,14 @@ class RbacController extends Controller
                 $rbacClasses[] = $moduleClass::getRbacClass();
             }
         }
+        $pluginHandler = Yii::createObject(PluginsHandlerInterface::class);
+        /* @var $pluginHandler PluginsHandlerInterface */
+        foreach ($pluginHandler->getRegisteredPluginManagers() as $pluginManager) {
+            if ($pluginManager instanceof RbacableInterface) {
+                $rbacClasses[] = $pluginManager::getRbacClass();
+            }
+        }
+
         $roles = [];
         $permissions = [];
         foreach ($rbacClasses as $rbacClass) {
