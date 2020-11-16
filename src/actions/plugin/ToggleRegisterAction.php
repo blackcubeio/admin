@@ -14,6 +14,7 @@
 
 namespace blackcube\admin\actions\plugin;
 
+use blackcube\core\interfaces\PluginManagerConfigurableInterface;
 use blackcube\core\interfaces\PluginsHandlerInterface;
 use yii\base\Action;
 use yii\web\NotFoundHttpException;
@@ -50,8 +51,8 @@ class ToggleRegisterAction extends Action
             $status = $pluginManager->unregister();
         } else {
             $status = $pluginManager->register();
-            if ($status === true && $pluginManager->getConfigureAction() !== null) {
-                return $this->controller->redirect(['edit', 'id' => $pluginManager->getId()]);
+            if ($status === true && $pluginManager instanceof PluginManagerConfigurableInterface && $pluginManager->getConfigureRoute() !== null) {
+                return $this->controller->redirect($pluginManager->getConfigureRoute());
             }
         }
         return $this->controller->redirect(['index']);

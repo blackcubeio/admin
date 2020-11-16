@@ -1,6 +1,14 @@
 Blackcube Admin - CHANGELOG 
 ===========================
 
+Release 2.0.0 November, 13th 2020 <pgaultier@redcat.io>
+-------------------------------------------------------
+
+ * Upd: Update dependencies
+ * Fix: Mysql string size
+ * Enh: Refactor `plugins` management
+ * Upd: Update front stuff
+
 Release 1.2.2 September, 5th 2020 <pgaultier@redcat.io>
 -------------------------------------------------------
 

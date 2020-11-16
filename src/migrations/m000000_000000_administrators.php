@@ -36,12 +36,12 @@ class m000000_000000_administrators extends Migration
     {
         $this->createTable('{{%administrators}}', [
             'id' => $this->bigPrimaryKey(),
-            'email' => $this->string()->notNull()->unique(),
-            'password' => $this->string(),
+            'email' => $this->string(190)->notNull()->unique(),
+            'password' => $this->string(190),
             'active' => $this->boolean()->defaultValue(false)->notNull(),
-            'authKey' => $this->string(),
-            'token' => $this->string(),
-            'tokenType' => $this->string(),
+            'authKey' => $this->string(190),
+            'token' => $this->string(190),
+            'tokenType' => $this->string(190),
             'dateCreate' => $this->dateTime()->notNull(),
             'dateUpdate' => $this->dateTime(),
         ]);
