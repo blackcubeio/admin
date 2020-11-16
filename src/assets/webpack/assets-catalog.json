@@ -6,20 +6,20 @@
     "js": "js/app.f37de87b.js"
   },
   "chartist": {
-    "css": "css/chartist.a8ad21c3.css",
-    "js": "js/chartist.a8ad21c3.js"
+    "css": "css/chartist.cc9b5958.css",
+    "js": "js/chartist.cc9b5958.js"
   },
   "fontawesome": {
-    "css": "css/fontawesome.09da0f5f.css",
-    "js": "js/fontawesome.09da0f5f.js"
+    "css": "css/fontawesome.ddb1d22b.css",
+    "js": "js/fontawesome.ddb1d22b.js"
   },
   "jsoneditor": {
-    "css": "css/jsoneditor.6aefff92.css",
-    "js": "js/jsoneditor.6aefff92.js"
+    "css": "css/jsoneditor.6f989445.css",
+    "js": "js/jsoneditor.6f989445.js"
   },
   "main": {
-    "css": "css/main.d4dba1c8.css",
-    "js": "js/main.d4dba1c8.js"
+    "css": "css/main.cdf9b7a7.css",
+    "js": "js/main.cdf9b7a7.js"
   },
   "vendors": {
     "js": "js/vendors.de8b9d44.js"
