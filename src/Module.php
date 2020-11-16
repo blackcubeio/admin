@@ -127,10 +127,14 @@ class Module extends BaseModule implements BootstrapInterface
 
     public function registerPlugins($app)
     {
-        $pluginHandlerUrlManager = Yii::createObject(PluginsHandlerInterface::class);
-        foreach($pluginHandlerUrlManager->getActivePluginManagers() as $pluginManager) {
-            if ($pluginManager instanceof PluginBootstrapInterface) {
-                $pluginManager->bootstrapAdmin($this->getUniqueId(), $app);
+        if ($app instanceof WebApplication) {
+            $pluginHandler = Yii::createObject(PluginsHandlerInterface::class);
+            /* @var $pluginHandler PluginsHandlerInterface */
+            foreach ($pluginHandler->getRegisteredPluginManagers() as $pluginManager) {
+                // foreach($pluginHandler->getActivePluginManagers() as $pluginManager) {
+                if ($pluginManager instanceof PluginBootstrapInterface) {
+                    $pluginManager->bootstrapAdmin($this->getUniqueId(), $app);
+                }
             }
         }
     }
