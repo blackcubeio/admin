@@ -51,8 +51,8 @@ class ToggleRegisterAction extends Action
             $status = $pluginManager->unregister();
         } else {
             $status = $pluginManager->register();
-            if ($status === true && $pluginManager instanceof PluginManagerConfigurableInterface) {
-                return $this->controller->redirect(['edit', 'id' => $pluginManager->getId()]);
+            if ($status === true && $pluginManager instanceof PluginManagerConfigurableInterface && $pluginManager->getConfigureRoute() !== null) {
+                return $this->controller->redirect($pluginManager->getConfigureRoute());
             }
         }
         return $this->controller->redirect(['index']);
