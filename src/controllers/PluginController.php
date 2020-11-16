@@ -19,8 +19,6 @@ use blackcube\admin\actions\plugin\IndexAction;
 use blackcube\admin\actions\plugin\ToggleAction;
 use blackcube\admin\actions\plugin\ToggleRegisterAction;
 use blackcube\admin\components\Rbac;
-use blackcube\core\interfaces\PluginManagerConfigurableInterface;
-use blackcube\core\interfaces\PluginsHandlerInterface;
 use blackcube\core\models\Plugin;
 use yii\filters\AccessControl;
 use yii\filters\AjaxFilter;
@@ -90,18 +88,6 @@ class PluginController extends Controller
         $actions['index'] = [
             'class' => IndexAction::class,
         ];
-        $id = Yii::$app->request->get('id', null);
-        if ($id !== null) {
-            $pluginsHandler = Yii::createObject(PluginsHandlerInterface::class);
-            $pluginManager = $pluginsHandler->getPluginManager($id);
-            if ($pluginManager !== null && $pluginManager instanceof PluginManagerConfigurableInterface) {
-                $configureAction = $pluginManager->getConfigureAction();
-                if ($configureAction !== null) {
-                    $actions['edit'] = $configureAction;
-                }
-            }
-            /**/
-        }
         return $actions;
     }
 }
