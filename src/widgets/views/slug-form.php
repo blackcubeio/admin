@@ -28,6 +28,12 @@ $elementClass = get_class($slugForm->getElement());
 //TODO: move into SlugForm
 $elementType = $elementClass::getElementType();
 
+if ($elementType === \blackcube\core\models\Node::getElementType()) {
+    $parentNode = $slugForm->getElement()->getParent()->one();
+    if ($parentNode !== null) {
+        $parentNodeId = $parentNode->id;
+    }
+}
 
 $slugFormOptions = [];
 if ($slugForm->isStandalone === false) {
@@ -74,9 +80,22 @@ if ($slugForm->isStandalone === false) {
                 </div>
             </div>
                 <div class="w-full bloc-fieldset md:w-8/12">
-                    <?php echo Html::activeLabel($slug, 'path', ['class' => 'label']); ?>
+                    <div class="label">
+                        <?php echo Html::activeLabel($slug, 'path', [/*/'class' => 'label'/**/]); ?>
+                        <?php echo Html::a('<i class="fa fa-refresh"></i>', '', [
+                            'class' => 'button rounded',
+                        ]); ?>
+                    </div>
                     <?php echo Html::activeTextInput($slug, 'path', ['class' => 'textfield'.($slug->hasErrors('path')?' error':'')]); ?>
+                    <?php echo Html::a('<i class="fa fa-refresh"></i>', '', [
+                        'class' => 'button rounded',
+                    ]); ?>
+                    <?php if (isset($parentNodeId)) :?>
+                        <?php echo Html::hiddenInput('parentNodeId', $parentNodeId); ?>
+                    <?php endif; ?>
                 </div>
+
+
             <?php else: ?>
             <div class="w-full bloc-fieldset md:w-3/12">
                 <?php echo Html::activeLabel($slug, 'host', ['class' => 'label']); ?>
@@ -89,9 +108,19 @@ if ($slugForm->isStandalone === false) {
                 </div>
             </div>
                 <div class="w-full bloc-fieldset md:w-9/12">
-                    <?php echo Html::activeLabel($slug, 'path', ['class' => 'label']); ?>
+                    <div class="label">
+                        <?php echo Html::activeLabel($slug, 'path', [/*/'class' => 'label'/**/]); ?>
+                        <?php echo Html::a('<i class="fa fa-refresh"></i>', '', [
+                            'class' => 'button rounded',
+                            'blackcube-url-generator' => Url::toRoute('ajax/generate-slug')
+                        ]); ?>
+                        <?php if (isset($parentNodeId)) :?>
+                            <?php echo Html::hiddenInput('parentNodeId', $parentNodeId); ?>
+                        <?php endif; ?>
+                    </div>
                     <?php echo Html::activeTextInput($slug, 'path', ['class' => 'textfield'.($slug->hasErrors('path')?' error':'')]); ?>
                 </div>
+
             <?php endif; ?>
         </div>
         <?php if($slugForm->getIsRedirectSlug() === true): ?>

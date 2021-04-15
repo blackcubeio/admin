@@ -15,13 +15,16 @@
 namespace blackcube\admin\controllers;
 
 use blackcube\admin\components\Rbac;
+use blackcube\admin\models\SlugGeneratorForm;
 use blackcube\admin\Module;
 use blackcube\core\components\PreviewManager;
+use blackcube\core\interfaces\SlugGeneratorInterface;
 use yii\filters\AccessControl;
 use yii\filters\AjaxFilter;
 use yii\web\Controller;
 use yii\web\Response;
 use Yii;
+use yii\web\UnprocessableEntityHttpException;
 
 /**
  * Class AjaxController
@@ -35,6 +38,7 @@ use Yii;
  */
 class AjaxController extends Controller
 {
+    public $enableCsrfValidation = false;
     /**
      * {@inheritDoc}
      */
@@ -50,6 +54,13 @@ class AjaxController extends Controller
                         'preview'
                     ],
                     'roles' => [Rbac::PERMISSION_SITE_PREVIEW]
+                ],
+                [
+                    'allow' => true,
+                    'actions' => [
+                        'generate-slug'
+                    ],
+                    'roles' => ['@']
                 ]
             ]
         ];
@@ -78,5 +89,28 @@ class AjaxController extends Controller
         return Module::t('widgets', 'Preview {icon}', [
             'icon' => $previewManager->check() ? '<i class="fa fa-low-vision text-red-600"></i>':'<i class="fa fa-eye-slash"></i>'
         ]);
+    }
+
+    public function actionGenerateSlug()
+    {
+        Yii::$app->response->format = Response::FORMAT_JSON;
+        $slugGeneratorForm = Yii::createObject(SlugGeneratorForm::class);
+        if (Yii::$app->request->isPost === true) {
+            $slugGeneratorForm->load(Yii::$app->request->bodyParams, '');
+        } elseif (Yii::$app->request->isGet === true) {
+            $slugGeneratorForm->load(Yii::$app->request->queryParams, '');
+        }
+        if ($slugGeneratorForm->validate() === true) {
+            $generator = Yii::createObject(SlugGeneratorInterface::class);
+            $url = $generator->getElementSlug($slugGeneratorForm->name, $slugGeneratorForm->parentElementType, $slugGeneratorForm->parentElementId);
+            return [
+                'name' => $slugGeneratorForm->name,
+                'parentElementType' => $slugGeneratorForm->parentElementType,
+                'parentElementId' => $slugGeneratorForm->parentElementId,
+                'url' => $url
+            ];
+        } else {
+            throw new UnprocessableEntityHttpException();
+        }
     }
 }

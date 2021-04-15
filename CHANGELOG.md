@@ -1,6 +1,12 @@
 Blackcube Admin - CHANGELOG 
 ===========================
 
+Release 2.0.1 April, 15th 2020 <pgaultier@redcat.io>
+----------------------------------------------------
+
+ * Upd: Update dependencies
+ * Enh: Adding `slug` generator
+
 Release 2.0.0 November, 13th 2020 <pgaultier@redcat.io>
 -------------------------------------------------------
 

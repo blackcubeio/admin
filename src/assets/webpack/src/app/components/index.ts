@@ -17,6 +17,7 @@ export function configure(configure: FrameworkConfiguration) {
         PLATFORM.moduleName('components/BlackcubeRbacCustomAttribute'),
         PLATFORM.moduleName('components/BlackcubeSidebarCustomAttribute'),
         PLATFORM.moduleName('components/BlackcubeEditorJsCustomElement'),
-        PLATFORM.moduleName('components/BlackcubeAjaxifyCustomAttribute')
+        PLATFORM.moduleName('components/BlackcubeAjaxifyCustomAttribute'),
+        PLATFORM.moduleName('components/BlackcubeUrlGeneratorCustomAttribute')
     ]);
 }
