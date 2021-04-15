@@ -94,6 +94,25 @@ class AjaxService {
             });
     }
 
+    public postRequestJson(url:string, formData:any)
+    {
+        this.logger.debug('postRequest', url);
+        return this.httpClient.fetch(url, {
+            method: 'post',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+            body: JSON.stringify(formData),
+        })
+            .then((response:Response) => {
+                if (response.status === 200) {
+                    return response.json();
+                }
+                throw new Error('Nothing found')
+            });
+    }
+
     public deleteRequest(url:string, csrf:string = '')
     {
         this.logger.debug('deleteRequest');
