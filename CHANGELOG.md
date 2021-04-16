@@ -1,6 +1,8 @@
 Blackcube Admin - CHANGELOG 
 ===========================
 
+* Upd: Update dependencies
+
 Release 2.0.1 April, 15th 2020 <pgaultier@redcat.io>
 ----------------------------------------------------
 
