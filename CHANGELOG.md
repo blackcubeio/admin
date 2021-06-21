@@ -1,6 +1,12 @@
 Blackcube Admin - CHANGELOG 
 ===========================
 
+
+Release 2.0.3 June, 21th 2021 <pgaultier@redcat.io>
+---------------------------------------------------
+
+* Fix: Correct user password management
+
 Release 2.0.2 June, 14th 2021 <pgaultier@redcat.io>
 ---------------------------------------------------
 

@@ -54,7 +54,9 @@ class CreateAction extends Action
             $user->setScenario(Administrator::SCENARIO_CREATE_ONLINE);
             $user->load(Yii::$app->request->bodyParams);
             if ($user->validate() === true) {
-                $user->password = $user->newPassword;
+                if (empty($user->newPassword) === false) {
+                    $user->password = $user->newPassword;
+                }
                 if ($user->save()) {
                     return $this->controller->redirect([$this->targetAction, 'id' => $user->id]);
                 }
