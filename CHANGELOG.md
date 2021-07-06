@@ -2,6 +2,11 @@ Blackcube Admin - CHANGELOG
 ===========================
 
 
+Release 2.0.4 July, 6th 2021 <pgaultier@redcat.io>
+--------------------------------------------------
+
+* Upd: Update dependencies to fix sorting
+
 Release 2.0.3 June, 21th 2021 <pgaultier@redcat.io>
 ---------------------------------------------------
 
