@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "4a06ba1c2aa32a30285a3abeaea1c339",
+    "content-hash": "456a6201a29b02e7e2e01f49d71c935c",
     "packages": [
         {
             "name": "aws/aws-sdk-php",
@@ -98,11 +98,11 @@
         },
         {
             "name": "blackcube/core",
-            "version": "2.0.2",
+            "version": "2.0.4",
             "source": {
                 "type": "git",
                 "url": "https://autodeploy:34VgAitrEDfFhWJ8szuD@code.redcat.io/blackcube/core.git",
-                "reference": "b2e5a91ae6571ff4f25f785bdf70a7e312d8d709"
+                "reference": "38eb912f472247e235f4be8875130d76bb0b9cba"
             },
             "require": {
                 "creocoder/yii2-flysystem": "~1.0",
@@ -164,7 +164,7 @@
                 "wiki": "https://code.redcat.io/blackcube/core/wikis/home",
                 "source": "https://code.redcat.io/blackcube/core/tree/devel"
             },
-            "time": "2021-06-14T13:12:23+00:00"
+            "time": "2021-07-06T09:11:33+00:00"
         },
         {
             "name": "bower-asset/inputmask",

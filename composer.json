@@ -36,7 +36,7 @@
         "ext-json": "*",
         "ext-fileinfo": "*",
         "ext-dom": "*",
-        "blackcube/core": "~2.0.2",
+        "blackcube/core": "~2.0.4",
         "creocoder/yii2-flysystem": "~1.0",
         "hashids/hashids": "~4.1",
         "league/flysystem-aws-s3-v3": "~1.0",
