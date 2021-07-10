@@ -2,6 +2,11 @@ Blackcube Admin - CHANGELOG
 ===========================
 
 
+Release 2.1.0 July, 10th 2021 <pgaultier@redcat.io>
+---------------------------------------------------
+
+* Initial public release on github
+
 Release 2.0.4 July, 6th 2021 <pgaultier@redcat.io>
 --------------------------------------------------
 

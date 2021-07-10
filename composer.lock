@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "456a6201a29b02e7e2e01f49d71c935c",
+    "content-hash": "8852a39f9e0142f016323e2e503b12ee",
     "packages": [
         {
             "name": "aws/aws-sdk-php",
@@ -98,11 +98,17 @@
         },
         {
             "name": "blackcube/core",
-            "version": "2.0.4",
+            "version": "2.1.0",
             "source": {
                 "type": "git",
-                "url": "https://autodeploy:34VgAitrEDfFhWJ8szuD@code.redcat.io/blackcube/core.git",
-                "reference": "38eb912f472247e235f4be8875130d76bb0b9cba"
+                "url": "https://github.com/blackcubeio/core.git",
+                "reference": "0b6945994b3326f798f801fd0271a3aa2b2eddd7"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/blackcubeio/core/zipball/0b6945994b3326f798f801fd0271a3aa2b2eddd7",
+                "reference": "0b6945994b3326f798f801fd0271a3aa2b2eddd7",
+                "shasum": ""
             },
             "require": {
                 "creocoder/yii2-flysystem": "~1.0",
@@ -133,16 +139,7 @@
                     "blackcube\\core\\": "src/"
                 }
             },
-            "autoload-dev": {
-                "psr-4": {
-                    "tests\\": "tests/",
-                    "tests\\_generated\\": "tests/_support/_generated/",
-                    "tests\\Helper\\": "tests/_support/Helper/"
-                }
-            },
-            "scripts": {
-                "post-install-cmd": []
-            },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "proprietary"
             ],
@@ -161,10 +158,10 @@
             ],
             "support": {
                 "issues": "https://code.redcat.io/blackcube/core/issues",
-                "wiki": "https://code.redcat.io/blackcube/core/wikis/home",
-                "source": "https://code.redcat.io/blackcube/core/tree/devel"
+                "source": "https://code.redcat.io/blackcube/core/tree/devel",
+                "wiki": "https://code.redcat.io/blackcube/core/wikis/home"
             },
-            "time": "2021-07-06T09:11:33+00:00"
+            "time": "2021-07-10T19:06:35+00:00"
         },
         {
             "name": "bower-asset/inputmask",
