@@ -23,6 +23,7 @@ class BlackcubeAjaxifyCustomAttribute implements ComponentCreated, ComponentBind
     @bindable({ primaryProperty: true }) event: AjaxEvent;
     // data-ajaxify-source="event-name" // which element should be monitored
     // data-ajaxify-target="event-name" // where we replace the HTML
+    // data-ajaxify-enhance="false" // disable enhancement, use full for form with their elements outside
     // target url should be set in target[data-ajaxify-url="url"]
 
     private form:HTMLFormElement;
@@ -61,7 +62,8 @@ class BlackcubeAjaxifyCustomAttribute implements ComponentCreated, ComponentBind
                     targetSelector = '[data-ajaxify-target=' + currentSource +']';
                 }
                 if (targetSelector !== null) {
-                    targetElement = <HTMLElement>this.element.querySelector(targetSelector);
+                    targetElement = <HTMLElement>DOM.querySelector(targetSelector);
+                    // targetElement = <HTMLElement>this.element.querySelector(targetSelector);
                     if (!targetElement && this.element.dataset.ajaxifyTarget === currentSource) {
                         targetElement = this.element;
                     }
@@ -83,6 +85,9 @@ class BlackcubeAjaxifyCustomAttribute implements ComponentCreated, ComponentBind
                                     targetElement.innerHTML = html;
                                     let isAlreadyEnhanced = this.element.isSameNode(targetElement);
                                     //TODO: should probably enhance children
+                                    if (elementForm.dataset.ajaxifyEnhance && (elementForm.dataset.ajaxifyEnhance === 'false' || elementForm.dataset.ajaxifyEnhance === '0')) {
+                                        isAlreadyEnhanced = true;
+                                    }
                                     if (isAlreadyEnhanced === false) {
                                         /**/
                                         this.templatingEngine.enhance({
