@@ -1,6 +1,12 @@
 Blackcube Admin - CHANGELOG 
 ===========================
 
+Release 2.1.2 July, 29th 2021 <pgaultier@redcat.io>
+---------------------------------------------------
+
+* Upd: Update dependencies
+* Fix: Fix JS to allow ajaxify on external forms
+
 Release 2.1.1 July, 22th 2021 <pgaultier@redcat.io>
 ---------------------------------------------------
 
