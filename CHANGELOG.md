@@ -1,6 +1,11 @@
 Blackcube Admin - CHANGELOG 
 ===========================
 
+Release 2.1.3 July, 29th 2021 <pgaultier@redcat.io>
+---------------------------------------------------
+
+* Upd: Update dependencies
+
 Release 2.1.2 July, 29th 2021 <pgaultier@redcat.io>
 ---------------------------------------------------
 
