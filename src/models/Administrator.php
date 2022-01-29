@@ -59,6 +59,14 @@ class Administrator extends \yii\db\ActiveRecord implements IdentityInterface
     public $checkPassword;
 
     /**
+     * {@inheritDoc}
+     */
+    public static function getDb()
+    {
+        return Module::getInstance()->db;
+    }
+
+    /**
      * {@inheritdoc}
      */
     public function behaviors():array

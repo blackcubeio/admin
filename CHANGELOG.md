@@ -1,47 +1,51 @@
 Blackcube Admin - CHANGELOG 
 ===========================
 
+ * Upd: Update command names
+ * Upd: Merge migrations with app ones 
+ * Upd: Update dependencies
+
 Release 2.1.4 September, 9th 2021 <pgaultier@redcat.io>
 -------------------------------------------------------
 
-* Upd: Update dependencies
+ * Upd: Update dependencies
 
 Release 2.1.3 July, 29th 2021 <pgaultier@redcat.io>
 ---------------------------------------------------
 
-* Upd: Update dependencies
+ * Upd: Update dependencies
 
 Release 2.1.2 July, 29th 2021 <pgaultier@redcat.io>
 ---------------------------------------------------
 
-* Upd: Update dependencies
-* Fix: Fix JS to allow ajaxify on external forms
+ * Upd: Update dependencies
+ * Fix: Fix JS to allow ajaxify on external forms
 
 Release 2.1.1 July, 22th 2021 <pgaultier@redcat.io>
 ---------------------------------------------------
 
-* Upd: Update dependencies
+ * Upd: Update dependencies
 
 Release 2.1.0 July, 10th 2021 <pgaultier@redcat.io>
 ---------------------------------------------------
 
-* Initial public release on github
+ * Initial public release on github
 
 Release 2.0.4 July, 6th 2021 <pgaultier@redcat.io>
 --------------------------------------------------
 
-* Upd: Update dependencies to fix sorting
+ * Upd: Update dependencies to fix sorting
 
 Release 2.0.3 June, 21th 2021 <pgaultier@redcat.io>
 ---------------------------------------------------
 
-* Fix: Correct user password management
+ * Fix: Correct user password management
 
 Release 2.0.2 June, 14th 2021 <pgaultier@redcat.io>
 ---------------------------------------------------
 
-* Upd: Update to Core 2.0.2
-* Upd: Update dependencies
+ * Upd: Update to Core 2.0.2
+ * Upd: Update dependencies
 
 Release 2.0.1 April, 15th 2020 <pgaultier@redcat.io>
 ----------------------------------------------------

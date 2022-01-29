@@ -79,7 +79,7 @@ class Module extends BaseModule implements BootstrapInterface
     /**
      * @var string command prefix
      */
-    public $commandNameSpace = 'badmin:';
+    public $commandNameSpace = 'bc:';
 
     /**
      * @var array list off assets to add to the admin page
@@ -153,6 +153,7 @@ class Module extends BaseModule implements BootstrapInterface
         $app->controllerMap[$this->commandNameSpace.'rbac'] = [
             'class' => RbacController::class,
         ];
+        /*/
         $app->controllerMap[$this->commandNameSpace.'migrate'] = [
             'class' => MigrateController::class,
             'migrationNamespaces' => $this->buildMigrationNamespaces(),
@@ -161,6 +162,35 @@ class Module extends BaseModule implements BootstrapInterface
             ],
             'db' => $this->db,
         ];
+        /*/
+        // TODO check what to do if db is not the same as the base app one
+        $migrationNamespaces = $this->buildMigrationNamespaces();
+        if (isset($app->controllerMap['migrate']) === true) {
+            if (isset($app->controllerMap['migrate']['migrationNamespaces']) === true) {
+                foreach ($migrationNamespaces as $migrationNamespace) {
+                    $app->controllerMap['migrate']['migrationNamespaces'][] = $migrationNamespace;
+                }
+            } else {
+                $app->controllerMap['migrate']['migrationNamespaces'] = $migrationNamespaces;
+            }
+            if (isset($app->controllerMap['migrate']['migrationPath']) === true) {
+                $app->controllerMap['migrate']['migrationPath'][] = '@yii/rbac/migrations';
+            } else {
+                $app->controllerMap['migrate']['migrationPath'] = [
+                    '@yii/rbac/migrations',
+                ];
+            }
+        } else {
+            $app->controllerMap['migrate'] = [
+                'class' => MigrateController::class,
+                'migrationNamespaces' => $migrationNamespaces,
+                'migrationPath' => [
+                    '@yii/rbac/migrations',
+                ],
+                'db' => $this->db,
+            ];
+        }
+        /**/
 
     }
 
