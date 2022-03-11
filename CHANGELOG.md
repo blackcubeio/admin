@@ -1,6 +1,11 @@
 Blackcube Admin - CHANGELOG 
 ===========================
 
+Release 2.2.3 March, 11th 2022 <pgaultier@redcat.io>
+----------------------------------------------------
+
+ * Upd: Update dependencies
+
 Release 2.2.2 March, 9th 2022 <pgaultier@redcat.io>
 ---------------------------------------------------
 
