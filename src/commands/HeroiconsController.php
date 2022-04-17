@@ -14,15 +14,10 @@
 
 namespace blackcube\admin\commands;
 
-use blackcube\admin\components\Rbac;
 use blackcube\admin\helpers\Html;
-use blackcube\admin\interfaces\PluginBootstrapInterface;
-use blackcube\admin\interfaces\RbacableInterface;
 use blackcube\admin\Module;
-use blackcube\core\interfaces\PluginsHandlerInterface;
 use yii\console\Controller;
 use yii\console\ExitCode;
-use ReflectionClass;
 use Yii;
 use yii\helpers\ArrayHelper;
 
@@ -42,7 +37,7 @@ class HeroiconsController extends Controller
     private $heroiconsAlias = '@blackcube/admin/helpers/heroicons';
     private $heroiconsHelperAlias = '@blackcube/admin/helpers/Heroicons.php';
     /**
-     * Update permissions and roles to define all RBAC elements defined in sub-modules
+     * Generate Heroicon class with inlined SVGs
      * @return int
      * @throws \yii\base\InvalidConfigException
      */

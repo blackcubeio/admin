@@ -15,7 +15,6 @@
 namespace blackcube\admin\commands;
 
 use blackcube\admin\components\Rbac;
-use blackcube\admin\interfaces\PluginBootstrapInterface;
 use blackcube\admin\interfaces\RbacableInterface;
 use blackcube\admin\Module;
 use blackcube\core\interfaces\PluginsHandlerInterface;

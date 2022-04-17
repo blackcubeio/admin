@@ -15,8 +15,6 @@
 namespace blackcube\admin\assets;
 
 use yii\web\AssetBundle;
-use yii\web\View;
-use Yii;
 
 /**
  * favicon static assets

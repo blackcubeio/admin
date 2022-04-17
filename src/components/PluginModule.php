@@ -19,7 +19,6 @@ use blackcube\core\interfaces\PluginModuleBootstrapInterface as CorePluginModule
 use yii\base\Module;
 use yii\console\Application as ConsoleApplication;
 use yii\web\Application as WebApplication;
-use Yii;
 
 /**
  * PluginModule
@@ -29,7 +28,7 @@ use Yii;
  * @license https://www.redcat.io/license license
  * @version XXX
  * @link https://www.redcat.io
- * @package blackcube\core\components
+ * @package blackcube\admin\components
  */
 abstract class PluginModule extends Module implements PluginModuleBootstrapInterface, CorePluginModuleBootstrapInterface {
 
