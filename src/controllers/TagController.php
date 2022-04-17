@@ -18,9 +18,13 @@ use blackcube\admin\actions\tag\CreateAction;
 use blackcube\admin\actions\tag\DeleteAction;
 use blackcube\admin\actions\tag\EditAction;
 use blackcube\admin\actions\tag\IndexAction;
+use blackcube\admin\actions\SeoAction;
+use blackcube\admin\actions\SitemapAction;
+use blackcube\admin\actions\TagAction;
 use blackcube\admin\actions\ToggleAction;
 use blackcube\admin\actions\BlocAction;
 use blackcube\admin\actions\ModalAction;
+use blackcube\admin\actions\SlugAction;
 use blackcube\admin\components\Rbac;
 use blackcube\core\models\Tag;
 use yii\filters\AccessControl;
@@ -65,7 +69,7 @@ class TagController extends BaseElementController
                 [
                     'allow' => true,
                     'actions' => [
-                        'edit', 'toggle', 'blocs',
+                        'edit', 'toggle', 'blocs', 'slug', 'sitemap', 'seo'
                     ],
                     'roles' => [Rbac::PERMISSION_TAG_UPDATE],
                 ],
@@ -87,7 +91,7 @@ class TagController extends BaseElementController
         ];
         $behaviors['forceAjax'] = [
             'class' => AjaxFilter::class,
-            'only' => ['modal', 'blocs', 'toggle'],
+            'only' => ['modal', 'blocs', 'toggle', 'slug', 'sitemap', 'seo'],
         ];
         return $behaviors;
     }
@@ -109,7 +113,18 @@ class TagController extends BaseElementController
         $actions['toggle'] = [
             'class' => ToggleAction::class,
             'elementClass' => Tag::class,
-            'elementName' => 'tag',
+        ];
+        $actions['slug'] = [
+            'class' => SlugAction::class,
+            'elementClass' => Tag::class,
+        ];
+        $actions['sitemap'] = [
+            'class' => SitemapAction::class,
+            'elementClass' => Tag::class,
+        ];
+        $actions['seo'] = [
+            'class' => SeoAction::class,
+            'elementClass' => Tag::class,
         ];
         $actions['index'] = [
             'class' => IndexAction::class,

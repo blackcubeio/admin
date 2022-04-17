@@ -1,0 +1,175 @@
+
+
+import {ILogger} from "@aurelia/kernel";
+import {IPlatform} from "aurelia";
+import {HttpService} from "../services/http-service";
+import {bindable, customElement, INode} from "@aurelia/runtime-html";
+import JSONEditor, {JSONEditorOptions} from 'jsoneditor';
+
+@customElement('blackcube-schema-editor')
+export class SchemaEditor
+{
+    private hiddenField:HTMLInputElement;
+    private jsonEditorElement:HTMLElement;
+    private jsonSchema:JSONEditor;
+    @bindable() public fieldId: string;
+    @bindable() public fieldName: string;
+    @bindable() public schema: string;
+    @bindable() public language: string;
+
+    public constructor(
+        @ILogger private readonly logger: ILogger,
+        @IPlatform private readonly platform: IPlatform,
+        @INode private readonly element: HTMLElement
+    ) {
+        this.logger = logger.scopeTo('SchemaEditor');
+    }
+
+
+    public attached(): void {
+        this.logger.debug('Attached');
+        if (this.fieldId) {
+            this.hiddenField.id = this.fieldId;
+        }
+        if (this.fieldName) {
+            this.hiddenField.name = this.fieldName;
+        }
+        if (this.schema) {
+            this.hiddenField.value = this.schema;
+        }
+        this.buildEditor();
+    }
+    private buildEditor()
+    {
+        // @ts-ignore
+        let config:JSONEditorOptions = {
+            mode: "tree",
+            modes: ["tree", "text"],
+            search: false,
+            navigationBar: false,
+            statusBar: true,
+            mainMenuBar: true,
+            enableSort: false,
+            enableTransform: false,
+            language: "en",
+            templates: [
+                {
+                    text: 'text',
+                    title: 'Insert Text property',
+                    className: 'jsoneditor-type-object',
+                    field: 'text',
+                    value: {
+                        type: 'string',
+                        title: 'Text',
+                        minLength: 6,
+                        description: 'Field description'
+                    }
+                },
+                {
+                    text: 'Textarea',
+                    title: 'Insert Textarea property',
+                    className: 'jsoneditor-type-object',
+                    field: "textarea",
+                    value: {
+                        type: 'string',
+                        format: 'textarea',
+                        description: 'Field description'
+                    }
+                },
+                {
+                    text: 'Wysiwyg',
+                    title: 'Insert Wysiwyg property',
+                    className: 'jsoneditor-type-object',
+                    field: "wysiwyg",
+                    value: {
+                        type: 'string',
+                        format: 'wysiwyg',
+                        description: 'Wysiwyg Editor'
+                    }
+                },
+                {
+                    text: 'Email',
+                    title: 'Insert Email property',
+                    className: 'jsoneditor-type-object',
+                    field: 'email',
+                    value: {
+                        type: 'string',
+                        title: 'E-mail',
+                        format: 'email',
+                        minLength: 6,
+                        description: 'Field description'
+                    }
+                },
+                {
+                    text: 'Regexp',
+                    title: 'Insert Regexp property',
+                    className: 'jsoneditor-type-object',
+                    field: "regexp",
+                    value: {
+                        type: 'string',
+                        pattern: '^[a-z0-9]+$',
+                        minLength: 6,
+                        title: "Regep",
+                        description: 'Field description'
+                    }
+                },
+                {
+                    text: 'Images',
+                    title: 'Insert Image property',
+                    className: 'jsoneditor-type-object',
+                    field: "image",
+                    value: {
+                        type: 'string',
+                        format: 'files',
+                        fileType: 'png,jpg',
+                        imageWidth: 600,
+                        imageHeight: 200,
+                        title: "images",
+                        description: 'Images size should be 600x200'
+                    }
+                },
+                {
+                    text: 'File',
+                    title: 'Insert Image property',
+                    className: 'jsoneditor-type-object',
+                    field: "file",
+                    value: {
+                        type: 'string',
+                        format: 'file',
+                        fileType: 'pdf',
+                        title: "file",
+                        description: 'Field description'
+                    }
+                },
+                {
+                    text: 'Files',
+                    title: 'Insert Image property',
+                    className: 'jsoneditor-type-object',
+                    field: "files",
+                    value: {
+                        type: 'string',
+                        format: 'files',
+                        fileType: 'pdf',
+                        title: "files",
+                        description: 'Field description'
+                    }
+                }
+            ]
+        };
+        if (this.language) {
+            config.language = this.language;
+        }
+        config.onChangeJSON = (jsonData:any) => {
+            // @ts-ignore
+            this.hiddenField.value = JSON.stringify(jsonData, null, 4);
+        };
+        config.onChangeText = (jsonString:string) => {
+            // @ts-ignore
+            this.hiddenField.value = jsonString;
+        };
+        this.jsonSchema =new JSONEditor(this.jsonEditorElement,  config);
+        this.jsonSchema.setText(this.schema);
+        this.jsonSchema.expandAll();
+
+    }
+}

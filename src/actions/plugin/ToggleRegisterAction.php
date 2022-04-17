@@ -35,6 +35,11 @@ class ToggleRegisterAction extends Action
 {
 
     /**
+     * @var string
+     */
+    public $view = '_line';
+
+    /**
      * @param integer $id
      * @return string|Response
      * @throws NotFoundHttpException
@@ -55,6 +60,8 @@ class ToggleRegisterAction extends Action
                 return $this->controller->redirect($pluginManager->getConfigureRoute());
             }
         }
-        return $this->controller->redirect(['index']);
+        return $this->controller->renderPartial($this->view, [
+            'pluginManager' => $pluginManager,
+        ]);
     }
 }

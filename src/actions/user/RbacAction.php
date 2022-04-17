@@ -14,8 +14,10 @@
 
 namespace blackcube\admin\actions\user;
 
+use blackcube\admin\components\Rbac;
 use blackcube\admin\models\Administrator;
 use blackcube\admin\helpers\User as UserHelper;
+use blackcube\admin\models\RbacItemForm;
 use yii\base\Action;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
@@ -50,7 +52,9 @@ class RbacAction extends Action
         if ($user === null) {
             throw new NotFoundHttpException();
         }
+        $updated = false;
         if (Yii::$app->request->isPost) {
+
             $itemName = Yii::$app->request->getBodyParam('name', null);
             $itemType = Yii::$app->request->getBodyParam('type', null);
             $itemMode = Yii::$app->request->getBodyParam('mode', null);
@@ -63,15 +67,20 @@ class RbacAction extends Action
                 }
                 if ($item !== null && $itemMode === 'add') {
                     Yii::$app->authManager->assign($item, $user->id);
-                } else if ($item !== null && $itemMode === 'remove') {
+                    $updated = true;
+                } elseif ($item !== null && $itemMode === 'remove') {
                     Yii::$app->authManager->revoke($item, $user->id);
+                    $updated = true;
                 }
             }
         }
         $authorizationData = UserHelper::prepareAuthorizationData($user->id);
+        $authManager = Yii::$app->authManager;
+
 
         return $this->controller->renderPartial($this->view, [
             'user' => $user,
+            'updated' => $updated,
             'userRolesById' => $authorizationData['userRolesById'],
             'userPermissionsById' => $authorizationData['userPermissionsById'],
             'userAssignmentsById' => $authorizationData['userAssignmentsById'],

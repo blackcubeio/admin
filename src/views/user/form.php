@@ -22,79 +22,79 @@ use blackcube\admin\Module;
 use blackcube\admin\components\Rbac;
 use blackcube\admin\helpers\Html;
 use blackcube\admin\widgets\Sidebar;
+use blackcube\admin\helpers\BlackcubeHtml;
+use blackcube\admin\helpers\Heroicons;
+use yii\helpers\Url;
+use blackcube\admin\helpers\Aurelia;
 
 $authManager = Yii::$app->authManager;
 
 ?>
-    <main>
-        <?php echo Html::beginForm('', 'post', ['class' => 'form']); ?>
-        <ul class="header">
-            <li>
-                <?php echo Html::a('<i class="fa fa-angle-left mr-2"></i> '.Module::t('user', 'Back'), ['index'], ['class' => 'button']); ?>
-            </li>
-            <li>
-                <?php echo Html::button('<i class="fa fa-check mr-2"></i> '.Module::t('user', 'Save'), ['type' => 'submit', 'class' => 'button']); ?>
-            </li>
-        </ul>
+<main class="application-content">
+    <?php echo Html::beginForm('', 'post', [
+        'class' => 'element-form-wrapper',
+    ]); ?>
+    <div class="page-header">
+        <?php echo Html::beginTag('a', [
+            'class' => 'text-white',
+            'href' => Url::to(['index'])
+        ]); ?>
+        <?php echo Heroicons::svg('solid/chevron-left', ['class' => 'h-7 w-7']); ?>
+        <?php echo Html::endTag('a'); ?>
 
-        <div class="bloc">
-                <div class="bloc-title">
-                    <span class="title"><?php echo Module::t('user', 'User'); ?></span>
+        <h3 class="page-header-title"><?php echo Module::t('user', 'User'); ?></h3>
+    </div>
+    <div class="px-6 pb-6">
+        <div class="element-form-bloc">
+            <div class="element-form-bloc-stacked">
+                <?php echo BlackcubeHtml::activeCheckbox($user, 'active', ['hint' => Module::t('user', 'User status')]); ?>
+            </div>
+            <div class="element-form-bloc-grid-12">
+                <div class="element-form-bloc-cols-4">
+                    <?php echo BlackcubeHtml::activeTextInput($user, 'email', []); ?>
+                </div>
+                <div class="element-form-bloc-cols-4">
+                    <?php echo BlackcubeHtml::activeTextInput($user, 'firstname', []); ?>
+                </div>
+                <div class="element-form-bloc-cols-4">
+                    <?php echo BlackcubeHtml::activeTextInput($user, 'lastname', []); ?>
                 </div>
             </div>
-        <div class="bloc">
-            <div class="w-full bloc-fieldset md:w-1/12">
-                <?php echo Html::activeLabel($user, 'active', ['class' => 'label']); ?>
-                <?php echo Html::activeCheckbox($user, 'active', []); ?>
-            </div>
-
-            <div class="w-full md:w-5/12 bloc-fieldset">
-                <?php echo Html::activeLabel($user, 'email', ['class' => 'label']); ?>
-                <?php echo Html::activeTextInput($user, 'email', ['class' => 'textfield'.($user->hasErrors('email')?' error':'')]); ?>
-            </div>
-            <div class="w-full md:w-3/12 bloc-fieldset">
-                <?php echo Html::activeLabel($user, 'newPassword', ['class' => 'label']); ?>
-                <?php echo Html::activePasswordInput($user, 'newPassword', [
-                    'class' => 'textfield'.($user->hasErrors('newPassword')?' error':''),
-                ]); ?>
-            </div>
-            <div class="w-full md:w-3/12 bloc-fieldset">
-                <?php echo Html::activeLabel($user, 'checkPassword', ['class' => 'label']); ?>
-                <?php echo Html::activePasswordInput($user, 'checkPassword', [
-                    'class' => 'textfield'.($user->hasErrors('checkPassword')?' error':''),
-                ]); ?>
+            <div class="element-form-bloc-grid-12">
+                <div class="element-form-bloc-cols-6">
+                    <?php echo BlackcubeHtml::activePasswordInput($user, 'newPassword', []); ?>
+                </div>
+                <div class="element-form-bloc-cols-6">
+                    <?php echo BlackcubeHtml::activePasswordInput($user, 'checkPassword', []); ?>
+                </div>
             </div>
         </div>
-        <?php if ($user->id !== null): ?>
-        <div class="bloc">
-            <div class="bloc-title">
-                <span class="title">
-                    <?php echo Module::t('user', 'Authorizations'); ?>
-                </span>
-                <span class="text-gray-200 italic text-xs"><?php echo Module::t('user', 'authorizations are updated on the fly'); ?></span>
-            </div>
-        </div>
+    </div>
+    <div class="px-6 pb-6">
 
-        <?php echo Html::beginTag('div', [
-            'class' => 'bloc',
-            'blackcube-rbac' => \yii\helpers\Url::to(['rbac', 'id' => $user->id])]); ?>
-            <?php echo $this->render('_roles', [
-                'user' => $user,
-                'userRolesById' => $userRolesById,
-                'userPermissionsById' => $userPermissionsById,
-                'userAssignmentsById' => $userAssignmentsById,
+        <div class="element-form-buttons">
+            <?php echo Html::beginTag('a', [
+                'class' => 'element-form-buttons-button',
+                'href' => Url::to(['index'])
             ]); ?>
-        <?php echo Html::endTag('div'); ?>
-        <?php endif; ?>
-
-        <div class="buttons">
-            <?php echo Html::a('<i class="fa fa-times mr-2"></i> '.Module::t('user', 'Cancel'), ['index'], [
-                'class' => 'button-cancel'
+            <?php echo Heroicons::svg('solid/x', ['class' => 'element-form-buttons-button-icon']); ?>
+            <?php echo Module::t('common', 'Cancel'); ?>
+            <?php echo Html::endTag('a'); ?>
+            <?php echo Html::beginTag('button', [
+                'class' => 'element-form-buttons-button action',
+                'type' => 'submit'
             ]); ?>
-            <?php echo Html::button('<i class="fa fa-check mr-2"></i> '.Module::t('user', 'Save'), [
-                'type' => 'submit',
-                'class' => 'button-submit'
-            ]); ?>
+            <?php echo Heroicons::svg('solid/check', ['class' => 'element-form-buttons-button-icon']); ?>
+            <?php echo Module::t('common', 'Save'); ?>
+            <?php echo Html::endTag('button'); ?>
         </div>
-        <?php echo Html::endForm(); ?>
-    </main>
+    </div>
+    <?php if($user->isNewRecord === false): ?>
+    <?php echo Aurelia::component('blackcube-permissions', '', [
+        'url.bind' => Url::to(['rbac', 'id' => $user->id])
+    ]);?>
+    <?php endif; ?>
+
+    <?php echo Html::endForm(); ?>
+</main>
+

@@ -15,27 +15,42 @@
  * @var $userRolesById array
  * @var $userPermissionsById array
  * @var $userAssignmentsById array
+ * @var $updated boolean
  * @var $this \yii\web\View
  */
 
 use blackcube\admin\Module;
 use blackcube\admin\components\Rbac;
 use blackcube\admin\helpers\Html;
+use blackcube\admin\helpers\BlackcubeHtml;
+use blackcube\admin\helpers\Aurelia;
 
 $authManager = Yii::$app->authManager;
-
+$additionalOptions = [];
+if ($updated) {
+    $additionalOptions['blackcube-notification-trigger'] = Aurelia::bindOptions([
+        'title.bind' => Module::t('user', 'Success'),
+        'type.bind' => 'check',
+        'content.bind' => Module::t('user', 'Permission were updated'),
+    ]);
+}
 ?>
+<?php echo Html::beginTag('div', ['class' => 'px-6 pb-6'] + $additionalOptions); ?>
+
+    <div class="element-form-bloc-grid-12">
 <?php foreach($authManager->getRoles() as $i => $role): ?>
-    <div class="w-full md:w-1/4 px-3 py-2">
-        <label class="block w-full bg-gray-400 rounded py-1 px-2 select-none">
-            <?php echo Html::checkbox(Rbac::rbac2Name($role->name), in_array($role->name, $userRolesById), [
+    <div class="element-form-bloc-cols-4 border-indigo-800 border-2 rounded">
+        <div class="px-2 pt-2 pb-3 bg-indigo-100 border-b-2 border-indigo-800">
+            <?php echo BlackcubeHtml::checkbox(Rbac::rbac2Name($role->name), in_array($role->name, $userRolesById), [
+                'label' => Rbac::extractRole($role->name),
                 'data-rbac-type' => 'role',
                 'data-rbac-name' => $role->name,
                 'disabled' => (in_array($role->name, $userRolesById) && in_array($role->name, $userAssignmentsById) === false),
             ]); ?>
-            <?php echo Rbac::extractRole($role->name); ?>
-        </label>
-        <div>
+            <?php // echo Rbac::extractRole($role->name); ?>
+        </div>
+        <?php if (count($authManager->getChildRoles($role->name)) > 1): ?>
+        <div class="p-2">
             <?php foreach($authManager->getChildRoles($role->name) as $childRole): ?>
                 <?php if ($role->name !== $childRole->name): ?>
                     <label class="inline bg-white select-none italic text-xs">
@@ -44,18 +59,23 @@ $authManager = Yii::$app->authManager;
                 <?php endif; ?>
             <?php endforeach; ?>
         </div>
+        <?php endif; ?>
         <?php if ($role->name !== Rbac::ROLE_ADMIN): ?>
+        <div class="p-2">
         <?php foreach($authManager->getPermissionsByRole($role->name) as $permission): ?>
-            <label class="block w-full bg-white py-0 px-2 select-none">
-                <?php echo Html::checkbox(Rbac::rbac2Name($permission->name), in_array($permission->name, $userPermissionsById), [
-                    'data-rbac-type' => 'permission',
-                    'data-rbac-name' => $permission->name,
-                    'disabled' => (in_array($permission->name, $userPermissionsById) && in_array($permission->name, $userAssignmentsById) === false),
-                ]); ?>
-                <?php echo Rbac::extractPermission($permission->name); ?>
-            </label>
+                <div class="">
+                    <?php echo BlackcubeHtml::checkbox(Rbac::rbac2Name($permission->name), in_array($permission->name, $userPermissionsById), [
+                        'label' => Rbac::extractPermission($permission->name),
+                        'data-rbac-type' => 'permission',
+                        'data-rbac-name' => $permission->name,
+                        'disabled' => (in_array($permission->name, $userPermissionsById) && in_array($permission->name, $userAssignmentsById) === false),
+                    ]); ?>
+                    <?php // echo Rbac::extractRole($role->name); ?>
+                </div>
         <?php endforeach; ?>
+        </div>
         <?php endif; ?>
     </div>
 <?php endforeach; ?>
-
+    </div>
+<?php echo Html::endTag('div'); ?>

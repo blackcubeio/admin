@@ -37,7 +37,7 @@ class DownItemAction extends Action
     /**
      * @var string view
      */
-    public $view = '_form_list';
+    public $view = '_form_menu_items';
 
     /**
      * @param integer $id
@@ -72,10 +72,7 @@ class DownItemAction extends Action
             }
         }
         $menuItemsQuery = $menu->getChildren();
-        $languagesQuery = Language::find()->active()->orderBy(['name' => SORT_ASC]);
         return $this->controller->renderPartial($this->view, [
-            'menu' => $menu,
-            'languagesQuery' => $languagesQuery,
             'menuItemsQuery' => $menuItemsQuery,
         ]);
     }

@@ -18,9 +18,13 @@ use blackcube\admin\actions\composite\CreateAction;
 use blackcube\admin\actions\composite\DeleteAction;
 use blackcube\admin\actions\composite\EditAction;
 use blackcube\admin\actions\composite\IndexAction;
+use blackcube\admin\actions\SeoAction;
+use blackcube\admin\actions\SitemapAction;
+use blackcube\admin\actions\TagAction;
 use blackcube\admin\actions\ToggleAction;
 use blackcube\admin\actions\BlocAction;
 use blackcube\admin\actions\ModalAction;
+use blackcube\admin\actions\SlugAction;
 use blackcube\admin\components\Rbac;
 use blackcube\core\models\Composite;
 use yii\filters\AccessControl;
@@ -65,7 +69,7 @@ class CompositeController extends BaseElementController
                 [
                     'allow' => true,
                     'actions' => [
-                        'edit', 'toggle', 'blocs',
+                        'edit', 'toggle', 'blocs', 'slug', 'sitemap', 'seo', 'tag'
                     ],
                     'roles' => [Rbac::PERMISSION_COMPOSITE_UPDATE],
                 ],
@@ -87,7 +91,7 @@ class CompositeController extends BaseElementController
         ];
         $behaviors['forceAjax'] = [
             'class' => AjaxFilter::class,
-            'only' => ['modal', 'blocs', 'toggle'],
+            'only' => ['modal', 'blocs', 'toggle', 'slug', 'sitemap', 'seo', 'tag'],
         ];
         return $behaviors;
     }
@@ -109,7 +113,22 @@ class CompositeController extends BaseElementController
         $actions['toggle'] = [
             'class' => ToggleAction::class,
             'elementClass' => Composite::class,
-            'elementName' => 'composite',
+        ];
+        $actions['slug'] = [
+            'class' => SlugAction::class,
+            'elementClass' => Composite::class,
+        ];
+        $actions['sitemap'] = [
+            'class' => SitemapAction::class,
+            'elementClass' => Composite::class,
+        ];
+        $actions['seo'] = [
+            'class' => SeoAction::class,
+            'elementClass' => Composite::class,
+        ];
+        $actions['tag'] = [
+            'class' => TagAction::class,
+            'elementClass' => Composite::class,
         ];
         $actions['index'] = [
             'class' => IndexAction::class,

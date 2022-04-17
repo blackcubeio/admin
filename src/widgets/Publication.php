@@ -57,6 +57,7 @@ class Publication extends Widget
     public function run()
     {
         $cache = Module::getInstance()->cache;
+        $cache = null;
         $content = false;
         /* @var $cache \yii\caching\Cache */
         if ($cache !== null && $this->cacheId !== null) {
@@ -101,7 +102,7 @@ class Publication extends Widget
                 'seoStatus' => $seoStatus,
             ]);
             if ($cache !== null && $this->cacheId !== null) {
-                $cache->set($this->cacheId, $content, 3600, QueryCache::getCmsDependencies());
+                $cache->set($this->cacheId, $content, null, QueryCache::getCmsDependencies());
             }
         }
         return $content;

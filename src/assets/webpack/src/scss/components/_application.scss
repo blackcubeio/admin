@@ -1,0 +1,43 @@
+
+.application {
+  &-content {
+    @apply overflow-hidden my-6 px-4 sm:px-6 lg:max-w-6xl lg:mx-auto lg:px-8;
+  }
+
+}
+
+.page {
+  &-header {
+    @apply p-5 bg-indigo-800 flex items-center justify-between;
+    &-title {
+      @apply text-lg leading-6 font-medium text-white flex-1 min-w-0;
+    }
+    &-buttons {
+      @apply flex md:mt-0 md:ml-4 rounded-md;
+      &-button {
+        @apply inline-flex items-center px-2 py-1 border border-gray-300 shadow-sm text-xs font-medium text-gray-700 bg-white hover:bg-indigo-800 hover:text-white focus:outline-none ;
+        &:not(:first-child) {
+          @apply -ml-px;
+        }
+        &:first-child {
+          @apply rounded-l-md
+        }
+        &:last-child {
+          @apply rounded-r-md
+        }
+        &.active {
+          @apply text-green-800 bg-green-50;
+        }
+        &.inactive {
+          @apply text-red-800 bg-red-50;
+        }
+        &.disabled {
+          @apply text-gray-300 bg-gray-50 hover:bg-gray-50 hover:text-gray-300;
+        }
+      }
+    }
+    &-abstract {
+      @apply mt-1 max-w-2xl text-sm text-white;
+    }
+  }
+}

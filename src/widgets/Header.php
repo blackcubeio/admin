@@ -39,6 +39,7 @@ class Header extends Widget
     {
         $previewManager = Yii::createObject(PreviewManager::class);
         $searchForm = Yii::createObject(SearchForm::class);
+
         $currentModuleUid = Module::getInstance()->getUniqueId();
         return $this->render('header', [
             'currentModuleUid' => '/'.$currentModuleUid,

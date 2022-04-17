@@ -86,7 +86,7 @@ class MenuController extends Controller
         ];
         $behaviors['forceAjax'] = [
             'class' => AjaxFilter::class,
-            'only' => ['modal', 'item-modal', 'toggle', 'up-item', 'down-item'],
+            'only' => ['modal', 'item-modal', 'toggle', 'up-item', 'down-item', 'delete', 'delete-item'],
         ];
         return $behaviors;
     }
@@ -108,7 +108,6 @@ class MenuController extends Controller
         $actions['toggle'] = [
             'class' => ToggleAction::class,
             'elementClass' => Menu::class,
-            'elementName' => 'menu',
         ];
         $actions['index'] = [
             'class' => IndexAction::class,

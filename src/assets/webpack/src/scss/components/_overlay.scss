@@ -1,0 +1,90 @@
+.overlay {
+  @apply fixed block inset-0 overflow-hidden z-10;
+  &-wrapper {
+    @apply absolute inset-0 overflow-hidden;
+  }
+  &-overlay {
+    @apply absolute inset-0 bg-gray-500 bg-opacity-75 transition-opacity ease-in-out duration-500;
+    &.opened {
+      @apply opacity-100;
+    }
+    &.closed {
+      @apply opacity-0;
+    }
+    &.opening,
+    &.closing {
+    }
+  }
+  &-content {
+    @apply fixed inset-y-0 right-0 flex max-w-full pl-10 sm:pl-16 z-20;
+  }
+  &-panel {
+    @apply w-screen max-w-2xl transform transition ease-in-out duration-500 sm:duration-700;
+    &.opened {
+      @apply translate-x-0;
+    }
+    &.closed {
+      @apply translate-x-full;
+    }
+    &.opening,
+    &.closing {
+    }
+    &-wrapper {
+      @apply flex h-full flex-col overflow-y-scroll bg-white shadow-xl;
+    }
+  }
+  &-form {
+    @apply h-full flex flex-col bg-white shadow-xl overflow-y-scroll;
+  }
+  &-header {
+    @apply px-4 py-6 bg-gray-50 sm:px-6;
+    &-wrapper {
+      @apply flex items-start justify-between space-x-3;
+    }
+    &-title {
+      @apply text-lg font-medium text-gray-900;
+    }
+    &-abstract {
+      @apply text-sm text-gray-500;
+    }
+  }
+  &-divider-container {
+    @apply space-y-6 py-6 sm:space-y-0 sm:divide-y sm:divide-gray-200 sm:py-0;
+  }
+  &-close {
+    @apply h-7 flex items-center;
+    &-btn {
+      @apply bg-gray-50 rounded-md text-gray-400;
+      &:hover {
+        @apply text-gray-500;
+      }
+      &:focus {
+        @apply outline-none ring-2 ring-indigo-500
+      }
+    }
+    &-img {
+      @apply h-6 w-6;
+    }
+  }
+  &-actions {
+    @apply flex-shrink-0 border-t border-gray-200 px-4 py-5 sm:px-6;
+    &-wrapper {
+      @apply flex justify-end space-x-3;
+    }
+    &-btn {
+      @apply rounded-md border border-gray-300 bg-white py-2 px-4 text-sm font-medium text-gray-700 shadow-sm;
+      &:hover {
+        @apply bg-gray-50;
+      }
+      &:focus {
+        @apply outline-none ring-2 ring-indigo-500 ring-offset-2;
+      }
+      &.submit {
+        @apply inline-flex justify-center border-transparent bg-indigo-600 text-white;
+        &:hover {
+          @apply bg-indigo-700;
+        }
+      }
+    }
+  }
+}

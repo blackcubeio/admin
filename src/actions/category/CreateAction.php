@@ -27,7 +27,7 @@ use yii\web\Response;
 use Yii;
 
 /**
- * Class CreateAction
+ * Class EditAction
  *
  * @author Philippe Gaultier <pgaultier@redcat.io>
  * @copyright 2010-2020 Redcat
@@ -56,40 +56,47 @@ class CreateAction extends BaseElementAction
     public function run()
     {
         $category = Yii::createObject(Category::class);
-        $slugForm = Yii::createObject([
-            'class' => SlugForm::class,
-            'element' => $category
-        ]);
+        /* @var $category Category */
+
+        if ($category === null) {
+            throw new NotFoundHttpException();
+        }
         $pluginsHandler = Yii::createObject(PluginsHandlerInterface::class);
         /* @var $pluginsHandler \blackcube\core\interfaces\PluginsHandlerInterface */
         $pluginsHandler->runHook(PluginHookInterface::PLUGIN_HOOK_LOAD, $category);
 
         $blocs = $category->getBlocs()->all();
-        $transaction = Module::getInstance()->db->beginTransaction();
-        $result = CategoryHelper::saveElement($category, $blocs, $slugForm);
-        $validatePlugins = $pluginsHandler->runHook(PluginHookInterface::PLUGIN_HOOK_VALIDATE, $category);
-        $validatePlugins = array_reduce($validatePlugins, function($accumulator, $item) {
-            return $accumulator && $item;
-        }, true);
 
-        if ($result === true && $validatePlugins === true) {
-            $savePlugins = $pluginsHandler->runHook(PluginHookInterface::PLUGIN_HOOK_SAVE, $category);
-            $savePlugins = array_reduce($savePlugins, function($accumulator, $item) {
+        if (Yii::$app->request->isPost) {
+            $transaction = Module::getInstance()->db->beginTransaction();
+            $result = CategoryHelper::saveElement($category, $blocs);
+            $validatePlugins = $pluginsHandler->runHook(PluginHookInterface::PLUGIN_HOOK_VALIDATE, $category);
+            $validatePlugins = array_reduce($validatePlugins, function($accumulator, $item) {
                 return $accumulator && $item;
             }, true);
-            if ($savePlugins === true) {
-                $transaction->commit();
-                return $this->controller->redirect([$this->targetAction, 'id' => $category->id]);
+            if ($result === true && $validatePlugins === true) {
+                $savePlugins = $pluginsHandler->runHook(PluginHookInterface::PLUGIN_HOOK_SAVE, $category);
+                $savePlugins = array_reduce($savePlugins, function($accumulator, $item) {
+                    return $accumulator && $item;
+                }, true);
+                if ($savePlugins === true) {
+                    $transaction->commit();
+                    return $this->controller->redirect([$this->targetAction, 'id' => $category->id]);
+                }
             }
+            $transaction->rollBack();
         }
-        $transaction->rollBack();
+
         $languagesQuery = Language::find()->active()->orderBy(['name' => SORT_ASC]);
+
         $typesQuery = $this->getTypesQuery()
             ->orderBy(['name' => SORT_ASC]);
+
+
+
         return $this->controller->render($this->view, [
             'pluginsHandler' => $pluginsHandler,
             'category' => $category,
-            'slugForm' => $slugForm,
             'typesQuery' => $typesQuery,
             'blocs' => $blocs,
             'languagesQuery' => $languagesQuery,

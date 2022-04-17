@@ -50,6 +50,7 @@ class DeleteAction extends BaseElementAction
         $category = $this->getCategoryQuery()
             ->andWhere(['id' => $id])
             ->one();
+
         if ($category === null) {
             throw new NotFoundHttpException();
         }
@@ -71,6 +72,13 @@ class DeleteAction extends BaseElementAction
                 $blocsQuery = $category->getBlocs();
                 foreach($blocsQuery->each() as $bloc) {
                     $bloc->delete();
+                }
+                $tagsQuery = $category->getTags()->with('blocs');
+                foreach($tagsQuery->each() as $tag) {
+                    foreach($tag->blocs as $bloc) {
+                        $bloc->delete();
+                    }
+                    $tag->delete();
                 }
                 $category->delete();
                 $transaction->commit();

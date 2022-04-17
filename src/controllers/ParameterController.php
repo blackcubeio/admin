@@ -80,7 +80,7 @@ class ParameterController extends Controller
         ];
         $behaviors['forceAjax'] = [
             'class' => AjaxFilter::class,
-            'only' => ['modal'],
+            'only' => ['modal', 'delete'],
         ];
         return $behaviors;
     }

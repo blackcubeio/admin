@@ -38,6 +38,7 @@ class TechnicalController extends Controller
         $actions = parent::actions();
         $actions['error'] = [
             'class' => ErrorAction::class,
+            'layout' => 'main',
         ];
         return $actions;
     }

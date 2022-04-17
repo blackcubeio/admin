@@ -64,7 +64,7 @@ class PluginController extends Controller
         ];
         $behaviors['forceAjax'] = [
             'class' => AjaxFilter::class,
-            'only' => ['modal', 'actions'],
+            'only' => ['modal', 'actions', 'toggle', 'toggle-register'],
         ];
         return $behaviors;
     }

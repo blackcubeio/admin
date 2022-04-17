@@ -65,7 +65,7 @@ class BlocTypeController extends Controller
                 [
                     'allow' => true,
                     'actions' => [
-                        'edit', 'toggle',
+                        'edit',
                     ],
                     'roles' => [Rbac::PERMISSION_BLOCTYPE_UPDATE],
                 ],
@@ -80,7 +80,7 @@ class BlocTypeController extends Controller
         ];
         $behaviors['forceAjax'] = [
             'class' => AjaxFilter::class,
-            'only' => ['modal'],
+            'only' => ['modal', 'delete'],
         ];
         return $behaviors;
     }

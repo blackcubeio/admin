@@ -79,7 +79,7 @@ class TypeController extends Controller
         ];
         $behaviors['forceAjax'] = [
             'class' => AjaxFilter::class,
-            'only' => ['modal', 'actions'],
+            'only' => ['modal', 'actions', 'delete'],
         ];
         return $behaviors;
     }

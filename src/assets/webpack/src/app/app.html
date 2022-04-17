@@ -1,0 +1,527 @@
+<div class="h-screen flex overflow-hidden bg-gray-100" bc-test="">
+    <!-- ul>
+        <li><a load="route:home">home</a></li>
+        <li><a load="route:ajax">ajax</a></li>
+    </ul -->
+    <!-- Off-canvas menu for mobile, show/hide based on off-canvas menu state. -->
+    <div blackcube-menu="" class="menu menu-mobile" role="dialog" aria-modal="true">
+        <!--
+          Off-canvas menu overlay, show/hide based on off-canvas menu state.
+
+          Entering: "transition-opacity ease-linear duration-300"
+            From: "opacity-0"
+            To: "opacity-100"
+          Leaving: "transition-opacity ease-linear duration-300"
+            From: "opacity-100"
+            To: "opacity-0"
+        -->
+        <div ref="overlay" class="menu-mobile-overlay closed" aria-hidden="true"></div>
+
+        <!--
+          Off-canvas menu, show/hide based on off-canvas menu state.
+
+          Entering: "transition ease-in-out duration-300 transform"
+            From: "-translate-x-full"
+            To: "translate-x-0"
+          Leaving: "transition ease-in-out duration-300 transform"
+            From: "translate-x-0"
+            To: "-translate-x-full"
+        -->
+        <div ref="offcanvas" class="menu-mobile-offcanvas closed">
+            <!--
+              Close button, show/hide based on off-canvas menu state.
+
+              Entering: "ease-in-out duration-300"
+                From: "opacity-0"
+                To: "opacity-100"
+              Leaving: "ease-in-out duration-300"
+                From: "opacity-100"
+                To: "opacity-0"
+            -->
+            <div ref="closepanel" class="menu-mobile-close closed">
+                <button class="menu-mobile-btn" ref="close">
+                    <span class="sr-only">Close sidebar</span>
+                    <!-- Heroicon name: outline/x -->
+                    <svg class="menu-mobile-img" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+            </div>
+
+            <div class="menu-logo">
+                <img class="menu-logo-img" src="https://tailwindui.com/img/logos/workflow-logo-indigo-600-mark-gray-800-text.svg" alt="Workflow">
+            </div>
+            <div class="menu-mobile-navbar-wrapper">
+                <nav class="navbar" aria-label="Sidebar">
+                    <div class="navbar-item">
+                        <!-- Current: "bg-gray-100 text-gray-900", Default: "bg-white text-gray-600 hover:bg-gray-50 hover:text-gray-900" -->
+                        <a href="#" class="navbar-item-link">
+                            <!--
+                              Heroicon name: outline/home
+
+                              Current: "text-gray-500", Default: "text-gray-400 group-hover:text-gray-500"
+                            -->
+                            <svg class="navbar-item-img" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                            </svg>
+                            Dashboard
+                        </a>
+                    </div>
+
+                    <div class="navbar-item">
+                        <!-- Current: "bg-gray-100 text-gray-900", Default: "bg-white text-gray-600 hover:bg-gray-50 hover:text-gray-900" -->
+                        <button type="button" class="navbar-item-btn" aria-controls="sub-menu-team" aria-expanded="false">
+                            <!-- Heroicon name: outline/users -->
+                            <svg class="navbar-item-img" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+                            </svg>
+                            Team
+                            <!-- Expanded: "text-gray-400 rotate-90", Collapsed: "text-gray-300" -->
+                            <svg class="navbar-item-expander" viewBox="0 0 20 20" aria-hidden="true">
+                                <path d="M6 6L14 10L6 14V6Z" fill="currentColor" />
+                            </svg>
+                        </button>
+                        <!-- Expandable link section, show/hide based on state. -->
+                        <div class="navbar-subitems" id="sub-menu-1">
+                            <a href="#" class="navbar-subitems-link">
+                                <svg class="navbar-subitems-img" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                </svg>
+                                <span class="navbar-subitems-title">
+                                          Overview
+                                        </span>
+                                <span class="navbar-subitems-badge exclamation">
+                                            20+
+                                        </span>
+                            </a>
+
+                            <a href="#" class="navbar-subitems-link">
+                                Members
+                            </a>
+
+                            <a href="#" class="navbar-subitems-link">
+                                Calendar
+                            </a>
+
+                            <a href="#" class="navbar-subitems-link">
+                                <svg class="navbar-subitems-img" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                </svg>
+                                <span class="navbar-subitems-title">
+                                            Settings
+                                        </span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="navbar-item">
+                        <!-- Current: "bg-gray-100 text-gray-900", Default: "bg-white text-gray-600 hover:bg-gray-50 hover:text-gray-900" -->
+                        <button type="button" class="navbar-item-btn" aria-controls="sub-menu-projects" aria-expanded="false">
+                            <!-- Heroicon name: outline/folder -->
+                            <svg class="navbar-item-img" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z" />
+                            </svg>
+                            Projects
+                            <!-- Expanded: "text-gray-400 rotate-90", Collapsed: "text-gray-300" -->
+                            <svg class="navbar-item-expander" viewBox="0 0 20 20" aria-hidden="true">
+                                <path d="M6 6L14 10L6 14V6Z" fill="currentColor" />
+                            </svg>
+                        </button>
+                        <!-- Expandable link section, show/hide based on state. -->
+                        <div class="navbar-subitems" id="sub-menu-2">
+                            <a href="#" class="navbar-subitems-link">
+                                Overview
+                            </a>
+
+                            <a href="#" class="navbar-subitems-link">
+                                Members
+                            </a>
+
+                            <a href="#" class="navbar-subitems-link">
+                                Calendar
+                            </a>
+
+                            <a href="#" class="navbar-subitems-link">
+                                Settings
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="navbar-item">
+                        <!-- Current: "bg-gray-100 text-gray-900", Default: "bg-white text-gray-600 hover:bg-gray-50 hover:text-gray-900" -->
+                        <button type="button" class="navbar-item-btn" aria-controls="sub-menu-calendar" aria-expanded="false">
+                            <!-- Heroicon name: outline/calendar -->
+                            <svg class="navbar-item-img" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                            </svg>
+                            Calendar
+                            <!-- Expanded: "text-gray-400 rotate-90", Collapsed: "text-gray-300" -->
+                            <svg class="navbar-item-expander" viewBox="0 0 20 20" aria-hidden="true">
+                                <path d="M6 6L14 10L6 14V6Z" fill="currentColor" />
+                            </svg>
+                        </button>
+                        <!-- Expandable link section, show/hide based on state. -->
+                        <div class="navbar-subitems" id="sub-menu-2">
+                            <a href="#" class="navbar-subitems-link">
+                                Overview
+                            </a>
+
+                            <a href="#" class="navbar-subitems-link">
+                                Members
+                            </a>
+
+                            <a href="#" class="navbar-subitems-link">
+                                Calendar
+                            </a>
+
+                            <a href="#" class="navbar-subitems-link">
+                                Settings
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="navbar-item">
+                        <!-- Current: "bg-gray-100 text-gray-900", Default: "bg-white text-gray-600 hover:bg-gray-50 hover:text-gray-900" -->
+                        <button type="button" class="navbar-item-btn" aria-controls="sub-menu-2" aria-expanded="false">
+                            <!-- Heroicon name: outline/inbox -->
+                            <svg class="navbar-item-img" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4" />
+                            </svg>
+                            Documents
+                            <!-- Expanded: "text-gray-400 rotate-90", Collapsed: "text-gray-300" -->
+                            <svg class="navbar-item-expander" viewBox="0 0 20 20" aria-hidden="true">
+                                <path d="M6 6L14 10L6 14V6Z" fill="currentColor" />
+                            </svg>
+                        </button>
+                        <!-- Expandable link section, show/hide based on state. -->
+                        <div class="navbar-subitems" id="sub-menu-2">
+                            <a href="#" class="navbar-subitems-link">
+                                Overview
+                            </a>
+
+                            <a href="#" class="navbar-subitems-link">
+                                Members
+                            </a>
+
+                            <a href="#" class="navbar-subitems-link">
+                                Calendar
+                            </a>
+
+                            <a href="#" class="navbar-subitems-link">
+                                Settings
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="navbar-item">
+                        <!-- Current: "bg-gray-100 text-gray-900", Default: "bg-white text-gray-600 hover:bg-gray-50 hover:text-gray-900" -->
+                        <button type="button" class="navbar-item-btn" aria-controls="sub-menu-reports" aria-expanded="false">
+                            <!-- Heroicon name: outline/chart-bar -->
+                            <svg class="navbar-item-img" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                            </svg>
+                            Reports
+                            <!-- Expanded: "text-gray-400 rotate-90", Collapsed: "text-gray-300" -->
+                            <svg class="navbar-item-expander" viewBox="0 0 20 20" aria-hidden="true">
+                                <path d="M6 6L14 10L6 14V6Z" fill="currentColor" />
+                            </svg>
+                        </button>
+                        <!-- Expandable link section, show/hide based on state. -->
+                        <div class="navbar-subitems" id="sub-menu-2">
+                            <a href="#" class="navbar-subitems-link">
+                                Overview
+                            </a>
+
+                            <a href="#" class="navbar-subitems-link">
+                                Members
+                            </a>
+
+                            <a href="#" class="navbar-subitems-link">
+                                Calendar
+                            </a>
+
+                            <a href="#" class="navbar-subitems-link">
+                                Settings
+                            </a>
+                        </div>
+                    </div>
+
+                </nav>
+            </div>
+        </div>
+
+        <div class="flex-shrink-0 w-14" aria-hidden="true">
+            <!-- Dummy element to force sidebar to shrink to fit close icon -->
+        </div>
+    </div>
+
+    <!-- Static sidebar for desktop -->
+    <div blackcube-menu="" class="menu menu-desktop">
+        <div class="menu-desktop-wrapper">
+            <!-- Sidebar component, swap this element with another sidebar if you like -->
+            <div class="menu-desktop-sidebar">
+                <div class="menu-logo">
+                    <!-- img class="menu-logo-img" src="https://tailwindui.com/img/logos/workflow-logo-indigo-600-mark-gray-800-text.svg" alt="Workflow" -->
+                    <span class="text-2xl font-semibold leading-7 text-gray-900 sm:truncate">Blackcube</span>
+                </div>
+                <div class="menu-desktop-navbar-wrapper">
+                    <nav class="navbar" aria-label="Sidebar">
+                        <div class="navbar-item">
+                            <!-- Current: "bg-gray-100 text-gray-900", Default: "bg-white text-gray-600 hover:bg-gray-50 hover:text-gray-900" -->
+                            <a href="#" load="route:ajax" class="navbar-item-link">
+                                <!--
+                                  Heroicon name: outline/home
+
+                                  Current: "text-gray-500", Default: "text-gray-400 group-hover:text-gray-500"
+                                -->
+                                <svg class="navbar-item-img" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                                </svg>
+                                Dashboard
+                            </a>
+                        </div>
+
+                        <div class="navbar-item expanded">
+                            <!-- Current: "bg-gray-100 text-gray-900", Default: "bg-white text-gray-600 hover:bg-gray-50 hover:text-gray-900" -->
+                            <button type="button" class="navbar-item-btn" aria-controls="sub-menu-team" aria-expanded="false">
+                                <!-- Heroicon name: outline/users -->
+                                <svg class="navbar-item-img" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+                                </svg>
+                                Team
+                                <!-- Expanded: "text-gray-400 rotate-90", Collapsed: "text-gray-300" -->
+                                <svg class="navbar-item-expander" viewBox="0 0 20 20" aria-hidden="true">
+                                    <path d="M6 6L14 10L6 14V6Z" fill="currentColor" />
+                                </svg>
+                            </button>
+                            <!-- Expandable link section, show/hide based on state. -->
+                            <div class="navbar-subitems" id="sub-menu-1">
+                                <a href="#" class="navbar-subitems-link active">
+                                    <svg class="navbar-subitems-img" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                    </svg>
+                                    <span class="navbar-subitems-title">
+                                          Overview
+                                        </span>
+                                    <span class="navbar-subitems-badge exclamation">
+                                            20+
+                                        </span>
+                                </a>
+
+                                <a href="#" class="navbar-subitems-link">
+                                    Members
+                                </a>
+
+                                <a href="#" class="navbar-subitems-link">
+                                    Calendar
+                                </a>
+
+                                <a href="#" class="navbar-subitems-link">
+                                    <svg class="navbar-subitems-img" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                    </svg>
+                                    <span class="navbar-subitems-title">
+                                            Settings
+                                        </span>
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="navbar-item">
+                            <!-- Current: "bg-gray-100 text-gray-900", Default: "bg-white text-gray-600 hover:bg-gray-50 hover:text-gray-900" -->
+                            <button type="button" class="navbar-item-btn" aria-controls="sub-menu-projects" aria-expanded="false">
+                                <!-- Heroicon name: outline/folder -->
+                                <svg class="navbar-item-img" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z" />
+                                </svg>
+                                Projects
+                                <!-- Expanded: "text-gray-400 rotate-90", Collapsed: "text-gray-300" -->
+                                <svg class="navbar-item-expander" viewBox="0 0 20 20" aria-hidden="true">
+                                    <path d="M6 6L14 10L6 14V6Z" fill="currentColor" />
+                                </svg>
+                            </button>
+                            <!-- Expandable link section, show/hide based on state. -->
+                            <div class="navbar-subitems" id="sub-menu-2">
+                                <a href="#" class="navbar-subitems-link">
+                                    Overview
+                                </a>
+
+                                <a href="#" class="navbar-subitems-link">
+                                    Members
+                                </a>
+
+                                <a href="#" class="navbar-subitems-link">
+                                    Calendar
+                                </a>
+
+                                <a href="#" class="navbar-subitems-link">
+                                    Settings
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="navbar-item">
+                            <!-- Current: "bg-gray-100 text-gray-900", Default: "bg-white text-gray-600 hover:bg-gray-50 hover:text-gray-900" -->
+                            <button type="button" class="navbar-item-btn" aria-controls="sub-menu-calendar" aria-expanded="false">
+                                <!-- Heroicon name: outline/calendar -->
+                                <svg class="navbar-item-img" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                </svg>
+                                Calendar
+                                <!-- Expanded: "text-gray-400 rotate-90", Collapsed: "text-gray-300" -->
+                                <svg class="navbar-item-expander" viewBox="0 0 20 20" aria-hidden="true">
+                                    <path d="M6 6L14 10L6 14V6Z" fill="currentColor" />
+                                </svg>
+                            </button>
+                            <!-- Expandable link section, show/hide based on state. -->
+                            <div class="navbar-subitems" id="sub-menu-2">
+                                <a href="#" class="navbar-subitems-link">
+                                    Overview
+                                </a>
+
+                                <a href="#" class="navbar-subitems-link">
+                                    Members
+                                </a>
+
+                                <a href="#" class="navbar-subitems-link">
+                                    Calendar
+                                </a>
+
+                                <a href="#" class="navbar-subitems-link">
+                                    Settings
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="navbar-item">
+                            <!-- Current: "bg-gray-100 text-gray-900", Default: "bg-white text-gray-600 hover:bg-gray-50 hover:text-gray-900" -->
+                            <button type="button" class="navbar-item-btn" aria-controls="sub-menu-2" aria-expanded="false">
+                                <!-- Heroicon name: outline/inbox -->
+                                <svg class="navbar-item-img" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4" />
+                                </svg>
+                                Documents
+                                <!-- Expanded: "text-gray-400 rotate-90", Collapsed: "text-gray-300" -->
+                                <svg class="navbar-item-expander" viewBox="0 0 20 20" aria-hidden="true">
+                                    <path d="M6 6L14 10L6 14V6Z" fill="currentColor" />
+                                </svg>
+                            </button>
+                            <!-- Expandable link section, show/hide based on state. -->
+                            <div class="navbar-subitems" id="sub-menu-2">
+                                <a href="#" class="navbar-subitems-link">
+                                    Overview
+                                </a>
+
+                                <a href="#" class="navbar-subitems-link">
+                                    Members
+                                </a>
+
+                                <a href="#" class="navbar-subitems-link">
+                                    Calendar
+                                </a>
+
+                                <a href="#" class="navbar-subitems-link">
+                                    Settings
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="navbar-item">
+                            <!-- Current: "bg-gray-100 text-gray-900", Default: "bg-white text-gray-600 hover:bg-gray-50 hover:text-gray-900" -->
+                            <button type="button" class="navbar-item-btn" aria-controls="sub-menu-reports" aria-expanded="false">
+                                <!-- Heroicon name: outline/chart-bar -->
+                                <svg class="navbar-item-img" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                                </svg>
+                                Reports
+                                <!-- Expanded: "text-gray-400 rotate-90", Collapsed: "text-gray-300" -->
+                                <svg class="navbar-item-expander" viewBox="0 0 20 20" aria-hidden="true">
+                                    <path d="M6 6L14 10L6 14V6Z" fill="currentColor" />
+                                </svg>
+                            </button>
+                            <!-- Expandable link section, show/hide based on state. -->
+                            <div class="navbar-subitems" id="sub-menu-2">
+                                <a href="#" class="navbar-subitems-link">
+                                    Overview
+                                </a>
+
+                                <a href="#" class="navbar-subitems-link">
+                                    Members
+                                </a>
+
+                                <a href="#" class="navbar-subitems-link">
+                                    Calendar
+                                </a>
+
+                                <a href="#" class="navbar-subitems-link">
+                                    Settings
+                                </a>
+                            </div>
+                        </div>
+
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="flex flex-col w-0 flex-1 overflow-hidden">
+        <div class="relative z-10 flex-shrink-0 flex h-16 bg-white shadow">
+            <blackcube-burger>
+            </blackcube-burger>
+            <div class="flex-1 px-4 flex justify-between">
+                <div class="flex-1 flex">
+                    <form class="w-full flex md:ml-0" action="#" method="GET">
+                        <label for="search_field" class="sr-only">Search</label>
+                        <div class="relative w-full text-gray-400 focus-within:text-gray-600">
+                            <div class="absolute inset-y-0 left-0 flex items-center pointer-events-none">
+                                <!-- Heroicon name: solid/search -->
+                                <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                                    <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd" />
+                                </svg>
+                            </div>
+                            <input id="search_field" class="block w-full h-full pl-8 pr-3 py-2 border-transparent text-gray-900 placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:ring-0 focus:border-transparent sm:text-sm" placeholder="Search" type="search" name="search">
+                        </div>
+                    </form>
+                </div>
+                <div class="ml-4 flex items-center md:ml-6">
+                    <button class="bg-white p-1 rounded-full text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                        <span class="sr-only">View notifications</span>
+                        <!-- Heroicon name: outline/bell -->
+                        <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+                        </svg>
+                    </button>
+
+                    <!-- Profile dropdown -->
+                    <blackcube-profile
+                            class="ml-3 relative"
+                            x-avatar.bind="'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixqx=L4xjUIq3VW&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80'"
+                            initials.bind="'PG'"
+                            items.bind="[{label: 'Settings', url:'#', active: false}, {label: 'Logout', url:'#', active: false}]"
+                    >
+                    </blackcube-profile>
+                </div>
+            </div>
+        </div>
+        <main class="flex-1 relative overflow-y-auto focus:outline-none">
+
+            <au-viewport class="py-6 block"></au-viewport>
+
+        </main>
+    </div>
+
+    <!-- Alert box -->
+    <blackcube-alert>
+
+    </blackcube-alert>
+
+    <!-- Slide panel overlay -->
+    <blackcube-overlay class="overlay" aria-labelledby="slide-over-title" role="dialog" aria-modal="true">
+
+    </blackcube-overlay>
+
+    <blackcube-notification-center>
+
+    </blackcube-notification-center>
+</div>

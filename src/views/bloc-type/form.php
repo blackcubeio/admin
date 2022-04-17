@@ -17,67 +17,81 @@
  */
 
 use blackcube\admin\Module;
+use blackcube\admin\components\Rbac;
 use blackcube\admin\helpers\Html;
 use blackcube\admin\widgets\Sidebar;
+use blackcube\admin\helpers\BlackcubeHtml;
+use blackcube\admin\helpers\Heroicons;
+use yii\helpers\Url;
+use blackcube\admin\helpers\Aurelia;
+
+$authManager = Yii::$app->authManager;
 
 ?>
-    <main>
-        <?php echo Html::beginForm('', 'post', ['class' => 'form']); ?>
-        <ul class="header">
-            <li>
-                <?php echo Html::a('<i class="fa fa-angle-left mr-2"></i> '.Module::t('bloc-type', 'Back'), ['index'], ['class' => 'button']); ?>
-            </li>
-            <li>
-                <?php echo Html::button('<i class="fa fa-check mr-2"></i> '.Module::t('bloc-type', 'Save'), ['type' => 'submit', 'class' => 'button']); ?>
-            </li>
-        </ul>
-
-        <div class="bloc">
-                <div class="bloc-title">
-                    <span class="title"><?php echo Module::t('bloc-type', 'Bloc type'); ?></span>
+<main class="application-content">
+    <?php echo Html::beginForm('', 'post', [
+        'class' => 'element-form-wrapper',
+    ]); ?>
+    <div class="page-header">
+        <?php echo Html::beginTag('a', [
+            'class' => 'text-white',
+            'href' => Url::to(['index'])
+        ]); ?>
+        <?php echo Heroicons::svg('solid/chevron-left', ['class' => 'h-7 w-7']); ?>
+        <?php echo Html::endTag('a'); ?>
+        <h3 class="page-header-title"><?php echo Module::t('bloc-type', 'Bloc type'); ?></h3>
+    </div>
+    <div class="px-6 pb-6">
+        <div class="element-form-bloc">
+            <div class="element-form-bloc-grid-12">
+                <div class="element-form-bloc-cols-6">
+                    <?php echo BlackcubeHtml::activeTextInput($blocType, 'name', []); ?>
                 </div>
-            </div>
-        <div class="bloc">
-            <div class="w-full md:w-1/2 bloc-fieldset">
-                    <?php echo Html::activeLabel($blocType, 'name', ['class' => 'label']); ?>
-                    <?php echo Html::activeTextInput($blocType, 'name', ['class' => 'textfield'.($blocType->hasErrors('name')?' error':'')]); ?>
+                <div class="element-form-bloc-cols-6">
+                    <?php echo BlackcubeHtml::activeTextInput($blocType, 'view', []); ?>
                 </div>
-                <div class="w-full md:w-1/2 bloc-fieldset">
-                    <?php echo Html::activeLabel($blocType, 'view', ['class' => 'label']); ?>
-                    <?php echo Html::activeTextInput($blocType, 'view', ['class' => 'textfield'.($blocType->hasErrors('view')?' error':'')]); ?>
-                </div>
-            </div>
-            <div class="bloc">
-                <div class="w-full px-3">
-                    <?php echo Html::activeLabel($blocType, 'template', ['class' => 'block uppercase tracking-wide text-gray-700 text-xs font-light mb-1']); ?>
-                    <?php echo Html::activeSchema($blocType, 'template'); ?>
-                </div>
-            </div>
-        <div class="bloc">
-            <div class="bloc-title">
-                <span class="title"><?php echo Module::t('bloc-type', 'Associated types'); ?></span>
             </div>
         </div>
-
-        <div class="bloc">
+        <div class="element-form-bloc">
+            <div class="element-form-bloc-stacked">
+                <?php echo BlackcubeHtml::activeSchema($blocType, 'template'); ?>
+            </div>
+        </div>
+    </div>
+    <div class="element-form-header">
+        <h3 class="element-form-header-title">
+            <?php echo Module::t('bloc-type', 'Associated types'); ?>
+        </h3>
+        <!-- p class="element-form-header-abstract">This is the minimal information needed to create a new composite</p -->
+    </div>
+    <div class="px-6 pb-6 flex flex-wrap">
         <?php foreach ($typeBlocTypes as $i => $typeBlocType): ?>
-                <div class="w-full bloc-fieldset md:w-2/12">
-                    <?php echo Html::activeCheckbox($typeBlocType, '['.$i.']allowed', ['label' => false, 'class' => 'checkbox']); ?>
-                    <?php echo Html::activeLabel($typeBlocType, '['.$i.']allowed', ['class' => 'label', 'style' => 'display:inline-block;', 'label' => $typeBlocType->type->name]); ?>
-                    <?php echo Html::activeHiddenInput($typeBlocType, '['.$i.']typeId'); ?>
-                    <?php echo Html::activeHiddenInput($typeBlocType, '['.$i.']blocTypeId'); ?>
-                </div>
+            <div class="w-full md:w-1/4">
+                <?php echo BlackcubeHtml::activeCheckbox($typeBlocType, '['.$i.']allowed', ['label' => $typeBlocType->type->name]); ?>
+                <?php echo Html::activeHiddenInput($typeBlocType, '['.$i.']typeId'); ?>
+                <?php echo Html::activeHiddenInput($typeBlocType, '['.$i.']blocTypeId'); ?>
+            </div>
         <?php endforeach; ?>
-                </div>
+    </div>
+    <div class="px-6 pb-6">
 
-        <div class="buttons">
-            <?php echo Html::a('<i class="fa fa-times mr-2"></i> '.Module::t('bloc-type', 'Cancel'), ['index'], [
-                'class' => 'button-cancel'
+        <div class="element-form-buttons">
+            <?php echo Html::beginTag('a', [
+                'class' => 'element-form-buttons-button',
+                'href' => Url::to(['index'])
             ]); ?>
-            <?php echo Html::button('<i class="fa fa-check mr-2"></i> '.Module::t('bloc-type', 'Save'), [
-                'type' => 'submit',
-                'class' => 'button-submit'
+            <?php echo Heroicons::svg('solid/x', ['class' => 'element-form-buttons-button-icon']); ?>
+            <?php echo Module::t('common', 'Cancel'); ?>
+            <?php echo Html::endTag('a'); ?>
+            <?php echo Html::beginTag('button', [
+                'class' => 'element-form-buttons-button action',
+                'type' => 'submit'
             ]); ?>
+            <?php echo Heroicons::svg('solid/check', ['class' => 'element-form-buttons-button-icon']); ?>
+            <?php echo Module::t('common', 'Save'); ?>
+            <?php echo Html::endTag('button'); ?>
         </div>
-        <?php echo Html::endForm(); ?>
-    </main>
+    </div>
+    <?php echo Html::endForm(); ?>
+</main>
+

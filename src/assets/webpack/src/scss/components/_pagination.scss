@@ -1,0 +1,32 @@
+
+.pagination {
+  @apply bg-white px-4 py-3 flex items-center justify-between border-t border-gray-200 sm:px-6;
+  &-mobile {
+    @apply flex-1 flex justify-between sm:hidden;
+  }
+  &-desktop {
+    @apply hidden sm:flex-1 sm:flex sm:items-center sm:justify-between;
+    &-info {
+      @apply text-sm text-gray-700;
+    }
+    &-nav {
+      @apply relative z-0 inline-flex rounded-md shadow-sm -space-x-px;
+      &-icon {
+        @apply h-5 w-5;
+      }
+      &-link {
+        @apply bg-white border-gray-300 text-gray-500 hover:bg-gray-50 relative inline-flex items-center px-4 py-2 border text-sm font-medium;
+        &.active {
+          @apply z-10 bg-indigo-50 border-indigo-500 text-indigo-600;
+        }
+        &:first-child {
+          @apply px-2 rounded-l-md;
+        }
+        &:last-child {
+          @apply px-2 rounded-r-md;
+        }
+      }
+    }
+  }
+}
+

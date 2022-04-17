@@ -14,8 +14,10 @@
 
 namespace blackcube\admin\actions\node;
 
+use blackcube\admin\Module;
 use blackcube\admin\actions\BaseElementAction;
 use blackcube\core\interfaces\PluginsHandlerInterface;
+use blackcube\core\models\Composite;
 use blackcube\core\models\Node;
 use blackcube\core\models\Slug;
 use blackcube\core\models\Type;
@@ -37,6 +39,11 @@ use Yii;
 class IndexAction extends BaseElementAction
 {
     /**
+     * @var int
+     */
+    public $pagerSize = 20;
+
+    /**
      * @var string view
      */
     public $view = 'index';
@@ -51,11 +58,13 @@ class IndexAction extends BaseElementAction
         $nodesQuery = $this->getNodesQuery()
             ->joinWith('type', true)
             ->joinWith('slug', true)
+            ->with('language')
             ->with('slug.seo')
             ->with('slug.sitemap');
         $search = Yii::$app->request->getQueryParam('search', null);
         if ($search !== null) {
             $nodesQuery->andWhere(['or',
+                ['like', Node::tableName().'.[[id]]', $search, false],
                 ['like', Node::tableName().'.[[name]]', $search],
                 ['like', Type::tableName().'.[[name]]', $search],
                 ['like', Slug::tableName().'.[[path]]', $search],
@@ -65,7 +74,12 @@ class IndexAction extends BaseElementAction
             'class' => ActiveDataProvider::class,
             'query' => $nodesQuery,
             'pagination' => [
-                'pageSize' => 20,
+                'pageSize' => $this->pagerSize,
+                'pageParam' => 'page',
+                'params' => [
+                    'search' => $search,
+                    'page' => Yii::$app->request->getQueryParam('page', 0)
+                ],
             ],
             'sort' => [
                 'defaultOrder' => [
@@ -88,6 +102,16 @@ class IndexAction extends BaseElementAction
         $pluginsHandler = Yii::createObject(PluginsHandlerInterface::class);
         /* @var $pluginsHandler \blackcube\core\interfaces\PluginsHandlerInterface */
 
+        if (Yii::$app->request->isAjax) {
+            return $this->controller->renderPartial('_list', [
+                'icon' => 'outline/document-text',
+                'title' => Module::t('node', 'Nodes'),
+                'elementsProvider' => $nodesProvider,
+                'additionalLinkOptions' => [
+                    'data-ajaxify-source' => 'nodes-search'
+                ]
+            ]);
+        }
         return $this->controller->render($this->view, [
             'pluginsHandler' => $pluginsHandler,
             'nodesProvider' => $nodesProvider

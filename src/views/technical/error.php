@@ -5,45 +5,54 @@
  * PHP version 7.2+
  *
  * @author Philippe Gaultier <pgaultier@redcat.io>
- * @copyright 2010-2020 Redcat
+ * @copyright 2010-2019 Redcat
  * @license https://www.redcat.io/license license
  * @version XXX
  * @link https://www.redcat.io
- * @package blackcube\admin\views\technical
+ * @package webapp\views\layouts
  *
- * @var $this \yii\web\View
- * @var $name string
  * @var $message string
  * @var $exception Exception
+ * @var $this \yii\web\View
  */
 
 use blackcube\admin\Module;
-use blackcube\admin\helpers\Html;
-use yii\web\Response;
-
-if ($exception instanceof \yii\web\HttpException) {
-    $code = $exception->statusCode;
-    $definition = isset(Response::$httpStatuses[$code]) ? Response::$httpStatuses[$code] : 'An internal server error occurred.';
-} else {
-    $code = 'XXX';
-    $definition = 'An internal server error occurred.';
-}
+use yii\web\HttpException;
 
 ?>
-<div class="container mx-auto h-full flex flex-1 justify-center items-center">
-    <div class="w-full max-w-lg">
-        <div class="leading-loose">
-            <div class="max-w-xl m-4 p-10 bg-white rounded shadow-xl">
-                <p class="text-gray-800 font-medium text-center text-xl font-bold">
-                <?php echo Module::t('technical', '{code} - {definition}', [
-                    'code' => $code,
-                    'definition' => $definition
-                ]); ?></p>
-                <?php echo Html::a(Module::t('error', 'Take Me Back To Home'), ['dashboard/index'], [
-                    'class' => 'px-4 py-1 text-white font-light tracking-wider bg-gray-900 rounded ml-24'
-                ]); ?>
-            </div>
+<div class="error-wrapper">
+    <div class="error-container">
+        <div class="error-container-panel">
+            <main class="sm:flex">
+                <p class="error-code">
+                    <?php echo ($exception instanceof HttpException) ? $exception->statusCode : '500'; ?>
+                </p>
+                <div class="error-message-panel">
+                    <div class="error-message">
+                        <h1 class="error-message-title">
+                            <?php echo $message; ?>
+                        </h1>
+                        <p class="error-message-info">
+                            <?php
+                                if ($exception instanceof HttpException) :
+                                switch ($exception->statusCode):
+                                    case 404:
+                                        echo Module::t('views', 'Please check the URL in the address bar and try again.');
+                                        break;
+                                endswitch;
+                                else:
+                                    echo Module::t('views', 'Unhandled error.');
+                                endif;
+                            ?>
 
+                        </p>
+                    </div>
+                    <div class="error-message-buttons">
+                        <a href="#" class="error-message-button"> Go back home </a>
+                        <!-- a href="#" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-indigo-800 bg-indigo-100 hover:bg-indigo-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"> Contact support </a -->
+                    </div>
+                </div>
+            </main>
         </div>
     </div>
 </div>

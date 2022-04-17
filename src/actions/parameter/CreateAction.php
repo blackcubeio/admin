@@ -18,6 +18,7 @@ use blackcube\core\models\Parameter;
 use yii\base\Action;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
+use blackcube\core\Module as CoreModule;
 use Yii;
 
 /**
@@ -58,8 +59,11 @@ class CreateAction extends Action
                 }
             }
         }
+        $allowedParameterDomains = CoreModule::getInstance()->allowedParameterDomains;
+
         return $this->controller->render($this->view, [
             'parameter' => $parameter,
+            'allowedParameterDomains' => $allowedParameterDomains
         ]);
     }
 }

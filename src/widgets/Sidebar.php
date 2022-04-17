@@ -40,6 +40,7 @@ class Sidebar extends Widget
     {
         $modules = Module::getInstance()->getModules();
         $adminModuleId = Module::getInstance()->getUniqueId();
+        $version = Module::getInstance()->version;;
         $widgets = [];
         $modulesWidgets = [];
         foreach($modules as $id => $module) {
@@ -63,6 +64,7 @@ class Sidebar extends Widget
         return $this->render('sidebar', [
             'adminUid' => Module::getInstance()->getUniqueId(),
             'controllerUid' => Yii::$app->controller->getUniqueId(),
+            'version' => $version,
             'widgets' => $widgets,
             'modulesWidgets' => $modulesWidgets,
         ]);

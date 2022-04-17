@@ -59,6 +59,7 @@ class EditAction extends BaseElementAction
     {
         $composite = $this->getCompositeQuery()
             ->andWhere(['id' => $id])
+            ->with('blocs.blocType')
             ->one();
         /* @var $composite Composite */
 
@@ -69,11 +70,7 @@ class EditAction extends BaseElementAction
         /* @var $pluginsHandler \blackcube\core\interfaces\PluginsHandlerInterface */
         $pluginsHandler->runHook(PluginHookInterface::PLUGIN_HOOK_LOAD, $composite);
 
-        $slugForm = Yii::createObject([
-            'class' => SlugForm::class,
-            'element' => $composite
-        ]);
-        $blocs = $composite->getBlocs()->all();
+        $blocs = $composite->blocs; // getBlocs()->all();
         $nodeComposite = NodeComposite::find()
             ->andWhere(['compositeId' => $composite->id])
             ->orderBy(['order' => SORT_ASC])
@@ -83,33 +80,31 @@ class EditAction extends BaseElementAction
             $nodeComposite->compositeId = $composite->id;
         }
 
-        // $result = $this->saveElement($composite, $blocs, $slugForm);
-        $transaction = Module::getInstance()->db->beginTransaction();
-        $result = CompositeHelper::saveElement($composite, $blocs, $slugForm);
-        $validatePlugins = $pluginsHandler->runHook(PluginHookInterface::PLUGIN_HOOK_VALIDATE, $composite);
-        $validatePlugins = array_reduce($validatePlugins, function($accumulator, $item) {
-            return $accumulator && $item;
-        }, true);
-        if ($result === true && $validatePlugins === true) {
-            $selectedTags = Yii::$app->request->getBodyParam('selectedTags', []);
-            CompositeHelper::handleTags($composite, $selectedTags);
-            CompositeHelper::handleNodes($composite, $nodeComposite);
-            $savePlugins = $pluginsHandler->runHook(PluginHookInterface::PLUGIN_HOOK_SAVE, $composite);
-            $savePlugins = array_reduce($savePlugins, function($accumulator, $item) {
+        if (Yii::$app->request->isPost) {
+            $transaction = Module::getInstance()->db->beginTransaction();
+            $result = CompositeHelper::saveElement($composite, $blocs);
+            $validatePlugins = $pluginsHandler->runHook(PluginHookInterface::PLUGIN_HOOK_VALIDATE, $composite);
+            $validatePlugins = array_reduce($validatePlugins, function($accumulator, $item) {
                 return $accumulator && $item;
             }, true);
-            if ($savePlugins === true) {
-                $transaction->commit();
-                return $this->controller->redirect([$this->targetAction, 'id' => $composite->id]);
+            if ($result === true && $validatePlugins === true) {
+                CompositeHelper::handleNodes($composite, $nodeComposite);
+                $savePlugins = $pluginsHandler->runHook(PluginHookInterface::PLUGIN_HOOK_SAVE, $composite);
+                $savePlugins = array_reduce($savePlugins, function($accumulator, $item) {
+                    return $accumulator && $item;
+                }, true);
+                if ($savePlugins === true) {
+                    $transaction->commit();
+                    return $this->controller->redirect([$this->targetAction, 'id' => $composite->id]);
+                }
             }
+            $transaction->rollBack();
         }
-        $transaction->rollBack();
+
         $languagesQuery = Language::find()->active()->orderBy(['name' => SORT_ASC]);
 
         $typesQuery = $this->getTypesQuery()
             ->orderBy(['name' => SORT_ASC]);
-
-        $selectTagsData =  CompositeHelper::prepareTags();
 
         $nodesQuery = $this->getNodesQuery()
             ->orderBy(['left' => SORT_ASC]);
@@ -118,11 +113,9 @@ class EditAction extends BaseElementAction
         return $this->controller->render($this->view, [
             'pluginsHandler' => $pluginsHandler,
             'composite' => $composite,
-            'slugForm' => $slugForm,
             'typesQuery' => $typesQuery,
             'nodesQuery' => $nodesQuery,
             'nodeComposite' => $nodeComposite,
-            'selectTagsData' => $selectTagsData,
             'blocs' => $blocs,
             'languagesQuery' => $languagesQuery,
         ]);

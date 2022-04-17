@@ -47,7 +47,8 @@ class FilterActiveQuery extends ActiveQuery
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function active() {
+    public function active()
+    {
         if ($this->previewManager->check() === false) {
             $this->andWhere([
                 '[[active]]' => true,

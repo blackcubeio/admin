@@ -15,6 +15,7 @@
 namespace blackcube\admin;
 
 use blackcube\admin\commands\AdministratorController;
+use blackcube\admin\commands\HeroiconsController;
 use blackcube\admin\commands\RbacController;
 use blackcube\admin\interfaces\MigrableInterface;
 use blackcube\admin\interfaces\PluginBootstrapInterface;
@@ -89,6 +90,11 @@ class Module extends BaseModule implements BootstrapInterface
     public $additionalAssets = [];
 
     /**
+     * @var string version number
+     */
+    public $version = 'v3.0-dev';
+
+    /**
      * @inheritdoc
      */
     public function init()
@@ -152,6 +158,9 @@ class Module extends BaseModule implements BootstrapInterface
         ];
         $app->controllerMap[$this->commandNameSpace.'rbac'] = [
             'class' => RbacController::class,
+        ];
+        $app->controllerMap[$this->commandNameSpace.'heroicons'] = [
+            'class' => HeroiconsController::class,
         ];
         /*/
         $app->controllerMap[$this->commandNameSpace.'migrate'] = [

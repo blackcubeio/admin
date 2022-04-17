@@ -1,0 +1,107 @@
+
+.dashboard {
+  &-header {
+    @apply bg-white shadow sm:rounded-md sm:overflow-hidden;
+    &-wrapper {
+      @apply px-4 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+    }
+    &-container {
+      @apply py-6 md:flex md:items-center md:justify-between lg:border-t lg:border-gray-200;
+    }
+    &-bloc {
+      @apply flex-1 min-w-0 text-gray-600;
+      &-wrapper {
+        @apply flex items-center;
+      }
+    }
+    &-icon {
+      @apply h-16 w-16 rounded-full;
+      &.desktop {
+        @apply hidden sm:block;
+      }
+      &.mobile {
+        @apply sm:hidden;
+      }
+    }
+    &-title {
+      @apply ml-3 text-2xl font-bold leading-7 sm:leading-9 sm:truncate text-gray-800;
+    }
+  }
+  &-infos {
+    @apply max-w-7xl mx-auto ;
+    &-title {
+      @apply text-lg leading-6 font-medium text-gray-900;
+    }
+    &-cards {
+      @apply mt-2 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-2;
+      .dashboard-card {
+        @apply bg-white overflow-hidden shadow rounded-lg;
+        &-wrapper {
+          @apply p-5 bg-indigo-800;
+        }
+        &-container {
+          @apply flex items-center;
+        }
+        &-list {
+          @apply divide-y divide-gray-200;
+          &-wrapper {
+            @apply flow-root;
+          }
+          &-heading {
+            @apply bg-gray-50 px-5 py-3;
+          }
+          & .item {
+            &-link {
+              @apply block hover:bg-gray-50;
+            }
+            &-content {
+              @apply px-4 py-2 flex items-center sm:px-6;
+              &-wrapper {
+                @apply min-w-0 flex-1 sm:flex sm:items-center sm:justify-between;
+              }
+            }
+            &-title {
+              @apply font-medium text-indigo-600 truncate;
+            }
+            &-id {
+              @apply ml-1 flex-shrink-0 font-normal text-gray-500;
+            }
+            &-infos {
+              @apply flex items-center text-sm text-gray-500;
+              &-icon {
+                @apply flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400;
+              }
+            }
+            &-accessory {
+              @apply ml-5 flex-shrink-0;
+              &-icon {
+                @apply h-5 w-5 text-gray-400;
+              }
+            }
+          }
+        }
+
+        &-icon {
+          @apply h-8 w-8;
+        }
+        &-badge {
+          @apply inline-flex items-center px-2 py-0.5 rounded text-xs font-medium;
+          &-icon {
+            @apply h-5 w-5 pr-2;
+          }
+          &.active {
+            @apply bg-green-100 text-green-800;
+          }
+          &.inactive {
+            @apply bg-red-100 text-red-800;
+          }
+          &.slug {
+            @apply bg-indigo-100 text-indigo-800;
+          }
+        }
+      }
+    }
+
+  }
+}
+

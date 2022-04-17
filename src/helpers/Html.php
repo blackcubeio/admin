@@ -34,16 +34,6 @@ use yii\helpers\Json;
  */
 class Html extends \blackcube\core\web\helpers\Html
 {
-    /**
-     * @var array
-     */
-    private static $icons = [
-        'plus' => [
-            'path' => 'M11 9h4v2h-4v4H9v-4H5V9h4V5h2v4zm-1 11a10 10 0 1 1 0-20 10 10 0 0 1 0 20zm0-2a8 8 0 1 0 0-16 8 8 0 0 0 0 16z',
-            'viewBox' => '0 0 20 20',
-        ],
-    ];
-
 
     /**
      * Prepare AureliaCustomAttribute parameters
@@ -59,34 +49,15 @@ class Html extends \blackcube\core\web\helpers\Html
             if (isset($value)) {
                 $key = Inflector::camel2id($key);
                 if (is_bool($value)) {
-                    $value = $value ? '1' : '0';
+                    $value = $value ? 'true' : 'false';
                 } elseif (!(is_numeric($value) || is_string($value))) {
-                    $value = Json::encode($value);
+                    $value = '\'' . Json::encode($value) .'\'';
                 }
-                //ELSE VALUE IS OK
-                $aureliaParameters .= $key.'.bind: \''.$value.'\'; ';
+                $aureliaParameters .= $key.'.bind: '.$value.'; ';
             }
         }
         return $aureliaParameters;
 
-    }
-
-    /**
-     * @param Model $model
-     * @param string $attribute
-     * @param array $options
-     * @return string
-     */
-    public static function activeSchema(Model $model, $attribute, $options = [])
-    {
-        $selfId = static::getInputId($model, $attribute);
-        $selfName = static::getInputName($model, $attribute);
-        $options = array_merge([
-            'field-id' => $selfId,
-            'field-name' => $selfName,
-            'schema' => $model->{$attribute}
-        ], $options);
-        return static::tag('blackcube-schema-editor', '', $options);
     }
 
     /**
@@ -133,14 +104,14 @@ class Html extends \blackcube\core\web\helpers\Html
         $options = array_merge([
             'id' => $selfId,
             'name' => $selfName,
-            'multiple' => false,
+            'multiple.bind' => false,
         ], $options);
 
         if (isset($options['value']) === false) {
             $options['value'] = static::getAttributeValue($model, $attribute);
         }
 
-        return static::tag('blackcube-file', '', $options);
+        return static::tag('blackcube-file-upload', '', $options);
     }
 
     /**
@@ -164,9 +135,9 @@ class Html extends \blackcube\core\web\helpers\Html
             }
         }
         if ($structure['field'] === 'file') {
-            $options['multiple'] = false;
+            $options['multiple.bind'] = false;
         } elseif ($structure['field'] === 'files') {
-            $options['multiple'] = true;
+            $options['multiple.bind'] = true;
         }
         return $options;
     }
@@ -244,28 +215,10 @@ class Html extends \blackcube\core\web\helpers\Html
                 break;
             case 'text':
             default:
-                $result = static::activeTextInput($elastic, $attribute, ['class' => 'textfield'.($elastic->hasErrors($realAttibute)?' error':'')]);
+                $result = static::activeTextInput($elastic, $attribute, ['class' => 'element-form-bloc-textfield'.($elastic->hasErrors($realAttibute)?' error':'')]);
                 break;
         }
         return $result;
     }
 
-    /**
-     * @param string $name
-     * @param array $options
-     * @return string
-     */
-    public static function svg($name, $options = [])
-    {
-        $tag = '';
-        if (isset(static::$icons[$name])) {
-            $options['viewBox'] = static::$icons[$name]['viewBox'];
-            $options['xmlns'] = 'http://www.w3.org/2000/svg';
-            $tag = static::tag('svg',
-                static::tag('path', '', ['d' => static::$icons[$name]['path']]),
-                $options
-            );
-        }
-        return $tag;
-    }
 }

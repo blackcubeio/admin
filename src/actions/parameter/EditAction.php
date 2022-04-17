@@ -15,6 +15,7 @@
 namespace blackcube\admin\actions\parameter;
 
 use blackcube\core\models\Parameter;
+use blackcube\core\Module as CoreModule;
 use yii\base\Action;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
@@ -63,8 +64,11 @@ class EditAction extends Action
                 }
             }
         }
+        $allowedParameterDomains = CoreModule::getInstance()->allowedParameterDomains;
+
         return $this->controller->render($this->view, [
             'parameter' => $parameter,
+            'allowedParameterDomains' => $allowedParameterDomains
         ]);
     }
 }

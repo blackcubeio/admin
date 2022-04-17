@@ -13,6 +13,7 @@
  *
  * @var string $controllerUid
  * @var string $adminUid
+ * @var string|null $version
  * @var array $widgets
  * @var array $modulesWidgets
  */
@@ -21,181 +22,94 @@ use blackcube\admin\Module;
 use blackcube\admin\components\Rbac;
 use blackcube\admin\helpers\Html;
 use yii\helpers\Url;
+use blackcube\admin\helpers\Heroicons;
+use blackcube\admin\helpers\Aurelia;
+use blackcube\admin\widgets\Navbar;
 ?>
-<!--Sidebar-->
-<aside id="sidebar" blackcube-sidebar="">
-    <ul>
-        <?php  if (Yii::$app->user->can(Rbac::PERMISSION_SITE_DASHBOARD)): ?>
-        <?php echo Html::beginTag('li', ['class' => ($controllerUid === $adminUid.'/dashboard' ? 'active':'')]); ?>
-            <?php echo Html::beginTag('a', ['href' => Url::to(['/'.$adminUid.'/dashboard/index'])]); ?>
-                <i class="fas fa-tachometer-alt float-left mx-2 mt-1"></i>
-                <span><?php echo Module::t('widgets', 'Dashboard'); ?></span>
-                <span><i class="fas fa-angle-right float-right mt-2"></i></span>
-            <?php echo Html::endTag('a'); ?>
-        <?php echo Html::endTag('li'); ?>
-        <?php endif; ?>
-        <?php if (Yii::$app->user->can(Rbac::PERMISSION_PARAMETER_VIEW)
-            || Yii::$app->user->can(Rbac::PERMISSION_USER_VIEW)
-            || Yii::$app->user->can(Rbac::PERMISSION_TYPE_VIEW)
-            || Yii::$app->user->can(Rbac::PERMISSION_BLOCTYPE_VIEW)
-            || Yii::$app->user->can(Rbac::PERMISSION_MENU_VIEW)): ?>
+<!-- Off-canvas menu for mobile, show/hide based on off-canvas menu state. -->
+<div blackcube-menu="" class="menu menu-mobile" role="dialog" aria-modal="true">
+    <!--
+      Off-canvas menu overlay, show/hide based on off-canvas menu state.
 
-            <li class="child">
-                <?php echo Html::beginTag('span', ['class' => 'section', 'data-blackcube-section' => 'parameters']); ?>
-                    <i class="fa fa-tools float-left mx-2 mt-2"></i>
-                    <?php echo Module::t('widgets', 'Parameters'); ?>
-                    <span><i class="fa fa-angle-down float-right mt-2 arrow"></i></span>
-                <?php echo Html::endTag('span'); ?>
-                <ul class="hidden">
-                    <?php  if (Yii::$app->user->can(Rbac::PERMISSION_USER_VIEW)): ?>
-                        <?php echo Html::beginTag('li', ['class' => ($controllerUid === $adminUid.'/user' ? 'active':'')]); ?>
-                        <?php echo Html::beginTag('a', ['href' => Url::to(['/'.$adminUid.'/user/index'])]); ?>
-                        <i class="fa fa-user-alt float-left mx-2 mt-2"></i>
-                        <?php echo Module::t('widgets', 'Users'); ?>
-                        <span><i class="fa fa-angle-right angle"></i></span>
-                        <?php echo Html::endTag('a'); ?>
-                        <?php echo Html::endTag('li'); ?>
-                    <?php endif; ?>
-                    <?php  if (Yii::$app->user->can(Rbac::PERMISSION_PARAMETER_VIEW)): ?>
-                        <?php echo Html::beginTag('li', ['class' => ($controllerUid === $adminUid.'/parameter' ? 'active':'')]); ?>
-                            <?php echo Html::beginTag('a', ['href' => Url::to(['/'.$adminUid.'/parameter/index'])]); ?>
-                                <i class="fa fa-wrench float-left mx-2 mt-2"></i>
-                                <?php echo Module::t('widgets', 'Parameters'); ?>
-                                <span><i class="fa fa-angle-right angle"></i></span>
-                            <?php echo Html::endTag('a'); ?>
-                    <?php echo Html::endTag('li'); ?>
-                <?php endif; ?>
-                <?php  if (Yii::$app->user->can(Rbac::PERMISSION_TYPE_VIEW)): ?>
-                    <?php echo Html::beginTag('li', ['class' => ($controllerUid === $adminUid.'/type' ? 'active':'')]); ?>
-                        <?php echo Html::beginTag('a', ['href' => Url::to(['/'.$adminUid.'/type/index'])]); ?>
-                            <i class="fa fa-file-invoice float-left mx-2 mt-2"></i>
-                            <?php echo Module::t('widgets', 'Types'); ?>
-                            <span><i class="fa fa-angle-right angle"></i></span>
-                        <?php echo Html::endTag('a'); ?>
-                    <?php echo Html::endTag('li'); ?>
-                <?php endif; ?>
-                <?php  if (Yii::$app->user->can(Rbac::PERMISSION_BLOCTYPE_VIEW)): ?>
-                    <?php echo Html::beginTag('li', ['class' => ($controllerUid === $adminUid.'/bloc-type' ? 'active':'')]); ?>
-                        <?php echo Html::beginTag('a', ['href' => Url::to(['/'.$adminUid.'/bloc-type/index'])]); ?>
-                            <i class="fa fa-cube float-left mx-2 mt-2"></i>
-                            <?php echo Module::t('widgets', 'Bloc types'); ?>
-                            <span><i class="fa fa-angle-right angle"></i></span>
-                        <?php echo Html::endTag('a'); ?>
-                    <?php echo Html::endTag('li'); ?>
-                <?php endif; ?>
-                    <?php  if (Yii::$app->user->can(Rbac::PERMISSION_MENU_VIEW)): ?>
-                        <?php echo Html::beginTag('li', ['class' => ($controllerUid === $adminUid.'/menu' ? 'active':'')]); ?>
-                        <?php echo Html::beginTag('a', ['href' => Url::to(['/'.$adminUid.'/menu/index'])]); ?>
-                        <i class="fa fa-list float-left mx-2 mt-2"></i>
-                        <?php echo Module::t('widgets', 'Menus'); ?>
-                        <span><i class="fa fa-angle-right angle"></i></span>
-                        <?php echo Html::endTag('a'); ?>
-                        <?php echo Html::endTag('li'); ?>
-                    <?php endif; ?>
-            </ul>
-        </li>
-        <?php endif; ?>
-        <?php if (Yii::$app->user->can(Rbac::PERMISSION_COMPOSITE_VIEW)
-            || Yii::$app->user->can(Rbac::PERMISSION_NODE_VIEW)
-            || Yii::$app->user->can(Rbac::PERMISSION_CATEGORY_VIEW)
-            || Yii::$app->user->can(Rbac::PERMISSION_TAG_VIEW)
-            || Yii::$app->user->can(Rbac::PERMISSION_SLUG_VIEW)): ?>
-        <li>
-            <?php echo Html::beginTag('span', ['class' => 'section', 'data-blackcube-section' => 'management']); ?>
-            <i class="fa fa-book float-left mx-2 mt-2"></i>
-            <?php echo Module::t('widgets', 'Management'); ?>
-            <span><i class="fa fa-angle-down float-right mt-2 arrow"></i></span>
-            <?php echo Html::endTag('span'); ?>
-            <ul class="hidden">
-                <?php  if (Yii::$app->user->can(Rbac::PERMISSION_NODE_VIEW)): ?>
-                    <?php echo Html::beginTag('li', ['class' => ($controllerUid === $adminUid.'/node' ? 'active':'')]); ?>
-                        <?php echo Html::beginTag('a', ['href' => Url::to(['/'.$adminUid.'/node/index'])]); ?>
-                            <i class="fa fa-sitemap float-left mx-2 mt-2"></i>
-                            <?php echo Module::t('widgets', 'Nodes'); ?>
-                            <span><i class="fa fa-angle-right angle"></i></span>
-                        <?php echo Html::endTag('a'); ?>
-                    <?php echo Html::endTag('li'); ?>
-                <?php endif; ?>
-                <?php  if (Yii::$app->user->can(Rbac::PERMISSION_COMPOSITE_VIEW)): ?>
-                    <?php echo Html::beginTag('li', ['class' => ($controllerUid === $adminUid.'/composite' ? 'active':'')]); ?>
-                    <?php echo Html::beginTag('a', ['href' => Url::to(['/'.$adminUid.'/composite/index'])]); ?>
-                    <i class="fa fa-file float-left mx-2 mt-2"></i>
-                    <?php echo Module::t('widgets', 'Composites'); ?>
-                    <span><i class="fa fa-angle-right angle"></i></span>
-                    <?php echo Html::endTag('a'); ?>
-                    <?php echo Html::endTag('li'); ?>
-                <?php endif; ?>
-                <?php  if (Yii::$app->user->can(Rbac::PERMISSION_CATEGORY_VIEW)): ?>
-                    <?php echo Html::beginTag('li', ['class' => ($controllerUid === $adminUid.'/category' ? 'active':'')]); ?>
-                        <?php echo Html::beginTag('a', ['href' => Url::to(['/'.$adminUid.'/category/index'])]); ?>
-                            <i class="fas fa-tags float-left mx-2 mt-2"></i>
-                            <?php echo Module::t('widgets', 'Categories'); ?>
-                            <span><i class="fa fa-angle-right angle"></i></span>
-                        <?php echo Html::endTag('a'); ?>
-                    <?php echo Html::endTag('li'); ?>
-                <?php endif; ?>
-                <?php  if (Yii::$app->user->can(Rbac::PERMISSION_TAG_VIEW)): ?>
-                    <?php echo Html::beginTag('li', ['class' => ($controllerUid === $adminUid.'/tag' ? 'active':'')]); ?>
-                        <?php echo Html::beginTag('a', ['href' => Url::to(['/'.$adminUid.'/tag/index'])]); ?>
-                            <i class="fa fa-tag float-left mx-2 mt-2"></i>
-                            <?php echo Module::t('widgets', 'Tags'); ?>
-                            <span><i class="fa fa-angle-right angle"></i></span>
-                        <?php echo Html::endTag('a'); ?>
-                    <?php echo Html::endTag('li'); ?>
-                <?php endif; ?>
-                <?php  if (Yii::$app->user->can(Rbac::PERMISSION_SLUG_VIEW)): ?>
-                    <?php echo Html::beginTag('li', ['class' => ($controllerUid === $adminUid.'/slug' ? 'active':'')]); ?>
-                    <?php echo Html::beginTag('a', ['href' => Url::to(['/'.$adminUid.'/slug/index'])]); ?>
-                    <i class="fa fa-globe-americas float-left mx-2 mt-2"></i>
-                    <?php echo Module::t('widgets', 'Slugs'); ?>
-                    <span><i class="fa fa-angle-right angle"></i></span>
-                    <?php echo Html::endTag('a'); ?>
-                    <?php echo Html::endTag('li'); ?>
-                <?php endif; ?>
-            </ul>
-        </li>
-        <?php endif; ?>
-        <?php if (Yii::$app->user->can(Rbac::PERMISSION_PLUGIN_VIEW)): ?>
-        <li>
-            <?php echo Html::beginTag('span', ['class' => 'section', 'data-blackcube-section' => 'plugin']); ?>
-            <i class="fa fa-plug float-left mx-2 mt-2"></i>
-            <?php echo Module::t('widgets', 'Plugins'); ?>
-            <span><i class="fa fa-angle-down float-right mt-2 arrow"></i></span>
-            <?php echo Html::endTag('span'); ?>
-            <ul class="hidden">
-                <?php echo Html::beginTag('li', ['class' => ($controllerUid === $adminUid.'/plugin' ? 'active':'')]); ?>
-                    <?php echo Html::beginTag('a', ['href' => Url::to(['/'.$adminUid.'/plugin/index'])]); ?>
-                        <i class="fa fa-screwdriver float-left mx-2 mt-2"></i>
-                        <?php echo Module::t('widgets', 'Configuration'); ?>
-                        <span><i class="fa fa-angle-right angle"></i></span>
-                    <?php echo Html::endTag('a'); ?>
-                <?php echo Html::endTag('li'); ?>
-            </ul>
-        </li>
-        <?php endif; ?>
-        <?php if (count($modulesWidgets) > 0): ?>
-        <li>
-            <?php echo Html::beginTag('span', ['class' => 'section', 'data-blackcube-section' => 'modules']); ?>
-            <i class="fa fa-box-open float-left mx-2 mt-2"></i>
-            <?php echo Module::t('widgets', 'Modules'); ?>
-            <span><i class="fa fa-angle-down float-right mt-2 arrow"></i></span>
-            <?php echo Html::endTag('span'); ?>
-            <ul class="hidden">
-                <?php foreach ($modulesWidgets as $moduleWidgetConfig) {
-                    $moduleWidgetClass = $moduleWidgetConfig['class'];
-                    unset($moduleWidgetConfig['class']);
-                    echo $moduleWidgetClass::widget($moduleWidgetConfig);
-                } ?>
-            </ul>
-        </li>
-        <?php endif; ?>
+      Entering: "transition-opacity ease-linear duration-300"
+        From: "opacity-0"
+        To: "opacity-100"
+      Leaving: "transition-opacity ease-linear duration-300"
+        From: "opacity-100"
+        To: "opacity-0"
+    -->
+    <div  data-ref="overlay" class="menu-mobile-overlay closed" aria-hidden="true"></div>
 
-        <?php foreach ($widgets as $widgetConfig) {
-            $widgetClass = $widgetConfig['class'];
-            unset($widgetConfig['class']);
-            echo $widgetClass::widget($widgetConfig);
-        } ?>
-    </ul>
+    <!--
+      Off-canvas menu, show/hide based on off-canvas menu state.
 
-</aside>
-<!--/Sidebar-->
+      Entering: "transition ease-in-out duration-300 transform"
+        From: "-translate-x-full"
+        To: "translate-x-0"
+      Leaving: "transition ease-in-out duration-300 transform"
+        From: "translate-x-0"
+        To: "-translate-x-full"
+    -->
+    <div  data-ref="offcanvas" class="menu-mobile-offcanvas closed">
+        <!--
+          Close button, show/hide based on off-canvas menu state.
+
+          Entering: "ease-in-out duration-300"
+            From: "opacity-0"
+            To: "opacity-100"
+          Leaving: "ease-in-out duration-300"
+            From: "opacity-100"
+            To: "opacity-0"
+        -->
+        <div  data-ref="closepanel" class="menu-mobile-close closed">
+            <button class="menu-mobile-btn"  data-ref="close">
+                <span class="sr-only"><?php Module::t('common', 'Close sidebar'); ?></span>
+                <?php echo Heroicons::svg('outline/x', ['class' => 'menu-mobile-img']); ?>
+            </button>
+        </div>
+
+        <div class="menu-logo">
+            <!-- img class="menu-logo-img" src="https://tailwindui.com/img/logos/workflow-logo-indigo-600-mark-gray-800-text.svg" alt="Workflow" -->
+            <span class="text-2xl font-semibold leading-7 text-gray-900 sm:truncate">Blackcube</span>
+            <?php if($version !== null): ?>
+                <span class="text-xs text-gray-600 italic ml-2"><?php echo $version; ?></span>
+            <?php endif; ?>
+        </div>
+        <div class="menu-mobile-navbar-wrapper">
+            <?php echo Navbar::widget([
+                'adminUid' => $adminUid,
+                'controllerUid' => $controllerUid,
+                'widgets' => $widgets,
+                'modulesWidgets' => $modulesWidgets,
+            ])?>
+        </div>
+    </div>
+
+    <div class="flex-shrink-0 w-14" aria-hidden="true">
+        <!-- Dummy element to force sidebar to shrink to fit close icon -->
+    </div>
+</div>
+
+<!-- Static sidebar for desktop -->
+<div blackcube-menu="" class="menu menu-desktop">
+    <div class="menu-desktop-wrapper">
+        <!-- Sidebar component, swap this element with another sidebar if you like -->
+        <div class="menu-desktop-sidebar">
+            <div class="menu-logo">
+                <!-- img class="menu-logo-img" src="https://tailwindui.com/img/logos/workflow-logo-indigo-600-mark-gray-800-text.svg" alt="Workflow" -->
+                <span class="text-2xl font-semibold leading-7 text-gray-900 sm:truncate">Blackcube</span>
+                <?php if($version !== null): ?>
+                    <span class="text-xs text-gray-600 italic ml-2"><?php echo $version; ?></span>
+                <?php endif; ?>
+            </div>
+            <div class="menu-desktop-navbar-wrapper">
+                <?php echo Navbar::widget([
+                    'adminUid' => $adminUid,
+                    'controllerUid' => $controllerUid,
+                    'widgets' => $widgets,
+                    'modulesWidgets' => $modulesWidgets,
+                ])?>
+            </div>
+        </div>
+    </div>
+</div>

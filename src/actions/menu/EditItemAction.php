@@ -85,6 +85,7 @@ class EditItemAction extends Action
         $parentsQuery = MenuItem::find()->andWhere(['menuId' => $menuItem->menuId])
             ->andWhere(['!=', 'id', $menuItem->id ]);
         return $this->controller->render($this->view, [
+            'menu' => $menuItem->menu,
             'menuItem' => $menuItem,
             'parentsQuery' => $parentsQuery,
             'routes' => RouteHelper::findAllRoutes(),

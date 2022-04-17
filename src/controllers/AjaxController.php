@@ -15,7 +15,7 @@
 namespace blackcube\admin\controllers;
 
 use blackcube\admin\components\Rbac;
-use blackcube\admin\models\SlugGeneratorForm;
+use blackcube\admin\helpers\Heroicons;use blackcube\admin\helpers\Html;use blackcube\admin\models\SlugGeneratorForm;
 use blackcube\admin\Module;
 use blackcube\core\components\PreviewManager;
 use blackcube\core\interfaces\SlugGeneratorInterface;
@@ -86,9 +86,12 @@ class AjaxController extends Controller
         } else {
             $previewManager->activate();
         }
-        return Module::t('widgets', 'Preview {icon}', [
-            'icon' => $previewManager->check() ? '<i class="fa fa-low-vision text-red-600"></i>':'<i class="fa fa-eye-slash"></i>'
-        ]);
+        $content = Html::tag('span', Module::t('widgets', 'Preview'), ['class' => 'sr-only']);
+        $content .= "\n" . Heroicons::svg(
+    $previewManager->check() ? 'outline/eye' : 'outline/eye-off',
+            ['class' => 'preview-icon']);
+
+        return $content;
     }
 
     public function actionGenerateSlug()

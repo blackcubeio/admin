@@ -51,10 +51,12 @@ class LoginAction extends Action
         $administrator->scenario = Administrator::SCENARIO_LOGIN;
         if ($administrator->load(Yii::$app->request->bodyParams) === true) {
             if ($administrator->validate() === true) {
-                $realAdministrator = Administrator::find()->where(['email' => $administrator->email])->one();
-                Yii::$app->user->login($realAdministrator, 60 * 60 *24 * 30);
+                $realAdministrator = Administrator::find()
+                    ->where(['email' => $administrator->email])
+                    ->one();
+                $duration = ($administrator->rememberMe > 0) ? (60 * 60 * 24 * 30) : 0;
+                Yii::$app->user->login($realAdministrator, $duration);
                 return $this->controller->redirect([$this->targetAction]);
-                // $realAdministrator = $administrator::
             }
             $administrator->password = null;
         }

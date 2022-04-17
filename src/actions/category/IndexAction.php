@@ -14,9 +14,11 @@
 
 namespace blackcube\admin\actions\category;
 
+use blackcube\admin\Module;
 use blackcube\admin\actions\BaseElementAction;
 use blackcube\core\interfaces\PluginsHandlerInterface;
 use blackcube\core\models\Category;
+use blackcube\core\models\Composite;
 use blackcube\core\models\Slug;
 use blackcube\core\models\Type;
 use yii\data\ActiveDataProvider;
@@ -37,6 +39,11 @@ use Yii;
 class IndexAction extends BaseElementAction
 {
     /**
+     * @var int
+     */
+    public $pagerSize = 20;
+
+    /**
      * @var string view
      */
     public $view = 'index';
@@ -52,12 +59,13 @@ class IndexAction extends BaseElementAction
         $categoriesQuery
             ->joinWith('type', true)
             ->joinWith('slug', true)
-            // ->joinWith('tags', true)
+            ->with('language')
             ->with('slug.seo')
             ->with('slug.sitemap');
         $search = Yii::$app->request->getQueryParam('search', null);
         if ($search !== null) {
             $categoriesQuery->andWhere(['or',
+                ['like', Category::tableName().'.[[id]]', $search, false],
                 ['like', Category::tableName().'.[[name]]', $search],
                 ['like', Type::tableName().'.[[name]]', $search],
                 ['like', Slug::tableName().'.[[path]]', $search],
@@ -67,7 +75,12 @@ class IndexAction extends BaseElementAction
             'class' => ActiveDataProvider::class,
             'query' => $categoriesQuery,
             'pagination' => [
-                'pageSize' => 20,
+                'pageSize' => $this->pagerSize,
+                'pageParam' => 'page',
+                'params' => [
+                    'search' => $search,
+                    'page' => Yii::$app->request->getQueryParam('page', 0)
+                ],
             ],
             'sort' => [
                 'defaultOrder' => [
@@ -88,7 +101,7 @@ class IndexAction extends BaseElementAction
 
         return $this->controller->render($this->view, [
             'pluginsHandler' => $pluginsHandler,
-            'categoriesProvider' => $categoriesProvider,
+            'categoriesProvider' => $categoriesProvider
         ]);
     }
 }

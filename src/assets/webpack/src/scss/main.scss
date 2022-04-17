@@ -1,0 +1,33 @@
+@tailwind base;
+
+@tailwind components;
+
+@import "components/application";
+@import "components/login";
+@import "components/error";
+@import "components/dashboard";
+@import "components/header";
+@import "components/publication";
+@import "components/search";
+@import "components/elements";
+@import "components/pagination";
+@import "components/profile";
+@import "components/notification-center";
+@import "components/alert";
+@import "components/menu";
+@import "components/overlay";
+@import "components/form";
+
+@import "jsoneditor/reset";
+@import "jsoneditor/variables";
+@import "jsoneditor/autocomplete";
+@import "jsoneditor/contextmenu";
+@import "jsoneditor/editor";
+@import "jsoneditor/menu";
+@import "jsoneditor/navigationbar";
+@import "jsoneditor/searchbox";
+@import "jsoneditor/statusbar";
+@import "jsoneditor/treepath";
+@import "jsoneditor/selectr";
+
+@tailwind utilities;

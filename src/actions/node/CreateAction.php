@@ -16,6 +16,7 @@ namespace blackcube\admin\actions\node;
 
 use blackcube\admin\actions\BaseElementAction;
 use blackcube\admin\helpers\Node as NodeHelper;
+use blackcube\admin\models\MoveNodeForm;
 use blackcube\admin\models\SlugForm;
 use blackcube\admin\Module;
 use blackcube\core\interfaces\PluginHookInterface;
@@ -56,53 +57,60 @@ class CreateAction extends BaseElementAction
     public function run()
     {
         $node = Yii::createObject(Node::class);
-        $slugForm = Yii::createObject([
-            'class' => SlugForm::class,
-            'element' => $node
-        ]);
+        /* @var $node Node */
+
+        if ($node === null) {
+            throw new NotFoundHttpException();
+        }
         $pluginsHandler = Yii::createObject(PluginsHandlerInterface::class);
         /* @var $pluginsHandler \blackcube\core\interfaces\PluginsHandlerInterface */
         $pluginsHandler->runHook(PluginHookInterface::PLUGIN_HOOK_LOAD, $node);
 
+        $moveNodeForm = Yii::createObject([
+            'class' => MoveNodeForm::class,
+            'move' => 1
+        ]);
+
         $blocs = $node->getBlocs()->all();
         $compositesQuery = $node->getComposites();
-        $transaction = Module::getInstance()->db->beginTransaction();
-        if (Yii::$app->request->isPost) {
-            $targetId = Yii::$app->request->getBodyParam('moveNodeTarget');
-            $saveNodeMode =  Yii::$app->request->getBodyParam('moveNodeMode', 'into');
-            $targetNode = Node::findOne(['id' => $targetId]);
-            $node->load(Yii::$app->request->bodyParams);
-            switch ($saveNodeMode) {
-                case 'into':
-                    $node->saveInto($targetNode);
-                    break;
-                case 'before':
-                    $node->saveBefore($targetNode);
-                    break;
-                case 'after':
-                    $node->saveAfter($targetNode);
-                    break;
-            }
 
-        }
-        $result = NodeHelper::saveElement($node, $blocs, $slugForm);
-        $validatePlugins = $pluginsHandler->runHook(PluginHookInterface::PLUGIN_HOOK_VALIDATE, $node);
-        $validatePlugins = array_reduce($validatePlugins, function($accumulator, $item) {
-            return $accumulator && $item;
-        }, true);
-        if ($result === true && $validatePlugins === true) {
-            $selectedTags = Yii::$app->request->getBodyParam('selectedTags', []);
-            NodeHelper::handleTags($node, $selectedTags);
-            $savePlugins = $pluginsHandler->runHook(PluginHookInterface::PLUGIN_HOOK_SAVE, $node);
-            $savePlugins = array_reduce($savePlugins, function($accumulator, $item) {
+        if (Yii::$app->request->isPost) {
+            $transaction = Module::getInstance()->db->beginTransaction();
+            $moveNodeForm->load(Yii::$app->request->bodyParams);
+            if ($moveNodeForm->move) {
+                $targetNode = Node::findOne(['id' => $moveNodeForm->target]);
+                $node->load(Yii::$app->request->bodyParams);
+                switch ($moveNodeForm->mode) {
+                    case 'into':
+                        $node->saveInto($targetNode);
+                        break;
+                    case 'before':
+                        $node->saveBefore($targetNode);
+                        break;
+                    case 'after':
+                        $node->saveAfter($targetNode);
+                        break;
+                }
+            }
+            $result = NodeHelper::saveElement($node, $blocs);
+            $validatePlugins = $pluginsHandler->runHook(PluginHookInterface::PLUGIN_HOOK_VALIDATE, $node);
+            $validatePlugins = array_reduce($validatePlugins, function($accumulator, $item) {
                 return $accumulator && $item;
             }, true);
-            if ($savePlugins === true) {
-                $transaction->commit();
-                return $this->controller->redirect([$this->targetAction, 'id' => $node->id]);
+            if ($result === true && $validatePlugins === true) {
+
+                $savePlugins = $pluginsHandler->runHook(PluginHookInterface::PLUGIN_HOOK_SAVE, $node);
+                $savePlugins = array_reduce($savePlugins, function($accumulator, $item) {
+                    return $accumulator && $item;
+                }, true);
+                if ($savePlugins === true) {
+                    $transaction->commit();
+                    return $this->controller->redirect([$this->targetAction, 'id' => $node->id]);
+                }
             }
+            $transaction->rollBack();
         }
-        $transaction->rollBack();
+
         $languagesQuery = Language::find()->active()->orderBy(['name' => SORT_ASC]);
 
         $targetNodesQuery = $this->getTargetNodesQuery()
@@ -111,18 +119,15 @@ class CreateAction extends BaseElementAction
         $typesQuery = $this->getTypesQuery()
             ->orderBy(['name' => SORT_ASC]);
 
-        $selectTagsData =  NodeHelper::prepareTags();
-
         return $this->controller->render($this->view, [
             'pluginsHandler' => $pluginsHandler,
             'node' => $node,
-            'slugForm' => $slugForm,
             'typesQuery' => $typesQuery,
-            'selectTagsData' => $selectTagsData,
             'targetNodesQuery' => $targetNodesQuery,
             'blocs' => $blocs,
             'compositesQuery' => $compositesQuery,
             'languagesQuery' => $languagesQuery,
+            'moveNodeForm' => $moveNodeForm,
         ]);
     }
 }

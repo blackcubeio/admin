@@ -61,6 +61,11 @@ class DeleteAction extends BaseElementAction
 
             try {
                 $slug = $composite->getSlug()->one();
+                $nodes = $composite->getNodes()->all();
+                foreach ($nodes as $node) {
+                    /* @var $node \blackcube\core\models\Node */
+                    $node->detachComposite($composite);
+                }
                 $deletePlugins = $pluginsHandler->runHook(PluginHookInterface::PLUGIN_HOOK_DELETE, $composite);
                 $deletePlugins = array_reduce($deletePlugins, function($accumulator, $item) {
                     return $accumulator && $item;
@@ -73,6 +78,7 @@ class DeleteAction extends BaseElementAction
                 foreach($blocsQuery->each() as $bloc) {
                     $bloc->delete();
                 }
+
                 $composite->delete();
                 $transaction->commit();
             } catch (\Exception $e) {

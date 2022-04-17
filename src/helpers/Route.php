@@ -85,7 +85,12 @@ class Route {
                                         $actionId = '';
                                     }
                                     $route = trim($info['moduleId'].'/'.$controllerId.'/'.$actionId, '/');
-                                    $routes[$route] = $route;
+                                    // $routes[$route] = $route;
+                                    $routes[] = [
+                                        'id' => $route,
+                                        'name' => $route,
+                                        'type' => Module::t('helpers', 'Blackcube')
+                                    ];
                                 }
                             }
                             if ($ref->hasMethod('actions')) {
@@ -96,7 +101,12 @@ class Route {
                                         $actionId = '';
                                     }
                                     $route = trim($info['moduleId'].'/'.$controllerId.'/'.$actionId, '/');
-                                    $routes[$route] = $route;
+                                    // $routes[$route] = $route;
+                                    $routes[] = [
+                                        'id' => $route,
+                                        'name' => $routes[$route],
+                                        'type' => Module::t('helpers', 'Blackcube')
+                                    ];
                                 }
 
                             }
@@ -106,6 +116,21 @@ class Route {
                 }
             }
         }
+        usort($routes, function($item1, $item2) {
+            if ($item1['type'] === $item2['type']) {
+                if ($item1['name'] === $item2['name']) {
+                    return 0;
+                } elseif ($item1['name'] > $item2['name']) {
+                    return 1;
+                } else {
+                    return -1;
+                }
+            } elseif ($item1['type'] > $item2['type']) {
+                return 1;
+            } else {
+                return -1;
+            }
+        });
         return $routes;
     }
 

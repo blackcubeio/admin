@@ -16,6 +16,7 @@ namespace blackcube\admin\actions\node;
 
 use blackcube\admin\actions\BaseElementAction;
 use blackcube\admin\helpers\Node as NodeHelper;
+use blackcube\admin\models\MoveNodeForm;
 use blackcube\admin\models\SlugForm;
 use blackcube\admin\Module;
 use blackcube\core\interfaces\PluginHookInterface;
@@ -58,7 +59,9 @@ class EditAction extends BaseElementAction
     {
         $node = $this->getNodeQuery()
             ->andWhere(['id' => $id])
+            ->with('blocs.blocType')
             ->one();
+        /* @var $node Node */
 
         if ($node === null) {
             throw new NotFoundHttpException();
@@ -67,70 +70,49 @@ class EditAction extends BaseElementAction
         /* @var $pluginsHandler \blackcube\core\interfaces\PluginsHandlerInterface */
         $pluginsHandler->runHook(PluginHookInterface::PLUGIN_HOOK_LOAD, $node);
 
-        $slugForm = Yii::createObject([
-            'class' => SlugForm::class,
-            'element' => $node
+        $moveNodeForm = Yii::createObject([
+            'class' => MoveNodeForm::class,
+            'move' => 0
         ]);
 
-        $parentNode = $node->getParent()->one();
-        $blocs = $node->getBlocs()->all();
+        $blocs = $node->blocs; //getBlocs()->all();
         $compositesQuery = $node->getComposites();
-        if (Yii::$app->request->isPost) {
-            $moveNode =  Yii::$app->request->getBodyParam('moveNode', false);
-            if ($moveNode == true) {
-                $newTargetNodeId = Yii::$app->request->getBodyParam('moveNodeTarget', null);
-                $moveNodeTarget = Node::findOne(['id' => $newTargetNodeId]);
-                $moveNodeMode =  Yii::$app->request->getBodyParam('moveNodeMode', 'into');
-                if ($moveNodeTarget === null) {
-                    $moveNode = false;
-                }
-            }
-        }
+
         if (Yii::$app->request->isPost) {
             $transaction = Module::getInstance()->db->beginTransaction();
-        }
-        try {
-            if (isset($moveNode) && $moveNode == true && isset($moveNodeTarget, $moveNodeMode)) {
-                switch ($moveNodeMode) {
-                    case 'into':
-                        $node->moveInto($moveNodeTarget);
-                        break;
-                    case 'before':
-                        $node->moveBefore($moveNodeTarget);
-                        break;
-                    case 'after':
-                        $node->moveAfter($moveNodeTarget);
-                        break;
-                }
-            }
-            $result = NodeHelper::saveElement($node, $blocs, $slugForm);
-            if (Yii::$app->request->isPost) {
-                $transaction->commit();
-            }
-        } catch(\Exception $e) {
-            $result = false;
-            if (Yii::$app->request->isPost) {
-                $transaction->rollBack();
-            }
-        }
-        $transaction = Module::getInstance()->db->beginTransaction();
-        $validatePlugins = $pluginsHandler->runHook(PluginHookInterface::PLUGIN_HOOK_VALIDATE, $node);
-        $validatePlugins = array_reduce($validatePlugins, function($accumulator, $item) {
-            return $accumulator && $item;
-        }, true);
-        if ($result === true && $validatePlugins === true) {
-            $selectedTags = Yii::$app->request->getBodyParam('selectedTags', []);
-            NodeHelper::handleTags($node, $selectedTags);
-            $savePlugins = $pluginsHandler->runHook(PluginHookInterface::PLUGIN_HOOK_SAVE, $node);
-            $savePlugins = array_reduce($savePlugins, function($accumulator, $item) {
+            $moveNodeForm->load(Yii::$app->request->bodyParams);
+            $result = NodeHelper::saveElement($node, $blocs);
+            $validatePlugins = $pluginsHandler->runHook(PluginHookInterface::PLUGIN_HOOK_VALIDATE, $node);
+            $validatePlugins = array_reduce($validatePlugins, function($accumulator, $item) {
                 return $accumulator && $item;
             }, true);
-            if ($savePlugins === true) {
-                $transaction->commit();
-                return $this->controller->redirect([$this->targetAction, 'id' => $node->id]);
+            if ($result === true && $validatePlugins === true) {
+                if ($moveNodeForm->move) {
+                    $targetNode = Node::findOne(['id' => $moveNodeForm->target]);
+                    switch ($moveNodeForm->mode) {
+                        case 'into':
+                            $node->moveInto($targetNode);
+                            break;
+                        case 'before':
+                            $node->moveBefore($targetNode);
+                            break;
+                        case 'after':
+                            $node->moveAfter($targetNode);
+                            break;
+                    }
+                }
+                $savePlugins = $pluginsHandler->runHook(PluginHookInterface::PLUGIN_HOOK_SAVE, $node);
+                $savePlugins = array_reduce($savePlugins, function($accumulator, $item) {
+                    return $accumulator && $item;
+                }, true);
+                if ($savePlugins === true) {
+                    $transaction->commit();
+                    return $this->controller->redirect([$this->targetAction, 'id' => $node->id]);
+                }
             }
+            $transaction->rollBack();
         }
-        $transaction->rollBack();
+
         $languagesQuery = Language::find()->active()->orderBy(['name' => SORT_ASC]);
 
         $targetNodesQuery = $this->getTargetNodesQuery()
@@ -139,19 +121,15 @@ class EditAction extends BaseElementAction
         $typesQuery = $this->getTypesQuery()
             ->orderBy(['name' => SORT_ASC]);
 
-        $selectTagsData = NodeHelper::prepareTags();
-
         return $this->controller->render($this->view, [
             'pluginsHandler' => $pluginsHandler,
             'node' => $node,
-            'parentNode' => $parentNode,
-            'slugForm' => $slugForm,
             'typesQuery' => $typesQuery,
-            'selectTagsData' => $selectTagsData,
             'targetNodesQuery' => $targetNodesQuery,
             'blocs' => $blocs,
             'compositesQuery' => $compositesQuery,
             'languagesQuery' => $languagesQuery,
+            'moveNodeForm' => $moveNodeForm,
         ]);
     }
 }

@@ -50,6 +50,7 @@ class DeleteAction extends BaseElementAction
         $tag = $this->getTagQuery()
             ->andWhere(['id' => $id])
             ->one();
+
         if ($tag === null) {
             throw new NotFoundHttpException();
         }

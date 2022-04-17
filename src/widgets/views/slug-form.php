@@ -145,7 +145,7 @@ if ($slugForm->isStandalone === false) {
         <?php endif; ?>
         <div class="bloc">
             <div class="w-full px-3">
-            <span class="italic text-xs text-gray-700"><?php echo Module::t('widgets', 'Sitemap and SEO elements are Slug dependant. They will be activated for the website only if Slug is active'); ?></span>
+            <span class="italic text-xs text-gray-700"><?php echo Module::t('widgets', 'Sitemap and SEO are Slug dependant. They will be activated for the website only if Slug is active'); ?></span>
             </div>
         </div>
         <div class="bloc">

@@ -1,0 +1,29 @@
+
+.publication {
+  @apply relative z-0 inline-flex shadow-sm rounded-md;
+  &-tag {
+    @apply relative inline-flex items-center px-2 py-1 border-0 border-gray-700 bg-white text-xs text-gray-700;
+    &-icon {
+      @apply w-3 h-3;
+    }
+    &:not(:first-child) {
+      @apply -ml-px;
+    }
+    &:first-child {
+      @apply rounded-l-full;
+    }
+    &:last-child {
+      @apply rounded-r-full;
+    }
+    &.deactivated {
+
+    }
+    &.inactive {
+      @apply bg-yellow-200 text-yellow-700;
+    }
+    &.active {
+      @apply bg-green-200 text-green-700;
+    }
+  }
+}
+

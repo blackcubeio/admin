@@ -14,6 +14,7 @@
 
 namespace blackcube\admin\actions\slug;
 
+use blackcube\admin\Module;
 use blackcube\core\models\Slug;
 use yii\base\Action;
 use yii\data\ActiveDataProvider;
@@ -46,8 +47,10 @@ class IndexAction extends Action
     public function run()
     {
         $slugsQuery = Slug::find()
-            ->joinWith('seo', true)
-            ->joinWith('sitemap', true);
+            ->andWhere(['is not', 'targetUrl', null])
+            ->andWhere(['is not', 'httpCode', null]);
+            // ->joinWith('seo', true)
+            // ->joinWith('sitemap', true);
         $search = Yii::$app->request->getQueryParam('search', null);
         if ($search !== null) {
             $slugsQuery->andWhere(['or',
@@ -70,6 +73,16 @@ class IndexAction extends Action
                 ]
             ],
         ]);
+        if (Yii::$app->request->isAjax) {
+            return $this->controller->renderPartial('_list', [
+                'icon' => 'outline/link',
+                'title' => Module::t('slug', 'Slugs'),
+                'elementsProvider' => $slugsProvider,
+                'additionalLinkOptions' => [
+                    'data-ajaxify-source' => 'slugs-search'
+                ]
+            ]);
+        }
 
         return $this->controller->render($this->view, [
             'slugsProvider' => $slugsProvider

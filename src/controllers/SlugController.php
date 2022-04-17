@@ -15,10 +15,11 @@
 namespace blackcube\admin\controllers;
 
 use blackcube\admin\actions\ModalAction;
+use blackcube\admin\actions\slug\CreateAction;
 use blackcube\admin\actions\slug\DeleteAction;
 use blackcube\admin\actions\slug\EditAction;
 use blackcube\admin\actions\slug\IndexAction;
-use blackcube\admin\actions\slug\ToggleAction;
+use blackcube\admin\actions\ToggleAction;
 use blackcube\admin\components\Rbac;
 use blackcube\core\models\Slug;
 use yii\filters\AccessControl;
@@ -56,7 +57,7 @@ class SlugController extends BaseElementController
                 [
                     'allow' => true,
                     'actions' => [
-                        'toggle', 'edit',
+                        'toggle', 'edit', 'create',
                     ],
                     'roles' => [Rbac::PERMISSION_SLUG_UPDATE],
                 ],
@@ -72,7 +73,7 @@ class SlugController extends BaseElementController
         ];
         $behaviors['forceAjax'] = [
             'class' => AjaxFilter::class,
-            'only' => ['modal', 'toggle'],
+            'only' => ['modal', 'toggle', 'delete'],
         ];
         return $behaviors;
     }
@@ -90,6 +91,9 @@ class SlugController extends BaseElementController
         $actions['index'] = [
             'class' => IndexAction::class,
         ];
+        $actions['create'] = [
+            'class' => CreateAction::class,
+        ];
         $actions['edit'] = [
             'class' => EditAction::class,
         ];
@@ -98,6 +102,7 @@ class SlugController extends BaseElementController
         ];
         $actions['toggle'] = [
             'class' => ToggleAction::class,
+            'elementClass' => Slug::class,
         ];
         return $actions;
     }

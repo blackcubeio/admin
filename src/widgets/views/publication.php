@@ -18,9 +18,10 @@
 
 use blackcube\admin\Module;
 use blackcube\admin\helpers\Html;
+use blackcube\admin\helpers\Heroicons;
 
 ?>
-<span class="inline-flex mx-0">
+<!-- span class="inline-flex mx-0">
     <?php echo Html::tag('span', 'U' . Html::tag('span',
         Module::t('widgets', 'URL Status'),
         ['class' => 'tooltip-text']), [
@@ -36,4 +37,9 @@ use blackcube\admin\helpers\Html;
         ['class' => 'tooltip-text']), [
         'class' => 'tooltip status-bar '.$seoStatus,
     ]); ?>
+</span -->
+<span class="publication">
+    <?php echo Html::tag('span', Heroicons::svg('outline/link', ['class' => 'publication-tag-icon']), ['class' => 'publication-tag '.$slugStatus]); ?>
+    <?php echo Html::tag('span', Heroicons::svg('outline/map', ['class' => 'publication-tag-icon']), ['class' => 'publication-tag '.$sitemapStatus]); ?>
+    <?php echo Html::tag('span', Heroicons::svg('outline/search-circle', ['class' => 'publication-tag-icon']), ['class' => 'publication-tag '.$seoStatus]); ?>
 </span>

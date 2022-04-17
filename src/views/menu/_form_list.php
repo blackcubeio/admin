@@ -21,45 +21,40 @@ use blackcube\admin\Module;
 use blackcube\admin\helpers\Html;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Url;
+use blackcube\admin\widgets\MenuItemCard;
+use blackcube\admin\helpers\Heroicons;
 
 ?>
-<div class="bloc">
-    <div class="bloc-title">
-        <span class="title"><?php echo Module::t('menu', 'Items'); ?></span>
+<?php echo Html::beginForm('create-item') ;?>
+<div class="elements">
+    <div class="element-form-header">
+        <h3 class="element-form-header-title">
+            <?php echo Module::t('menu', 'Items'); ?>
+        </h3>
+        <!-- p class="element-form-header-abstract">This is the minimal information needed to create a new composite</p -->
     </div>
-</div>
-<?php if ($menuItemsQuery !== null): ?>
-    <div class="bloc table-container">
-        <table>
-            <thead>
-            <tr>
-                <th>
-                    <?php echo Module::t('menu', 'Name'); ?>
-                </th>
-                <th>
-                    <?php echo Module::t('menu', 'Type'); ?>
-                </th>
-                <th>
-                    <?php echo Module::t('menu', 'Route'); ?>
-                </th>
-                <th class="tools">
-                    <?php echo Module::t('menu', 'Action'); ?>
-                </th>
-            </tr>
-            </thead>
-            <tbody>
-            <?php $level = 0; ?>
-            <?php foreach($menuItemsQuery->each() as $i => $menuItem): ?>
-                <?php /* @var $menuItem \blackcube\core\models\MenuItem */?>
-                <?php echo $this->render('_item', ['level' => $level, 'menuItem' => $menuItem]); ?>
-                <?php $baseIndex = $i ; ?>
-            <?php endforeach; ?>
-            </tbody>
-        </table>
+
+        <?php echo Html::beginTag('div', [
+            'class' => 'elements-list',
+            'data-ajaxify-target' => 'refresh-menu-items'
+        ]); ?>
+            <?php echo $this->render('_form_menu_items', [
+                'menuItemsQuery' => $menuItemsQuery
+            ]); ?>
+    <div class="px-6 pb-6">
+            <div class="element-form-buttons">
+                <?php echo Html::beginTag('a', [
+                    'class' => 'element-form-buttons-button action',
+                    'href' => Url::to(['create-item', 'menuId' => $menu->id])
+                ]); ?>
+                <?php echo Heroicons::svg('solid/check', ['class' => 'element-form-buttons-button-icon']); ?>
+                <?php echo Module::t('menu', 'Add item'); ?>
+                <?php echo Html::endTag('a'); ?>
+            </div>
     </div>
-<?php endif; ?>
-<div class="buttons">
-    <?php echo Html::a('<i class="fa fa-plus mr-2"></i> '.Module::t('menu', 'Add item'), ['create-item', 'menuId' => $menu->id], [
-        'class' => 'button-submit'
-    ]); ?>
+        <?php echo  Html::endTag('div'); ?>
+
+
 </div>
+
+<?php echo Html::endForm(); ?>

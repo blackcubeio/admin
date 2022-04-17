@@ -16,6 +16,7 @@ namespace blackcube\admin\actions\parameter;
 
 use blackcube\core\models\Parameter;
 use yii\base\Action;
+use yii\data\ActiveDataProvider;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
 use Yii;
@@ -33,6 +34,11 @@ use Yii;
 class IndexAction extends Action
 {
     /**
+     * @var int
+     */
+    public $pagerSize = 20;
+
+    /**
      * @var string view
      */
     public $view = 'index';
@@ -44,10 +50,38 @@ class IndexAction extends Action
      */
     public function run()
     {
-        $parametersQuery = Parameter::find()
-            ->orderBy(['domain' => SORT_ASC, 'name' => SORT_ASC]);
+        $parametersQuery = Parameter::find();
+        $search = Yii::$app->request->getQueryParam('search', null);
+        if ($search !== null) {
+            $parametersQuery->andWhere(['or',
+                ['like', 'name', $search],
+                ['like', 'domain', $search],
+            ]);
+        }
+        $parametersProvider = Yii::createObject([
+            'class' => ActiveDataProvider::class,
+            'query' => $parametersQuery,
+            'pagination' => [
+                'pageSize' => $this->pagerSize,
+                'pageParam' => 'page',
+                'params' => [
+                    'search' => $search,
+                    'page' => Yii::$app->request->getQueryParam('page', 0)
+                ],
+            ],
+            'sort' => [
+                'defaultOrder' => [
+                    'domain' => SORT_ASC,
+                    'name' => SORT_ASC
+                ],
+                'attributes' => [
+                    'domain',
+                    'name',
+                ]
+            ],
+        ]);
         return $this->controller->render($this->view, [
-            'parametersQuery' => $parametersQuery
+            'elementsProvider' => $parametersProvider
         ]);
     }
 }

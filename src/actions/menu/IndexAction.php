@@ -14,6 +14,7 @@
 
 namespace blackcube\admin\actions\menu;
 
+use blackcube\admin\Module;
 use blackcube\core\models\Menu;
 use yii\base\Action;
 use yii\data\ActiveDataProvider;
@@ -34,6 +35,11 @@ use Yii;
 class IndexAction extends Action
 {
     /**
+     * @var int
+     */
+    public $pagerSize = 20;
+
+    /**
      * @var string view
      */
     public $view = 'index';
@@ -49,14 +55,20 @@ class IndexAction extends Action
         $search = Yii::$app->request->getQueryParam('search', null);
         if ($search !== null) {
             $menusQuery->andWhere(['or',
-                ['like', Menu::tableName().'.[[name]]', $search],
+                ['like', 'id', $search, false],
+                ['like', 'name', $search],
             ]);
         }
         $menusProvider = Yii::createObject([
             'class' => ActiveDataProvider::class,
             'query' => $menusQuery,
             'pagination' => [
-                'pageSize' => 20,
+                'pageSize' => $this->pagerSize,
+                'pageParam' => 'page',
+                'params' => [
+                    'search' => $search,
+                    'page' => Yii::$app->request->getQueryParam('page', 0)
+                ],
             ],
             'sort' => [
                 'defaultOrder' => [
@@ -64,12 +76,21 @@ class IndexAction extends Action
                 ],
                 'attributes' => [
                     'name',
-                    'active',
                 ]
             ],
         ]);
+        if (Yii::$app->request->isAjax) {
+            return $this->controller->renderPartial('_list', [
+                'icon' => 'outline/view-list',
+                'title' => Module::t('menu', 'Menus'),
+                'elementsProvider' => $menusProvider,
+                'additionalLinkOptions' => [
+                    'data-ajaxify-source' => 'menus-search'
+                ]
+            ]);
+        }
         return $this->controller->render($this->view, [
-            'menusProvider' => $menusProvider
+            'elementsProvider' => $menusProvider
         ]);
     }
 }

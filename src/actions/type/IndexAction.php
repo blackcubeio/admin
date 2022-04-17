@@ -16,6 +16,7 @@ namespace blackcube\admin\actions\type;
 
 use blackcube\core\models\Type;
 use yii\base\Action;
+use yii\data\ActiveDataProvider;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
 use Yii;
@@ -33,6 +34,11 @@ use Yii;
 class IndexAction extends Action
 {
     /**
+     * @var int
+     */
+    public $pagerSize = 20;
+
+    /**
      * @var string view
      */
     public $view = 'index';
@@ -44,10 +50,36 @@ class IndexAction extends Action
      */
     public function run()
     {
-        $typesQuery = Type::find()
-            ->orderBy(['name' => SORT_ASC]);
+        $typesQuery = Type::find();
+        $search = Yii::$app->request->getQueryParam('search', null);
+        if ($search !== null) {
+            $typesQuery->andWhere(['or',
+                ['like', 'id', $search, false],
+                ['like', 'name', $search],
+            ]);
+        }
+        $typesProvider = Yii::createObject([
+            'class' => ActiveDataProvider::class,
+            'query' => $typesQuery,
+            'pagination' => [
+                'pageSize' => $this->pagerSize,
+                'pageParam' => 'page',
+                'params' => [
+                    'search' => $search,
+                    'page' => Yii::$app->request->getQueryParam('page', 0)
+                ],
+            ],
+            'sort' => [
+                'defaultOrder' => [
+                    'name' => SORT_ASC
+                ],
+                'attributes' => [
+                    'name',
+                ]
+            ],
+        ]);
         return $this->controller->render($this->view, [
-            'typesQuery' => $typesQuery
+            'elementsProvider' => $typesProvider
         ]);
     }
 }

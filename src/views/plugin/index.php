@@ -23,10 +23,15 @@ use yii\helpers\Url;
 
 $formatter = Yii::$app->formatter;
 ?>
-    <main class="overflow-hidden">
-        <div class="table-container" >
-            <div blackcube-ajaxify="click" >
-                <?php echo $this->render('_list', ['pluginManagers' => $pluginManagers]); ?>
-            </div>
-        </div>
-    </main>
+<main class="application-content">
+    <div class="elements" data-ajaxify-target="plugins-search">
+        <?php echo $this->render('_list', [
+            'icon' => 'outline/beaker',
+            'title' => Module::t('plugin', 'Plugins'),
+            'pluginManagers' => $pluginManagers,
+            'additionalLinkOptions' => [
+                'data-ajaxify-source' => 'plugins-search'
+            ]
+        ]); ?>
+    </div>
+</main>

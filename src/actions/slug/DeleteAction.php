@@ -50,7 +50,12 @@ class DeleteAction extends Action
             throw new NotFoundHttpException();
         }
         if (Yii::$app->request->isPost) {
-            $slug->delete();
+            $element = $slug->element;
+            if ($element !== null) {
+                $element->detachSlug();
+            } else {
+                $slug->delete();
+            }
         }
         return $this->controller->redirect([$this->targetAction]);
     }

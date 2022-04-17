@@ -78,6 +78,7 @@ class CreateItemAction extends Action
         }
         $parentsQuery = MenuItem::find()->andWhere(['menuId' => $menu->id]);
         return $this->controller->render($this->view, [
+            'menu' => $menu,
             'menuItem' => $menuItem,
             'parentsQuery' => $parentsQuery,
             'routes' => RouteHelper::findAllRoutes(),

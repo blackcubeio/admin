@@ -58,21 +58,15 @@ class EditAction extends Action
         if ($slug->element === null) {
             $slug->setScenario(Slug::SCENARIO_REDIRECT);
         }
-        $slugForm = Yii::createObject([
-            'class' => SlugForm::class,
-            'element' => $slug,
-        ]);
 
         if (Yii::$app->request->isPost) {
-            $slugForm->multiLoad(Yii::$app->request->bodyParams);
-            if ($slugForm->preValidate()) {
-                if ($slugForm->save()) {
-                    return $this->controller->redirect([$this->targetAction, 'id' => $slug->id]);
-                }
+            $slug->load(Yii::$app->request->bodyParams);
+            if ($slug->save()) {
+                return $this->controller->redirect([$this->targetAction, 'id' => $slug->id]);
             }
         }
         return $this->controller->render($this->view, [
-            'slugForm' => $slugForm,
+            'element' => $slug,
         ]);
     }
 }

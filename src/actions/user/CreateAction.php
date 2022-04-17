@@ -21,7 +21,7 @@ use yii\web\Response;
 use Yii;
 
 /**
- * Class IndexAction
+ * Class CreateAction
  *
  * @author Philippe Gaultier <pgaultier@redcat.io>
  * @copyright 2010-2020 Redcat

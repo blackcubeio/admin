@@ -1,0 +1,12 @@
+<template>
+    <div aria-live="assertive" class="notification-center">
+        <blackcube-notification repeat.for="notification of notifications"
+                                class="notification"
+            type.bind="notification.type"
+        title.bind="notification.title"
+        content.bind="notification.content"
+        index.bind="$index"
+        duration.bind="notification.duration">
+        </blackcube-notification>
+    </div>
+</template>

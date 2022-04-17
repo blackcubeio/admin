@@ -21,19 +21,20 @@ use blackcube\admin\Module;
 use blackcube\core\interfaces\PluginHookInterface;
 use blackcube\core\interfaces\PluginsHandlerInterface;
 use blackcube\core\models\Tag;
+use blackcube\core\models\Language;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
 use Yii;
 
 /**
- * Class IndexAction
+ * Class EditAction
  *
  * @author Philippe Gaultier <pgaultier@redcat.io>
  * @copyright 2010-2020 Redcat
  * @license https://www.redcat.io/license license
  * @version XXX
  * @link https://www.redcat.io
- * @package blackcube\admin\actions\tag
+ * @package blackcube\admin\actions\category
  */
 class CreateAction extends BaseElementAction
 {
@@ -55,40 +56,48 @@ class CreateAction extends BaseElementAction
     public function run()
     {
         $tag = Yii::createObject(Tag::class);
-        $slugForm = Yii::createObject([
-            'class' => SlugForm::class,
-            'element' => $tag,
-        ]);
+        /* @var $tag Tag */
+
+        if ($tag === null) {
+            throw new NotFoundHttpException();
+        }
         $pluginsHandler = Yii::createObject(PluginsHandlerInterface::class);
         /* @var $pluginsHandler \blackcube\core\interfaces\PluginsHandlerInterface */
         $pluginsHandler->runHook(PluginHookInterface::PLUGIN_HOOK_LOAD, $tag);
 
         $blocs = $tag->getBlocs()->all();
-        $transaction = Module::getInstance()->db->beginTransaction();
-        $result = TagHelper::saveElement($tag, $blocs, $slugForm);
-        $validatePlugins = $pluginsHandler->runHook(PluginHookInterface::PLUGIN_HOOK_VALIDATE, $tag);
-        $validatePlugins = array_reduce($validatePlugins, function($accumulator, $item) {
-            return $accumulator && $item;
-        }, true);
-        if ($result === true && $validatePlugins === true) {
-            $savePlugins = $pluginsHandler->runHook(PluginHookInterface::PLUGIN_HOOK_SAVE, $tag);
-            $savePlugins = array_reduce($savePlugins, function($accumulator, $item) {
+
+        if (Yii::$app->request->isPost) {
+            $transaction = Module::getInstance()->db->beginTransaction();
+            $result = TagHelper::saveElement($tag, $blocs);
+            $validatePlugins = $pluginsHandler->runHook(PluginHookInterface::PLUGIN_HOOK_VALIDATE, $tag);
+            $validatePlugins = array_reduce($validatePlugins, function($accumulator, $item) {
                 return $accumulator && $item;
             }, true);
-            if ($savePlugins === true) {
-                $transaction->commit();
-                return $this->controller->redirect([$this->targetAction, 'id' => $tag->id]);
+            if ($result === true && $validatePlugins === true) {
+                $savePlugins = $pluginsHandler->runHook(PluginHookInterface::PLUGIN_HOOK_SAVE, $tag);
+                $savePlugins = array_reduce($savePlugins, function($accumulator, $item) {
+                    return $accumulator && $item;
+                }, true);
+                if ($savePlugins === true) {
+                    $transaction->commit();
+                    return $this->controller->redirect([$this->targetAction, 'id' => $tag->id]);
+                }
             }
+            $transaction->rollBack();
         }
-        $transaction->rollBack();
+
         $categoriesQuery = $this->getCategoriesQuery()
             ->orderBy(['name' => SORT_ASC]);
+
         $typesQuery = $this->getTypesQuery()
             ->orderBy(['name' => SORT_ASC]);
+
+
+
         return $this->controller->render($this->view, [
             'pluginsHandler' => $pluginsHandler,
             'tag' => $tag,
-            'slugForm' => $slugForm,
             'typesQuery' => $typesQuery,
             'blocs' => $blocs,
             'categoriesQuery' => $categoriesQuery,

@@ -56,16 +56,17 @@ class BlocAction extends Action
         if ($this->elementClass === null) {
             throw new InvalidArgumentException(Module::t('actions', 'Property "elementClass" must be defined'));
         }
-        if (Yii::$app->request->isPost) {
-            $elementClass = $this->elementClass;
-            if ($id !== null) {
-                $element = $elementClass::findOne(['id' => $id]);
-                if ($element === null) {
-                    throw new NotFoundHttpException();
-                }
-            } else {
+        $elementClass = $this->elementClass;
+        if ($id !== null) {
+            $element = $elementClass::findOne(['id' => $id]);
+            if ($element === null) {
                 throw new NotFoundHttpException();
             }
+        } else {
+            throw new NotFoundHttpException();
+        }
+        if (Yii::$app->request->isPost) {
+
             $originalBlocs = $element->getBlocs()->all();
             Model::loadMultiple($originalBlocs, Yii::$app->request->bodyParams);
             if (isset(Yii::$app->request->bodyParams['blocAdd'])) {
@@ -98,8 +99,10 @@ class BlocAction extends Action
                     }
                 }
             }
-            return $this->controller->renderPartial($this->view, ['blocs' => $blocs, 'element' => $element]);
+        } else {
+            $blocs = $element->getBlocs()->all();
         }
+        return $this->controller->renderPartial($this->view, ['blocs' => $blocs, 'element' => $element]);
 
     }
 }

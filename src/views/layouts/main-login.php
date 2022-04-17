@@ -33,7 +33,7 @@ $this->beginPage(); ?><!DOCTYPE html>
         </title>
         <?php $this->head(); ?>
     </head>
-    <body class="h-screen font-sans login bg-cover">
+    <body class="login">
         <?php $this->beginBody(); ?>
             <?php echo $content; ?>
         <?php $this->endBody(); ?>
