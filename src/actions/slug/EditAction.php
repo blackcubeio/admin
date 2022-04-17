@@ -14,7 +14,6 @@
 
 namespace blackcube\admin\actions\slug;
 
-use blackcube\admin\models\SlugForm;
 use blackcube\core\models\Slug;
 use yii\base\Action;
 use yii\web\NotFoundHttpException;

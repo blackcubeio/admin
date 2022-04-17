@@ -14,7 +14,6 @@
 
 namespace blackcube\admin\actions\user;
 
-use blackcube\admin\helpers\User as UserHelper;
 use blackcube\admin\models\Administrator;
 use yii\base\Action;
 use yii\web\NotFoundHttpException;

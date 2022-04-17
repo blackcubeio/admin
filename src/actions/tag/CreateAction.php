@@ -16,12 +16,10 @@ namespace blackcube\admin\actions\tag;
 
 use blackcube\admin\actions\BaseElementAction;
 use blackcube\admin\helpers\Tag as TagHelper;
-use blackcube\admin\models\SlugForm;
 use blackcube\admin\Module;
 use blackcube\core\interfaces\PluginHookInterface;
 use blackcube\core\interfaces\PluginsHandlerInterface;
 use blackcube\core\models\Tag;
-use blackcube\core\models\Language;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
 use Yii;
@@ -34,7 +32,7 @@ use Yii;
  * @license https://www.redcat.io/license license
  * @version XXX
  * @link https://www.redcat.io
- * @package blackcube\admin\actions\category
+ * @package blackcube\admin\actions\tag
  */
 class CreateAction extends BaseElementAction
 {

@@ -14,11 +14,9 @@
 
 namespace blackcube\admin\actions\category;
 
-use blackcube\admin\Module;
 use blackcube\admin\actions\BaseElementAction;
 use blackcube\core\interfaces\PluginsHandlerInterface;
 use blackcube\core\models\Category;
-use blackcube\core\models\Composite;
 use blackcube\core\models\Slug;
 use blackcube\core\models\Type;
 use yii\data\ActiveDataProvider;

@@ -17,7 +17,6 @@ namespace blackcube\admin\actions\node;
 use blackcube\admin\actions\BaseElementAction;
 use blackcube\admin\helpers\Node as NodeHelper;
 use blackcube\admin\models\MoveNodeForm;
-use blackcube\admin\models\SlugForm;
 use blackcube\admin\Module;
 use blackcube\core\interfaces\PluginHookInterface;
 use blackcube\core\interfaces\PluginsHandlerInterface;

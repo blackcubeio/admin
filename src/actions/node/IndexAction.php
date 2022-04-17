@@ -17,7 +17,6 @@ namespace blackcube\admin\actions\node;
 use blackcube\admin\Module;
 use blackcube\admin\actions\BaseElementAction;
 use blackcube\core\interfaces\PluginsHandlerInterface;
-use blackcube\core\models\Composite;
 use blackcube\core\models\Node;
 use blackcube\core\models\Slug;
 use blackcube\core\models\Type;

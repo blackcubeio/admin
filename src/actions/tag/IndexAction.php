@@ -9,7 +9,7 @@
  * @license https://www.redcat.io/license license
  * @version XXX
  * @link https://www.redcat.io
- * @package blackcube\admin\actions\category
+ * @package blackcube\admin\actions\tag
  */
 
 namespace blackcube\admin\actions\tag;
@@ -19,7 +19,6 @@ use blackcube\admin\actions\BaseElementAction;
 use blackcube\core\interfaces\PluginsHandlerInterface;
 use blackcube\core\models\Category;
 use blackcube\core\models\Tag;
-use blackcube\core\models\Composite;
 use blackcube\core\models\Slug;
 use blackcube\core\models\Type;
 use yii\data\ActiveDataProvider;

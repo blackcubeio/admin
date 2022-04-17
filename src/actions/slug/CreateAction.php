@@ -15,14 +15,7 @@
 namespace blackcube\admin\actions\slug;
 
 use blackcube\admin\actions\BaseElementAction;
-use blackcube\admin\helpers\Tag as TagHelper;
-use blackcube\admin\models\SlugForm;
-use blackcube\admin\Module;
-use blackcube\core\interfaces\PluginHookInterface;
-use blackcube\core\interfaces\PluginsHandlerInterface;
 use blackcube\core\models\Slug;
-use blackcube\core\models\Tag;
-use blackcube\core\models\Language;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
 use Yii;

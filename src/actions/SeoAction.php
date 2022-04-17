@@ -16,13 +16,9 @@ namespace blackcube\admin\actions;
 
 use blackcube\admin\Module;
 use blackcube\core\interfaces\ElementInterface;
-use blackcube\core\models\Bloc;
 use blackcube\core\models\Seo;
-use blackcube\core\models\Sitemap;
-use blackcube\core\models\Slug;
 use yii\base\Action;
 use yii\base\InvalidArgumentException;
-use yii\base\Model;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
 use Yii;

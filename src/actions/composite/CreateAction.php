@@ -16,7 +16,6 @@ namespace blackcube\admin\actions\composite;
 
 use blackcube\admin\actions\BaseElementAction;
 use blackcube\admin\helpers\Composite as CompositeHelper;
-use blackcube\admin\models\SlugForm;
 use blackcube\admin\Module;
 use blackcube\core\interfaces\PluginHookInterface;
 use blackcube\core\interfaces\PluginsHandlerInterface;

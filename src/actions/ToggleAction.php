@@ -20,7 +20,6 @@ use yii\base\Action;
 use yii\base\InvalidArgumentException;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
-use Yii;
 
 /**
  * Class ToggleAction

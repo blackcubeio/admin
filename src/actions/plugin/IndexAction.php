@@ -28,7 +28,7 @@ use Yii;
  * @license https://www.redcat.io/license license
  * @version XXX
  * @link https://www.redcat.io
- * @package blackcube\admin\actions\type
+ * @package blackcube\admin\actions\plugin
  */
 class IndexAction extends Action
 {

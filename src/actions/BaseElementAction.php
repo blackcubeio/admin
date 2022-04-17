@@ -21,7 +21,6 @@ use blackcube\core\models\Tag;
 use blackcube\core\models\Type;
 use yii\base\Action;
 use yii\db\ActiveQuery;
-use Yii;
 
 /**
  * Class BaseAction
