@@ -1,6 +1,7 @@
 Blackcube Admin - CHANGELOG 
 ===========================
 
+ * Upd: Prepare DI
  * Upd: Full BO Rewrite
  * Upd: Migrate to Aurelia 2
  * Chg: Replace Wysiwyg editor with QuillJs
