@@ -15,9 +15,11 @@
 namespace blackcube\admin\controllers;
 
 use blackcube\admin\components\Rbac;
-use blackcube\admin\helpers\Heroicons;use blackcube\admin\helpers\Html;use blackcube\admin\models\SlugGeneratorForm;
+use blackcube\admin\helpers\Heroicons;
+use blackcube\admin\helpers\Html;
+use blackcube\admin\models\SlugGeneratorForm;
 use blackcube\admin\Module;
-use blackcube\core\components\PreviewManager;
+use blackcube\core\interfaces\PreviewManagerInterface;
 use blackcube\core\interfaces\SlugGeneratorInterface;
 use yii\filters\AccessControl;
 use yii\filters\AjaxFilter;
@@ -76,11 +78,8 @@ class AjaxController extends Controller
      * @return string|Response
      * @throws \yii\base\InvalidConfigException
      */
-    public function actionPreview()
+    public function actionPreview(PreviewManagerInterface $previewManager)
     {
-        $previewManager = Yii::createObject([
-            'class' => PreviewManager::class,
-        ]);
         if ($previewManager->check() === true) {
             $previewManager->deactivate();
         } else {

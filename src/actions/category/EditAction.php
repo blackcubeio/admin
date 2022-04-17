@@ -49,11 +49,12 @@ class EditAction extends BaseElementAction
 
     /**
      * @param string $id
+     * @param PluginsHandlerInterface $pluginsHandler
      * @return string|Response
      * @throws NotFoundHttpException
      * @throws \yii\base\InvalidConfigException
      */
-    public function run($id)
+    public function run($id, PluginsHandlerInterface $pluginsHandler)
     {
         $category = $this->getCategoryQuery()
             ->andWhere(['id' => $id])
@@ -64,8 +65,7 @@ class EditAction extends BaseElementAction
         if ($category === null) {
             throw new NotFoundHttpException();
         }
-        $pluginsHandler = Yii::createObject(PluginsHandlerInterface::class);
-        /* @var $pluginsHandler \blackcube\core\interfaces\PluginsHandlerInterface */
+
         $pluginsHandler->runHook(PluginHookInterface::PLUGIN_HOOK_LOAD, $category);
 
         $blocs = $category->blocs; // ->getBlocs()->all();
@@ -94,8 +94,6 @@ class EditAction extends BaseElementAction
 
         $typesQuery = $this->getTypesQuery()
             ->orderBy(['name' => SORT_ASC]);
-
-
 
         return $this->controller->render($this->view, [
             'pluginsHandler' => $pluginsHandler,

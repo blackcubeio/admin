@@ -24,7 +24,6 @@ use blackcube\admin\components\Rbac;
 use blackcube\core\models\Slug;
 use yii\filters\AccessControl;
 use yii\filters\AjaxFilter;
-use Yii;
 
 /**
  * Class SlugController

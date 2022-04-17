@@ -17,7 +17,6 @@ namespace blackcube\admin\controllers;
 use blackcube\admin\actions\authentication\LoginAction;
 use blackcube\admin\actions\authentication\LogoutAction;
 use yii\web\Controller;
-use Yii;
 
 /**
  * Class AuthenticationController

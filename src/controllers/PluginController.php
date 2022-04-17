@@ -23,7 +23,6 @@ use blackcube\core\models\Plugin;
 use yii\filters\AccessControl;
 use yii\filters\AjaxFilter;
 use yii\web\Controller;
-use Yii;
 
 /**
  * Class PluginController

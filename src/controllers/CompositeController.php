@@ -29,7 +29,6 @@ use blackcube\admin\components\Rbac;
 use blackcube\core\models\Composite;
 use yii\filters\AccessControl;
 use yii\filters\AjaxFilter;
-use Yii;
 
 /**
  * Class CompositeController

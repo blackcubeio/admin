@@ -48,22 +48,14 @@ class CreateAction extends BaseElementAction
     public $targetAction = 'edit';
 
     /**
+     * @param Category $category
+     * @param PluginsHandlerInterface $pluginsHandler
      * @return string|Response
-     * @throws NotFoundHttpException
      * @throws \yii\base\InvalidConfigException
+     * @throws \yii\db\Exception
      */
-    public function run()
+    public function run(Category $category, PluginsHandlerInterface $pluginsHandler)
     {
-        $category = Yii::createObject(Category::class);
-        /* @var $category Category */
-
-        if ($category === null) {
-            throw new NotFoundHttpException();
-        }
-        $pluginsHandler = Yii::createObject(PluginsHandlerInterface::class);
-        /* @var $pluginsHandler \blackcube\core\interfaces\PluginsHandlerInterface */
-        $pluginsHandler->runHook(PluginHookInterface::PLUGIN_HOOK_LOAD, $category);
-
         $blocs = $category->getBlocs()->all();
 
         if (Yii::$app->request->isPost) {
@@ -90,8 +82,6 @@ class CreateAction extends BaseElementAction
 
         $typesQuery = $this->getTypesQuery()
             ->orderBy(['name' => SORT_ASC]);
-
-
 
         return $this->controller->render($this->view, [
             'pluginsHandler' => $pluginsHandler,

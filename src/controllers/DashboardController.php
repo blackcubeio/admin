@@ -18,7 +18,6 @@ use blackcube\admin\actions\dashboard\IndexAction;
 use blackcube\admin\components\Rbac;
 use yii\filters\AccessControl;
 use yii\web\Controller;
-use Yii;
 
 /**
  * Class DashboardController

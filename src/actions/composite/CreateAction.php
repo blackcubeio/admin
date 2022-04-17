@@ -49,19 +49,18 @@ class CreateAction extends BaseElementAction
     public $targetAction = 'edit';
 
     /**
+     * @param Composite $composite
+     * @param NodeComposite $nodeComposite
+     * @param PluginsHandlerInterface $pluginsHandler
      * @return string|Response
      * @throws NotFoundHttpException
      * @throws \yii\base\InvalidConfigException
      */
-    public function run()
+    public function run(Composite $composite, NodeComposite $nodeComposite, PluginsHandlerInterface $pluginsHandler)
     {
-        $composite = Yii::createObject(Composite::class);
 
-        $pluginsHandler = Yii::createObject(PluginsHandlerInterface::class);
-        /* @var $pluginsHandler \blackcube\core\interfaces\PluginsHandlerInterface */
         $pluginsHandler->runHook(PluginHookInterface::PLUGIN_HOOK_LOAD, $composite);
 
-        $nodeComposite = Yii::createObject(NodeComposite::class);
         if (Yii::$app->request->isPost) {
             $transaction = Module::getInstance()->db->beginTransaction();
             $composite->load(Yii::$app->request->bodyParams);

@@ -41,7 +41,7 @@ class DeleteAction extends Action
      * @param string $id
      * @return string|Response
      * @throws NotFoundHttpException
-     * @throws \yii\base\InvalidConfigException
+     * @throws \yii\base\InvalidConfigException|\yii\db\StaleObjectException
      */
     public function run($id)
     {

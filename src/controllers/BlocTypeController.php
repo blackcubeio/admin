@@ -24,7 +24,6 @@ use blackcube\core\models\BlocType;
 use yii\filters\AccessControl;
 use yii\filters\AjaxFilter;
 use yii\web\Controller;
-use Yii;
 
 /**
  * Class BlocTypeController

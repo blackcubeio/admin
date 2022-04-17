@@ -15,6 +15,7 @@
 namespace blackcube\admin\actions\category;
 
 use blackcube\admin\actions\BaseElementAction;
+use blackcube\admin\Module;
 use blackcube\core\interfaces\PluginsHandlerInterface;
 use blackcube\core\models\Category;
 use blackcube\core\models\Slug;
@@ -47,11 +48,17 @@ class IndexAction extends BaseElementAction
     public $view = 'index';
 
     /**
+     * @var string view
+     */
+    public $ajaxView = '_list';
+
+    /**
+     * @param PluginsHandlerInterface $pluginsHandler
      * @return string|Response
      * @throws NotFoundHttpException
      * @throws \yii\base\InvalidConfigException
      */
-    public function run()
+    public function run(PluginsHandlerInterface $pluginsHandler)
     {
         $categoriesQuery = $this->getCategoriesQuery();
         $categoriesQuery
@@ -94,9 +101,17 @@ class IndexAction extends BaseElementAction
                 ]
             ],
         ]);
-        $pluginsHandler = Yii::createObject(PluginsHandlerInterface::class);
-        /* @var $pluginsHandler \blackcube\core\interfaces\PluginsHandlerInterface */
 
+        if (Yii::$app->request->isAjax) {
+            return $this->controller->renderPartial($this->ajaxView, [
+                'icon' => 'outline/color-swatch',
+                'title' => Module::t('category', 'Categories'),
+                'elementsProvider' => $categoriesProvider,
+                'additionalLinkOptions' => [
+                    'data-ajaxify-source' => 'categories-search'
+                ]
+            ]);
+        }
         return $this->controller->render($this->view, [
             'pluginsHandler' => $pluginsHandler,
             'categoriesProvider' => $categoriesProvider

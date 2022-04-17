@@ -47,13 +47,13 @@ class CreateAction extends Action
     public $targetAction = 'edit';
 
     /**
+     * @param BlocType $blocType
      * @return string|Response
      * @throws NotFoundHttpException
-     * @throws \yii\base\InvalidConfigException
+     * @throws \yii\base\InvalidConfigException|\yii\db\Exception
      */
-    public function run()
+    public function run(BlocType $blocType)
     {
-        $blocType = Yii::createObject(BlocType::class);
         $blocType->template = '{"type": "object", "properties": {"text": {"type": "string"}}, "required": []}';
         $typeBlocTypes = TypeHelper::getTypeBlocTypes();
         if (Yii::$app->request->isPost) {

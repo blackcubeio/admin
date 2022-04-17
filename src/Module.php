@@ -20,6 +20,7 @@ use blackcube\admin\commands\RbacController;
 use blackcube\admin\interfaces\MigrableInterface;
 use blackcube\admin\interfaces\PluginBootstrapInterface;
 use blackcube\admin\models\Administrator;
+use blackcube\core\components\PreviewManager;
 use blackcube\core\interfaces\PluginsHandlerInterface;
 use yii\base\BootstrapInterface;
 use yii\base\Module as BaseModule;
@@ -115,6 +116,7 @@ class Module extends BaseModule implements BootstrapInterface
     public function bootstrap($app)
     {
         Yii::setAlias('@blackcube/admin', __DIR__);
+        $this->registerDi($app);
         $app->setComponents([
             'authManager' => [
                 'class' => DbManager::class,
@@ -131,6 +133,14 @@ class Module extends BaseModule implements BootstrapInterface
         $this->registerPlugins($app);
     }
 
+    /**
+     * @param WebApplication|ConsoleApplication $app
+     * @throws \yii\base\InvalidConfigException
+     */
+    public function registerDi($app)
+    {
+
+    }
     public function registerPlugins($app)
     {
         if ($app instanceof WebApplication) {

@@ -45,7 +45,6 @@ class Aurelia
      */
     private static function bindElementOptions($options = [])
     {
-        $aureliaParameters = '';
         $finalOptions = [];
         foreach ($options as $key => $value) {
             if (isset($value)) {

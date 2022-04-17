@@ -53,7 +53,7 @@ class IndexAction extends BaseElementAction
      * @throws NotFoundHttpException
      * @throws \yii\base\InvalidConfigException
      */
-    public function run()
+    public function run(PluginsHandlerInterface $pluginsHandler)
     {
         $tagsQuery = $this->getTagsQuery();
         $tagsQuery
@@ -97,8 +97,6 @@ class IndexAction extends BaseElementAction
                 ]
             ],
         ]);
-        $pluginsHandler = Yii::createObject(PluginsHandlerInterface::class);
-        /* @var $pluginsHandler \blackcube\core\interfaces\PluginsHandlerInterface */
 
         return $this->controller->render($this->view, [
             'pluginsHandler' => $pluginsHandler,

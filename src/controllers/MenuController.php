@@ -31,7 +31,6 @@ use blackcube\core\models\MenuItem;
 use yii\filters\AccessControl;
 use yii\filters\AjaxFilter;
 use yii\web\Controller;
-use Yii;
 
 /**
  * Class MenuController

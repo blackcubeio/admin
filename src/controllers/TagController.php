@@ -20,7 +20,6 @@ use blackcube\admin\actions\tag\EditAction;
 use blackcube\admin\actions\tag\IndexAction;
 use blackcube\admin\actions\SeoAction;
 use blackcube\admin\actions\SitemapAction;
-use blackcube\admin\actions\TagAction;
 use blackcube\admin\actions\ToggleAction;
 use blackcube\admin\actions\BlocAction;
 use blackcube\admin\actions\ModalAction;
@@ -29,7 +28,6 @@ use blackcube\admin\components\Rbac;
 use blackcube\core\models\Tag;
 use yii\filters\AccessControl;
 use yii\filters\AjaxFilter;
-use Yii;
 
 /**
  * Class TagController

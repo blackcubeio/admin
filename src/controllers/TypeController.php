@@ -24,7 +24,6 @@ use blackcube\core\models\Type;
 use yii\filters\AccessControl;
 use yii\filters\AjaxFilter;
 use yii\web\Controller;
-use Yii;
 
 /**
  * Class TypeController
@@ -79,7 +78,7 @@ class TypeController extends Controller
         ];
         $behaviors['forceAjax'] = [
             'class' => AjaxFilter::class,
-            'only' => ['modal', 'actions', 'delete'],
+            'only' => ['modal', 'toggle', 'actions', 'delete'],
         ];
         return $behaviors;
     }

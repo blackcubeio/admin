@@ -27,11 +27,9 @@ use blackcube\admin\actions\BlocAction;
 use blackcube\admin\actions\ModalAction;
 use blackcube\admin\actions\SlugAction;
 use blackcube\admin\components\Rbac;
-use blackcube\core\models\Composite;
 use blackcube\core\models\Node;
 use yii\filters\AccessControl;
 use yii\filters\AjaxFilter;
-use Yii;
 
 /**
  * Class NodeController

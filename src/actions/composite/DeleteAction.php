@@ -41,11 +41,12 @@ class DeleteAction extends BaseElementAction
 
     /**
      * @param string $id
+     * @param PluginsHandlerInterface $pluginsHandler
      * @return string|Response
      * @throws NotFoundHttpException
      * @throws \yii\base\InvalidConfigException
      */
-    public function run($id)
+    public function run($id, PluginsHandlerInterface $pluginsHandler)
     {
         $composite = $this->getCompositeQuery()
             ->andWhere(['id' => $id])
@@ -56,8 +57,6 @@ class DeleteAction extends BaseElementAction
         }
         if (Yii::$app->request->isPost) {
             $transaction = Module::getInstance()->db->beginTransaction();
-            $pluginsHandler = Yii::createObject(PluginsHandlerInterface::class);
-            /* @var $pluginsHandler \blackcube\core\interfaces\PluginsHandlerInterface */
 
             try {
                 $slug = $composite->getSlug()->one();

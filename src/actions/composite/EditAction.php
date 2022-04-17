@@ -50,11 +50,12 @@ class EditAction extends BaseElementAction
 
     /**
      * @param string $id
+     * @param PluginsHandlerInterface $pluginsHandler
      * @return string|Response
      * @throws NotFoundHttpException
      * @throws \yii\base\InvalidConfigException
      */
-    public function run($id)
+    public function run($id, PluginsHandlerInterface $pluginsHandler)
     {
         $composite = $this->getCompositeQuery()
             ->andWhere(['id' => $id])
@@ -65,8 +66,6 @@ class EditAction extends BaseElementAction
         if ($composite === null) {
             throw new NotFoundHttpException();
         }
-        $pluginsHandler = Yii::createObject(PluginsHandlerInterface::class);
-        /* @var $pluginsHandler \blackcube\core\interfaces\PluginsHandlerInterface */
         $pluginsHandler->runHook(PluginHookInterface::PLUGIN_HOOK_LOAD, $composite);
 
         $blocs = $composite->blocs; // getBlocs()->all();

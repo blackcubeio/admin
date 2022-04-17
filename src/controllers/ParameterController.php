@@ -24,7 +24,6 @@ use blackcube\core\models\Parameter;
 use yii\filters\AccessControl;
 use yii\filters\AjaxFilter;
 use yii\web\Controller;
-use Yii;
 
 /**
  * Class ParameterController
@@ -80,7 +79,7 @@ class ParameterController extends Controller
         ];
         $behaviors['forceAjax'] = [
             'class' => AjaxFilter::class,
-            'only' => ['modal', 'delete'],
+            'only' => ['modal', 'toggle', 'delete'],
         ];
         return $behaviors;
     }
