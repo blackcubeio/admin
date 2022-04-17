@@ -14,8 +14,6 @@
 
 namespace blackcube\admin\interfaces;
 
-use Yii;
-
 /**
  * Interface ModuleMenuInterface
  *

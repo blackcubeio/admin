@@ -14,14 +14,9 @@
 
 namespace blackcube\admin\models;
 
-use blackcube\core\interfaces\ElementInterface;
 use blackcube\core\models\Category;
 use blackcube\core\models\Node;
-use blackcube\core\models\Seo;
-use blackcube\core\models\Sitemap;
-use blackcube\core\models\Slug;
 use yii\base\Model;
-use Yii;
 
 /**
  * SlugGeneratorForm Model

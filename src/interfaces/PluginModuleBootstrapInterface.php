@@ -17,7 +17,6 @@ namespace blackcube\admin\interfaces;
 use yii\base\BootstrapInterface;
 use yii\web\Application as WebApplication;
 use yii\console\Application as ConsoleApplication;
-use Yii;
 
 /**
  * Interface PluginModuleBootstrapInterface

@@ -16,9 +16,7 @@ namespace blackcube\admin\widgets;
 
 use blackcube\admin\components\Rbac;
 use blackcube\admin\models\Administrator;
-use blackcube\admin\models\SearchForm;
 use blackcube\admin\Module;
-use blackcube\core\components\PreviewManager;
 use blackcube\core\models\BlocType;
 use blackcube\core\models\Category;
 use blackcube\core\models\Composite;
@@ -30,7 +28,6 @@ use blackcube\core\models\Tag;
 use blackcube\core\models\Type;
 use yii\base\NotSupportedException;
 use yii\base\Widget;
-use Yii;
 
 /**
  * Widget SimpleElementCard

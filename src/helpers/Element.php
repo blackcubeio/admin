@@ -14,12 +14,8 @@
 
 namespace blackcube\admin\helpers;
 
-use blackcube\admin\models\SlugForm;
 use blackcube\admin\Module;
 use blackcube\core\interfaces\ElementInterface;
-use blackcube\core\interfaces\TaggableInterface;
-use blackcube\core\models\Category;
-use blackcube\core\models\Tag;
 use blackcube\core\models\Bloc;
 use yii\base\ErrorException;
 use yii\base\Model;

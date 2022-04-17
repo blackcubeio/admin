@@ -14,12 +14,8 @@
 
 namespace blackcube\admin\widgets;
 
-use blackcube\admin\models\SearchForm;
-use blackcube\admin\Module;
-use blackcube\core\components\PreviewManager;
 use yii\base\InvalidConfigException;
 use yii\base\Widget;
-use Yii;
 use yii\data\Pagination;
 
 /**

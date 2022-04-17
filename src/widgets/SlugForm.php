@@ -17,7 +17,6 @@ namespace blackcube\admin\widgets;
 use blackcube\core\interfaces\ElementInterface;
 use blackcube\admin\models\SlugForm as SlugFormModel;
 use yii\base\Widget;
-use Yii;
 
 /**
  * Widget SlugForm

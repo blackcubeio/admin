@@ -14,8 +14,6 @@
 
 namespace blackcube\admin\helpers;
 
-use Yii;
-
 /**
  * Class Tag
  *

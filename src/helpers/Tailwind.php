@@ -1,6 +1,6 @@
 <?php
 /**
- * Html.php
+ * Tailwind.php
  *
  * PHP version 7.4+
  *
@@ -14,16 +14,8 @@
 
 namespace blackcube\admin\helpers;
 
-use blackcube\core\interfaces\ElasticInterface;
-use yii\base\InvalidArgumentException;
-use yii\base\InvalidConfigException;
-use yii\base\Model;
-use yii\base\NotSupportedException;
-use yii\helpers\Inflector;
-use yii\helpers\Json;
-
 /**
- * Class Html
+ * Class Tailwind
  *
  * @author Philippe Gaultier <pgaultier@redcat.io>
  * @copyright 2010-2022 Redcat

@@ -14,11 +14,7 @@
 
 namespace blackcube\admin\widgets;
 
-use blackcube\admin\models\SearchForm;
-use blackcube\admin\Module;
-use blackcube\core\components\PreviewManager;
 use yii\base\Widget;
-use Yii;
 
 /**
  * Widget ElementListHeader

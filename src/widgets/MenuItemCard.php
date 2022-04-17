@@ -14,11 +14,8 @@
 
 namespace blackcube\admin\widgets;
 
-use blackcube\admin\components\Rbac;
-use blackcube\admin\models\SearchForm;
 use blackcube\admin\Module;
 use blackcube\core\components\Element;
-use blackcube\core\components\PreviewManager;
 use blackcube\core\models\Category;
 use blackcube\core\models\Composite;
 use blackcube\core\models\MenuItem;

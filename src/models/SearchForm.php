@@ -16,7 +16,6 @@ namespace blackcube\admin\models;
 
 use blackcube\admin\Module;
 use yii\base\Model;
-use Yii;
 
 /**
  * SearchForm Model

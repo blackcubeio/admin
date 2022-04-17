@@ -14,7 +14,6 @@
 
 namespace blackcube\admin\migrations;
 
-use yii\db\Expression;
 use yii\db\Migration;
 
 /**

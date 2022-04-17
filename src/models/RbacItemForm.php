@@ -14,12 +14,7 @@
 
 namespace blackcube\admin\models;
 
-use blackcube\core\interfaces\ElementInterface;
-use blackcube\core\models\Seo;
-use blackcube\core\models\Sitemap;
-use blackcube\core\models\Slug;
 use yii\base\Model;
-use Yii;
 
 /**
  * RbacItemForm Model

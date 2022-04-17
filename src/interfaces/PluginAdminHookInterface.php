@@ -15,7 +15,6 @@
 namespace blackcube\admin\interfaces;
 
 use blackcube\core\interfaces\PluginHookInterface;
-use Yii;
 
 /**
  * Interface PluginAdminHookInterface

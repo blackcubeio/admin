@@ -19,8 +19,6 @@ use yii\base\InvalidArgumentException;
 use yii\base\InvalidConfigException;
 use yii\base\Model;
 use yii\base\NotSupportedException;
-use yii\helpers\Inflector;
-use yii\helpers\Json;
 
 /**
  * Class Html
@@ -34,58 +32,6 @@ use yii\helpers\Json;
  */
 class Html extends \blackcube\core\web\helpers\Html
 {
-
-    /**
-     * Prepare AureliaCustomAttribute parameters
-     *
-     * @param array $parameters
-     * @return string
-     * @since XXX
-     */
-    public static function bindAureliaAttributes($parameters = [])
-    {
-        $aureliaParameters = '';
-        foreach ($parameters as $key => $value) {
-            if (isset($value)) {
-                $key = Inflector::camel2id($key);
-                if (is_bool($value)) {
-                    $value = $value ? 'true' : 'false';
-                } elseif (!(is_numeric($value) || is_string($value))) {
-                    $value = '\'' . Json::encode($value) .'\'';
-                }
-                $aureliaParameters .= $key.'.bind: '.$value.'; ';
-            }
-        }
-        return $aureliaParameters;
-
-    }
-
-    /**
-     * @param Model $model
-     * @param string $attribute
-     * @param array $options
-     * @return string
-     */
-    public static function activeEditorJs(Model $model, $attribute, $options = [])
-    {
-        $selfId = static::getInputId($model, $attribute);
-        $selfName = static::getInputName($model, $attribute);
-        if (isset($options['value']) === true) {
-            $selfValue = $options['value'];
-            unset($options['value']);
-        } else {
-            $selfValue = static::getAttributeValue($model, $attribute);
-        }
-
-        $options = array_merge([
-            'field-id' => $selfId,
-            'field-name' => $selfName,
-            'field-value' => $selfValue,
-        ], $options);
-        return static::tag('blackcube-editor-js', '', $options);
-
-    }
-
     /**
      * @param Model $model
      * @param string $attribute

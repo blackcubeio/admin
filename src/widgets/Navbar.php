@@ -14,11 +14,7 @@
 
 namespace blackcube\admin\widgets;
 
-use blackcube\admin\interfaces\MenuInterface;
-use blackcube\admin\interfaces\ModuleMenuInterface;
-use blackcube\admin\Module;
 use yii\base\Widget;
-use Yii;
 
 /**
  * Widget Navbar

@@ -14,8 +14,6 @@
 
 namespace blackcube\admin\interfaces;
 
-use Yii;
-use yii\base\Model;
 use yii\base\Application;
 
 /**
