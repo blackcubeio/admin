@@ -2,7 +2,7 @@
 /**
  * element-list-pagination.php
  *
- * PHP version 7.2+
+ * PHP version 7.4+
  *
  * @author Philippe Gaultier <pgaultier@redcat.io>
  * @copyright 2010-2022 Redcat
