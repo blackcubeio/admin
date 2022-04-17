@@ -7,14 +7,14 @@ Blackcube Admin
 Pre-requisites
 --------------
 
- * PHP 7.2+
+ * PHP 7.4+
    * Extension `dom`
    * Extension `fileinfo`
    * Extension `intl`
    * Extension `json`
    * Extension `mbstring`
  * Apache or NginX
- * Blackcube core
+ * Blackcube core 3;x
 
 Pre-flight
 ----------
