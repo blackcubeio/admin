@@ -1,6 +1,10 @@
 Blackcube Admin - CHANGELOG 
 ===========================
 
+ * Upd: Full BO Rewrite
+ * Upd: Migrate to Aurelia 2
+ * Chg: Replace Wysiwyg editor with QuillJs
+
 Release 2.2.3 March, 11th 2022 <pgaultier@redcat.io>
 ----------------------------------------------------
 
