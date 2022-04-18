@@ -43,11 +43,12 @@ class CreateAction extends Action
     public $targetAction = 'edit';
 
     /**
+     * @param Administrator $user
      * @return string|Response
      * @throws NotFoundHttpException
      * @throws \yii\base\InvalidConfigException
      */
-    public function run()
+    public function run(Administrator $user)
     {
         $user = Yii::createObject(Administrator::class);
         if (Yii::$app->request->isPost) {

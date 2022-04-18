@@ -20,6 +20,11 @@ use blackcube\admin\commands\RbacController;
 use blackcube\admin\interfaces\MigrableInterface;
 use blackcube\admin\interfaces\PluginBootstrapInterface;
 use blackcube\admin\models\Administrator;
+use blackcube\admin\models\FilterActiveQuery;
+use blackcube\admin\models\MoveNodeForm;
+use blackcube\admin\models\RbacItemForm;
+use blackcube\admin\models\SearchForm;
+use blackcube\admin\models\TagForm;
 use blackcube\core\components\PreviewManager;
 use blackcube\core\interfaces\PluginsHandlerInterface;
 use yii\base\BootstrapInterface;
@@ -96,6 +101,24 @@ class Module extends BaseModule implements BootstrapInterface
     public $version = 'v3.0-dev';
 
     /**
+     * @var string[]
+     */
+    public $coreSingletons = [
+    ];
+
+    /**
+     * @var string[]
+     */
+    public $coreElements = [
+        Administrator::class => Administrator::class,
+        FilterActiveQuery::class => FilterActiveQuery::class,
+        MoveNodeForm::class => MoveNodeForm::class,
+        RbacItemForm::class => RbacItemForm::class,
+        SearchForm::class => SearchForm::class,
+        TagForm::class => TagForm::class,
+    ];
+
+    /**
      * @inheritdoc
      */
     public function init()
@@ -139,7 +162,16 @@ class Module extends BaseModule implements BootstrapInterface
      */
     public function registerDi($app)
     {
-
+        foreach($this->coreSingletons as $class => $definition) {
+            if (Yii::$container->hasSingleton($class) === false) {
+                Yii::$container->setSingleton($class, $definition);
+            }
+        }
+        foreach($this->coreElements as $class => $definition) {
+            if (Yii::$container->has($class) === false) {
+                Yii::$container->set($class, $definition);
+            }
+        }
     }
     public function registerPlugins($app)
     {

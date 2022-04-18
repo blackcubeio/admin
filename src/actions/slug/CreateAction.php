@@ -43,15 +43,14 @@ class CreateAction extends BaseElementAction
     public $targetAction = 'edit';
 
     /**
+     * @param Slug $slug
      * @return string|Response
      * @throws NotFoundHttpException
      * @throws \yii\base\InvalidConfigException
      */
-    public function run()
+    public function run(Slug $slug)
     {
-        $slug = Yii::createObject(Slug::class);
         $slug->setScenario(Slug::SCENARIO_REDIRECT);
-        /* @var $slug Slug */
 
         if (Yii::$app->request->isPost) {
             $slug->load(Yii::$app->request->bodyParams);

@@ -48,13 +48,13 @@ class CreateAction extends Action
     public $targetAction = 'edit';
 
     /**
+     * @param Type $type
      * @return string|Response
      * @throws NotFoundHttpException
      * @throws \yii\base\InvalidConfigException
      */
-    public function run()
+    public function run(Type $type)
     {
-        $type = Yii::createObject(Type::class);
         $typeBlocTypes = BlocTypeHelper::getTypeBlocTypes();
         if (Yii::$app->request->isPost) {
             $type->load(Yii::$app->request->bodyParams);

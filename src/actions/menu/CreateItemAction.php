@@ -46,17 +46,17 @@ class CreateItemAction extends Action
 
     /**
      * @param integer $menuId
+     * @param MenuItem $menuItem
      * @return string|Response
      * @throws NotFoundHttpException
      * @throws \yii\base\InvalidConfigException
      */
-    public function run($menuId)
+    public function run($menuId, MenuItem $menuItem)
     {
         $menu = Menu::findOne(['id' => $menuId]);
         if ($menu === null) {
             throw new NotFoundHttpException();
         }
-        $menuItem = Yii::createObject(MenuItem::class);
         $menuItem->menuId = $menuId;
         if (Yii::$app->request->isPost) {
             $menuItem->load(Yii::$app->request->bodyParams);

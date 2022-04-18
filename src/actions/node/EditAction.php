@@ -50,11 +50,13 @@ class EditAction extends BaseElementAction
 
     /**
      * @param string $id
+     * @param MoveNodeForm $moveNodeForm
+     * @param PluginsHandlerInterface $pluginsHandler
      * @return string|Response
      * @throws NotFoundHttpException
      * @throws \yii\base\InvalidConfigException
      */
-    public function run($id)
+    public function run($id, MoveNodeForm $moveNodeForm, PluginsHandlerInterface $pluginsHandler)
     {
         $node = $this->getNodeQuery()
             ->andWhere(['id' => $id])
@@ -65,14 +67,10 @@ class EditAction extends BaseElementAction
         if ($node === null) {
             throw new NotFoundHttpException();
         }
-        $pluginsHandler = Yii::createObject(PluginsHandlerInterface::class);
-        /* @var $pluginsHandler \blackcube\core\interfaces\PluginsHandlerInterface */
+
         $pluginsHandler->runHook(PluginHookInterface::PLUGIN_HOOK_LOAD, $node);
 
-        $moveNodeForm = Yii::createObject([
-            'class' => MoveNodeForm::class,
-            'move' => 0
-        ]);
+        $moveNodeForm->move = 0;
 
         $blocs = $node->blocs; //getBlocs()->all();
         $compositesQuery = $node->getComposites();

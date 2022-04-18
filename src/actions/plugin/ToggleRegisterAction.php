@@ -19,7 +19,6 @@ use blackcube\core\interfaces\PluginsHandlerInterface;
 use yii\base\Action;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
-use Yii;
 
 /**
  * Class ToggleRegisterAction
@@ -41,13 +40,12 @@ class ToggleRegisterAction extends Action
 
     /**
      * @param integer $id
+     * @param PluginsHandlerInterface $pluginsHandler
      * @return string|Response
      * @throws NotFoundHttpException
      */
-    public function run($id)
+    public function run($id, PluginsHandlerInterface $pluginsHandler)
     {
-        $pluginsHandler = Yii::createObject(PluginsHandlerInterface::class);
-        /* @var $pluginsHandler PluginsHandlerInterface */
         $pluginManager = $pluginsHandler->getPluginManager($id);
         if ($pluginManager === null) {
             throw new NotFoundHttpException();

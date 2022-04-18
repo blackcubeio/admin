@@ -50,13 +50,13 @@ class IndexAction extends Action
     public $view = 'index';
 
     /**
+     * @param SearchForm $searchForm
      * @return string|Response
      * @throws NotFoundHttpException
      * @throws \yii\base\InvalidConfigException
      */
-    public function run()
+    public function run(SearchForm $searchForm)
     {
-        $searchForm = Yii::createObject(SearchForm::class);
         $currentModuleUid = Module::getInstance()->getUniqueId();
         $nodesProvider = null;
         $compositesProvider = null;

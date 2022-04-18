@@ -14,6 +14,7 @@
 
 namespace blackcube\admin\actions\type;
 
+use blackcube\admin\Module;
 use blackcube\core\models\Type;
 use yii\base\Action;
 use yii\data\ActiveDataProvider;
@@ -42,6 +43,11 @@ class IndexAction extends Action
      * @var string view
      */
     public $view = 'index';
+
+    /**
+     * @var string view
+     */
+    public $ajaxView = '_list';
 
     /**
      * @return string|Response
@@ -78,6 +84,16 @@ class IndexAction extends Action
                 ]
             ],
         ]);
+        if (Yii::$app->request->isAjax) {
+            return $this->controller->renderPartial($this->ajaxView, [
+                'icon' => 'outline/template',
+                'title' => Module::t('type', 'Types'),
+                'elementsProvider' => $typesProvider,
+                'additionalLinkOptions' => [
+                    'data-ajaxify-source' => 'types-search'
+                ]
+            ]);
+        }
         return $this->controller->render($this->view, [
             'elementsProvider' => $typesProvider
         ]);

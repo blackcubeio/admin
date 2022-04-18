@@ -49,26 +49,19 @@ class CreateAction extends BaseElementAction
     public $targetAction = 'edit';
 
     /**
+     * @param Node $node
+     * @param MoveNodeForm $moveNodeForm
+     * @param PluginsHandlerInterface $pluginsHandler
      * @return string|Response
      * @throws NotFoundHttpException
      * @throws \yii\base\InvalidConfigException
      */
-    public function run()
+    public function run(Node $node, MoveNodeForm $moveNodeForm, PluginsHandlerInterface $pluginsHandler)
     {
-        $node = Yii::createObject(Node::class);
-        /* @var $node Node */
 
-        if ($node === null) {
-            throw new NotFoundHttpException();
-        }
-        $pluginsHandler = Yii::createObject(PluginsHandlerInterface::class);
-        /* @var $pluginsHandler \blackcube\core\interfaces\PluginsHandlerInterface */
         $pluginsHandler->runHook(PluginHookInterface::PLUGIN_HOOK_LOAD, $node);
 
-        $moveNodeForm = Yii::createObject([
-            'class' => MoveNodeForm::class,
-            'move' => 1
-        ]);
+        $moveNodeForm->move = 1;
 
         $blocs = $node->getBlocs()->all();
         $compositesQuery = $node->getComposites();

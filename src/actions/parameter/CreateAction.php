@@ -44,13 +44,13 @@ class CreateAction extends Action
     public $targetAction = 'edit';
 
     /**
+     * @param Parameter $parameter
      * @return string|Response
      * @throws NotFoundHttpException
      * @throws \yii\base\InvalidConfigException
      */
-    public function run()
+    public function run(Parameter $parameter)
     {
-        $parameter = Yii::createObject(Parameter::class);
         if (Yii::$app->request->isPost) {
             $parameter->load(Yii::$app->request->bodyParams);
             if ($parameter->validate() === true) {

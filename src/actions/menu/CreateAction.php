@@ -44,13 +44,13 @@ class CreateAction extends Action
     public $targetAction = 'edit';
 
     /**
+     * @param Menu $menu
      * @return string|Response
      * @throws NotFoundHttpException
      * @throws \yii\base\InvalidConfigException
      */
-    public function run()
+    public function run(Menu $menu)
     {
-        $menu = Yii::createObject(Menu::class);
         if (Yii::$app->request->isPost === true) {
             $menu->load(Yii::$app->request->bodyParams);
             if ($menu->validate() === true) {

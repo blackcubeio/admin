@@ -23,8 +23,6 @@
 
 use blackcube\admin\Module;
 use blackcube\admin\helpers\Html;
-use blackcube\admin\widgets\Sidebar;
-use blackcube\admin\widgets\SlugForm;
 use blackcube\core\interfaces\PluginsHandlerInterface;
 use blackcube\admin\interfaces\PluginAdminHookInterface;
 use yii\helpers\ArrayHelper;

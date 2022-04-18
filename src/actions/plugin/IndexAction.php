@@ -18,7 +18,6 @@ use blackcube\core\interfaces\PluginsHandlerInterface;
 use yii\base\Action;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
-use Yii;
 
 /**
  * Class IndexAction
@@ -38,14 +37,13 @@ class IndexAction extends Action
     public $view = 'index';
 
     /**
+     * @param PluginsHandlerInterface $pluginsHandler
      * @return string|Response
      * @throws NotFoundHttpException
      * @throws \yii\base\InvalidConfigException
      */
-    public function run()
+    public function run(PluginsHandlerInterface $pluginsHandler)
     {
-        $pluginsHandler = Yii::createObject(PluginsHandlerInterface::class);
-        /* @var $pluginsHandler \blackcube\core\interfaces\PluginsHandlerInterface */
         $pluginManagers = $pluginsHandler->getPluginManagers();
         return $this->controller->render($this->view, [
             'pluginManagers' => $pluginManagers,

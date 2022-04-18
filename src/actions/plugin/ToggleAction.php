@@ -42,10 +42,11 @@ class ToggleAction extends Action
 
     /**
      * @param integer $id
+     * @param PluginsHandlerInterface $pluginsHandler
      * @return string|Response
      * @throws NotFoundHttpException
      */
-    public function run($id)
+    public function run($id, PluginsHandlerInterface $pluginsHandler)
     {
         $plugin = Plugin::find()->andWhere(['id' => $id])->one();
         if ($plugin === null) {
@@ -53,9 +54,8 @@ class ToggleAction extends Action
         }
         $plugin->active = !$plugin->active;
         $pluginStatus = $plugin->save(false, ['active', 'dateUpdate']);
-        $pluginHandler = Yii::createObject(PluginsHandlerInterface::class);
-        /* @var $pluginsHandler PluginsHandlerInterface */
-        $pluginManager = $pluginHandler->getPluginManager($id);
+
+        $pluginManager = $pluginsHandler->getPluginManager($id);
         if ($pluginManager === null) {
             throw new InvalidArgumentException();
         }

@@ -49,6 +49,11 @@ class IndexAction extends BaseElementAction
     public $view = 'index';
 
     /**
+     * @var string view
+     */
+    public $ajaxView = '_list';
+
+    /**
      * @return string|Response
      * @throws NotFoundHttpException
      * @throws \yii\base\InvalidConfigException
@@ -97,7 +102,16 @@ class IndexAction extends BaseElementAction
                 ]
             ],
         ]);
-
+        if (Yii::$app->request->isAjax) {
+            return $this->controller->renderPartial($this->ajaxView, [
+                'icon' => 'outline/color-swatch',
+                'title' => Module::t('tag', 'Tags'),
+                'elementsProvider' => $tagsProvider,
+                'additionalLinkOptions' => [
+                    'data-ajaxify-source' => 'tags-search'
+                ]
+            ]);
+        }
         return $this->controller->render($this->view, [
             'pluginsHandler' => $pluginsHandler,
             'tagsProvider' => $tagsProvider

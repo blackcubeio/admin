@@ -47,20 +47,14 @@ class CreateAction extends BaseElementAction
     public $targetAction = 'edit';
 
     /**
+     * @param Tag $tag
+     * @param PluginsHandlerInterface $pluginsHandler
      * @return string|Response
      * @throws NotFoundHttpException
      * @throws \yii\base\InvalidConfigException
      */
-    public function run()
+    public function run(Tag $tag, PluginsHandlerInterface $pluginsHandler)
     {
-        $tag = Yii::createObject(Tag::class);
-        /* @var $tag Tag */
-
-        if ($tag === null) {
-            throw new NotFoundHttpException();
-        }
-        $pluginsHandler = Yii::createObject(PluginsHandlerInterface::class);
-        /* @var $pluginsHandler \blackcube\core\interfaces\PluginsHandlerInterface */
         $pluginsHandler->runHook(PluginHookInterface::PLUGIN_HOOK_LOAD, $tag);
 
         $blocs = $tag->getBlocs()->all();

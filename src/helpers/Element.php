@@ -65,7 +65,6 @@ class Element {
             }
         }
         return $saveStatus;
-        // return [$element, $slugForm, $blocs];
     }
 
 }

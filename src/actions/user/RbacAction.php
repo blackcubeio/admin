@@ -73,8 +73,6 @@ class RbacAction extends Action
             }
         }
         $authorizationData = UserHelper::prepareAuthorizationData($user->id);
-        $authManager = Yii::$app->authManager;
-
 
         return $this->controller->renderPartial($this->view, [
             'user' => $user,

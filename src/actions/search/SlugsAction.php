@@ -47,13 +47,13 @@ class SlugsAction extends Action
     public $view = '_list';
 
     /**
+     * @param SearchForm $searchForm
      * @return string|Response
      * @throws NotFoundHttpException
      * @throws \yii\base\InvalidConfigException
      */
-    public function run()
+    public function run(SearchForm $searchForm)
     {
-        $searchForm = Yii::createObject(SearchForm::class);
         $currentModuleUid = Module::getInstance()->getUniqueId();
         $elementsProvider = null;
         if (Yii::$app->request->isPost) {
