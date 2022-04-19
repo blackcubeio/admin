@@ -25,6 +25,7 @@ export class QuillEditor
 {
     @bindable() public fieldId: string;
     @bindable() public fieldName: string;
+    @bindable() public content: string = '';
     @bindable() public options: QuillOptionsStatic = {
         theme: 'snow',
         modules: {
@@ -62,6 +63,8 @@ export class QuillEditor
         if (this.fieldName) {
             this.hiddenField.name = this.fieldName;
         }
+        this.hiddenField.value = this.content;
+        this.editorElement.innerHTML = this.content;
         this.options.theme = 'snow';
         this.quill = new Quill(this.editorElement, this.options);
         this.quill.on('text-change', this.onTextChange);

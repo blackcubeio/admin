@@ -100,6 +100,7 @@ EOT;
         $options = array_merge([
             'field-id' => $selfId,
             'field-name' => $selfName,
+            'content.bind' => $model->{$attributeName},
         ], $options);
 
         $labelOptions['class'] = 'element-form-bloc-label'.$errorClass;
