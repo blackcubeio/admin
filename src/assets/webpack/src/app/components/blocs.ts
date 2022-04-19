@@ -27,14 +27,6 @@ export class Blocs
         this.logger.debug(this.url);
         this.form = <HTMLFormElement>this.element.closest('form');
         this.element.addEventListener('click', this.onDelegateClick);
-        // this.loadBlocs();
-    }
-    protected loadBlocs()
-    {
-        this.httpService.getHtmlContent(this.url)
-            .then((data) => {
-                this.view = data;
-            });
     }
 
     protected onDelegateClick = (evt:Event) => {

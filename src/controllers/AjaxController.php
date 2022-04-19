@@ -93,18 +93,16 @@ class AjaxController extends Controller
         return $content;
     }
 
-    public function actionGenerateSlug()
+    public function actionGenerateSlug(SlugGeneratorForm $slugGeneratorForm, SlugGeneratorInterface $slugGenerator)
     {
         Yii::$app->response->format = Response::FORMAT_JSON;
-        $slugGeneratorForm = Yii::createObject(SlugGeneratorForm::class);
         if (Yii::$app->request->isPost === true) {
             $slugGeneratorForm->load(Yii::$app->request->bodyParams, '');
         } elseif (Yii::$app->request->isGet === true) {
             $slugGeneratorForm->load(Yii::$app->request->queryParams, '');
         }
         if ($slugGeneratorForm->validate() === true) {
-            $generator = Yii::createObject(SlugGeneratorInterface::class);
-            $url = $generator->getElementSlug($slugGeneratorForm->name, $slugGeneratorForm->parentElementType, $slugGeneratorForm->parentElementId);
+            $url = $slugGenerator->getElementSlug($slugGeneratorForm->name, $slugGeneratorForm->parentElementType, $slugGeneratorForm->parentElementId);
             return [
                 'name' => $slugGeneratorForm->name,
                 'parentElementType' => $slugGeneratorForm->parentElementType,

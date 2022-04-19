@@ -1,8 +1,5 @@
 import {customElement, bindable, INode} from '@aurelia/runtime-html';
 import { IEventAggregator, ILogger, IDisposable } from '@aurelia/kernel';
-import { AlertEvent, AlertEventType, AlertStatus, AlertType } from '../interfaces/alert';
-import { transitionWithPromise } from '../helpers/transition';
-import {ICustomAttributeViewModel, ICustomElementViewModel} from "aurelia";
 import {HttpService} from "../services/http-service";
 import Quill, {QuillOptionsStatic} from "quill";
 import "quill/dist/quill.snow.css";
@@ -39,7 +36,7 @@ export class QuillEditor
         },
         formats: ['bold', 'italic', 'link', 'underline', 'list']
     };
-    private editor:HTMLElement;
+    private editorElement:HTMLElement;
     private hiddenField:HTMLInputElement;
     private quill: Quill;
     constructor(
@@ -66,15 +63,15 @@ export class QuillEditor
             this.hiddenField.name = this.fieldName;
         }
         this.options.theme = 'snow';
-        this.quill = new Quill(this.editor, this.options);
+        this.quill = new Quill(this.editorElement, this.options);
         this.quill.on('text-change', this.onTextChange);
         this.logger.trace('Attached');
     }
 
     private onTextChange = () => {
         // @ts-ignore
-        this.hiddenField.value = this.editor.querySelector('.ql-editor')?.innerHTML;
-        this.logger.trace(this.editor.querySelector('.ql-editor')?.innerHTML);
+        this.hiddenField.value = this.editorElement.querySelector('.ql-editor')?.innerHTML;
+        this.logger.trace(this.editorElement.querySelector('.ql-editor')?.innerHTML);
 
     };
     public detaching()

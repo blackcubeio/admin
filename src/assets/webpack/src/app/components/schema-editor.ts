@@ -10,7 +10,7 @@ import JSONEditor, {JSONEditorOptions} from 'jsoneditor';
 export class SchemaEditor
 {
     private hiddenField:HTMLInputElement;
-    private jsonEditorElement:HTMLElement;
+    private editorElement:HTMLElement;
     private jsonSchema:JSONEditor;
     @bindable() public fieldId: string;
     @bindable() public fieldName: string;
@@ -167,7 +167,7 @@ export class SchemaEditor
             // @ts-ignore
             this.hiddenField.value = jsonString;
         };
-        this.jsonSchema =new JSONEditor(this.jsonEditorElement,  config);
+        this.jsonSchema =new JSONEditor(this.editorElement,  config);
         this.jsonSchema.setText(this.schema);
         this.jsonSchema.expandAll();
 
