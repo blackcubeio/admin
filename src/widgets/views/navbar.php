@@ -41,7 +41,8 @@ use Yii;
     || Yii::$app->user->can(Rbac::PERMISSION_USER_VIEW)
     || Yii::$app->user->can(Rbac::PERMISSION_TYPE_VIEW)
     || Yii::$app->user->can(Rbac::PERMISSION_BLOCTYPE_VIEW)
-    || Yii::$app->user->can(Rbac::PERMISSION_MENU_VIEW)): ?>
+    || Yii::$app->user->can(Rbac::PERMISSION_MENU_VIEW)
+    || Yii::$app->user->can(Rbac::PERMISSION_LANGUAGE_VIEW)): ?>
 
     <div class="navbar-item" data-blackcube-section="parameters">
         <button type="button" class="navbar-item-btn" aria-expanded="false">
@@ -59,6 +60,20 @@ use Yii;
                     <?php echo Heroicons::svg('outline/users', ['class' => 'navbar-item-img']); ?>
                     <span class="navbar-subitems-title">
                         <?php echo Module::t('widgets', 'Users'); ?>
+                    </span>
+                <!-- span class="navbar-subitems-badge exclamation">
+                    20+
+                </span -->
+                <?php echo Html::endTag('a'); ?>
+            <?php endif; ?>
+            <?php  if (Yii::$app->user->can(Rbac::PERMISSION_LANGUAGE_VIEW)): ?>
+                <?php echo Html::beginTag('a', [
+                    'href' => Url::to(['/'.$adminUid.'/language/index']),
+                    'class' => 'navbar-subitems-link'.($controllerUid === $adminUid.'/language' ? ' active':''),
+                ]); ?>
+                <?php echo Heroicons::svg('outline/flag', ['class' => 'navbar-item-img']); ?>
+                <span class="navbar-subitems-title">
+                        <?php echo Module::t('widgets', 'Languages'); ?>
                     </span>
                 <!-- span class="navbar-subitems-badge exclamation">
                     20+

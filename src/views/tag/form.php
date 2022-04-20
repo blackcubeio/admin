@@ -102,19 +102,52 @@ use blackcube\admin\helpers\Aurelia;
         <?php endif; ?>
 
         <?php if (($tag->isNewRecord === false) && $tag->type !== null): ?>
-            <div class="element-form-header">
+            <?php echo Html::beginTag('div', ['blackcube-fold' => Aurelia::bindOptions(['element-type' => $tag::getElementType(), 'element-id' => $tag->id, 'element-sub-data' => 'blocs'])]); ?>
+            <div class="element-form-header flex justify-between text-white" data-fold="">
                 <h3 class="element-form-header-title">
-                    <?php echo Module::t('tag', 'Content'); ?>
+                    <?php echo Module::t('tag', 'Contents'); ?>
+                    <span class="inline-flex items-center ml-2 px-1 py-0.5 rounded-full text-xs font-medium bg-white text-indigo-800"> <?php echo $tag->getBlocs()->count(); ?> </span>
                 </h3>
-                <!-- p class="element-form-header-abstract"><?php echo Module::t('tag', 'This is the minimal information needed to create a new tag'); ?></p -->
+                <button type="button" data-fold="down">
+                    <?php echo Heroicons::svg('outline/chevron-up', ['class' => 'h-5 w-5']); ?>
+                </button>
+                <button type="button" data-fold="up" class="hidden">
+                    <?php echo Heroicons::svg('outline/chevron-down', ['class' => 'h-5 w-5']); ?>
+                </button>
             </div>
             <?php echo Aurelia::component('blackcube-blocs', '', [
+                'data-target-fold' => '',
+                'class' => 'hidden',
                 'url.bind' => Url::to(['blocs', 'id' => $tag->id]),
                 'view.bind' => $this->render('@blackcube/admin/views/common/_blocs', [
                     'element' => $tag,
                     'blocs' => $blocs
                 ])
             ]);?>
+            <?php echo Html::beginTag('div', ['blackcube-fold' => Aurelia::bindOptions(['element-type' => $tag::getElementType(), 'element-id' => $tag->id, 'element-sub-data' => 'composites'])]); ?>
+            <div class="element-form-header mt-6 flex justify-between text-white" data-fold="">
+
+                <h3 class="element-form-header-title">
+                    <?php echo Module::t('node', 'Composites'); ?>
+                    <span class="inline-flex items-center ml-2 px-1 py-0.5 rounded-full text-xs font-medium bg-white text-indigo-800"> <?php echo $tag->getComposites()->count(); ?> </span>
+                </h3>
+                <button type="button" data-fold="down">
+                    <?php echo Heroicons::svg('outline/chevron-up', ['class' => 'h-5 w-5']); ?>
+                </button>
+                <button type="button" data-fold="up" class="hidden">
+                    <?php echo Heroicons::svg('outline/chevron-down', ['class' => 'h-5 w-5']); ?>
+                </button>
+            </div>
+            <?php echo Aurelia::component('blackcube-composites', '', [
+                'data-target-fold' => '',
+                'class' => 'hidden',
+                'url.bind' => Url::to(['composites', 'id' => $tag->id]),
+                'view.bind' => $this->render('@blackcube/admin/views/common/_composites', [
+                    'element' => $tag,
+                ])
+            ]);?>
+            <?php echo Html::endTag('div'); ?>
+            <?php echo Html::endTag('div'); ?>
         <?php endif; ?>
         <?php if ($pluginsHandler instanceof PluginsHandlerInterface): ?>
             <?php $widgets = $pluginsHandler->runWidgetHook(

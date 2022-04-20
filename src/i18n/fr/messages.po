@@ -41,8 +41,8 @@ msgid "Category status"
 msgstr "Statut de la catégorie"
 
 msgctxt "blackcube/admin/category"
-msgid "Content"
-msgstr "Contenu"
+msgid "Contents"
+msgstr "Contenus"
 
 msgctxt "blackcube/admin/category"
 msgid "Language"
@@ -252,8 +252,8 @@ msgid "Composites"
 msgstr "Articles"
 
 msgctxt "blackcube/admin/composite"
-msgid "Content"
-msgstr "Contenu"
+msgid "Contents"
+msgstr "Contenus"
 
 msgctxt "blackcube/admin/composite"
 msgid "Language"
@@ -375,37 +375,21 @@ msgctxt "blackcube/admin/dashboard"
 msgid "Tags"
 msgstr "Tags"
 
-msgctxt "blackcube/admin/helpers"
-msgid "Blackcube"
-msgstr "Blackcube"
+msgctxt "blackcube/admin/language"
+msgid "Language"
+msgstr "Langue"
 
-msgctxt "blackcube/admin/helpers"
-msgid "CMS Category"
-msgstr "CMS: Catégorie"
+msgctxt "blackcube/admin/language"
+msgid "Language is primary"
+msgstr "Langue primaire"
 
-msgctxt "blackcube/admin/helpers"
-msgid "CMS Composite"
-msgstr "CMS: Article"
+msgctxt "blackcube/admin/language"
+msgid "Language status"
+msgstr "Statut de la langue"
 
-msgctxt "blackcube/admin/helpers"
-msgid "CMS Node"
-msgstr "CMS: Rubrique"
-
-msgctxt "blackcube/admin/helpers"
-msgid "CMS Tag"
-msgstr "CMS: Tag"
-
-msgctxt "blackcube/admin/helpers"
-msgid "Class \"{classname}\" does not exist."
-msgstr "Le classe « {classname} » n’existe pas."
-
-msgctxt "blackcube/admin/helpers"
-msgid "Module \"{moduleId}\" does not exist."
-msgstr "Le module « {moduleId} » n’existe pas."
-
-msgctxt "blackcube/admin/helpers"
-msgid "Regular"
-msgstr "Standard"
+msgctxt "blackcube/admin/language"
+msgid "Languages"
+msgstr "Langues"
 
 msgctxt "blackcube/admin/menu"
 msgid "Add item"
@@ -437,7 +421,7 @@ msgstr "Menus"
 
 msgctxt "blackcube/admin/menu"
 msgid "Parent"
-msgstr ""
+msgstr "Parent"
 
 msgctxt "blackcube/admin/menu"
 msgid "Root"
@@ -540,8 +524,8 @@ msgid "Composites"
 msgstr "Articles"
 
 msgctxt "blackcube/admin/node"
-msgid "Content"
-msgstr "Contenu"
+msgid "Contents"
+msgstr "Contenus"
 
 msgctxt "blackcube/admin/node"
 msgid "Into"
@@ -671,27 +655,9 @@ msgctxt "blackcube/admin/slug"
 msgid "Composite"
 msgstr "Article"
 
-#, fuzzy
-#| msgctxt "blackcube/admin/slug"
-#| msgid "Found (#{code})"
-msgctxt "blackcube/admin/slug"
-msgid "Found (#{code})"
-msgstr "Found (#{code})"
-
-#, fuzzy
-#| msgctxt "blackcube/admin/slug"
-#| msgid "Moved Permanently (#{code})"
-msgctxt "blackcube/admin/slug"
-msgid "Moved Permanently (#{code})"
-msgstr "Moved Permanently (#{code})"
-
 msgctxt "blackcube/admin/slug"
 msgid "Node"
 msgstr "Rubrique"
-
-msgctxt "blackcube/admin/slug"
-msgid "Select HTTP Code"
-msgstr "Choisir le code HTTP"
 
 msgctxt "blackcube/admin/slug"
 msgid "Slug"
@@ -710,8 +676,8 @@ msgid "Category"
 msgstr "Catégorie"
 
 msgctxt "blackcube/admin/tag"
-msgid "Content"
-msgstr "Contenu"
+msgid "Contents"
+msgstr "Contenus"
 
 msgctxt "blackcube/admin/tag"
 msgid "No type"
@@ -766,6 +732,10 @@ msgid "Types"
 msgstr "Types"
 
 msgctxt "blackcube/admin/user"
+msgid "Account"
+msgstr "Compte"
+
+msgctxt "blackcube/admin/user"
 msgid "Permission were updated"
 msgstr "Les permissions ont été mises à jour"
 
@@ -818,6 +788,10 @@ msgid "username@website.com"
 msgstr "identifiant@siteinternet.com"
 
 msgctxt "blackcube/admin/widgets"
+msgid "Account"
+msgstr "Compte"
+
+msgctxt "blackcube/admin/widgets"
 msgid "Bloc types"
 msgstr "Types de bloc"
 
@@ -838,8 +812,8 @@ msgid "Dashboard"
 msgstr "Tableau de bord"
 
 msgctxt "blackcube/admin/widgets"
-msgid "Image size should be 1200x630"
-msgstr "La taille de l’image doit faire 1200x630"
+msgid "Languages"
+msgstr "Langues"
 
 msgctxt "blackcube/admin/widgets"
 msgid "Logout"
@@ -878,16 +852,16 @@ msgid "Previous"
 msgstr "Précédent"
 
 msgctxt "blackcube/admin/widgets"
+msgid "Primary"
+msgstr "Primaire"
+
+msgctxt "blackcube/admin/widgets"
 msgid "Redirect {httpCode}"
 msgstr "Redirection {httpCode}"
 
 msgctxt "blackcube/admin/widgets"
 msgid "Route: {route}"
 msgstr "Route: {route}"
-
-msgctxt "blackcube/admin/widgets"
-msgid "SEO"
-msgstr "SEO"
 
 msgctxt "blackcube/admin/widgets"
 msgid "SEO integration"
@@ -898,36 +872,12 @@ msgid "Showing {start} to {end} of {count} results"
 msgstr "De {start} à {end} sur {count} résultats"
 
 msgctxt "blackcube/admin/widgets"
-msgid "Sitemap"
-msgstr "Sitemap"
-
-msgctxt "blackcube/admin/widgets"
-msgid ""
-"Sitemap and SEO are Slug dependant. They will be activated for the website "
-"only if Slug is active"
-msgstr ""
-"Le Sitemap et le SEO dépendent de l’URL. Ils seront activés seulement si "
-"l’URL est active"
-
-msgctxt "blackcube/admin/widgets"
 msgid "Sitemap integration"
 msgstr "Intégration Sitemap"
 
 msgctxt "blackcube/admin/widgets"
-msgid "Slug"
-msgstr "URL"
-
-msgctxt "blackcube/admin/widgets"
 msgid "Slugs"
 msgstr "URLs"
-
-msgctxt "blackcube/admin/widgets"
-msgid "Summary"
-msgstr "Sommaire"
-
-msgctxt "blackcube/admin/widgets"
-msgid "Summary large image"
-msgstr "Sommaire grande image"
 
 msgctxt "blackcube/admin/widgets"
 msgid "Tags"
@@ -958,16 +908,98 @@ msgid "Users"
 msgstr "Utilisateurs"
 
 msgctxt "blackcube/admin/widgets"
-msgid "Website"
-msgstr "Site"
-
-msgctxt "blackcube/admin/widgets"
 msgid "no route"
 msgstr "pas de route"
 
 msgctxt "blackcube/admin/widgets"
 msgid "or drag and drop"
 msgstr "ou glisser déposer"
+
+msgctxt "blackcube/admin/helpers"
+msgid "Blackcube"
+msgstr "Blackcube"
+
+msgctxt "blackcube/admin/helpers"
+msgid "CMS Category"
+msgstr "CMS: Catégorie"
+
+msgctxt "blackcube/admin/helpers"
+msgid "CMS Composite"
+msgstr "CMS: Article"
+
+msgctxt "blackcube/admin/helpers"
+msgid "CMS Node"
+msgstr "CMS: Rubrique"
+
+msgctxt "blackcube/admin/helpers"
+msgid "CMS Tag"
+msgstr "CMS: Tag"
+
+msgctxt "blackcube/admin/helpers"
+msgid "Class \"{classname}\" does not exist."
+msgstr "Le classe « {classname} » n’existe pas."
+
+msgctxt "blackcube/admin/helpers"
+msgid "Module \"{moduleId}\" does not exist."
+msgstr "Le module « {moduleId} » n’existe pas."
+
+msgctxt "blackcube/admin/helpers"
+msgid "Regular"
+msgstr "Standard"
+
+#, fuzzy
+#~| msgctxt "blackcube/admin/slug"
+#~| msgid "Found (#{code})"
+#~ msgctxt "blackcube/admin/slug"
+#~ msgid "Found (#{code})"
+#~ msgstr "Found (#{code})"
+
+#, fuzzy
+#~| msgctxt "blackcube/admin/slug"
+#~| msgid "Moved Permanently (#{code})"
+#~ msgctxt "blackcube/admin/slug"
+#~ msgid "Moved Permanently (#{code})"
+#~ msgstr "Moved Permanently (#{code})"
+
+#~ msgctxt "blackcube/admin/slug"
+#~ msgid "Select HTTP Code"
+#~ msgstr "Choisir le code HTTP"
+
+#~ msgctxt "blackcube/admin/widgets"
+#~ msgid "Image size should be 1200x630"
+#~ msgstr "La taille de l’image doit faire 1200x630"
+
+#~ msgctxt "blackcube/admin/widgets"
+#~ msgid "SEO"
+#~ msgstr "SEO"
+
+#~ msgctxt "blackcube/admin/widgets"
+#~ msgid "Sitemap"
+#~ msgstr "Sitemap"
+
+#~ msgctxt "blackcube/admin/widgets"
+#~ msgid ""
+#~ "Sitemap and SEO are Slug dependant. They will be activated for the "
+#~ "website only if Slug is active"
+#~ msgstr ""
+#~ "Le Sitemap et le SEO dépendent de l’URL. Ils seront activés seulement si "
+#~ "l’URL est active"
+
+#~ msgctxt "blackcube/admin/widgets"
+#~ msgid "Slug"
+#~ msgstr "URL"
+
+#~ msgctxt "blackcube/admin/widgets"
+#~ msgid "Summary"
+#~ msgstr "Sommaire"
+
+#~ msgctxt "blackcube/admin/widgets"
+#~ msgid "Summary large image"
+#~ msgstr "Sommaire grande image"
+
+#~ msgctxt "blackcube/admin/widgets"
+#~ msgid "Website"
+#~ msgstr "Site"
 
 #~ msgctxt "blackcube/admin/type"
 #~ msgid "Allowed bloc types"

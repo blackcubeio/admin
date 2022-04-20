@@ -39,7 +39,7 @@ msgid "Category status"
 msgstr ""
 
 msgctxt "blackcube/admin/category"
-msgid "Content"
+msgid "Contents"
 msgstr ""
 
 msgctxt "blackcube/admin/category"
@@ -243,7 +243,7 @@ msgid "Composites"
 msgstr ""
 
 msgctxt "blackcube/admin/composite"
-msgid "Content"
+msgid "Contents"
 msgstr ""
 
 msgctxt "blackcube/admin/composite"
@@ -366,36 +366,20 @@ msgctxt "blackcube/admin/dashboard"
 msgid "Tags"
 msgstr ""
 
-msgctxt "blackcube/admin/helpers"
-msgid "Blackcube"
+msgctxt "blackcube/admin/language"
+msgid "Language"
 msgstr ""
 
-msgctxt "blackcube/admin/helpers"
-msgid "CMS Category"
+msgctxt "blackcube/admin/language"
+msgid "Language is primary"
 msgstr ""
 
-msgctxt "blackcube/admin/helpers"
-msgid "CMS Composite"
+msgctxt "blackcube/admin/language"
+msgid "Language status"
 msgstr ""
 
-msgctxt "blackcube/admin/helpers"
-msgid "CMS Node"
-msgstr ""
-
-msgctxt "blackcube/admin/helpers"
-msgid "CMS Tag"
-msgstr ""
-
-msgctxt "blackcube/admin/helpers"
-msgid "Class \"{classname}\" does not exist."
-msgstr ""
-
-msgctxt "blackcube/admin/helpers"
-msgid "Module \"{moduleId}\" does not exist."
-msgstr ""
-
-msgctxt "blackcube/admin/helpers"
-msgid "Regular"
+msgctxt "blackcube/admin/language"
+msgid "Languages"
 msgstr ""
 
 msgctxt "blackcube/admin/menu"
@@ -531,7 +515,7 @@ msgid "Composites"
 msgstr ""
 
 msgctxt "blackcube/admin/node"
-msgid "Content"
+msgid "Contents"
 msgstr ""
 
 msgctxt "blackcube/admin/node"
@@ -663,19 +647,7 @@ msgid "Composite"
 msgstr ""
 
 msgctxt "blackcube/admin/slug"
-msgid "Found (#{code})"
-msgstr ""
-
-msgctxt "blackcube/admin/slug"
-msgid "Moved Permanently (#{code})"
-msgstr ""
-
-msgctxt "blackcube/admin/slug"
 msgid "Node"
-msgstr ""
-
-msgctxt "blackcube/admin/slug"
-msgid "Select HTTP Code"
 msgstr ""
 
 msgctxt "blackcube/admin/slug"
@@ -695,7 +667,7 @@ msgid "Category"
 msgstr ""
 
 msgctxt "blackcube/admin/tag"
-msgid "Content"
+msgid "Contents"
 msgstr ""
 
 msgctxt "blackcube/admin/tag"
@@ -751,6 +723,10 @@ msgid "Types"
 msgstr ""
 
 msgctxt "blackcube/admin/user"
+msgid "Account"
+msgstr ""
+
+msgctxt "blackcube/admin/user"
 msgid "Permission were updated"
 msgstr ""
 
@@ -803,6 +779,10 @@ msgid "username@website.com"
 msgstr ""
 
 msgctxt "blackcube/admin/widgets"
+msgid "Account"
+msgstr ""
+
+msgctxt "blackcube/admin/widgets"
 msgid "Bloc types"
 msgstr ""
 
@@ -823,7 +803,7 @@ msgid "Dashboard"
 msgstr ""
 
 msgctxt "blackcube/admin/widgets"
-msgid "Image size should be 1200x630"
+msgid "Languages"
 msgstr ""
 
 msgctxt "blackcube/admin/widgets"
@@ -863,15 +843,15 @@ msgid "Previous"
 msgstr ""
 
 msgctxt "blackcube/admin/widgets"
+msgid "Primary"
+msgstr ""
+
+msgctxt "blackcube/admin/widgets"
 msgid "Redirect {httpCode}"
 msgstr ""
 
 msgctxt "blackcube/admin/widgets"
 msgid "Route: {route}"
-msgstr ""
-
-msgctxt "blackcube/admin/widgets"
-msgid "SEO"
 msgstr ""
 
 msgctxt "blackcube/admin/widgets"
@@ -883,31 +863,11 @@ msgid "Showing {start} to {end} of {count} results"
 msgstr ""
 
 msgctxt "blackcube/admin/widgets"
-msgid "Sitemap"
-msgstr ""
-
-msgctxt "blackcube/admin/widgets"
-msgid "Sitemap and SEO are Slug dependant. They will be activated for the website only if Slug is active"
-msgstr ""
-
-msgctxt "blackcube/admin/widgets"
 msgid "Sitemap integration"
 msgstr ""
 
 msgctxt "blackcube/admin/widgets"
-msgid "Slug"
-msgstr ""
-
-msgctxt "blackcube/admin/widgets"
 msgid "Slugs"
-msgstr ""
-
-msgctxt "blackcube/admin/widgets"
-msgid "Summary"
-msgstr ""
-
-msgctxt "blackcube/admin/widgets"
-msgid "Summary large image"
 msgstr ""
 
 msgctxt "blackcube/admin/widgets"
@@ -939,14 +899,42 @@ msgid "Users"
 msgstr ""
 
 msgctxt "blackcube/admin/widgets"
-msgid "Website"
-msgstr ""
-
-msgctxt "blackcube/admin/widgets"
 msgid "no route"
 msgstr ""
 
 msgctxt "blackcube/admin/widgets"
 msgid "or drag and drop"
+msgstr ""
+
+msgctxt "blackcube/admin/helpers"
+msgid "Blackcube"
+msgstr ""
+
+msgctxt "blackcube/admin/helpers"
+msgid "CMS Category"
+msgstr ""
+
+msgctxt "blackcube/admin/helpers"
+msgid "CMS Composite"
+msgstr ""
+
+msgctxt "blackcube/admin/helpers"
+msgid "CMS Node"
+msgstr ""
+
+msgctxt "blackcube/admin/helpers"
+msgid "CMS Tag"
+msgstr ""
+
+msgctxt "blackcube/admin/helpers"
+msgid "Class \"{classname}\" does not exist."
+msgstr ""
+
+msgctxt "blackcube/admin/helpers"
+msgid "Module \"{moduleId}\" does not exist."
+msgstr ""
+
+msgctxt "blackcube/admin/helpers"
+msgid "Regular"
 msgstr ""
 

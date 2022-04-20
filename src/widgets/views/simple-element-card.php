@@ -25,20 +25,12 @@
 
 use blackcube\admin\helpers\Html;
 use yii\helpers\Url;
-use blackcube\admin\widgets\Sidebar;
 use blackcube\admin\Module;
 use blackcube\admin\helpers\Heroicons;
-use blackcube\core\models\Node;
-use blackcube\core\models\Composite;
-use blackcube\core\models\Category;
-use blackcube\core\models\Tag;
-use blackcube\core\models\Slug;
-use blackcube\admin\widgets\Publication;
+use blackcube\core\models\Language;
 use blackcube\core\models\Parameter;
 use blackcube\admin\models\Administrator;
 use blackcube\core\models\Menu;
-use DateTime;
-use Yii;
 
 $wrapperOptions = [
     'class' => 'card-wrapper'
@@ -90,7 +82,7 @@ if ($element instanceof Parameter) {
                             <span class="sr-only"><?php echo Module::t('common', 'Edit'); ?></span>
                             <?php echo Heroicons::svg('outline/pencil-alt', ['class' => 'card-body-actions-button-icon']); ?>
                         <?php echo Html::endTag('a'); ?>
-                        <?php if($element instanceof Administrator || $element instanceof Menu): ?>
+                        <?php if($element instanceof Administrator || $element instanceof Menu || $element instanceof Language): ?>
                             <?php echo Html::beginTag('a', [
                                 'href' => Url::to([$controller.'/toggle'] + $routeParameters),
                                 'class' => 'card-body-actions-button'.($element->active ? ' active':' inactive'),

@@ -51,11 +51,12 @@ use blackcube\admin\components\Rbac;
                             'name' => 'compositeDetach',
                             'class' => 'element-form-bloc-toolbar-buttons-button'
                         ]); ?>
-                            <span class="sr-only"><?php Module::t('common', 'Detach'); ?></span>
+                            <span class="sr-only"><?php Module::t('common', 'Edit'); ?></span>
                             <?php echo Heroicons::svg('outline/pencil-alt', ['class' => 'h-4 w-4']); ?>
                         <?php echo Html::endTag('a'); ?>
                         <?php endif; ?>
                     </span>
+                    <?php if($element instanceof \blackcube\core\models\Node): ?>
                     <span class="element-form-bloc-toolbar-buttons">
                         <?php if ($i > 0): ?>
                             <?php echo Html::beginTag('button', [
@@ -74,25 +75,25 @@ use blackcube\admin\components\Rbac;
                             <?php echo Heroicons::svg('outline/chevron-up', ['class' => 'h-4 w-4']); ?>
                             <?php echo Html::endTag('span'); ?>
                         <?php endif; ?>
-            <?php if ($i >= ($compositesCount - 1)): ?>
-                <?php echo Html::beginTag('span', [
-                    'class' => 'element-form-bloc-toolbar-buttons-button disabled'
-                ]); ?>
-                <?php echo Heroicons::svg('outline/chevron-down', ['class' => 'h-4 w-4']); ?>
-                <?php echo Html::endTag('span'); ?>
-            <?php else: ?>
-                <?php echo Html::beginTag('button', [
-                    'type' => 'button',
-                    'name' => 'compositeDown',
-                    'value' => $composite->id,
-                    'class' => 'element-form-bloc-toolbar-buttons-button'
-                ]); ?>
-                <span class="sr-only"><?php Module::t('common', 'Down'); ?></span>
-                <?php echo Heroicons::svg('outline/chevron-down', ['class' => 'h-4 w-4']); ?>
+                        <?php if ($i >= ($compositesCount - 1)): ?>
+                    <?php echo Html::beginTag('span', [
+                        'class' => 'element-form-bloc-toolbar-buttons-button disabled'
+                    ]); ?>
+                        <?php echo Heroicons::svg('outline/chevron-down', ['class' => 'h-4 w-4']); ?>
+                    <?php echo Html::endTag('span'); ?>
+                <?php else: ?>
+                    <?php echo Html::beginTag('button', [
+                        'type' => 'button',
+                        'name' => 'compositeDown',
+                        'value' => $composite->id,
+                        'class' => 'element-form-bloc-toolbar-buttons-button'
+                    ]); ?>
+                        <span class="sr-only"><?php Module::t('common', 'Down'); ?></span>
+                    <?php echo Heroicons::svg('outline/chevron-down', ['class' => 'h-4 w-4']); ?>
                 <?php echo Html::endTag('button'); ?>
             <?php endif; ?>
-
                     </span>
+                    <?php endif; ?>
     </div>
 </div>
 

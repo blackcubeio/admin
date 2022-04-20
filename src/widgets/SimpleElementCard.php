@@ -20,6 +20,7 @@ use blackcube\admin\Module;
 use blackcube\core\models\BlocType;
 use blackcube\core\models\Category;
 use blackcube\core\models\Composite;
+use blackcube\core\models\Language;
 use blackcube\core\models\Menu;
 use blackcube\core\models\Node;
 use blackcube\core\models\Parameter;
@@ -96,6 +97,14 @@ class SimpleElementCard extends Widget
             $info = '';
             $updatePermission = Rbac::PERMISSION_MENU_UPDATE;
             $deletePermission = Rbac::PERMISSION_MENU_DELETE;
+        } elseif ($this->element instanceof Language) {
+            $controller = 'language';
+            $type = Module::t('widgets', 'Languages');
+            $icon = 'outline/flag';
+            $title = $this->element->name;
+            $info = $this->element->main ? Module::t('widgets', 'Primary') : ($this->element->mainLanguage->name ?? Module::t('widgets', 'Unknown'));
+            $updatePermission = Rbac::PERMISSION_LANGUAGE_UPDATE;
+            $deletePermission = Rbac::PERMISSION_LANGUAGE_DELETE;
         } else {
             throw new NotSupportedException('Element type "'.get_class($this->element).'" is not supported');
         }

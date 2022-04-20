@@ -157,31 +157,52 @@ use blackcube\admin\helpers\Aurelia;
     <?php endif; ?>
 
     <?php if (($node->isNewRecord === false) && $node->type !== null): ?>
-        <div class="element-form-header">
-            <h3 class="element-form-header-title">
-                <?php echo Module::t('node', 'Content'); ?>
-            </h3>
+        <?php echo Html::beginTag('div', ['blackcube-fold' => Aurelia::bindOptions(['element-type' => $node::getElementType(), 'element-id' => $node->id, 'element-sub-data' => 'blocs'])]); ?>
+            <div class="element-form-header flex justify-between text-white" data-fold="">
+                <h3 class="element-form-header-title">
+                    <?php echo Module::t('node', 'Contents'); ?>
+                    <span class="inline-flex items-center ml-2 px-1 py-0.5 rounded-full text-xs font-medium bg-white text-indigo-800"> <?php echo $node->getBlocs()->count(); ?> </span>
+                </h3>
+                <button type="button" data-fold="down">
+                    <?php echo Heroicons::svg('outline/chevron-up', ['class' => 'h-5 w-5']); ?>
+                </button>
+                <button type="button" data-fold="up" class="hidden">
+                    <?php echo Heroicons::svg('outline/chevron-down', ['class' => 'h-5 w-5']); ?>
+                </button>
+            </div>
+            <?php echo Aurelia::component('blackcube-blocs', '', [
+                'data-target-fold' => '',
+                'class' => 'hidden',
+                'url.bind' => Url::to(['blocs', 'id' => $node->id]),
+                'view.bind' => $this->render('@blackcube/admin/views/common/_blocs', [
+                    'element' => $node,
+                    'blocs' => $blocs
+                ])
+            ]);?>
+        <?php echo Html::endTag('div'); ?>
+        <?php echo Html::beginTag('div', ['blackcube-fold' => Aurelia::bindOptions(['element-type' => $node::getElementType(), 'element-id' => $node->id, 'element-sub-data' => 'composites'])]); ?>
+            <div class="element-form-header mt-6 flex justify-between text-white" data-fold="">
 
-        </div>
-        <?php echo Aurelia::component('blackcube-blocs', '', [
-            'url.bind' => Url::to(['blocs', 'id' => $node->id]),
-            'view.bind' => $this->render('@blackcube/admin/views/common/_blocs', [
-                'element' => $node,
-                'blocs' => $blocs
-            ])
-        ]);?>
-        <div class="element-form-header mt-6">
-            <h3 class="element-form-header-title">
-                <?php echo Module::t('node', 'Composites'); ?>
-            </h3>
-
-        </div>
-        <?php echo Aurelia::component('blackcube-composites', '', [
-            'url.bind' => Url::to(['composites', 'id' => $node->id]),
-            'view.bind' => $this->render('@blackcube/admin/views/common/_composites', [
-                'element' => $node,
-            ])
-        ]);?>
+                <h3 class="element-form-header-title">
+                    <?php echo Module::t('node', 'Composites'); ?>
+                    <span class="inline-flex items-center ml-2 px-1 py-0.5 rounded-full text-xs font-medium bg-white text-indigo-800"> <?php echo $node->getComposites()->count(); ?> </span>
+                </h3>
+                <button type="button" data-fold="up">
+                    <?php echo Heroicons::svg('outline/chevron-up', ['class' => 'h-5 w-5']); ?>
+                </button>
+                <button type="button" class="hidden" data-fold="down">
+                    <?php echo Heroicons::svg('outline/chevron-down', ['class' => 'h-5 w-5']); ?>
+                </button>
+            </div>
+            <?php echo Aurelia::component('blackcube-composites', '', [
+                'data-target-fold' => '',
+                'class' => 'hidden',
+                'url.bind' => Url::to(['composites', 'id' => $node->id]),
+                'view.bind' => $this->render('@blackcube/admin/views/common/_composites', [
+                    'element' => $node,
+                ])
+            ]);?>
+        <?php echo Html::endTag('div'); ?>
     <?php endif; ?>
 
     <?php if ($pluginsHandler instanceof PluginsHandlerInterface): ?>

@@ -2,7 +2,6 @@ import {customElement, bindable, INode} from '@aurelia/runtime-html';
 import { IEventAggregator, ILogger, IDisposable } from '@aurelia/kernel';
 import {HttpService} from "../services/http-service";
 import Quill, {QuillOptionsStatic} from "quill";
-import "quill/dist/quill.snow.css";
 
 const Link = Quill.import('formats/link');
 class BlackcubeLink extends Link {

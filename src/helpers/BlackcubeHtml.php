@@ -53,16 +53,19 @@ EOT;
 </div>
 EOT;
     public static $booleanTemplate = <<< EOT
-<div class="element-form-bloc-{type}-wrapper">
-    <div class="element-form-bloc-{type}-input-wrapper">
-        {hidden}
-        {field}
-    </div>        
-    <div class="element-form-bloc-{type}-label-wrapper">
-        {label}
-        <p class="element-form-bloc-abstract">
-            {hint}
-        </p>
+<div class="mt-2">
+    {mainLabel}
+    <div class="element-form-bloc-{type}-wrapper">
+        <div class="element-form-bloc-{type}-input-wrapper">
+            {hidden}
+            {field}
+        </div>        
+        <div class="element-form-bloc-{type}-label-wrapper">
+            {label}
+            <p class="element-form-bloc-abstract">
+                {hint}
+            </p>
+        </div>
     </div>
 </div>
 EOT;
@@ -383,6 +386,8 @@ EOT;
         $labelContent = ArrayHelper::remove($options, 'label', $name);
         $labelOptions = ArrayHelper::remove($options, 'labelOptions', []);
         $hint = ArrayHelper::remove($options, 'hint', null);
+        $mainLabelContent = ArrayHelper::remove($options, 'mainLabel', '');
+        $mainLabelOptions = ArrayHelper::remove($options, 'mainLabelOptions', ['class' => 'element-form-bloc-label']);
 
         if (!isset($options['checked'])) {
             $options['checked'] = (bool) $checked;
@@ -409,12 +414,14 @@ EOT;
         return str_replace([
             '{type}',
             '{hidden}',
+            '{mainLabel}',
             '{label}',
             '{field}',
             '{hint}'
         ], [
             $type,
             $hidden,
+            empty($mainLabelContent) ? '' : Html::label($mainLabelContent, null, $mainLabelOptions),
             Html::label($labelContent, $for, $labelOptions),
             Html::input($type, $name, $value, $options),
             $hint
