@@ -12,12 +12,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/blackcubeio/core.git",
-                "reference": "996fac7d73780c7e0b8c58efd4d3cef5820b10fc"
+                "reference": "4ab93dfb69403c8121568cc64f08cff0e07ce4d7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/blackcubeio/core/zipball/996fac7d73780c7e0b8c58efd4d3cef5820b10fc",
-                "reference": "996fac7d73780c7e0b8c58efd4d3cef5820b10fc",
+                "url": "https://api.github.com/repos/blackcubeio/core/zipball/4ab93dfb69403c8121568cc64f08cff0e07ce4d7",
+                "reference": "4ab93dfb69403c8121568cc64f08cff0e07ce4d7",
                 "shasum": ""
             },
             "require": {
@@ -75,7 +75,7 @@
                 "source": "https://code.redcat.io/blackcube/core/tree/devel",
                 "wiki": "https://code.redcat.io/blackcube/core/wikis/home"
             },
-            "time": "2022-04-19T13:19:22+00:00"
+            "time": "2022-04-20T15:39:11+00:00"
         },
         {
             "name": "bower-asset/inputmask",
