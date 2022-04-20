@@ -332,6 +332,14 @@ msgid "email"
 msgstr "e-mail"
 
 msgctxt "blackcube/admin/console"
+msgid "firstname"
+msgstr "prénom"
+
+msgctxt "blackcube/admin/console"
+msgid "lastname"
+msgstr "nom"
+
+msgctxt "blackcube/admin/console"
 msgid "password"
 msgstr "mot de passe"
 
