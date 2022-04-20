@@ -52,9 +52,9 @@ class Aurelia
                     $key = Inflector::camel2id($key);
                     if (is_bool($value)) {
                         $value = $value ? 'true' : 'false';
-                    } elseif(is_string($value)) {
-                        $value = '\'' . $value .'\'';
-                    } elseif (is_numeric($value) || is_array($value)) {
+                    // } elseif(is_string($value)) {
+                    //    $value = '\'' . $value .'\'';
+                    } elseif (is_numeric($value) || is_array($value) || is_string($value)) {
                         $value = '' . Json::encode($value) .'';
                     }
                 }
@@ -80,9 +80,9 @@ class Aurelia
                     $key = Inflector::camel2id($key);
                     if (is_bool($value)) {
                         $value = $value ? 'true' : 'false';
-                    } elseif(is_string($value)) {
-                        $value = '\'' . $value .'\'';
-                    } elseif (is_numeric($value) || is_array($value)) {
+                    // } elseif(is_string($value)) {
+                    //    $value = '\'' . $value .'\'';
+                    } elseif (is_numeric($value) || is_array($value) || is_string($value)) {
                         $value = '' . Json::encode($value) .'';
                     }
                 }
