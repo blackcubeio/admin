@@ -30,6 +30,7 @@ use yii\helpers\Url;
 use blackcube\admin\helpers\Heroicons;
 use blackcube\admin\helpers\BlackcubeHtml;
 use blackcube\admin\helpers\Aurelia;
+use blackcube\core\models\Tag;
 ?>
 <main class="application-content">
     <?php echo Html::beginForm('', 'post', [
@@ -56,6 +57,7 @@ use blackcube\admin\helpers\Aurelia;
             'seoActive.bind' => (($composite->slug !== null) && ($composite->slug->seo !== null) && $composite->slug->seo->active),
             'tagsTitle.bind' => Module::t('composite', 'Tags'),
             'tagsUrl.bind' => Url::to(['tag', 'id' => $composite->id]),
+            'showTags.bind' => (Tag::find()->count() > 0),
             'slugExists.bind' => ($composite->slug !== null)
         ]); ?>
         <?php endif; ?>

@@ -23,7 +23,7 @@ use yii\helpers\Url;
 use blackcube\core\interfaces\PluginsHandlerInterface;
 use blackcube\admin\interfaces\PluginAdminHookInterface;
 use blackcube\admin\helpers\Heroicons;
-use yii\widgets\LinkPager;
+use blackcube\core\models\Category;
 
 $formatter = Yii::$app->formatter;
 ?>
@@ -45,7 +45,7 @@ $formatter = Yii::$app->formatter;
                             <?php echo Heroicons::svg('solid/search', ['class' => 'action-form-search-button-icon']); ?>
                         </button>
                     </div>
-                <?php if (Yii::$app->user->can(Rbac::PERMISSION_CATEGORY_CREATE)): ?>
+                <?php if (Yii::$app->user->can(Rbac::PERMISSION_CATEGORY_CREATE) && (Category::find()->count() > 0)): ?>
                     <div class="action-form-buttons">
                         <?php echo Html::beginTag('a', ['href' => Url::to(['create']), 'class' => 'action-form-button']); ?>
                             <?php echo Heroicons::svg('outline/plus', ['class' => 'action-form-button-icon']); ?>
@@ -81,7 +81,7 @@ $formatter = Yii::$app->formatter;
             <?php endforeach; ?>
         <?php endif; ?>
 
-        <?php if (Yii::$app->user->can(Rbac::PERMISSION_CATEGORY_CREATE)): ?>
+        <?php if (Yii::$app->user->can(Rbac::PERMISSION_CATEGORY_CREATE) && (Category::find()->count() > 0)): ?>
             <div class="action-form">
                 <div class="action-form-wrapper">
                     <div class="action-form-buttons">

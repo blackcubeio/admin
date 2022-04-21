@@ -31,6 +31,7 @@ use yii\helpers\Url;
 use blackcube\admin\helpers\Heroicons;
 use blackcube\admin\helpers\BlackcubeHtml;
 use blackcube\admin\helpers\Aurelia;
+use blackcube\core\models\Tag;
 ?>
 <main class="application-content">
     <?php echo Html::beginForm('', 'post', [
@@ -57,6 +58,7 @@ use blackcube\admin\helpers\Aurelia;
                 'seoActive.bind' => (($node->slug !== null) && ($node->slug->seo !== null) && $node->slug->seo->active),
                 'tagsTitle.bind' => Module::t('node', 'Tags'),
                 'tagsUrl.bind' => Url::to(['tag', 'id' => $node->id]),
+                'showTags.bind' => (Tag::find()->count() > 0),
                 'slugExists.bind' => ($node->slug !== null)
             ]); ?>
         <?php endif; ?>
