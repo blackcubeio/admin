@@ -33,8 +33,6 @@ use blackcube\core\models\Category;
 use blackcube\core\models\Tag;
 use blackcube\core\models\Slug;
 use blackcube\admin\widgets\Publication;
-use DateTime;
-use Yii;
 
 $wrapperOptions = [
     'class' => 'card-wrapper'

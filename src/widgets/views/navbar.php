@@ -23,7 +23,6 @@ use blackcube\admin\helpers\Html;
 use yii\helpers\Url;
 use blackcube\admin\helpers\Heroicons;
 use blackcube\admin\helpers\Aurelia;
-use Yii;
 ?>
 <nav class="navbar" aria-label="Sidebar">
     <?php  if (Yii::$app->user->can(Rbac::PERMISSION_SITE_DASHBOARD)): ?>

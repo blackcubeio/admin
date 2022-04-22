@@ -32,8 +32,6 @@ use blackcube\core\models\Slug;
 use blackcube\admin\widgets\Publication;
 use blackcube\admin\components\Rbac;
 use blackcube\core\models\MenuItem;
-use DateTime;
-use Yii;
 
 $wrapperOptions = [
     'class' => 'card-wrapper'

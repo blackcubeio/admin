@@ -26,8 +26,6 @@ use yii\helpers\Url;
 use blackcube\admin\widgets\Sidebar;
 use blackcube\admin\Module;
 use blackcube\admin\helpers\Heroicons;
-use DateTime;
-use Yii;
 
 ?>
 <div class="pagination">
