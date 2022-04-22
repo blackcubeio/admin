@@ -13,7 +13,7 @@
  *
  * @var $menu \blackcube\core\models\Menu
  * @var $menuItem \blackcube\core\models\MenuItem
- * @var $parentsQuery \yii\db\ActiveQuery
+ * @var $parents array
  * @var $routes array
  * @var $this \yii\web\View
  */
@@ -55,8 +55,9 @@ $formatter = Yii::$app->formatter;
                 ]); ?>
             </div>
             <div class="element-form-bloc-cols-6">
-                <?php echo BlackcubeHtml::activeDropDownList($menuItem, 'parentId', ArrayHelper::map($parentsQuery->select(['id', 'name'])->asArray()->all(), 'id', 'name'), [
+                <?php echo BlackcubeHtml::activeDropDownList($menuItem, 'parentId', ArrayHelper::map($parents, 'id', 'name'), [
                     'prompt' => Module::t('menu', 'Root'),
+                    'encodeSpaces' => true,
                     'label' => Module::t('menu', 'Parent'),
                 ]); ?>
             </div>
