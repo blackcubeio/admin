@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "fed2ca00157e7e3fe972953e4f07c7c0",
+    "content-hash": "c3891c647fe44bf692c7d9c42f568714",
     "packages": [
         {
             "name": "blackcube/core",
@@ -12,12 +12,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/blackcubeio/core.git",
-                "reference": "daba3fcc8aed773daa87cac1b2f456a8a297bee7"
+                "reference": "97879f4b359499da08805ce050bbd6ace3044e55"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/blackcubeio/core/zipball/daba3fcc8aed773daa87cac1b2f456a8a297bee7",
-                "reference": "daba3fcc8aed773daa87cac1b2f456a8a297bee7",
+                "url": "https://api.github.com/repos/blackcubeio/core/zipball/97879f4b359499da08805ce050bbd6ace3044e55",
+                "reference": "97879f4b359499da08805ce050bbd6ace3044e55",
                 "shasum": ""
             },
             "require": {
@@ -48,6 +48,11 @@
                 "yiisoft/yii2-gii": "~2.2"
             },
             "type": "yii2-extension",
+            "extra": {
+                "branch-alias": {
+                    "dev-devel-3.x": "3.0.x-dev"
+                }
+            },
             "autoload": {
                 "psr-4": {
                     "blackcube\\core\\": "src/"
@@ -75,7 +80,7 @@
                 "source": "https://code.redcat.io/blackcube/core/tree/devel",
                 "wiki": "https://code.redcat.io/blackcube/core/wikis/home"
             },
-            "time": "2022-04-22T14:27:06+00:00"
+            "time": "2022-04-22T14:39:58+00:00"
         },
         {
             "name": "bower-asset/inputmask",
