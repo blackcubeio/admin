@@ -15,8 +15,10 @@
 namespace blackcube\admin\actions\menu;
 
 use blackcube\admin\helpers\Route as RouteHelper;
+use blackcube\core\models\Menu;
 use blackcube\core\models\MenuItem;
 use yii\base\Action;
+use yii\helpers\ArrayHelper;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
 use Yii;
@@ -82,13 +84,49 @@ class EditItemAction extends Action
             }
 
         }
-        $parentsQuery = MenuItem::find()->andWhere(['menuId' => $menuItem->menuId])
-            ->andWhere(['!=', 'id', $menuItem->id ]);
+        $menu = Menu::find()->andWhere(['id' => $menuItem->menuId])->one();
         return $this->controller->render($this->view, [
             'menu' => $menuItem->menu,
             'menuItem' => $menuItem,
-            'parentsQuery' => $parentsQuery,
+            'parents' => $this->getParents($menu, $menuItem->id),
             'routes' => RouteHelper::findAllRoutes(),
         ]);
+    }
+
+    private function getParents(Menu $menu, $menuItemId)
+    {
+        $menuItems = $menu->getChildren();
+        $items = [];
+        $level = 0;
+        foreach($menuItems->each() as $menuItem) {
+            /* @var \blackcube\core\models\MenuItem $menuItem */
+            if ($menuItem->id !== $menuItemId) {
+                $items[] = [
+                    'id' => $menuItem->id,
+                    'name' => $menuItem->name
+                ];
+
+                $items = ArrayHelper::merge($items, $this->buildSubMenuItems($menuItem, $level++, $menuItemId));
+
+            }
+        }
+        return $items;
+    }
+    private function buildSubMenuItems(MenuItem $menuItem, $level, $menuItemId)
+    {
+        $items = [];
+        foreach ($menuItem->getChildren()->each() as $subMenuItem) {
+            /* @var \blackcube\core\models\MenuItem $subMenuItem */
+            if ($subMenuItem->id !== $menuItemId) {
+                $items[] = [
+                    'id' => $subMenuItem->id,
+                    'name' => str_pad('', 2*$level, ' ', STR_PAD_LEFT).$subMenuItem->name,
+                ];
+
+                $items =  ArrayHelper::merge($items, $this->buildSubMenuItems($subMenuItem, $level++, $menuItemId));
+
+            }
+        }
+        return $items;
     }
 }

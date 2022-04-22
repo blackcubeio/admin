@@ -18,6 +18,7 @@ use blackcube\admin\helpers\Route as RouteHelper;
 use blackcube\core\models\Menu;
 use blackcube\core\models\MenuItem;
 use yii\base\Action;
+use yii\helpers\ArrayHelper;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
 use Yii;
@@ -76,12 +77,45 @@ class CreateItemAction extends Action
                 }
             }
         }
-        $parentsQuery = MenuItem::find()->andWhere(['menuId' => $menu->id]);
+        // $parentsQuery = MenuItem::find()->andWhere(['menuId' => $menu->id]);
         return $this->controller->render($this->view, [
             'menu' => $menu,
             'menuItem' => $menuItem,
-            'parentsQuery' => $parentsQuery,
+            'parents' => $this->getParents($menu),
             'routes' => RouteHelper::findAllRoutes(),
         ]);
+    }
+
+    private function getParents(Menu $menu)
+    {
+        $menuItems = $menu->getChildren();
+        $items = [];
+        $level = 0;
+        foreach($menuItems->each() as $menuItem) {
+            /* @var \blackcube\core\models\MenuItem $menuItem */
+            $items[] = [
+                'id' => $menuItem->id,
+                'name' => $menuItem->name
+            ];
+
+            $items = ArrayHelper::merge($items, $this->buildSubMenuItems($menuItem, $level++));
+
+        }
+        return $items;
+    }
+    private function buildSubMenuItems(MenuItem $menuItem, $level)
+    {
+        $items = [];
+        foreach ($menuItem->getChildren()->each() as $subMenuItem) {
+            /* @var \blackcube\core\models\MenuItem $subMenuItem */
+            $items[] = [
+                'id' => $subMenuItem->id,
+                'name' => str_pad('', 2*$level, ' ', STR_PAD_LEFT).$subMenuItem->name,
+            ];
+
+            $items =  ArrayHelper::merge($items, $this->buildSubMenuItems($subMenuItem, $level++));
+
+        }
+        return $items;
     }
 }
