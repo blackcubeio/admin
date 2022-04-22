@@ -20,8 +20,10 @@ use blackcube\admin\models\MoveNodeForm;
 use blackcube\admin\Module;
 use blackcube\core\interfaces\PluginHookInterface;
 use blackcube\core\interfaces\PluginsHandlerInterface;
+use blackcube\core\interfaces\SlugGeneratorInterface;
 use blackcube\core\models\Language;
 use blackcube\core\models\Node;
+use blackcube\core\models\Slug;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
 use Yii;
@@ -51,12 +53,14 @@ class CreateAction extends BaseElementAction
     /**
      * @param Node $node
      * @param MoveNodeForm $moveNodeForm
+     * @param Slug $slug
+     * @param SlugGeneratorInterface $slugGenerator
      * @param PluginsHandlerInterface $pluginsHandler
      * @return string|Response
      * @throws NotFoundHttpException
      * @throws \yii\base\InvalidConfigException
      */
-    public function run(Node $node, MoveNodeForm $moveNodeForm, PluginsHandlerInterface $pluginsHandler)
+    public function run(Node $node, MoveNodeForm $moveNodeForm, Slug $slug, SlugGeneratorInterface $slugGenerator, PluginsHandlerInterface $pluginsHandler)
     {
 
         $pluginsHandler->runHook(PluginHookInterface::PLUGIN_HOOK_LOAD, $node);
@@ -85,6 +89,12 @@ class CreateAction extends BaseElementAction
                 }
             }
             $result = NodeHelper::saveElement($node, $blocs);
+            $slug->path = $slugGenerator->getElementSlug($node);
+            $slug->active = true;
+            $result = $result && $slug->save();
+            if ($result) {
+                $node->attachSlug($slug);
+            }
             $validatePlugins = $pluginsHandler->runHook(PluginHookInterface::PLUGIN_HOOK_VALIDATE, $node);
             $validatePlugins = array_reduce($validatePlugins, function($accumulator, $item) {
                 return $accumulator && $item;

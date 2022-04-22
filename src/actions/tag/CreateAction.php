@@ -19,6 +19,8 @@ use blackcube\admin\helpers\Tag as TagHelper;
 use blackcube\admin\Module;
 use blackcube\core\interfaces\PluginHookInterface;
 use blackcube\core\interfaces\PluginsHandlerInterface;
+use blackcube\core\interfaces\SlugGeneratorInterface;
+use blackcube\core\models\Slug;
 use blackcube\core\models\Tag;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
@@ -48,12 +50,14 @@ class CreateAction extends BaseElementAction
 
     /**
      * @param Tag $tag
+     * @param Slug $slug
+     * @param SlugGeneratorInterface $slugGenerator
      * @param PluginsHandlerInterface $pluginsHandler
      * @return string|Response
      * @throws NotFoundHttpException
      * @throws \yii\base\InvalidConfigException
      */
-    public function run(Tag $tag, PluginsHandlerInterface $pluginsHandler)
+    public function run(Tag $tag, Slug $slug, SlugGeneratorInterface $slugGenerator, PluginsHandlerInterface $pluginsHandler)
     {
         $pluginsHandler->runHook(PluginHookInterface::PLUGIN_HOOK_LOAD, $tag);
 
@@ -67,6 +71,12 @@ class CreateAction extends BaseElementAction
                 return $accumulator && $item;
             }, true);
             if ($result === true && $validatePlugins === true) {
+                $slug->path = $slugGenerator->getElementSlug($tag);
+                $slug->active = true;
+                $result = $result && $slug->save();
+                if ($result) {
+                    $tag->attachSlug($slug);
+                }
                 $savePlugins = $pluginsHandler->runHook(PluginHookInterface::PLUGIN_HOOK_SAVE, $tag);
                 $savePlugins = array_reduce($savePlugins, function($accumulator, $item) {
                     return $accumulator && $item;

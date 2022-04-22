@@ -19,9 +19,11 @@ use blackcube\admin\helpers\Composite as CompositeHelper;
 use blackcube\admin\Module;
 use blackcube\core\interfaces\PluginHookInterface;
 use blackcube\core\interfaces\PluginsHandlerInterface;
+use blackcube\core\interfaces\SlugGeneratorInterface;
 use blackcube\core\models\Composite;
 use blackcube\core\models\Language;
 use blackcube\core\models\NodeComposite;
+use blackcube\core\models\Slug;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
 use Yii;
@@ -51,12 +53,14 @@ class CreateAction extends BaseElementAction
     /**
      * @param Composite $composite
      * @param NodeComposite $nodeComposite
+     * @param Slug $slug
+     * @param SlugGeneratorInterface $slugGenerator
      * @param PluginsHandlerInterface $pluginsHandler
      * @return string|Response
      * @throws NotFoundHttpException
      * @throws \yii\base\InvalidConfigException
      */
-    public function run(Composite $composite, NodeComposite $nodeComposite, PluginsHandlerInterface $pluginsHandler)
+    public function run(Composite $composite, NodeComposite $nodeComposite, Slug $slug, SlugGeneratorInterface $slugGenerator, PluginsHandlerInterface $pluginsHandler)
     {
 
         $pluginsHandler->runHook(PluginHookInterface::PLUGIN_HOOK_LOAD, $composite);
@@ -66,6 +70,7 @@ class CreateAction extends BaseElementAction
             $composite->load(Yii::$app->request->bodyParams);
             $result = $composite->save();
 
+
             $validatePlugins = $pluginsHandler->runHook(PluginHookInterface::PLUGIN_HOOK_VALIDATE, $composite);
             $validatePlugins = array_reduce($validatePlugins, function($accumulator, $item) {
                 return $accumulator && $item;
@@ -73,6 +78,12 @@ class CreateAction extends BaseElementAction
             if ($result === true && $validatePlugins === true) {
                 $nodeComposite->compositeId = $composite->id;
                 CompositeHelper::handleNodes($composite, $nodeComposite);
+                $slug->path = $slugGenerator->getElementSlug($composite);
+                $slug->active = true;
+                $result = $result && $slug->save();
+                if ($result) {
+                    $composite->attachSlug($slug);
+                }
                 $savePlugins = $pluginsHandler->runHook(PluginHookInterface::PLUGIN_HOOK_SAVE, $composite);
                 $savePlugins = array_reduce($savePlugins, function($accumulator, $item) {
                     return $accumulator && $item;

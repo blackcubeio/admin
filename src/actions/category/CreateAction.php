@@ -19,8 +19,10 @@ use blackcube\admin\helpers\Category as CategoryHelper;
 use blackcube\admin\Module;
 use blackcube\core\interfaces\PluginHookInterface;
 use blackcube\core\interfaces\PluginsHandlerInterface;
+use blackcube\core\interfaces\SlugGeneratorInterface;
 use blackcube\core\models\Category;
 use blackcube\core\models\Language;
+use blackcube\core\models\Slug;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
 use Yii;
@@ -49,12 +51,14 @@ class CreateAction extends BaseElementAction
 
     /**
      * @param Category $category
+     * @param Slug $slug
+     * @param SlugGeneratorInterface $slugGenerator
      * @param PluginsHandlerInterface $pluginsHandler
      * @return string|Response
      * @throws \yii\base\InvalidConfigException
      * @throws \yii\db\Exception
      */
-    public function run(Category $category, PluginsHandlerInterface $pluginsHandler)
+    public function run(Category $category, Slug $slug, SlugGeneratorInterface $slugGenerator, PluginsHandlerInterface $pluginsHandler)
     {
         $blocs = $category->getBlocs()->all();
 
@@ -66,6 +70,12 @@ class CreateAction extends BaseElementAction
                 return $accumulator && $item;
             }, true);
             if ($result === true && $validatePlugins === true) {
+                $slug->path = $slugGenerator->getElementSlug($category);
+                $slug->active = true;
+                $result = $result && $slug->save();
+                if ($result) {
+                    $category->attachSlug($slug);
+                }
                 $savePlugins = $pluginsHandler->runHook(PluginHookInterface::PLUGIN_HOOK_SAVE, $category);
                 $savePlugins = array_reduce($savePlugins, function($accumulator, $item) {
                     return $accumulator && $item;
