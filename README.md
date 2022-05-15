@@ -73,7 +73,13 @@ Installation
             // additional modules
          ],
          'allowedParameterDomains' => ['],
-         'cache' => 'cache',
+            // override components if needed
+            'components' => [
+               'db' => ...
+               'cache' => ...
+               'fs' => ...
+            ],
+            /// end override
       ],
       'bo' => [
          'class' => blackcube\admin\Module::class,
@@ -84,7 +90,13 @@ Installation
          'modules' => [
             // additional modules
          ],
-         'cache' => 'cache',
+            // override components if needed
+            'components' => [
+               'db' => ...
+               'cache' => ...
+               'fs' => ...
+            ],
+            /// end override
       ],
    ],
 // ...
