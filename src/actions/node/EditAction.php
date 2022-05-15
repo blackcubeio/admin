@@ -76,7 +76,7 @@ class EditAction extends BaseElementAction
         $compositesQuery = $node->getComposites();
 
         if (Yii::$app->request->isPost) {
-            $transaction = Module::getInstance()->db->beginTransaction();
+            $transaction = Module::getInstance()->get('db')->beginTransaction();
             $moveNodeForm->load(Yii::$app->request->bodyParams);
             $result = NodeHelper::saveElement($node, $blocs);
             $validatePlugins = $pluginsHandler->runHook(PluginHookInterface::PLUGIN_HOOK_VALIDATE, $node);

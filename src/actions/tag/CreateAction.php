@@ -64,7 +64,7 @@ class CreateAction extends BaseElementAction
         $blocs = $tag->getBlocs()->all();
 
         if (Yii::$app->request->isPost) {
-            $transaction = Module::getInstance()->db->beginTransaction();
+            $transaction = Module::getInstance()->get('db')->beginTransaction();
             $result = TagHelper::saveElement($tag, $blocs);
             $validatePlugins = $pluginsHandler->runHook(PluginHookInterface::PLUGIN_HOOK_VALIDATE, $tag);
             $validatePlugins = array_reduce($validatePlugins, function($accumulator, $item) {

@@ -81,7 +81,7 @@ class SitemapAction extends Action
         if (Yii::$app->request->isPost) {
             $sitemap->scenario = Sitemap::SCENARIO_PRE_VALIDATE;
             $sitemap->load(Yii::$app->request->bodyParams);
-            $transaction = Module::getInstance()->db->beginTransaction();
+            $transaction = Module::getInstance()->get('db')->beginTransaction();
             if ($sitemap->save()) {
                 $transaction->commit();
                 $saved = true;

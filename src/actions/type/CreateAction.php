@@ -60,7 +60,7 @@ class CreateAction extends Action
             $type->load(Yii::$app->request->bodyParams);
             Model::loadMultiple($typeBlocTypes, Yii::$app->request->bodyParams);
             if ($type->validate() === true && Model::validateMultiple($typeBlocTypes)) {
-                $transaction = Module::getInstance()->db->beginTransaction();
+                $transaction = Module::getInstance()->get('db')->beginTransaction();
                 try {
                     $typeStatus = $type->save();
                     if ($typeStatus === true) {

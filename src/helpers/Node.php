@@ -41,7 +41,7 @@ class Node extends Element {
         $status = true;
         if (Yii::$app->request->isPost) {
             try {
-                $transaction = Module::getInstance()->db->beginTransaction();
+                $transaction = Module::getInstance()->get('db')->beginTransaction();
                 $currentAttachedNode = $nodeComposite->node;
                 $nodeComposite->load(Yii::$app->request->bodyParams);
                 $newAttachedNode = $nodeComposite->node;

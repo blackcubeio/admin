@@ -45,7 +45,7 @@ class Publication extends Widget
     public function init()
     {
         parent::init();
-        if ($this->cacheId === null && Module::getInstance()->cache !== null) {
+        if ($this->cacheId === null && Module::getInstance()->get('cache') !== null) {
             $className = get_class($this->element);
             $this->cacheId = Module::getInstance()->uniqueId.':widgets:publication:'. $className::getElementType().'-'.$this->element->id;
         }
@@ -56,7 +56,7 @@ class Publication extends Widget
      */
     public function run()
     {
-        $cache = Module::getInstance()->cache;
+        $cache = Module::getInstance()->get('cache');
         $cache = null;
         $content = false;
         /* @var $cache \yii\caching\Cache */

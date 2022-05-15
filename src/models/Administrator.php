@@ -70,7 +70,7 @@ class Administrator extends \yii\db\ActiveRecord implements IdentityInterface
      */
     public static function getDb()
     {
-        return Module::getInstance()->db;
+        return Module::getInstance()->get('db');
     }
 
     /**

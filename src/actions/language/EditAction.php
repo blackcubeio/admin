@@ -62,7 +62,7 @@ class EditAction extends Action
 
         if (Yii::$app->request->isPost) {
             $language->load(Yii::$app->request->bodyParams);
-            $transaction = Module::getInstance()->db->beginTransaction();
+            $transaction = Module::getInstance()->get('db')->beginTransaction();
             if ($language->save() === true) {
                 $transaction->commit();
                 return $this->controller->redirect([$this->targetAction, 'id' => $language->id]);

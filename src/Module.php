@@ -74,16 +74,6 @@ class Module extends BaseModule implements BootstrapInterface
     public $adminTemplatesAlias;
 
     /**
-     * @var Connection|array|string database access
-     */
-    public $db = 'db';
-
-    /**
-     * @var CacheInterface|array|string|null
-     */
-    public $cache;
-
-    /**
      * @var string command prefix
      */
     public $commandNameSpace = 'bc:';
@@ -126,10 +116,6 @@ class Module extends BaseModule implements BootstrapInterface
         $this->layout = 'main';
         parent::init();
         //TODO: should inherit db from Core
-        $this->db = Instance::ensure($this->db, Connection::class);
-        if ($this->cache !== null) {
-            $this->cache = Instance::ensure($this->cache, CacheInterface::class);
-        }
         $this->registerErrorHandler();
     }
 
@@ -143,8 +129,8 @@ class Module extends BaseModule implements BootstrapInterface
         $app->setComponents([
             'authManager' => [
                 'class' => DbManager::class,
-                'db' => $this->db,
-                'cache' => $this->cache,
+                'db' => $this->get('db'),
+                'cache' => $this->get('cache'),
             ],
         ]);
         $this->registerTranslations();
@@ -211,7 +197,7 @@ class Module extends BaseModule implements BootstrapInterface
             'migrationPath' => [
                 '@yii/rbac/migrations',
             ],
-            'db' => $this->db,
+            'db' => $this->get('db'),
         ];
         /*/
         // TODO check what to do if db is not the same as the base app one
@@ -238,7 +224,7 @@ class Module extends BaseModule implements BootstrapInterface
                 'migrationPath' => [
                     '@yii/rbac/migrations',
                 ],
-                'db' => $this->db,
+                'db' => $this->get('db'),
             ];
         }
         /**/
@@ -265,7 +251,7 @@ class Module extends BaseModule implements BootstrapInterface
             ]
         ], false);
         list($route,) = $app->urlManager->parseRequest($app->request);
-        if (preg_match('#'.$this->uniqueId.'/#', $route) > 0) {
+        if ($route !== null && preg_match('#'.$this->uniqueId.'/#', $route) > 0) {
             $app->setComponents([
                 'user' => [
                     'class' => WebUser::class,
@@ -304,7 +290,7 @@ class Module extends BaseModule implements BootstrapInterface
     {
         if (Yii::$app instanceof WebApplication) {
             list($route,) = Yii::$app->urlManager->parseRequest(Yii::$app->request);
-            if (preg_match('#'.$this->uniqueId.'/#', $route) > 0) {
+            if ($route !== null && preg_match('#'.$this->uniqueId.'/#', $route) > 0) {
                 Yii::configure($this, [
                     'components' => [
                         'errorHandler' => [

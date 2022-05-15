@@ -53,7 +53,7 @@ class CreateAction extends BaseElementAction
     {
         if (Yii::$app->request->isPost) {
             $language->load(Yii::$app->request->bodyParams);
-            $transaction = Module::getInstance()->db->beginTransaction();
+            $transaction = Module::getInstance()->get('db')->beginTransaction();
 
             if ($language->save()) {
                 $transaction->commit();

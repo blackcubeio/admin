@@ -61,7 +61,7 @@ class UpItemAction extends Action
             $previousItem->order = $menuItem->order;
             $menuItem->order = $previousOrder;
             try {
-                $transaction = Module::getInstance()->db->beginTransaction();
+                $transaction = Module::getInstance()->get('db')->beginTransaction();
                 $menuItem->save(false, ['order', 'dateUpdate']);
                 $previousItem->save(false, ['order', 'dateUpdate']);
                 $transaction->commit();

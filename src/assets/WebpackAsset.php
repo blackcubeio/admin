@@ -195,9 +195,6 @@ class WebpackAsset extends AssetBundle
      */
     private function getCache()
     {
-        if ($this->cacheEnabled === true) {
-            $this->cache = Instance::ensure($this->cache, Cache::class);
-        }
-        return $this->cacheEnabled ? $this->cache : null;
+        return $this->cacheEnabled ? $this->get('cache') : null;
     }
 }

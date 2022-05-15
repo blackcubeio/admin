@@ -71,7 +71,7 @@ class CreateAction extends BaseElementAction
         $compositesQuery = $node->getComposites();
 
         if (Yii::$app->request->isPost) {
-            $transaction = Module::getInstance()->db->beginTransaction();
+            $transaction = Module::getInstance()->get('db')->beginTransaction();
             $moveNodeForm->load(Yii::$app->request->bodyParams);
             if ($moveNodeForm->move) {
                 $targetNode = Node::findOne(['id' => $moveNodeForm->target]);

@@ -71,7 +71,7 @@ class EditAction extends BaseElementAction
         $blocs = $category->blocs; // ->getBlocs()->all();
 
         if (Yii::$app->request->isPost) {
-            $transaction = Module::getInstance()->db->beginTransaction();
+            $transaction = Module::getInstance()->get('db')->beginTransaction();
             $result = CategoryHelper::saveElement($category, $blocs);
             $validatePlugins = $pluginsHandler->runHook(PluginHookInterface::PLUGIN_HOOK_VALIDATE, $category);
             $validatePlugins = array_reduce($validatePlugins, function($accumulator, $item) {

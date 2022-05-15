@@ -48,7 +48,7 @@ class Element {
             Model::loadMultiple($blocs, Yii::$app->request->bodyParams);
             $element->load(Yii::$app->request->bodyParams);
             if ($element->validate() && Model::validateMultiple($blocs)) {
-                $transaction = Module::getInstance()->db->beginTransaction();
+                $transaction = Module::getInstance()->get('db')->beginTransaction();
                 $elementStatus = $element->save();
                 $blocStatus = true;
                 foreach($blocs as $bloc) {

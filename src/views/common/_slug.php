@@ -83,10 +83,10 @@ if ($saved === true) {
             <div class="element-form-bloc-cols-9">
                 <?php echo BlackcubeHtml::activeTextInput($slug, 'path', []); ?>
             </div>
-            <!-- div class="element-form-bloc-cols-1 flex items-end">
+            <!-- div class="element-form-bloc-cols-1 flex items-end pb-2">
                 <?php echo Html::a(Heroicons::svg('solid/refresh', ['class' => 'h-4 w-4']), '', [
                     'class' => 'relative inline-flex items-center p-2.5 rounded-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:text-white hover:bg-indigo-600 focus:z-10 focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500',
-                    'blackcube-url-generator' => Url::toRoute('ajax/generate-slug')
+                    'blackcube-url-generator' => Url::toRoute(['ajax/generate-slug', 'id' => $element->id, 'type' => $element::getElementType()])
                 ]); ?>
             </div -->
         </div>

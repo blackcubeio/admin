@@ -67,7 +67,7 @@ class ToggleAction extends Action
         if ($element instanceof ElementInterface && $element->slug !== null) {
             $element->slug->active = $element->active;
         }
-        $transaction = Module::getInstance()->db->beginTransaction();
+        $transaction = Module::getInstance()->get('db')->beginTransaction();
         try {
             $elementStatus = $element->save(false, ['active', 'dateUpdate']);
             if ($element instanceof ElementInterface) {

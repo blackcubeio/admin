@@ -60,7 +60,7 @@ class DownItemAction extends Action
             $nextItem->order = $menuItem->order;
             $menuItem->order = $nextOrder;
             try {
-                $transaction = Module::getInstance()->db->beginTransaction();
+                $transaction = Module::getInstance()->get('db')->beginTransaction();
                 $menuItem->save(false, ['order', 'dateUpdate']);
                 $nextItem->save(false, ['order', 'dateUpdate']);
                 $transaction->commit();

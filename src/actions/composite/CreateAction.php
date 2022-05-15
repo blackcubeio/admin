@@ -66,7 +66,7 @@ class CreateAction extends BaseElementAction
         $pluginsHandler->runHook(PluginHookInterface::PLUGIN_HOOK_LOAD, $composite);
 
         if (Yii::$app->request->isPost) {
-            $transaction = Module::getInstance()->db->beginTransaction();
+            $transaction = Module::getInstance()->get('db')->beginTransaction();
             $composite->load(Yii::$app->request->bodyParams);
             $result = $composite->save();
 

@@ -87,7 +87,7 @@ class SlugAction extends Action
                     'slugId' => $shouldDelete
                 ]);
             }
-            $transaction = Module::getInstance()->db->beginTransaction();
+            $transaction = Module::getInstance()->get('db')->beginTransaction();
             if ($slug->save()) {
                 if ($element->slug === null) {
                     $element->attachSlug($slug);

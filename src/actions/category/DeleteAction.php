@@ -56,7 +56,7 @@ class DeleteAction extends BaseElementAction
             throw new NotFoundHttpException();
         }
         if (Yii::$app->request->isPost) {
-            $transaction = Module::getInstance()->db->beginTransaction();
+            $transaction = Module::getInstance()->get('db')->beginTransaction();
 
             try {
                 $slug = $category->getSlug()->one();

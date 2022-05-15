@@ -95,7 +95,7 @@ $currentCategoryId = null;
                     <?php endif; ?>
 
                     <?php if ($pluginManager->getIsRegistered() && $pluginManager instanceof PluginManagerConfigurableInterface && $pluginManager->getConfigureRoute() !== null): ?>
-                        <?php echo Html::beginTag('a', ['href' => $pluginManager->getConfigureRoute(), 'class' => 'card-body-actions-button']); ?>
+                        <?php echo Html::beginTag('a', ['href' => Url::to($pluginManager->getConfigureRoute()), 'class' => 'card-body-actions-button']); ?>
                             <span class="sr-only"><?php echo Module::t('plugin', 'Edit'); ?></span>
                             <?php echo Heroicons::svg('outline/pencil-alt', ['class' => 'card-body-actions-button-icon']); ?>
                         <?php echo Html::endTag('a'); ?>

@@ -57,7 +57,7 @@ class DeleteAction extends Action
             throw new NotFoundHttpException();
         }
         if (Yii::$app->request->isPost) {
-            $transaction = Module::getInstance()->db->beginTransaction();
+            $transaction = Module::getInstance()->get('db')->beginTransaction();
 
             try {
                 $language->delete();
