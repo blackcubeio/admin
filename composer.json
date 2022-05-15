@@ -1,7 +1,7 @@
 {
     "name": "blackcube/admin",
-    "description": "Blackcube CMS Application",
-    "keywords": ["blackcube", "cms", "Admin"],
+    "description": "Blackcube CMS Administration system",
+    "keywords": ["blackcube", "cms", "admin", "back office", "yii", "yii2", "content management"],
     "homepage": "https://code.redcat.io/blackcube/admin",
     "type": "yii2-extension",
     "license": "proprietary",
@@ -37,7 +37,7 @@
         "swaggest/json-schema": "~0.12",
         "vlucas/phpdotenv": "~5.4",
         "yiisoft/yii2-imagine": "~2.3",
-        "yiisoft/yii2": "~2.0"
+        "yiisoft/yii2": "~2.0.13"
     },
     "require-dev" : {
         "codeception/codeception": "~4.1",
