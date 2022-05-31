@@ -21,7 +21,7 @@ use blackcube\admin\components\Rbac;
 use blackcube\admin\helpers\Html;
 use yii\helpers\Url;
 use blackcube\core\interfaces\PluginsHandlerInterface;
-use blackcube\admin\interfaces\PluginAdminHookInterface;
+use blackcube\admin\interfaces\PluginManagerAdminHookInterface;
 use blackcube\admin\helpers\Heroicons;
 use yii\widgets\LinkPager;
 

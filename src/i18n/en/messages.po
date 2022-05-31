@@ -269,6 +269,10 @@ msgid "Orphan"
 msgstr ""
 
 msgctxt "blackcube/admin/composite"
+msgid "Plugin"
+msgstr ""
+
+msgctxt "blackcube/admin/composite"
 msgid "SEO"
 msgstr ""
 
@@ -597,7 +601,19 @@ msgid "Parameters"
 msgstr ""
 
 msgctxt "blackcube/admin/plugin"
+msgid "Configure"
+msgstr ""
+
+msgctxt "blackcube/admin/plugin"
 msgid "Edit"
+msgstr ""
+
+msgctxt "blackcube/admin/plugin"
+msgid "Plugin registered"
+msgstr ""
+
+msgctxt "blackcube/admin/plugin"
+msgid "Plugin status"
 msgstr ""
 
 msgctxt "blackcube/admin/plugin"

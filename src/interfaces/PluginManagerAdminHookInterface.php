@@ -1,6 +1,6 @@
 <?php
 /**
- * PluginAdminHookInterface.php
+ * PluginManagerAdminHookInterface.php
  *
  * PHP version 7.4+
  *
@@ -17,7 +17,7 @@ namespace blackcube\admin\interfaces;
 use blackcube\core\interfaces\PluginHookInterface;
 
 /**
- * Interface PluginAdminHookInterface
+ * Interface PluginManagerAdminHookInterface
  *
  * @author Philippe Gaultier <pgaultier@redcat.io>
  * @copyright 2010-2022 Redcat
@@ -26,7 +26,7 @@ use blackcube\core\interfaces\PluginHookInterface;
  * @link https://www.redcat.io
  * @package blackcube\core\interfaces
  */
-interface PluginAdminHookInterface extends PluginHookInterface {
+interface PluginManagerAdminHookInterface extends PluginHookInterface {
     const PLUGIN_HOOK_WIDGET_COMPOSITE_LIST_HEAD = 'pluginAdminHookWidgetCompositeListHead';
     const PLUGIN_HOOK_WIDGET_COMPOSITE_LIST_BEFORE_LIST = 'pluginAdminHookWidgetCompositeListBeforeList';
     const PLUGIN_HOOK_WIDGET_COMPOSITE_LIST_AFTER_LIST = 'pluginAdminHookWidgetCompositeListAfterList';

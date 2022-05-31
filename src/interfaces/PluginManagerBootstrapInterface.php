@@ -1,6 +1,6 @@
 <?php
 /**
- * PluginBootstrapInterface.php
+ * PluginManagerBootstrapInterface.php
  *
  * PHP version 7.4+
  *
@@ -14,10 +14,11 @@
 
 namespace blackcube\admin\interfaces;
 
+use blackcube\admin\Module;
 use yii\base\Application;
 
 /**
- * Interface PluginBootstrapInterface
+ * Interface PluginManagerBootstrapInterface
  *
  * @author Philippe Gaultier <pgaultier@redcat.io>
  * @copyright 2010-2022 Redcat
@@ -26,12 +27,12 @@ use yii\base\Application;
  * @link https://www.redcat.io
  * @package blackcube\core\interfaces
  */
-interface PluginBootstrapInterface {
+interface PluginManagerBootstrapInterface {
     
     /**
-     * @param string $moduleUid Core module uniqueId
+     * @param Module $module Admin module
      * @param Application $app
      */
-    public function bootstrapAdmin($moduleUid, $app);
+    public function bootstrapAdmin(Module $module, Application $app);
 
 }

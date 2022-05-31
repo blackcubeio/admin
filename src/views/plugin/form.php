@@ -9,10 +9,9 @@
  * @license https://www.redcat.io/license license
  * @version XXX
  * @link https://www.redcat.io
- * @package blackcube\admin\views\language
+ * @package blackcube\admin\views\composite
  *
- * @var $language \blackcube\core\models\Language
- * @var $mainLanguagesQuery \blackcube\core\models\FilterActiveQuery
+ * @var $plugin \blackcube\core\models\Plugin
  * @var $this \yii\web\View
  */
 
@@ -25,6 +24,7 @@ use yii\helpers\Url;
 use blackcube\admin\helpers\Heroicons;
 use blackcube\admin\helpers\BlackcubeHtml;
 use blackcube\admin\helpers\Aurelia;
+use blackcube\core\models\Tag;
 ?>
 <main class="application-content">
     <?php echo Html::beginForm('', 'post', [
@@ -37,25 +37,28 @@ use blackcube\admin\helpers\Aurelia;
         ]); ?>
         <?php echo Heroicons::svg('solid/chevron-left', ['class' => 'h-7 w-7']); ?>
         <?php echo Html::endTag('a'); ?>
-        <h3 class="page-header-title"><?php echo Module::t('language', 'Language'); ?></h3>
+        <h3 class="page-header-title"><?php echo Module::t('composite', 'Plugin'); ?></h3>
     </div>
     <div class="px-6 pb-6">
 
         <div class="element-form-bloc">
-            <div class="element-form-bloc-stacked">
-                <?php echo BlackcubeHtml::activeCheckbox($language, 'active', ['hint' => Module::t('language', 'Language status')]); ?>
+            <div class="element-form-bloc-grid-12">
+                <div class="element-form-bloc-cols-3">
+                    <?php echo BlackcubeHtml::activeCheckbox($plugin, 'active', ['hint' => Module::t('plugin', 'Plugin status')]); ?>
+                </div>
+                <div class="element-form-bloc-cols-3">
+                    <?php echo BlackcubeHtml::activeCheckbox($plugin, 'registered', ['hint' => Module::t('plugin', 'Plugin registered')]); ?>
+                </div>
             </div>
             <div class="element-form-bloc-grid-12">
                 <div class="element-form-bloc-cols-2">
-                    <?php echo BlackcubeHtml::activeTextInput($language, 'id', []); ?>
+                    <?php echo BlackcubeHtml::activeTextInput($plugin, 'id'); ?>
                 </div>
-                <div class="element-form-bloc-cols-7">
-                    <?php echo BlackcubeHtml::activeTextInput($language, 'name', []); ?>
+                <div class="element-form-bloc-cols-5">
+                    <?php echo BlackcubeHtml::activeTextInput($plugin, 'name'); ?>
                 </div>
-                <div class="element-form-bloc-cols-3">
-                    <?php echo BlackcubeHtml::activeCheckbox($language, 'main', [
-                            'mainLabel' => Module::t('language', 'Language is primary')
-                        ]); ?>
+                <div class="element-form-bloc-cols-5">
+                    <?php echo BlackcubeHtml::activeTextInput($plugin, 'version'); ?>
                 </div>
             </div>
         </div>

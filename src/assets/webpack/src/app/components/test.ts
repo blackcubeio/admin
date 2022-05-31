@@ -1,4 +1,4 @@
-import {customElement, bindable, watch, BindingMode, INode} from '@aurelia/runtime-html';
+import {customElement, bindable, watch, INode} from '@aurelia/runtime-html';
 import { IEventAggregator, ILogger, IDisposable } from '@aurelia/kernel';
 import { ProfileMenuItem, ProfileStatus } from '../interfaces/profile';
 import {IPlatform} from "aurelia";

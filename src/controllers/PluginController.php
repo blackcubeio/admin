@@ -15,6 +15,7 @@
 namespace blackcube\admin\controllers;
 
 use blackcube\admin\actions\ModalAction;
+use blackcube\admin\actions\plugin\EditAction;
 use blackcube\admin\actions\plugin\IndexAction;
 use blackcube\admin\actions\plugin\ToggleAction;
 use blackcube\admin\actions\plugin\ToggleRegisterAction;
@@ -86,6 +87,9 @@ class PluginController extends Controller
         ];
         $actions['index'] = [
             'class' => IndexAction::class,
+        ];
+        $actions['edit'] = [
+            'class' => EditAction::class,
         ];
         return $actions;
     }

@@ -24,7 +24,7 @@
 use blackcube\admin\Module;
 use blackcube\admin\helpers\Html;
 use blackcube\core\interfaces\PluginsHandlerInterface;
-use blackcube\admin\interfaces\PluginAdminHookInterface;
+use blackcube\admin\interfaces\PluginManagerAdminHookInterface;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Url;
 use blackcube\admin\helpers\Heroicons;
@@ -66,7 +66,7 @@ use blackcube\core\models\Tag;
     <div class="px-6 pb-6">
         <?php if ($pluginsHandler instanceof PluginsHandlerInterface): ?>
             <?php $widgets = $pluginsHandler->runWidgetHook(
-                $composite->isNewRecord ? PluginAdminHookInterface::PLUGIN_HOOK_WIDGET_COMPOSITE_CREATE_HEAD : PluginAdminHookInterface::PLUGIN_HOOK_WIDGET_COMPOSITE_UPDATE_HEAD,
+                $composite->isNewRecord ? PluginManagerAdminHookInterface::PLUGIN_HOOK_WIDGET_COMPOSITE_CREATE_HEAD : PluginManagerAdminHookInterface::PLUGIN_HOOK_WIDGET_COMPOSITE_UPDATE_HEAD,
                 $composite
             ); ?>
             <?php foreach ($widgets as $widget): ?>
@@ -120,7 +120,7 @@ use blackcube\core\models\Tag;
     </div>
         <?php if ($pluginsHandler instanceof PluginsHandlerInterface): ?>
             <?php $widgets = $pluginsHandler->runWidgetHook(
-                $composite->isNewRecord ? PluginAdminHookInterface::PLUGIN_HOOK_WIDGET_COMPOSITE_CREATE_BEFORE_BLOCS : PluginAdminHookInterface::PLUGIN_HOOK_WIDGET_COMPOSITE_UPDATE_BEFORE_BLOCS,
+                $composite->isNewRecord ? PluginManagerAdminHookInterface::PLUGIN_HOOK_WIDGET_COMPOSITE_CREATE_BEFORE_BLOCS : PluginManagerAdminHookInterface::PLUGIN_HOOK_WIDGET_COMPOSITE_UPDATE_BEFORE_BLOCS,
                 $composite
             ); ?>
             <?php foreach ($widgets as $widget): ?>
@@ -156,7 +156,7 @@ use blackcube\core\models\Tag;
         <?php endif; ?>
         <?php if ($pluginsHandler instanceof PluginsHandlerInterface): ?>
             <?php $widgets = $pluginsHandler->runWidgetHook(
-                $composite->isNewRecord ? PluginAdminHookInterface::PLUGIN_HOOK_WIDGET_COMPOSITE_CREATE_TAIL : PluginAdminHookInterface::PLUGIN_HOOK_WIDGET_COMPOSITE_UPDATE_TAIL,
+                $composite->isNewRecord ? PluginManagerAdminHookInterface::PLUGIN_HOOK_WIDGET_COMPOSITE_CREATE_TAIL : PluginManagerAdminHookInterface::PLUGIN_HOOK_WIDGET_COMPOSITE_UPDATE_TAIL,
                 $composite
             ); ?>
             <?php foreach ($widgets as $widget): ?>

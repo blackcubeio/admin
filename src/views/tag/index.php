@@ -21,7 +21,7 @@ use blackcube\admin\components\Rbac;
 use blackcube\admin\helpers\Html;
 use yii\helpers\Url;
 use blackcube\core\interfaces\PluginsHandlerInterface;
-use blackcube\admin\interfaces\PluginAdminHookInterface;
+use blackcube\admin\interfaces\PluginManagerAdminHookInterface;
 use blackcube\admin\helpers\Heroicons;
 use blackcube\core\models\Category;
 
@@ -29,7 +29,7 @@ $formatter = Yii::$app->formatter;
 ?>
     <main class="application-content">
         <?php if ($pluginsHandler instanceof PluginsHandlerInterface): ?>
-            <?php $widgets = $pluginsHandler->runWidgetHook(PluginAdminHookInterface::PLUGIN_HOOK_WIDGET_CATEGORY_LIST_HEAD); ?>
+            <?php $widgets = $pluginsHandler->runWidgetHook(PluginManagerAdminHookInterface::PLUGIN_HOOK_WIDGET_CATEGORY_LIST_HEAD); ?>
             <?php foreach ($widgets as $widget): ?>
                 <?php echo $widget; ?>
             <?php endforeach; ?>
@@ -57,7 +57,7 @@ $formatter = Yii::$app->formatter;
         <?php echo Html::endForm(); ?>
 
         <?php if ($pluginsHandler instanceof PluginsHandlerInterface): ?>
-            <?php $widgets = $pluginsHandler->runWidgetHook(PluginAdminHookInterface::PLUGIN_HOOK_WIDGET_CATEGORY_LIST_BEFORE_LIST); ?>
+            <?php $widgets = $pluginsHandler->runWidgetHook(PluginManagerAdminHookInterface::PLUGIN_HOOK_WIDGET_CATEGORY_LIST_BEFORE_LIST); ?>
             <?php foreach ($widgets as $widget): ?>
                 <?php echo $widget; ?>
             <?php endforeach; ?>
@@ -75,7 +75,7 @@ $formatter = Yii::$app->formatter;
         </div>
         <?php echo Html::endForm(); ?>
         <?php if ($pluginsHandler instanceof PluginsHandlerInterface): ?>
-            <?php $widgets = $pluginsHandler->runWidgetHook(PluginAdminHookInterface::PLUGIN_HOOK_WIDGET_CATEGORY_LIST_AFTER_LIST); ?>
+            <?php $widgets = $pluginsHandler->runWidgetHook(PluginManagerAdminHookInterface::PLUGIN_HOOK_WIDGET_CATEGORY_LIST_AFTER_LIST); ?>
             <?php foreach ($widgets as $widget): ?>
                 <?php echo $widget; ?>
             <?php endforeach; ?>

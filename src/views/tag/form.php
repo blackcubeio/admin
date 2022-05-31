@@ -22,7 +22,7 @@
 use blackcube\admin\Module;
 use blackcube\admin\helpers\Html;
 use blackcube\core\interfaces\PluginsHandlerInterface;
-use blackcube\admin\interfaces\PluginAdminHookInterface;
+use blackcube\admin\interfaces\PluginManagerAdminHookInterface;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Url;
 use blackcube\admin\helpers\Heroicons;
@@ -61,7 +61,7 @@ use blackcube\admin\helpers\Aurelia;
     <div class="px-6 pb-6">
         <?php if ($pluginsHandler instanceof PluginsHandlerInterface): ?>
             <?php $widgets = $pluginsHandler->runWidgetHook(
-                $tag->isNewRecord ? PluginAdminHookInterface::PLUGIN_HOOK_WIDGET_TAG_CREATE_HEAD : PluginAdminHookInterface::PLUGIN_HOOK_WIDGET_TAG_UPDATE_HEAD,
+                $tag->isNewRecord ? PluginManagerAdminHookInterface::PLUGIN_HOOK_WIDGET_TAG_CREATE_HEAD : PluginManagerAdminHookInterface::PLUGIN_HOOK_WIDGET_TAG_UPDATE_HEAD,
                 $tag
             ); ?>
             <?php foreach ($widgets as $widget): ?>
@@ -93,7 +93,7 @@ use blackcube\admin\helpers\Aurelia;
     </div>
         <?php if ($pluginsHandler instanceof PluginsHandlerInterface): ?>
             <?php $widgets = $pluginsHandler->runWidgetHook(
-                $tag->isNewRecord ? PluginAdminHookInterface::PLUGIN_HOOK_WIDGET_TAG_CREATE_BEFORE_BLOCS : PluginAdminHookInterface::PLUGIN_HOOK_WIDGET_TAG_UPDATE_BEFORE_BLOCS,
+                $tag->isNewRecord ? PluginManagerAdminHookInterface::PLUGIN_HOOK_WIDGET_TAG_CREATE_BEFORE_BLOCS : PluginManagerAdminHookInterface::PLUGIN_HOOK_WIDGET_TAG_UPDATE_BEFORE_BLOCS,
                 $tag
             ); ?>
             <?php foreach ($widgets as $widget): ?>
@@ -151,7 +151,7 @@ use blackcube\admin\helpers\Aurelia;
         <?php endif; ?>
         <?php if ($pluginsHandler instanceof PluginsHandlerInterface): ?>
             <?php $widgets = $pluginsHandler->runWidgetHook(
-                $tag->isNewRecord ? PluginAdminHookInterface::PLUGIN_HOOK_WIDGET_TAG_CREATE_TAIL : PluginAdminHookInterface::PLUGIN_HOOK_WIDGET_TAG_UPDATE_TAIL,
+                $tag->isNewRecord ? PluginManagerAdminHookInterface::PLUGIN_HOOK_WIDGET_TAG_CREATE_TAIL : PluginManagerAdminHookInterface::PLUGIN_HOOK_WIDGET_TAG_UPDATE_TAIL,
                 $tag
             ); ?>
             <?php foreach ($widgets as $widget): ?>

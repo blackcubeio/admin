@@ -17,7 +17,7 @@ class BlackcubeLink extends Link {
         return node;
     }
 }
-Quill.register(BlackcubeLink);
+Quill.register(BlackcubeLink, true);
 
 @customElement('blackcube-quill-editor')
 export class QuillEditor

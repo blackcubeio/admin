@@ -25,7 +25,7 @@
 use blackcube\admin\Module;
 use blackcube\admin\helpers\Html;
 use blackcube\core\interfaces\PluginsHandlerInterface;
-use blackcube\admin\interfaces\PluginAdminHookInterface;
+use blackcube\admin\interfaces\PluginManagerAdminHookInterface;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Url;
 use blackcube\admin\helpers\Heroicons;
@@ -67,7 +67,7 @@ use blackcube\core\models\Tag;
     <div class="px-6 pb-6">
         <?php if ($pluginsHandler instanceof PluginsHandlerInterface): ?>
             <?php $widgets = $pluginsHandler->runWidgetHook(
-                $node->isNewRecord ? PluginAdminHookInterface::PLUGIN_HOOK_WIDGET_NODE_CREATE_HEAD : PluginAdminHookInterface::PLUGIN_HOOK_WIDGET_NODE_UPDATE_HEAD,
+                $node->isNewRecord ? PluginManagerAdminHookInterface::PLUGIN_HOOK_WIDGET_NODE_CREATE_HEAD : PluginManagerAdminHookInterface::PLUGIN_HOOK_WIDGET_NODE_UPDATE_HEAD,
                 $node
             ); ?>
             <?php foreach ($widgets as $widget): ?>
@@ -150,7 +150,7 @@ use blackcube\core\models\Tag;
 
     <?php if ($pluginsHandler instanceof PluginsHandlerInterface): ?>
         <?php $widgets = $pluginsHandler->runWidgetHook(
-            $node->isNewRecord ? PluginAdminHookInterface::PLUGIN_HOOK_WIDGET_NODE_CREATE_BEFORE_BLOCS : PluginAdminHookInterface::PLUGIN_HOOK_WIDGET_NODE_UPDATE_BEFORE_BLOCS,
+            $node->isNewRecord ? PluginManagerAdminHookInterface::PLUGIN_HOOK_WIDGET_NODE_CREATE_BEFORE_BLOCS : PluginManagerAdminHookInterface::PLUGIN_HOOK_WIDGET_NODE_UPDATE_BEFORE_BLOCS,
             $node
         ); ?>
         <?php foreach ($widgets as $widget): ?>
@@ -209,7 +209,7 @@ use blackcube\core\models\Tag;
 
     <?php if ($pluginsHandler instanceof PluginsHandlerInterface): ?>
             <?php $widgets = $pluginsHandler->runWidgetHook(
-                $node->isNewRecord ? PluginAdminHookInterface::PLUGIN_HOOK_WIDGET_NODE_CREATE_TAIL : PluginAdminHookInterface::PLUGIN_HOOK_WIDGET_NODE_UPDATE_TAIL,
+                $node->isNewRecord ? PluginManagerAdminHookInterface::PLUGIN_HOOK_WIDGET_NODE_CREATE_TAIL : PluginManagerAdminHookInterface::PLUGIN_HOOK_WIDGET_NODE_UPDATE_TAIL,
                 $node
             ); ?>
             <?php foreach ($widgets as $widget): ?>

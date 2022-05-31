@@ -105,6 +105,17 @@ $currentCategoryId = null;
                             <?php echo Heroicons::svg('outline/pencil-alt', ['class' => 'card-body-actions-button-icon']); ?>
                         <?php echo Html::endTag('span'); ?>
                     <?php endif; ?>
+                    <?php if ($pluginManager->getIsRegistered()): ?>
+                        <?php echo Html::beginTag('a', ['href' => Url::to(['edit', 'id' => $pluginManager->getId()]), 'class' => 'card-body-actions-button']); ?>
+                        <span class="sr-only"><?php echo Module::t('plugin', 'Configure'); ?></span>
+                        <?php echo Heroicons::svg('outline/adjustments', ['class' => 'card-body-actions-button-icon']); ?>
+                        <?php echo Html::endTag('a'); ?>
+                    <?php else: ?>
+                        <?php echo Html::beginTag('span', ['class' => 'card-body-actions-button disabled']); ?>
+                        <span class="sr-only"><?php echo Module::t('plugin', 'Configure'); ?></span>
+                        <?php echo Heroicons::svg('outline/adjustments', ['class' => 'card-body-actions-button-icon']); ?>
+                        <?php echo Html::endTag('span'); ?>
+                    <?php endif; ?>
 
                 <?php endif; ?>
                 </span>

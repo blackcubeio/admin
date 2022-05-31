@@ -18,7 +18,7 @@ use blackcube\admin\commands\AdministratorController;
 use blackcube\admin\commands\HeroiconsController;
 use blackcube\admin\commands\RbacController;
 use blackcube\admin\interfaces\MigrableInterface;
-use blackcube\admin\interfaces\PluginBootstrapInterface;
+use blackcube\admin\interfaces\PluginManagerBootstrapInterface;
 use blackcube\admin\models\Administrator;
 use blackcube\admin\models\FilterActiveQuery;
 use blackcube\admin\models\MoveNodeForm;
@@ -166,8 +166,8 @@ class Module extends BaseModule implements BootstrapInterface
             /* @var $pluginHandler PluginsHandlerInterface */
             foreach ($pluginHandler->getRegisteredPluginManagers() as $pluginManager) {
                 // foreach($pluginHandler->getActivePluginManagers() as $pluginManager) {
-                if ($pluginManager instanceof PluginBootstrapInterface) {
-                    $pluginManager->bootstrapAdmin($this->getUniqueId(), $app);
+                if ($pluginManager instanceof PluginManagerBootstrapInterface) {
+                    $pluginManager->bootstrapAdmin($this, $app);
                 }
             }
         }
@@ -187,19 +187,12 @@ class Module extends BaseModule implements BootstrapInterface
         $app->controllerMap[$this->commandNameSpace.'rbac'] = [
             'class' => RbacController::class,
         ];
-        $app->controllerMap[$this->commandNameSpace.'heroicons'] = [
-            'class' => HeroiconsController::class,
-        ];
-        /*/
-        $app->controllerMap[$this->commandNameSpace.'migrate'] = [
-            'class' => MigrateController::class,
-            'migrationNamespaces' => $this->buildMigrationNamespaces(),
-            'migrationPath' => [
-                '@yii/rbac/migrations',
-            ],
-            'db' => $this->get('db'),
-        ];
-        /*/
+        if (defined('YII_ENV') && YII_ENV === 'dev') {
+            $app->controllerMap[$this->commandNameSpace.'heroicons'] = [
+                'class' => HeroiconsController::class,
+            ];
+        }
+
         // TODO check what to do if db is not the same as the base app one
         $migrationNamespaces = $this->buildMigrationNamespaces();
         if (isset($app->controllerMap['migrate']) === true) {
