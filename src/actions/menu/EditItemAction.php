@@ -106,7 +106,7 @@ class EditItemAction extends Action
                     'name' => $menuItem->name
                 ];
 
-                $items = ArrayHelper::merge($items, $this->buildSubMenuItems($menuItem, $level++, $menuItemId));
+                $items = ArrayHelper::merge($items, $this->buildSubMenuItems($menuItem, $level+1, $menuItemId));
 
             }
         }
@@ -123,7 +123,7 @@ class EditItemAction extends Action
                     'name' => str_pad('', 2*$level, ' ', STR_PAD_LEFT).$subMenuItem->name,
                 ];
 
-                $items =  ArrayHelper::merge($items, $this->buildSubMenuItems($subMenuItem, $level++, $menuItemId));
+                $items =  ArrayHelper::merge($items, $this->buildSubMenuItems($subMenuItem, $level+1, $menuItemId));
 
             }
         }
