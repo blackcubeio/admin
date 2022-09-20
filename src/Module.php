@@ -140,6 +140,9 @@ class Module extends BaseModule implements BootstrapInterface
             $this->bootstrapWeb($app);
         }
         $this->registerPlugins($app);
+        if ($app instanceof WebApplication) {
+            $this->finalizeBbootstrapWeb($app);
+        }
     }
 
     /**
@@ -242,7 +245,17 @@ class Module extends BaseModule implements BootstrapInterface
                     ['class' => UrlRule::class, 'pattern' => '<controller:[\w\-]+>/<action:[\w\-]+>', 'route' => '<controller>/<action>'],
                 ],
             ]
-        ], false);
+        ], true);
+
+    }
+    /**
+     * Finalize Bootstrap web stuff
+     *
+     * @param WebApplication $app
+     * @since XXX
+     */
+    protected function finalizeBbootstrapWeb(WebApplication $app)
+    {
         list($route,) = $app->urlManager->parseRequest($app->request);
         if ($route !== null && preg_match('#'.$this->uniqueId.'/#', $route) > 0) {
             $app->setComponents([
