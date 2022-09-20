@@ -36,7 +36,7 @@ use yii\web\Response;
             'class' => 'text-white',
             'href' => Url::to(['index'])
         ]); ?>
-        <?php echo Heroicons::svg('solid/chevron-left', ['class' => 'h-7 w-7']); ?>
+        <?php echo Heroicons::svg('solid/chevron-left', ['class' => 'h-5 w-5 mr-2']); ?>
         <?php echo Html::endTag('a'); ?>
         <h3 class="page-header-title"><?php echo Module::t('slug', 'Slug'); ?></h3>
     </div>

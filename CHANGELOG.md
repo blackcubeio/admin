@@ -1,6 +1,7 @@
 Blackcube Admin - CHANGELOG 
 ===========================
 
+ * Upd: update heroicons
  * Upd: Prepare DI
  * Upd: Full BO Rewrite
  * Upd: Migrate to Aurelia 2

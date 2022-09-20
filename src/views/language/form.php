@@ -35,7 +35,7 @@ use blackcube\admin\helpers\Aurelia;
             'class' => 'text-white',
             'href' => Url::to(['index'])
         ]); ?>
-        <?php echo Heroicons::svg('solid/chevron-left', ['class' => 'h-7 w-7']); ?>
+        <?php echo Heroicons::svg('solid/chevron-left', ['class' => 'h-5 w-5 mr-2']); ?>
         <?php echo Html::endTag('a'); ?>
         <h3 class="page-header-title"><?php echo Module::t('language', 'Language'); ?></h3>
     </div>

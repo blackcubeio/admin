@@ -39,7 +39,7 @@ $formatter = Yii::$app->formatter;
             'class' => 'text-white',
             'href' => Url::to(['edit', 'id' => $menu->id])
         ]); ?>
-        <?php echo Heroicons::svg('solid/chevron-left', ['class' => 'h-7 w-7']); ?>
+        <?php echo Heroicons::svg('solid/chevron-left', ['class' => 'h-5 w-5 mr-2']); ?>
         <?php echo Html::endTag('a'); ?>
         <h3 class="page-header-title"><?php echo Module::t('menu', 'Menu item'); ?></h3>
     </div>
