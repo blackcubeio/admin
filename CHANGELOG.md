@@ -1,6 +1,7 @@
 Blackcube Admin - CHANGELOG 
 ===========================
 
+ * Fix: menu system'
  * Upd: update heroicons
  * Upd: Prepare DI
  * Upd: Full BO Rewrite
