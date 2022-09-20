@@ -77,8 +77,8 @@ class MenuItemCard extends Widget
             $icon = 'outline/link';
             $name = $element->path;
         } else {
-            $type = Module::t('widgets', 'Unknown');
-            $icon = 'outline/question-mark-circle';
+            $type = Module::t('widgets', 'Route');
+            $icon = 'outline/command-line';
             $name = $route;
         }
         return $this->render('menu-item-card', [

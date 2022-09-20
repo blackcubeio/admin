@@ -5651,6 +5651,9 @@ div.jsoneditor-statusbar>.jsoneditor-curserinfo-label,div.jsoneditor-statusbar>.
 .ml-2 {
   margin-left: 0.5rem;
 }
+.mr-2 {
+  margin-right: 0.5rem;
+}
 .mt-4 {
   margin-top: 1rem;
 }
@@ -5724,11 +5727,11 @@ div.jsoneditor-statusbar>.jsoneditor-curserinfo-label,div.jsoneditor-statusbar>.
 .h-5 {
   height: 1.25rem;
 }
-.h-7 {
-  height: 1.75rem;
-}
 .h-4 {
   height: 1rem;
+}
+.h-7 {
+  height: 1.75rem;
 }
 .h-6 {
   height: 1.5rem;
@@ -5747,9 +5750,6 @@ div.jsoneditor-statusbar>.jsoneditor-curserinfo-label,div.jsoneditor-statusbar>.
 }
 .w-5 {
   width: 1.25rem;
-}
-.w-7 {
-  width: 1.75rem;
 }
 .w-full {
   width: 100%;
