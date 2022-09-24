@@ -131,6 +131,7 @@ class Administrator extends \yii\db\ActiveRecord implements IdentityInterface
             [['password'], 'required', 'on' => [static::SCENARIO_LOGIN, static::SCENARIO_CREATE]],
             [['newPassword', 'checkPassword'], 'required', 'on' => [static::SCENARIO_CREATE_ONLINE]],
             [['newPassword'], 'compare', 'compareAttribute' => 'checkPassword', 'on' => [static::SCENARIO_UPDATE, static::SCENARIO_CREATE_ONLINE]],
+            [['newPassword'], 'passwordSecurity', 'usernameAttribute' => 'email', 'on' => [static::SCENARIO_CREATE_ONLINE, static::SCENARIO_UPDATE]],
             [['email'], 'validateLogin', 'on' => [static::SCENARIO_LOGIN], 'params' => ['password' => 'password']],
             [['email'], 'unique', 'on' => [static::SCENARIO_CREATE, static::SCENARIO_CREATE_ONLINE, static::SCENARIO_UPDATE]],
             [['active'], 'boolean'],
