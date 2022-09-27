@@ -875,6 +875,10 @@ msgid "Redirect {httpCode}"
 msgstr ""
 
 msgctxt "blackcube/admin/widgets"
+msgid "Route"
+msgstr ""
+
+msgctxt "blackcube/admin/widgets"
 msgid "Route: {route}"
 msgstr ""
 

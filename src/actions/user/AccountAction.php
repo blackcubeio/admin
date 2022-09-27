@@ -54,6 +54,7 @@ class AccountAction extends Action
         if ($user === null) {
             throw new NotFoundHttpException();
         }
+        $passwordSecurity = Yii::createObject('passwordSecurity');
         if (Yii::$app->request->isPost) {
             $user->setScenario(Administrator::SCENARIO_UPDATE);
             $user->load(Yii::$app->request->bodyParams);
@@ -71,6 +72,7 @@ class AccountAction extends Action
 
         return $this->controller->render($this->view, [
             'user' => $user,
+            'passwordSecurity' => $passwordSecurity,
         ]);
     }
 }

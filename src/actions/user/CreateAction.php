@@ -51,6 +51,7 @@ class CreateAction extends Action
     public function run(Administrator $user)
     {
         $user = Yii::createObject(Administrator::class);
+        $passwordSecurity = Yii::createObject('passwordSecurity');
         if (Yii::$app->request->isPost) {
             $user->setScenario(Administrator::SCENARIO_CREATE_ONLINE);
             $user->load(Yii::$app->request->bodyParams);
@@ -66,6 +67,7 @@ class CreateAction extends Action
         }
         return $this->controller->render($this->view, [
             'user' => $user,
+            'passwordSecurity' => $passwordSecurity
         ]);
     }
 }

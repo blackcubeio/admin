@@ -12,6 +12,7 @@
  * @package blackcube\admin\views\user
  *
  * @var $user \blackcube\admin\models\Administrator
+ * @var $passwordSecurity \blackcube\core\validators\PasswordStrengthValidator
  * @var $userRolesById array
  * @var $userPermissionsById array
  * @var $userAssignmentsById array
@@ -66,6 +67,11 @@ $authManager = Yii::$app->authManager;
                 </div>
                 <div class="element-form-bloc-cols-6">
                     <?php echo BlackcubeHtml::activePasswordInput($user, 'checkPassword', []); ?>
+                </div>
+                <div class="element-form-bloc-cols-12">
+                    <span class="text-xs italic">
+                    <?php echo $passwordSecurity->showPasswordRules(); ?>
+                    </span>
                 </div>
             </div>
         </div>
