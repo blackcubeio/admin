@@ -40,9 +40,9 @@
         "yiisoft/yii2": "~2.0.13"
     },
     "require-dev" : {
-        "codeception/codeception": "~4.1",
+        "codeception/codeception": "~5.0",
         "codeception/module-yii2": "~1.1",
-        "codeception/module-asserts": "~1.3",
+        "codeception/module-asserts": "~2.0",
         "yiisoft/yii2-debug":"~2.1",
         "yiisoft/yii2-gii": "~2.2"
     },
