@@ -9,7 +9,7 @@ Blackcube Admin - CHANGELOG
  * Chg: Replace Wysiwyg editor with QuillJs
  * Chg: Prepare new plugin system
  * Chg: move ```db```, ```cache``` and ```fs``` to components to allow tree traversal
-
+ * Fix: update deps to heandle `svg`
 
 Release 2.2.3 March, 11th 2022 <pgaultier@redcat.io>
 ----------------------------------------------------
