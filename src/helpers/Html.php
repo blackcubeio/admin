@@ -130,38 +130,38 @@ class Html extends \blackcube\core\web\helpers\Html
             case 'file':
             case 'files':
                 $options['class'] = ($elastic->hasErrors($realAttibute)?' error':'');
-                $result = static::activeUpload($elastic, $attribute, $options);
+                $result = BlackcubeHtml::activeUpload($elastic, $attribute, $options);
                 break;
             case 'wysiwyg':
                 $options['class'] = ($elastic->hasErrors($realAttibute)?' error':'');
-                $result = static::activeEditorJs($elastic, $attribute, $options);
+                $result = BlackcubeHtml::activeEditor($elastic, $attribute, $options);
                 break;
             case 'dropdownlist':
                 throw new NotSupportedException();
                 break;
             case 'password':
-                $result = static::activePasswordInput($elastic, $attribute, ['class' => 'textfield'.($elastic->hasErrors($realAttibute)?' error':'')]);
+                $result = BlackcubeHtml::activePasswordInput($elastic, $attribute, ['class' => 'textfield'.($elastic->hasErrors($realAttibute)?' error':'')]);
                 break;
             case 'checkbox':
-                $result = static::activeCheckbox($elastic, $attribute, ['label' => false, 'class' => 'checkbox'.($elastic->hasErrors($realAttibute)?' error':'')]);
+                $result = BlackcubeHtml::activeCheckbox($elastic, $attribute, ['label' => false, 'class' => 'checkbox'.($elastic->hasErrors($realAttibute)?' error':'')]);
                 break;
             case 'checkboxlist':
                 $mappedField = 'activeCheckboxList';
                 throw new NotSupportedException();
                 break;
             case 'radio':
-                $result = static::activeRadio($elastic, $attribute, ['label' => false, 'class' => 'checkbox'.($elastic->hasErrors($realAttibute)?' error':'')]);
+                $result = BlackcubeHtml::activeRadio($elastic, $attribute, ['label' => false, 'class' => 'checkbox'.($elastic->hasErrors($realAttibute)?' error':'')]);
                 break;
             case 'radiolist':
                 $mappedField = 'activeRadioList';
                 throw new NotSupportedException();
                 break;
             case 'textarea':
-                $result = static::activeTextArea($elastic, $attribute, ['class' => 'textfield'.($elastic->hasErrors($realAttibute)?' error':'')]);
+                $result = BlackcubeHtml::activeTextArea($elastic, $attribute, ['class' => 'textfield'.($elastic->hasErrors($realAttibute)?' error':'')]);
                 break;
             case 'text':
             default:
-                $result = static::activeTextInput($elastic, $attribute, ['class' => 'element-form-bloc-textfield'.($elastic->hasErrors($realAttibute)?' error':'')]);
+                $result = BlackcubeHtml::activeTextInput($elastic, $attribute, ['class' => 'element-form-bloc-textfield'.($elastic->hasErrors($realAttibute)?' error':'')]);
                 break;
         }
         return $result;
