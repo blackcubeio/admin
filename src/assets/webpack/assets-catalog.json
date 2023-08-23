@@ -1,15 +1,15 @@
 {
   "manifest": {
-    "js": "js/manifest.89f72297.js"
+    "js": "js/manifest.js"
   },
   "main": {
-    "css": "css/main.5423e9f4.css",
-    "js": "js/main.5423e9f4.js"
+    "css": "css/main.css",
+    "js": "js/main.js"
   },
   "app": {
-    "js": "js/app.10ee65da.js"
+    "js": "js/app.js"
   },
   "vendors": {
-    "js": "js/vendors.3a93afd9.js"
+    "js": "js/vendors.js"
   }
 }
