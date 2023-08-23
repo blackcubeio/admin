@@ -84,6 +84,21 @@ export class SchemaEditor
                     value: {
                         type: 'string',
                         format: 'wysiwyg',
+                        options: {
+                            theme: "snow",
+                            modules: {
+                                toolbar:[
+                                    ["bold", "italic", "underline"],
+                                    [
+                                        {
+                                            list: "bullet"
+                                        }
+                                        ],
+                                    ["link"]
+                                ]
+                            },
+                            formats: ["bold", "italic", "link", "underline", "list"]
+                        },
                         description: 'Wysiwyg Editor'
                     }
                 },

@@ -20,6 +20,7 @@ use yii\base\InvalidConfigException;
 use yii\base\Model;
 use yii\base\NotSupportedException;
 use yii\helpers\ArrayHelper;
+use yii\helpers\Json;
 use yii\validators\StringValidator;
 
 
@@ -533,6 +534,14 @@ EOT;
             $options['multiple.bind'] = false;
         } elseif ($structure['field'] === 'files') {
             $options['multiple.bind'] = true;
+        }
+        if ($structure['field'] === 'wysiwyg' && isset($structure['options']) === true) {
+            try {
+                $options['options.bind'] = $structure['options'];
+            } catch (\Exception $e) {
+                unset($options['options.bind']);
+                \Yii::error($e->getMessage());
+            }
         }
         return $options;
     }
