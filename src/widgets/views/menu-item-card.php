@@ -57,8 +57,10 @@ $wrapperOptions['class'] .= ' ml-'.($level * 4);
                     <?php echo $type; ?>
                 </p>
                 <p class="card-body-info">
+                    <?php if(empty($name) === false) :?>
                     <?php echo Heroicons::svg('outline/lightning-bolt', ['class' => 'card-body-info-icon']); ?>
                     <?php echo $name; ?>
+                    <?php endif; ?>
                 </p>
             </div>
             <div class="card-body-actions-wrapper">

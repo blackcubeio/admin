@@ -76,6 +76,10 @@ class MenuItemCard extends Widget
             $type = Module::t('widgets', 'Slugs');
             $icon = 'outline/link';
             $name = $element->path;
+        } elseif ($element === null) {
+            $type = Module::t('widgets', 'No route');
+            $icon = 'outline/no-symbol';
+            $name = $route;
         } else {
             $type = Module::t('widgets', 'Route');
             $icon = 'outline/command-line';
