@@ -847,6 +847,10 @@ msgid "Next"
 msgstr ""
 
 msgctxt "blackcube/admin/widgets"
+msgid "No route"
+msgstr ""
+
+msgctxt "blackcube/admin/widgets"
 msgid "Nodes"
 msgstr ""
 

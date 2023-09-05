@@ -10,7 +10,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.1.1\n"
+"X-Generator: Poedit 3.3.2\n"
 
 msgctxt "blackcube/admin/actions"
 msgid "Property \"elementClass\" must be defined"
@@ -850,6 +850,10 @@ msgstr ""
 
 msgctxt "blackcube/admin/widgets"
 msgid "Next"
+msgstr ""
+
+msgctxt "blackcube/admin/widgets"
+msgid "No route"
 msgstr ""
 
 msgctxt "blackcube/admin/widgets"
