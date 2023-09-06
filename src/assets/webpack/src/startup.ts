@@ -1,4 +1,5 @@
-import Aurelia, {RouterConfiguration} from 'aurelia';
+
+import Aurelia from "aurelia";
 import { ConsoleSink, LoggerConfiguration, LogLevel } from '@aurelia/kernel';
 
 declare var webpackBaseUrl: string;
@@ -10,7 +11,6 @@ declare var PRODUCTION:boolean;
 
 import * as globalAttributes from './app/attributes/index';
 import * as globalComponents from './app/components/index';
-import { App } from './app/app';
 import {Enhance} from "./app/enhance";
 
 const page = document.querySelector('body') as HTMLElement;

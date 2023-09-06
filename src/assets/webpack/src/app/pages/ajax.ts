@@ -1,10 +1,7 @@
 import {IEventAggregator, ILogger} from '@aurelia/kernel';
-import {IRouteViewModel, Params} from "aurelia";
-import {RouteNode} from "@aurelia/router-lite/dist/types/route-tree";
-import {NavigationInstruction} from "@aurelia/router-lite/dist/types/instructions";
 import {HttpService} from "../services/http-service";
 
-export class Ajax implements IRouteViewModel
+export class Ajax
 {
 
     public data: string = 'slotted';
@@ -17,15 +14,15 @@ export class Ajax implements IRouteViewModel
         this.logger = logger.scopeTo('Ajax');
     }
 
-    canLoad(params: Params, next: RouteNode, current: RouteNode | null): boolean | NavigationInstruction | NavigationInstruction[] | Promise<boolean | NavigationInstruction | NavigationInstruction[]>
+    canLoad()
     {
-        this.logger.debug('CanLoad', params);
+        this.logger.debug('CanLoad');
         return Promise.resolve(true);
     }
 
-    load(params: Params, next: RouteNode, current: RouteNode | null): void | Promise<void>
+    load(): void | Promise<void>
     {
-        this.logger.debug('Load', params);
+        this.logger.debug('Load');
         return this.httpService.getHtmlContent('/blackcube-cms-admin-aurelia2/data.html')
             .then((htmlData) => {
                 this.data = htmlData;
@@ -33,12 +30,12 @@ export class Ajax implements IRouteViewModel
             })
         // return Promise.resolve();
     }
-    canUnload(next: RouteNode | null, current: RouteNode): boolean | Promise<boolean>
+    canUnload(): boolean | Promise<boolean>
     {
         this.logger.debug('CanUnload');
         return Promise.resolve(true);
     }
-    unload(next: RouteNode | null, current: RouteNode): void | Promise<void>
+    unload(): void | Promise<void>
     {
         this.logger.debug('Unload');
         return Promise.resolve();

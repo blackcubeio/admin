@@ -4,7 +4,7 @@ import { HttpService } from '../services/http-service';
 import { OverlayEvent, OverlayEventType, OverlayStatus } from '../interfaces/overlay';
 import { transitionWithPromise } from '../helpers/transition';
 import { NotificationStatus } from '../interfaces/notification';
-import Aurelia, {CustomElement, ICustomElementViewModel, IPlatform, LifecycleFlags} from "aurelia";
+import Aurelia, {CustomElement, ICustomElementViewModel, IPlatform} from "aurelia";
 import {App} from "../app";
 import {Enhance} from "../enhance";
 

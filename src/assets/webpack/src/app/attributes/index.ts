@@ -8,3 +8,4 @@ export * from './overlay-close';
 export * from './broadcast-element';
 export * from './toggle-dependencies';
 export * from './fold';
+export * from './url-generator';

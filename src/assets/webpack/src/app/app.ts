@@ -1,6 +1,5 @@
-import {IEventAggregator, ILogger} from '@aurelia/kernel';
+import {IEventAggregator, ILogger, INode} from 'aurelia';
 import {Home} from "./pages/home";
-import {INode} from "@aurelia/runtime-html";
 import {Ajax} from "./pages/ajax";
 
 export class App {

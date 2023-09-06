@@ -62,6 +62,8 @@ export class Profile implements ICustomElementViewModel
     public onClickItem(evt: Event, index:number)
     {
         this.closeMenu(evt);
+        // enable prevent default
+        return true;
     }
 
     public openMenu(evt: Event)
