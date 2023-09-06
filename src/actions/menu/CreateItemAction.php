@@ -98,7 +98,7 @@ class CreateItemAction extends Action
                 'name' => $menuItem->name
             ];
 
-            $items = ArrayHelper::merge($items, $this->buildSubMenuItems($menuItem, $level++));
+            $items = ArrayHelper::merge($items, $this->buildSubMenuItems($menuItem, $level + 1));
 
         }
         return $items;
@@ -113,7 +113,7 @@ class CreateItemAction extends Action
                 'name' => str_pad('', 2*$level, ' ', STR_PAD_LEFT).$subMenuItem->name,
             ];
 
-            $items =  ArrayHelper::merge($items, $this->buildSubMenuItems($subMenuItem, $level++));
+            $items =  ArrayHelper::merge($items, $this->buildSubMenuItems($subMenuItem, $level + 1));
 
         }
         return $items;
