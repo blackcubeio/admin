@@ -24,6 +24,7 @@ use blackcube\admin\models\FilterActiveQuery;
 use blackcube\admin\models\MoveNodeForm;
 use blackcube\admin\models\RbacItemForm;
 use blackcube\admin\models\SearchForm;
+use blackcube\admin\models\SlugGeneratorForm;
 use blackcube\admin\models\TagForm;
 use blackcube\core\components\PreviewManager;
 use blackcube\core\interfaces\PluginsHandlerInterface;
@@ -105,6 +106,7 @@ class Module extends BaseModule implements BootstrapInterface
         MoveNodeForm::class => MoveNodeForm::class,
         RbacItemForm::class => RbacItemForm::class,
         SearchForm::class => SearchForm::class,
+        SlugGeneratorForm::class => SlugGeneratorForm::class,
         TagForm::class => TagForm::class,
     ];
 

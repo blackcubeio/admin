@@ -72,7 +72,13 @@ if ($saved === true) {
 <div class="relative flex-1 py-6 px-4 sm:px-6">
     <!-- Replace with your content -->
     <?php echo Html::beginForm(['slug', 'id' => $element->id]); ?>
-    <div class="element-form-bloc">
+        <?php echo Html::beginTag('div', [
+                'class' => 'element-form-bloc',
+                'blackcube-url-generator' => Url::toRoute(['ajax/generate-slug',
+                    'id' => $element->id,
+                    'type' => $element::getElementType()
+                ]),
+        ]); ?>
         <div class="element-form-bloc-stacked">
             <?php echo BlackcubeHtml::activeCheckbox($slug, 'active', []); ?>
         </div>
@@ -80,17 +86,19 @@ if ($saved === true) {
             <div class="element-form-bloc-cols-3">
                 <?php echo BlackcubeHtml::activeDropDownList($slug, 'host', ArrayHelper::map(Parameter::getAllowedHosts(), 'id', 'value'), []); ?>
             </div>
-            <div class="element-form-bloc-cols-9">
-                <?php echo BlackcubeHtml::activeTextInput($slug, 'path', []); ?>
-            </div>
-            <!-- div class="element-form-bloc-cols-1 flex items-end pb-2">
-                <?php echo Html::a(Heroicons::svg('solid/refresh', ['class' => 'h-4 w-4']), '', [
-                    'class' => 'relative inline-flex items-center p-2.5 rounded-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:text-white hover:bg-indigo-600 focus:z-10 focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500',
-                    'blackcube-url-generator' => Url::toRoute(['ajax/generate-slug', 'id' => $element->id, 'type' => $element::getElementType()])
+            <div class="element-form-bloc-cols-8">
+                <?php echo BlackcubeHtml::activeTextInput($slug, 'path', [
+                    'data-url-generator' => 'target',
                 ]); ?>
-            </div -->
+            </div>
+            <div class="element-form-bloc-cols-1 flex items-end pb-2">
+                <?php echo Html::a(Heroicons::svg('solid/refresh', ['class' => 'h-4 w-4']), '#', [
+                    'class' => 'relative inline-flex items-center p-2.5 rounded-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:text-white hover:bg-indigo-600 focus:z-10 focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500',
+                    'data-url-generator' => 'button',
+                ]); ?>
+            </div>
         </div>
-    </div>
+    <?php echo Html::endTag('div'); ?>
     <div class="element-form-buttons">
         <?php echo Html::beginTag('button', [
             'type' => 'button',

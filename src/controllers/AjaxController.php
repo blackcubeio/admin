@@ -19,6 +19,8 @@ use blackcube\admin\helpers\Heroicons;
 use blackcube\admin\helpers\Html;
 use blackcube\admin\models\SlugGeneratorForm;
 use blackcube\admin\Module;
+use blackcube\core\components\Element;
+use blackcube\core\components\RouteEncoder;
 use blackcube\core\interfaces\PreviewManagerInterface;
 use blackcube\core\interfaces\SlugGeneratorInterface;
 use yii\filters\AccessControl;
@@ -93,24 +95,28 @@ class AjaxController extends Controller
         return $content;
     }
 
-    public function actionGenerateSlug(SlugGeneratorForm $slugGeneratorForm, SlugGeneratorInterface $slugGenerator)
+    public function actionGenerateSlug(SlugGeneratorInterface $slugGenerator)
     {
         Yii::$app->response->format = Response::FORMAT_JSON;
         if (Yii::$app->request->isPost === true) {
-            $slugGeneratorForm->load(Yii::$app->request->bodyParams, '');
+            $parameters = Yii::$app->request->bodyParams;
         } elseif (Yii::$app->request->isGet === true) {
-            $slugGeneratorForm->load(Yii::$app->request->queryParams, '');
+            $parameters = Yii::$app->request->queryParams;
         }
-        if ($slugGeneratorForm->validate() === true) {
-            $url = $slugGenerator->getElementSlug($slugGeneratorForm->name, $slugGeneratorForm->parentElementType, $slugGeneratorForm->parentElementId);
-            return [
-                'name' => $slugGeneratorForm->name,
-                'parentElementType' => $slugGeneratorForm->parentElementType,
-                'parentElementId' => $slugGeneratorForm->parentElementId,
-                'url' => $url
-            ];
-        } else {
-            throw new UnprocessableEntityHttpException();
+        if (isset($parameters['id']) && isset($parameters['type'])) {
+            $route = RouteEncoder::encode($parameters['type'], $parameters['id']);
+            $element = Element::instanciate($route);
+            if ($element !== null) {
+                $slug = $slugGenerator->getElementSlug($element, true);
+                return [
+                    'elementType' => $parameters['type'],
+                    'elementId' => $parameters['id'],
+                    'url' => $slug
+                ];
+            }
         }
+
+        throw new UnprocessableEntityHttpException();
+
     }
 }
