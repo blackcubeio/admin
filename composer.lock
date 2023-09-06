@@ -12,12 +12,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/blackcubeio/core.git",
-                "reference": "128ae244c38e0590b2fb07b41dcd54b4cedafc5a"
+                "reference": "cd6e9512acc9931cfafdeb26476eaa811c60959a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/blackcubeio/core/zipball/128ae244c38e0590b2fb07b41dcd54b4cedafc5a",
-                "reference": "128ae244c38e0590b2fb07b41dcd54b4cedafc5a",
+                "url": "https://api.github.com/repos/blackcubeio/core/zipball/cd6e9512acc9931cfafdeb26476eaa811c60959a",
+                "reference": "cd6e9512acc9931cfafdeb26476eaa811c60959a",
                 "shasum": ""
             },
             "require": {
@@ -83,7 +83,7 @@
                 "source": "https://code.redcat.io/blackcube/core/tree/devel",
                 "wiki": "https://code.redcat.io/blackcube/core/wikis/home"
             },
-            "time": "2023-09-05T13:26:26+00:00"
+            "time": "2023-09-06T09:50:24+00:00"
         },
         {
             "name": "bower-asset/inputmask",
@@ -108,16 +108,16 @@
         },
         {
             "name": "bower-asset/jquery",
-            "version": "3.6.4",
+            "version": "3.7.1",
             "source": {
                 "type": "git",
-                "url": "git@github.com:jquery/jquery-dist.git",
-                "reference": "91ef2d8836342875f2519b5815197ea0f23613cf"
+                "url": "https://github.com/jquery/jquery-dist.git",
+                "reference": "fde1f76e2799dd877c176abde0ec836553246991"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/jquery/jquery-dist/zipball/91ef2d8836342875f2519b5815197ea0f23613cf",
-                "reference": "91ef2d8836342875f2519b5815197ea0f23613cf"
+                "url": "https://api.github.com/repos/jquery/jquery-dist/zipball/fde1f76e2799dd877c176abde0ec836553246991",
+                "reference": "fde1f76e2799dd877c176abde0ec836553246991"
             },
             "type": "bower-asset",
             "license": [
