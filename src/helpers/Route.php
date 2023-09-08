@@ -104,7 +104,7 @@ class Route {
                                     // $routes[$route] = $route;
                                     $routes[] = [
                                         'id' => $route,
-                                        'name' => $routes[$route],
+                                        'name' => $route,
                                         'type' => Module::t('helpers', 'Blackcube')
                                     ];
                                 }
@@ -176,9 +176,8 @@ class Route {
                         $controllerId = Inflector::camel2id($matches[2]);
                         $targetClass = $info['namespace'].'\\'.$matches[1];
                         $ref = new \ReflectionClass($targetClass);
-                        if ($ref->implementsInterface(BlackcubeControllerInterface::class) && $ref->isAbstract() === false) {
-                            // useless
-                        } elseif ($ref->isSubclassOf(Controller::class) && $ref->isAbstract() === false) {
+                        if (($ref->isSubclassOf(Controller::class) || $ref->implementsInterface(BlackcubeControllerInterface::class)) && $ref->isAbstract() === false) {
+                            // this is a "regular" or a "cms" controller
                             $defaultAction = $ref->getProperty('defaultAction')->getValue($ref->newInstanceWithoutConstructor());
                             foreach ($ref->getMethods(\ReflectionMethod::IS_PUBLIC) as $method) {
                                 if (strncmp('action', $method->name, 6) === 0 && ($method->name !== 'actions')) {

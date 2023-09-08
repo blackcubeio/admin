@@ -453,7 +453,9 @@ EOT;
         $options['title'] = Html::encode($model->getAttributeLabel($cleanAttribute));
         $options['upload-file-text'] = $uploadText;
         $options['upload-file-dnd'] = Module::t('widgets', 'or drag and drop');
-
+        if(isset($options['hint']) === false) {
+            $options['upload-file-description'] = $model->getAttributeHint($cleanAttribute);
+        }
         if (isset($options['value']) === false) {
             $options['value'] = Html::getAttributeValue($model, $attribute);
         }
