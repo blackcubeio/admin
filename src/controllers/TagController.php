@@ -14,6 +14,7 @@
 
 namespace blackcube\admin\controllers;
 
+use blackcube\admin\actions\tag\CompositeAction;
 use blackcube\admin\actions\tag\CreateAction;
 use blackcube\admin\actions\tag\DeleteAction;
 use blackcube\admin\actions\tag\EditAction;
@@ -67,7 +68,7 @@ class TagController extends BaseElementController
                 [
                     'allow' => true,
                     'actions' => [
-                        'edit', 'toggle', 'blocs', 'slug', 'sitemap', 'seo'
+                        'edit', 'toggle', 'blocs', 'composites', 'slug', 'sitemap', 'seo'
                     ],
                     'roles' => [Rbac::PERMISSION_TAG_UPDATE],
                 ],
@@ -89,7 +90,7 @@ class TagController extends BaseElementController
         ];
         $behaviors['forceAjax'] = [
             'class' => AjaxFilter::class,
-            'only' => ['modal', 'blocs', 'toggle', 'slug', 'sitemap', 'seo'],
+            'only' => ['modal', 'blocs', 'composites', 'toggle', 'slug', 'sitemap', 'seo'],
         ];
         return $behaviors;
     }
@@ -102,6 +103,10 @@ class TagController extends BaseElementController
         $actions = parent::actions();
         $actions['blocs'] = [
             'class' => BlocAction::class,
+            'elementClass' => Tag::class,
+        ];
+        $actions['composites'] = [
+            'class' => CompositeAction::class,
             'elementClass' => Tag::class,
         ];
         $actions['modal'] = [
