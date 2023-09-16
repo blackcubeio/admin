@@ -16,6 +16,7 @@
  * @var $userPermissionsById array
  * @var $userAssignmentsById array
  * @var $updated boolean
+ * @var $canAssign boolean
  * @var $this \yii\web\View
  */
 
@@ -41,12 +42,22 @@ if ($updated) {
 <?php foreach($authManager->getRoles() as $i => $role): ?>
     <div class="element-form-bloc-cols-4 border-indigo-800 border-2 rounded">
         <div class="px-2 pt-2 pb-3 bg-indigo-100 border-b-2 border-indigo-800">
-            <?php echo BlackcubeHtml::checkbox(Rbac::rbac2Name($role->name), in_array($role->name, $userRolesById), [
+            <?php
+            $parameters = [
                 'label' => Rbac::extractRole($role->name),
                 'data-rbac-type' => 'role',
                 'data-rbac-name' => $role->name,
-                'disabled' => (in_array($role->name, $userRolesById) && in_array($role->name, $userAssignmentsById) === false),
-            ]); ?>
+            ];
+            if ((in_array($role->name, $userRolesById) && in_array($role->name, $userAssignmentsById) === false)) {
+                $parameters['disabled'] = 'disabled';
+                $parameters['readonly'] = 'readonly';
+            }
+            if ($canAssign === false) {
+                $parameters['disabled'] = 'disabled';
+                $parameters['readonly'] = 'readonly';
+            }
+            ?>
+            <?php echo BlackcubeHtml::checkbox(Rbac::rbac2Name($role->name), in_array($role->name, $userRolesById), $parameters); ?>
             <?php // echo Rbac::extractRole($role->name); ?>
         </div>
         <?php if (count($authManager->getChildRoles($role->name)) > 1): ?>
@@ -64,12 +75,22 @@ if ($updated) {
         <div class="p-2">
         <?php foreach($authManager->getPermissionsByRole($role->name) as $permission): ?>
                 <div class="">
-                    <?php echo BlackcubeHtml::checkbox(Rbac::rbac2Name($permission->name), in_array($permission->name, $userPermissionsById), [
+                    <?php
+                    $parameters = [
                         'label' => Rbac::extractPermission($permission->name),
                         'data-rbac-type' => 'permission',
                         'data-rbac-name' => $permission->name,
-                        'disabled' => (in_array($permission->name, $userPermissionsById) && in_array($permission->name, $userAssignmentsById) === false),
-                    ]); ?>
+                    ];
+                    if ((in_array($permission->name, $userPermissionsById) && in_array($permission->name, $userAssignmentsById) === false)) {
+                        $parameters['disabled'] = 'disabled';
+                        $parameters['readonly'] = 'readonly';
+                    }
+                    if ($canAssign === false) {
+                        $parameters['disabled'] = 'disabled';
+                        $parameters['readonly'] = 'readonly';
+                    }
+                    ?>
+                    <?php echo BlackcubeHtml::checkbox(Rbac::rbac2Name($permission->name), in_array($permission->name, $userPermissionsById), $parameters); ?>
                     <?php // echo Rbac::extractRole($role->name); ?>
                 </div>
         <?php endforeach; ?>
