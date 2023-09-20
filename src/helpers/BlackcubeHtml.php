@@ -286,8 +286,8 @@ EOT;
         $options['class'] = 'element-form-bloc-textfield'.$errorClass;
 
         if($type === 'textarea') {
-            $doubleEncode = ArrayHelper::remove($options, 'doubleEncode', true);
-            $field = Html::textarea($name, Html::encode($value, $doubleEncode), $options);
+            // $doubleEncode = ArrayHelper::remove($options, 'doubleEncode', true);
+            $field = Html::textarea($name, $value, $options);
         } else {
             $field = Html::input($type, $name, $value, $options);;
         }
