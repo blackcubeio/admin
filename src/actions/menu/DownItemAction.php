@@ -2,10 +2,10 @@
 /**
  * DownItemAction.php
  *
- * PHP version 7.2+
+ * PHP version 8.0+
  *
  * @author Philippe Gaultier <pgaultier@redcat.io>
- * @copyright 2010-2020 Redcat
+ * @copyright 2010-2022 Redcat
  * @license https://www.redcat.io/license license
  * @version XXX
  * @link https://www.redcat.io
@@ -15,18 +15,16 @@
 namespace blackcube\admin\actions\menu;
 
 use blackcube\admin\Module;
-use blackcube\core\models\Language;
 use blackcube\core\models\MenuItem;
 use yii\base\Action;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
-use Yii;
 
 /**
  * Class DownItemAction
  *
  * @author Philippe Gaultier <pgaultier@redcat.io>
- * @copyright 2010-2020 Redcat
+ * @copyright 2010-2022 Redcat
  * @license https://www.redcat.io/license license
  * @version XXX
  * @link https://www.redcat.io
@@ -37,7 +35,7 @@ class DownItemAction extends Action
     /**
      * @var string view
      */
-    public $view = '_form_list';
+    public $view = '_form_menu_items';
 
     /**
      * @param integer $id
@@ -62,7 +60,7 @@ class DownItemAction extends Action
             $nextItem->order = $menuItem->order;
             $menuItem->order = $nextOrder;
             try {
-                $transaction = Module::getInstance()->db->beginTransaction();
+                $transaction = Module::getInstance()->get('db')->beginTransaction();
                 $menuItem->save(false, ['order', 'dateUpdate']);
                 $nextItem->save(false, ['order', 'dateUpdate']);
                 $transaction->commit();
@@ -72,10 +70,7 @@ class DownItemAction extends Action
             }
         }
         $menuItemsQuery = $menu->getChildren();
-        $languagesQuery = Language::find()->active()->orderBy(['name' => SORT_ASC]);
         return $this->controller->renderPartial($this->view, [
-            'menu' => $menu,
-            'languagesQuery' => $languagesQuery,
             'menuItemsQuery' => $menuItemsQuery,
         ]);
     }

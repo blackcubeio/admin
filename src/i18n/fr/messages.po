@@ -10,95 +10,71 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Poedit 2.3.1\n"
+"X-Generator: Poedit 3.3.2\n"
 
 msgctxt "blackcube/admin/actions"
 msgid "Property \"elementClass\" must be defined"
 msgstr "La propriété « elementClass » doit être définie"
-
-msgctxt "blackcube/admin/authentication"
-msgid "Forgot Password?"
-msgstr "Mot de passe oublié?"
-
-msgctxt "blackcube/admin/bloc-type"
-msgid "Action"
-msgstr "Action"
-
-msgctxt "blackcube/admin/bloc-type"
-msgid "Admin view: {adminView}"
-msgstr "Vue administration: {adminView}"
 
 msgctxt "blackcube/admin/bloc-type"
 msgid "Associated types"
 msgstr "Types associés"
 
 msgctxt "blackcube/admin/bloc-type"
-msgid "Back"
-msgstr "Retour"
-
-msgctxt "blackcube/admin/bloc-type"
 msgid "Bloc type"
 msgstr "Type de bloc"
 
 msgctxt "blackcube/admin/bloc-type"
-msgid "Cancel"
-msgstr "Annuler"
-
-msgctxt "blackcube/admin/bloc-type"
-msgid "Create"
-msgstr "Créer"
-
-msgctxt "blackcube/admin/bloc-type"
-msgid "Name"
-msgstr "Nom"
-
-msgctxt "blackcube/admin/bloc-type"
-msgid "Save"
-msgstr "Enregistrer"
+msgid "Bloc types"
+msgstr "Types de bloc"
 
 msgctxt "blackcube/admin/category"
-msgid "Action"
-msgstr "Action"
-
-msgctxt "blackcube/admin/category"
-msgid "Back"
-msgstr "Retour"
-
-msgctxt "blackcube/admin/category"
-msgid "Cancel"
-msgstr "Annuler"
+msgid "Categories"
+msgstr "Catégories"
 
 msgctxt "blackcube/admin/category"
 msgid "Category"
 msgstr "Catégorie"
 
 msgctxt "blackcube/admin/category"
-msgid "Content"
-msgstr "Contenu"
+msgid "Category status"
+msgstr "Statut de la catégorie"
 
 msgctxt "blackcube/admin/category"
-msgid "Create"
-msgstr "Créer"
+msgid "Contents"
+msgstr "Contenus"
 
 msgctxt "blackcube/admin/category"
-msgid "Name"
-msgstr "Nom"
+msgid "Language"
+msgstr "Langue"
 
 msgctxt "blackcube/admin/category"
 msgid "No type"
 msgstr "Pas de type"
 
 msgctxt "blackcube/admin/category"
-msgid "Save"
-msgstr "Enregistrer"
+msgid "SEO"
+msgstr "SEO"
 
 msgctxt "blackcube/admin/category"
-msgid "Status"
-msgstr "Statut"
+msgid "Sitemap"
+msgstr "Sitemap"
+
+msgctxt "blackcube/admin/category"
+msgid "Slug"
+msgstr "URL"
+
+msgctxt "blackcube/admin/category"
+msgid "This is the minimal information needed to create a new category"
+msgstr "Information minimale nécessaire pour créer une nouvelle catégorie"
 
 msgctxt "blackcube/admin/category"
 msgid "Type"
 msgstr "Type"
+
+msgctxt "blackcube/admin/common"
+msgid "Activate"
+msgstr "Activer"
 
 msgctxt "blackcube/admin/common"
 msgid "Beware, you are going to delete the element:"
@@ -109,72 +85,215 @@ msgid "Cancel"
 msgstr "Annuler"
 
 msgctxt "blackcube/admin/common"
+msgid "Close panel"
+msgstr "Fermer"
+
+msgctxt "blackcube/admin/common"
+msgid "Close sidebar"
+msgstr "Fermer"
+
+msgctxt "blackcube/admin/common"
+msgid "Create"
+msgstr "Créer"
+
+msgctxt "blackcube/admin/common"
 msgid "Delete"
 msgstr "Supprimer"
+
+msgctxt "blackcube/admin/common"
+msgid "Detach"
+msgstr "Détacher"
 
 msgctxt "blackcube/admin/common"
 msgid "Do you really want to continue ?"
 msgstr "Souhaitez-vous continuer ?"
 
 msgctxt "blackcube/admin/common"
+msgid "Down"
+msgstr "Descendre"
+
+msgctxt "blackcube/admin/common"
+msgid "Edit"
+msgstr "Modifier"
+
+msgctxt "blackcube/admin/common"
+msgid "Error"
+msgstr "Erreur"
+
+msgctxt "blackcube/admin/common"
+msgid "Next"
+msgstr "Suivant"
+
+msgctxt "blackcube/admin/common"
+msgid "Previous"
+msgstr "Précédent"
+
+msgctxt "blackcube/admin/common"
+msgid ""
+"SEO is Slug dependant. It will be activated for the website only if Slug is "
+"active"
+msgstr ""
+"Le Sitemap dépend de l’URL. Il sera activé seulement si l’URL est active"
+
+msgctxt "blackcube/admin/common"
+msgid "SEO management"
+msgstr "Gestion du SEO"
+
+msgctxt "blackcube/admin/common"
+msgid "SEO was not saved"
+msgstr "Le SEO n’a pas été sauvegardé"
+
+msgctxt "blackcube/admin/common"
+msgid "SEO was saved"
+msgstr "Le SEO a été sauvegardé"
+
+msgctxt "blackcube/admin/common"
+msgid "Save"
+msgstr "Enregistrer"
+
+msgctxt "blackcube/admin/common"
+msgid "Search"
+msgstr "Rechercher"
+
+msgctxt "blackcube/admin/common"
+msgid ""
+"Sitemap is Slug dependant. It will be activated for the website only if Slug "
+"is active"
+msgstr ""
+"Le Sitemap dépend de l’URL. Il sera activé seulement si l’URL est active"
+
+msgctxt "blackcube/admin/common"
+msgid "Sitemap management"
+msgstr "Gestion du Sitemap"
+
+msgctxt "blackcube/admin/common"
+msgid "Sitemap was not saved"
+msgstr "Le Sitemap n’a pas été sauvegardé"
+
+msgctxt "blackcube/admin/common"
+msgid "Sitemap was saved"
+msgstr "Le Sitemap a été sauvegardé"
+
+msgctxt "blackcube/admin/common"
+msgid "Slug allow an element to be linked in the public space"
+msgstr ""
+"L’URL permet à un élément d’être accessible depuis la partie publique du site"
+
+msgctxt "blackcube/admin/common"
+msgid "Slug management"
+msgstr "Gestion de l’URL"
+
+msgctxt "blackcube/admin/common"
+msgid "Slug was deleted"
+msgstr "L’URL a été supprimée"
+
+msgctxt "blackcube/admin/common"
+msgid "Slug was not saved"
+msgstr "L’URL n’a pas été sauvegardée"
+
+msgctxt "blackcube/admin/common"
+msgid "Slug was saved"
+msgstr "L’URL a été sauvegardée"
+
+msgctxt "blackcube/admin/common"
+msgid "Success"
+msgstr "Succès"
+
+msgctxt "blackcube/admin/common"
+msgid "Summary"
+msgstr "Sommaire"
+
+msgctxt "blackcube/admin/common"
+msgid "Summary large image"
+msgstr "Sommaire grande image"
+
+msgctxt "blackcube/admin/common"
+msgid "Tags are used to filter elements"
+msgstr "Les tags sont utilisés pour filtrer les éléments"
+
+msgctxt "blackcube/admin/common"
+msgid "Tags management"
+msgstr "Gestion des tags"
+
+msgctxt "blackcube/admin/common"
+msgid "Tags were not saved"
+msgstr "Les tags n’ont pas été sauvegardés"
+
+msgctxt "blackcube/admin/common"
+msgid "Tags were saved"
+msgstr "Les tags on été sauvegardés"
+
+msgctxt "blackcube/admin/common"
 msgid "Unknown"
 msgstr "Inconnu"
 
-msgctxt "blackcube/admin/composite"
-msgid "Action"
-msgstr "Action"
+msgctxt "blackcube/admin/common"
+msgid "Up"
+msgstr "Monter"
 
-msgctxt "blackcube/admin/composite"
-msgid "Back"
-msgstr "Retour"
+msgctxt "blackcube/admin/common"
+msgid "View"
+msgstr "Voir"
 
-msgctxt "blackcube/admin/composite"
-msgid "Cancel"
-msgstr "Annuler"
+msgctxt "blackcube/admin/common"
+msgid "Website"
+msgstr "Site"
 
 msgctxt "blackcube/admin/composite"
 msgid "Composite"
 msgstr "Article"
 
 msgctxt "blackcube/admin/composite"
-msgid "Content"
-msgstr "Contenu"
+msgid "Composite status"
+msgstr "Statut de l’article"
 
 msgctxt "blackcube/admin/composite"
-msgid "Create"
-msgstr "Créer"
+msgid "Composites"
+msgstr "Articles"
 
 msgctxt "blackcube/admin/composite"
-msgid "End: {0,date,medium}"
-msgstr "Fin: {0,date,medium}"
+msgid "Contents"
+msgstr "Contenus"
 
 msgctxt "blackcube/admin/composite"
-msgid "Name"
-msgstr "Nom"
+msgid "Language"
+msgstr "Langue"
 
 msgctxt "blackcube/admin/composite"
 msgid "No type"
 msgstr "Pas de type"
 
 msgctxt "blackcube/admin/composite"
+msgid "Node"
+msgstr "Rubrique"
+
+msgctxt "blackcube/admin/composite"
 msgid "Orphan"
 msgstr "Orphelin"
 
 msgctxt "blackcube/admin/composite"
-msgid "Save"
-msgstr "Enregistrer"
+msgid "Plugin"
+msgstr "Plugin"
 
 msgctxt "blackcube/admin/composite"
-msgid "Start: {0,date,medium}"
-msgstr "Début: {0,date,medium}"
+msgid "SEO"
+msgstr "SEO"
 
 msgctxt "blackcube/admin/composite"
-msgid "Status"
-msgstr "Statut"
+msgid "Sitemap"
+msgstr "Sitemap"
+
+msgctxt "blackcube/admin/composite"
+msgid "Slug"
+msgstr "URL"
 
 msgctxt "blackcube/admin/composite"
 msgid "Tags"
 msgstr "Tags"
+
+msgctxt "blackcube/admin/composite"
+msgid "This is the minimal information needed to create a new composite"
+msgstr "Information minimale nécessaire pour créer un nouvel article"
 
 msgctxt "blackcube/admin/composite"
 msgid "Type"
@@ -197,6 +316,10 @@ msgid "Create new administrator\n"
 msgstr "Créer un nouvel administrateur\n"
 
 msgctxt "blackcube/admin/console"
+msgid "Generate Heroicons helper\n"
+msgstr "Outil de génération des Heroicons\n"
+
+msgctxt "blackcube/admin/console"
 msgid "Inactive"
 msgstr "Inactif"
 
@@ -213,32 +336,28 @@ msgid "email"
 msgstr "e-mail"
 
 msgctxt "blackcube/admin/console"
+msgid "firstname"
+msgstr "prénom"
+
+msgctxt "blackcube/admin/console"
+msgid "lastname"
+msgstr "nom"
+
+msgctxt "blackcube/admin/console"
 msgid "password"
 msgstr "mot de passe"
 
 msgctxt "blackcube/admin/dashboard"
-msgid "Active ({count})"
-msgstr "Actif ({count})"
+msgid "Categories"
+msgstr "Catégories"
 
 msgctxt "blackcube/admin/dashboard"
-msgid "Active no URL ({count})"
-msgstr "Actif sans URL ({count})"
-
-msgctxt "blackcube/admin/dashboard"
-msgid "Categories stats ({count})"
-msgstr "Stats des catégories ({count})"
-
-msgctxt "blackcube/admin/dashboard"
-msgid "Composites stats ({count})"
-msgstr "Stats des articles ({count})"
+msgid "Composites"
+msgstr "Articles"
 
 msgctxt "blackcube/admin/dashboard"
 msgid "Dashboard"
 msgstr "Tableau de bord"
-
-msgctxt "blackcube/admin/dashboard"
-msgid "Inactive ({count})"
-msgstr "Inactif ({count})"
 
 msgctxt "blackcube/admin/dashboard"
 msgid "Last updated categories"
@@ -257,48 +376,44 @@ msgid "Last updated tags"
 msgstr "Derniers tags mis à jour"
 
 msgctxt "blackcube/admin/dashboard"
-msgid "Nodes stats ({count})"
-msgstr "Stats des rubriques ({count})"
+msgid "Nodes"
+msgstr "Rubriques"
 
 msgctxt "blackcube/admin/dashboard"
-msgid "Tags stats ({count})"
-msgstr "Stats des tags ({count})"
+msgid "Overview"
+msgstr "Vue d’ensemble"
 
-msgctxt "blackcube/admin/error"
-msgid "Take Me Back To Home"
-msgstr "Retour à la page d’accueil"
+msgctxt "blackcube/admin/dashboard"
+msgid "Tags"
+msgstr "Tags"
 
-msgctxt "blackcube/admin/menu"
-msgid "Action"
-msgstr "Action"
+msgctxt "blackcube/admin/language"
+msgid "Language"
+msgstr "Langue"
+
+msgctxt "blackcube/admin/language"
+msgid "Language is primary"
+msgstr "Langue primaire"
+
+msgctxt "blackcube/admin/language"
+msgid "Language status"
+msgstr "Statut de la langue"
+
+msgctxt "blackcube/admin/language"
+msgid "Languages"
+msgstr "Langues"
 
 msgctxt "blackcube/admin/menu"
 msgid "Add item"
 msgstr "Ajouter un élément"
 
 msgctxt "blackcube/admin/menu"
-msgid "Back"
-msgstr "Retour"
-
-msgctxt "blackcube/admin/menu"
-msgid "Cancel"
-msgstr "Annuler"
-
-msgctxt "blackcube/admin/menu"
-msgid "Category"
-msgstr "Catégorie"
-
-msgctxt "blackcube/admin/menu"
-msgid "Composite"
-msgstr "Article"
-
-msgctxt "blackcube/admin/menu"
-msgid "Create"
-msgstr "Créer"
-
-msgctxt "blackcube/admin/menu"
 msgid "Items"
 msgstr "Elément"
+
+msgctxt "blackcube/admin/menu"
+msgid "Language"
+msgstr "Langue"
 
 msgctxt "blackcube/admin/menu"
 msgid "Menu"
@@ -309,44 +424,24 @@ msgid "Menu item"
 msgstr "Elément"
 
 msgctxt "blackcube/admin/menu"
-msgid "Name"
-msgstr "Nom"
+msgid "Menu status"
+msgstr "Statut du menu"
 
 msgctxt "blackcube/admin/menu"
-msgid "Node"
-msgstr "Rubrique"
+msgid "Menus"
+msgstr "Menus"
 
 msgctxt "blackcube/admin/menu"
-msgid "Regular"
-msgstr "Standard"
+msgid "Parent"
+msgstr "Parent"
 
 msgctxt "blackcube/admin/menu"
 msgid "Root"
 msgstr "Racine"
 
 msgctxt "blackcube/admin/menu"
-msgid "Route"
-msgstr "Route"
-
-msgctxt "blackcube/admin/menu"
-msgid "Save"
-msgstr "Enregistrer"
-
-msgctxt "blackcube/admin/menu"
 msgid "Select a route"
-msgstr "Séléctionner une route"
-
-msgctxt "blackcube/admin/menu"
-msgid "Tag"
-msgstr "Tag"
-
-msgctxt "blackcube/admin/menu"
-msgid "Type"
-msgstr "Type"
-
-msgctxt "blackcube/admin/menu"
-msgid "Unknown"
-msgstr "Inconnu"
+msgstr "Sélectionner une route"
 
 msgctxt "blackcube/admin/models"
 msgid "Active"
@@ -373,12 +468,20 @@ msgid "Date Update"
 msgstr "Date de mise à jour"
 
 msgctxt "blackcube/admin/models"
-msgid "Email"
+msgid "E-mail"
 msgstr "E-mail"
+
+msgctxt "blackcube/admin/models"
+msgid "Firstname"
+msgstr "Prénom"
 
 msgctxt "blackcube/admin/models"
 msgid "ID"
 msgstr "ID"
+
+msgctxt "blackcube/admin/models"
+msgid "Lastname"
+msgstr "Nom"
 
 msgctxt "blackcube/admin/models"
 msgid "New Password"
@@ -395,6 +498,10 @@ msgstr "Mot de passe"
 msgctxt "blackcube/admin/models"
 msgid "Password Verification"
 msgstr "Vérification du mot de passe"
+
+msgctxt "blackcube/admin/models"
+msgid "Remember me"
+msgstr "Se souvenir de moi"
 
 msgctxt "blackcube/admin/models"
 msgid "Search"
@@ -417,48 +524,28 @@ msgid "Token Type"
 msgstr "Type de jeton"
 
 msgctxt "blackcube/admin/node"
-msgid "Action"
-msgstr "Action"
-
-msgctxt "blackcube/admin/node"
 msgid "After"
 msgstr "Après"
-
-msgctxt "blackcube/admin/node"
-msgid "Back"
-msgstr "Retour"
 
 msgctxt "blackcube/admin/node"
 msgid "Before"
 msgstr "Avant"
 
 msgctxt "blackcube/admin/node"
-msgid "Cancel"
-msgstr "Annuler"
-
-msgctxt "blackcube/admin/node"
 msgid "Composites"
 msgstr "Articles"
 
 msgctxt "blackcube/admin/node"
-msgid "Content"
-msgstr "Contenu"
-
-msgctxt "blackcube/admin/node"
-msgid "Create"
-msgstr "Créer"
-
-msgctxt "blackcube/admin/node"
-msgid "Create Node"
-msgstr "Créer une rubrique"
-
-msgctxt "blackcube/admin/node"
-msgid "End: {0,date,medium}"
-msgstr "Fin: {0,date,medium}"
+msgid "Contents"
+msgstr "Contenus"
 
 msgctxt "blackcube/admin/node"
 msgid "Into"
 msgstr "Dans"
+
+msgctxt "blackcube/admin/node"
+msgid "Language"
+msgstr "Langue"
 
 msgctxt "blackcube/admin/node"
 msgid "Mode"
@@ -469,28 +556,28 @@ msgid "Move Node"
 msgstr "Déplacer la rubrique"
 
 msgctxt "blackcube/admin/node"
-msgid "Name"
-msgstr "Nom"
-
-msgctxt "blackcube/admin/node"
-msgid "No type"
-msgstr "Pas de type"
-
-msgctxt "blackcube/admin/node"
 msgid "Node"
 msgstr "Rubrique"
 
 msgctxt "blackcube/admin/node"
-msgid "Save"
-msgstr "Enregistrer"
+msgid "Node status"
+msgstr "Statut de la rubrique"
 
 msgctxt "blackcube/admin/node"
-msgid "Start: {0,date,medium}"
-msgstr "Début: {0,date,medium}"
+msgid "Nodes"
+msgstr "Rubriques"
 
 msgctxt "blackcube/admin/node"
-msgid "Status"
-msgstr "Statut"
+msgid "SEO"
+msgstr "SEO"
+
+msgctxt "blackcube/admin/node"
+msgid "Sitemap"
+msgstr "Sitemap"
+
+msgctxt "blackcube/admin/node"
+msgid "Slug"
+msgstr "URL"
 
 msgctxt "blackcube/admin/node"
 msgid "Tags"
@@ -501,124 +588,88 @@ msgid "Target node"
 msgstr "Rubrique cible"
 
 msgctxt "blackcube/admin/node"
+msgid "This is the minimal information needed to create a new node"
+msgstr "Information minimale nécessaire pour créer une nouvelle rubrique"
+
+msgctxt "blackcube/admin/node"
 msgid "Type"
 msgstr "Type"
-
-msgctxt "blackcube/admin/parameter"
-msgid "Action"
-msgstr "Action"
-
-msgctxt "blackcube/admin/parameter"
-msgid "Back"
-msgstr "Retour"
-
-msgctxt "blackcube/admin/parameter"
-msgid "Cancel"
-msgstr "Annuler"
-
-msgctxt "blackcube/admin/parameter"
-msgid "Create"
-msgstr "Créer"
-
-msgctxt "blackcube/admin/parameter"
-msgid "Name"
-msgstr "Nom"
 
 msgctxt "blackcube/admin/parameter"
 msgid "Parameter"
 msgstr "Paramètre"
 
 msgctxt "blackcube/admin/parameter"
-msgid "Save"
+msgid "Parameters"
+msgstr "Paramètres"
+
+msgctxt "blackcube/admin/plugin"
+msgid "Configure"
+msgstr "Configurer"
+
+msgctxt "blackcube/admin/plugin"
+msgid "Edit"
+msgstr "Modifier"
+
+msgctxt "blackcube/admin/plugin"
+msgid "Plugin registered"
+msgstr "Désenregistrer"
+
+msgctxt "blackcube/admin/plugin"
+msgid "Plugin status"
+msgstr "Statut du plugin"
+
+msgctxt "blackcube/admin/plugin"
+msgid "Plugins"
+msgstr "Plugins"
+
+msgctxt "blackcube/admin/plugin"
+msgid "Register"
 msgstr "Enregistrer"
 
 msgctxt "blackcube/admin/plugin"
-msgid "Action"
-msgstr "Action"
-
-msgctxt "blackcube/admin/plugin"
-msgid "Name"
-msgstr "Nom"
-
-msgctxt "blackcube/admin/search"
-msgid "Action"
-msgstr "Action"
+msgid "Unregister"
+msgstr "Désenregistrer"
 
 msgctxt "blackcube/admin/search"
 msgid "Categories"
 msgstr "Catégories"
 
 msgctxt "blackcube/admin/search"
-msgid "Category"
-msgstr "Catégorie"
-
-msgctxt "blackcube/admin/search"
-msgid "Composite"
-msgstr "Article"
-
-msgctxt "blackcube/admin/search"
 msgid "Composites"
 msgstr "Articles"
-
-msgctxt "blackcube/admin/search"
-msgid "End: {0,date,medium}"
-msgstr "Fin: {0,date,medium}"
-
-msgctxt "blackcube/admin/search"
-msgid "Name"
-msgstr "Nom"
-
-msgctxt "blackcube/admin/search"
-msgid "Node"
-msgstr "Rubrique"
 
 msgctxt "blackcube/admin/search"
 msgid "Nodes"
 msgstr "Rubriques"
 
 msgctxt "blackcube/admin/search"
-msgid "Search"
-msgstr "Rechercher"
+msgid "Search categories"
+msgstr "Rechercher dans les catégories"
 
 msgctxt "blackcube/admin/search"
-msgid "Slug"
-msgstr "URL"
+msgid "Search composites"
+msgstr "Rechercher dans les articles"
+
+msgctxt "blackcube/admin/search"
+msgid "Search nodes"
+msgstr "Rechercher dans les rubriques"
+
+msgctxt "blackcube/admin/search"
+msgid "Search slugs"
+msgstr "Rechercher dans les URLs"
+
+msgctxt "blackcube/admin/search"
+msgid "Search tags"
+msgstr "Rechercher dans les tags"
 
 msgctxt "blackcube/admin/search"
 msgid "Slugs"
 msgstr "URLs"
 
 msgctxt "blackcube/admin/search"
-msgid "Start: {0,date,medium}"
-msgstr "Début: {0,date,medium}"
-
-msgctxt "blackcube/admin/search"
-msgid "Status"
-msgstr "Statut"
-
-msgctxt "blackcube/admin/search"
-msgid "Tag"
-msgstr "Tag"
-
-msgctxt "blackcube/admin/search"
 msgid "Tags"
 msgstr "Tags"
-
-msgctxt "blackcube/admin/search"
-msgid "Type"
-msgstr "Type"
-
-msgctxt "blackcube/admin/slug"
-msgid "Action"
-msgstr "Action"
-
-msgctxt "blackcube/admin/slug"
-msgid "Back"
-msgstr "Retour"
-
-msgctxt "blackcube/admin/slug"
-msgid "Cancel"
-msgstr "Annuler"
 
 msgctxt "blackcube/admin/slug"
 msgid "Category"
@@ -629,128 +680,68 @@ msgid "Composite"
 msgstr "Article"
 
 msgctxt "blackcube/admin/slug"
-msgid "Found (#{code})"
-msgstr "Found (#{code})"
-
-msgctxt "blackcube/admin/slug"
-msgid "Moved Permanently (#{code})"
-msgstr "Moved Permanently (#{code})"
-
-msgctxt "blackcube/admin/slug"
 msgid "Node"
 msgstr "Rubrique"
 
 msgctxt "blackcube/admin/slug"
-msgid "Redirect"
-msgstr "Redirection"
+msgid "Slug"
+msgstr "URL"
 
 msgctxt "blackcube/admin/slug"
-msgid "Save"
-msgstr "Enregistrer"
-
-msgctxt "blackcube/admin/slug"
-msgid "Select HTTP Code"
-msgstr "Choisir le code HTTP"
-
-msgctxt "blackcube/admin/slug"
-msgid "Status"
-msgstr "Statut"
+msgid "Slugs"
+msgstr "URLs"
 
 msgctxt "blackcube/admin/slug"
 msgid "Tag"
 msgstr "Tag"
 
-msgctxt "blackcube/admin/slug"
-msgid "Type"
-msgstr "Type"
-
-msgctxt "blackcube/admin/slug"
-msgid "Url"
-msgstr "URL"
+msgctxt "blackcube/admin/tag"
+msgid "Category"
+msgstr "Catégorie"
 
 msgctxt "blackcube/admin/tag"
-msgid "Action"
-msgstr "Action"
-
-msgctxt "blackcube/admin/tag"
-msgid "Back"
-msgstr "Retour"
-
-msgctxt "blackcube/admin/tag"
-msgid "Cancel"
-msgstr "Annuler"
-
-msgctxt "blackcube/admin/tag"
-msgid "Content"
-msgstr "Contenu"
-
-msgctxt "blackcube/admin/tag"
-msgid "Create"
-msgstr "Créer"
-
-msgctxt "blackcube/admin/tag"
-msgid "Name"
-msgstr "Nom"
+msgid "Contents"
+msgstr "Contenus"
 
 msgctxt "blackcube/admin/tag"
 msgid "No type"
 msgstr "Pas de type"
 
 msgctxt "blackcube/admin/tag"
-msgid "Save"
-msgstr "Enregistrer"
+msgid "SEO"
+msgstr "SEO"
 
 msgctxt "blackcube/admin/tag"
-msgid "Status"
-msgstr "Statut"
+msgid "Sitemap"
+msgstr "Sitemap"
+
+msgctxt "blackcube/admin/tag"
+msgid "Slug"
+msgstr "URL"
 
 msgctxt "blackcube/admin/tag"
 msgid "Tag"
 msgstr "Tag"
 
 msgctxt "blackcube/admin/tag"
+msgid "Tag status"
+msgstr "Statut du tag"
+
+msgctxt "blackcube/admin/tag"
+msgid "Tags"
+msgstr "Tags"
+
+msgctxt "blackcube/admin/tag"
+msgid "This is the minimal information needed to create a new tag"
+msgstr "Information minimale nécessaire pour créer un nouveau tag"
+
+msgctxt "blackcube/admin/tag"
 msgid "Type"
 msgstr "Type"
 
-msgctxt "blackcube/admin/technical"
-msgid "Website is in maintenance mode"
-msgstr "Site en cours de maintenance"
-
-msgctxt "blackcube/admin/technical"
-msgid "{code} - {definition}"
-msgstr "{code} - {definition}"
-
 msgctxt "blackcube/admin/type"
-msgid "Action"
-msgstr "Action"
-
-msgctxt "blackcube/admin/type"
-msgid "Allowed bloc types"
-msgstr "Types de blocs autorisés"
-
-msgctxt "blackcube/admin/type"
-msgid "Back"
-msgstr "Retour"
-
-msgctxt "blackcube/admin/type"
-msgid "Cancel"
-msgstr "Annuler"
-
-msgctxt "blackcube/admin/type"
-msgid "Create"
-msgstr "Créer"
-
-msgctxt "blackcube/admin/type"
-msgid "Name"
-msgstr "Nom"
-
-msgctxt "blackcube/admin/type"
-msgid "Route: {route}"
-msgstr "Route: {route}"
-
-msgctxt "blackcube/admin/type"
-msgid "Save"
-msgstr "Enregistrer"
+msgid "Associated bloc types"
+msgstr "Types de bloc associés"
 
 msgctxt "blackcube/admin/type"
 msgid "Select a route"
@@ -761,36 +752,32 @@ msgid "Type"
 msgstr "Type"
 
 msgctxt "blackcube/admin/type"
-msgid "no route"
-msgstr "pas de route"
+msgid "Types"
+msgstr "Types"
 
 msgctxt "blackcube/admin/user"
-msgid "Authorizations"
-msgstr "Autorisations"
+msgid "Account"
+msgstr "Compte"
 
 msgctxt "blackcube/admin/user"
-msgid "Back"
-msgstr "Retour"
+msgid "Permission were updated"
+msgstr "Les permissions ont été mises à jour"
 
 msgctxt "blackcube/admin/user"
-msgid "Cancel"
-msgstr "Annuler"
-
-msgctxt "blackcube/admin/user"
-msgid "Create"
-msgstr "Créer"
-
-msgctxt "blackcube/admin/user"
-msgid "Save"
-msgstr "Enregistrer"
+msgid "Success"
+msgstr "Succès"
 
 msgctxt "blackcube/admin/user"
 msgid "User"
 msgstr "Utilisateur"
 
 msgctxt "blackcube/admin/user"
-msgid "authorizations are updated on the fly"
-msgstr "les autorisations sont mises à jour à la volée"
+msgid "User status"
+msgstr "Statut de l’utilisateur"
+
+msgctxt "blackcube/admin/user"
+msgid "Users"
+msgstr "Utilisateurs"
 
 msgctxt "blackcube/admin/validators"
 msgid "Administrator does not exist"
@@ -803,6 +790,30 @@ msgstr "Le mot de passe est invalide"
 msgctxt "blackcube/admin/validators"
 msgid "User is invalid"
 msgstr "L’utilisateur est invalide"
+
+msgctxt "blackcube/admin/views"
+msgid "E-mail"
+msgstr "E-mail"
+
+msgctxt "blackcube/admin/views"
+msgid "Password"
+msgstr "Mot de passe"
+
+msgctxt "blackcube/admin/views"
+msgid "Please check the URL in the address bar and try again."
+msgstr "Veuillez vérifier l’URL dans la barre d’adresse et ré-essayer."
+
+msgctxt "blackcube/admin/views"
+msgid "Unhandled error."
+msgstr "Erreur non gérée."
+
+msgctxt "blackcube/admin/views"
+msgid "username@website.com"
+msgstr "identifiant@siteinternet.com"
+
+msgctxt "blackcube/admin/widgets"
+msgid "Account"
+msgstr "Compte"
 
 msgctxt "blackcube/admin/widgets"
 msgid "Bloc types"
@@ -825,8 +836,8 @@ msgid "Dashboard"
 msgstr "Tableau de bord"
 
 msgctxt "blackcube/admin/widgets"
-msgid "Image size should be 1200x630"
-msgstr "La taille de l’image doit faire 1200x630"
+msgid "Languages"
+msgstr "Langues"
 
 msgctxt "blackcube/admin/widgets"
 msgid "Logout"
@@ -841,8 +852,12 @@ msgid "Menus"
 msgstr "Menus"
 
 msgctxt "blackcube/admin/widgets"
-msgid "Modules"
-msgstr "Modules"
+msgid "Next"
+msgstr "Suivant"
+
+msgctxt "blackcube/admin/widgets"
+msgid "No route"
+msgstr "Pas de route"
 
 msgctxt "blackcube/admin/widgets"
 msgid "Nodes"
@@ -857,52 +872,44 @@ msgid "Plugins"
 msgstr "Plugins"
 
 msgctxt "blackcube/admin/widgets"
-msgid "Preview {icon}"
-msgstr "Prévisualiser {icon}"
+msgid "Preview"
+msgstr "Prévisualiser"
 
 msgctxt "blackcube/admin/widgets"
-msgid "SEO"
-msgstr "SEO"
+msgid "Previous"
+msgstr "Précédent"
+
+msgctxt "blackcube/admin/widgets"
+msgid "Primary"
+msgstr "Primaire"
+
+msgctxt "blackcube/admin/widgets"
+msgid "Redirect {httpCode}"
+msgstr "Redirection {httpCode}"
+
+msgctxt "blackcube/admin/widgets"
+msgid "Route"
+msgstr "Route"
+
+msgctxt "blackcube/admin/widgets"
+msgid "Route: {route}"
+msgstr "Route: {route}"
 
 msgctxt "blackcube/admin/widgets"
 msgid "SEO integration"
 msgstr "Intégration SEO"
 
 msgctxt "blackcube/admin/widgets"
-msgid "Search"
-msgstr "Rechercher"
-
-msgctxt "blackcube/admin/widgets"
-msgid "Sitemap"
-msgstr "Sitemap"
-
-msgctxt "blackcube/admin/widgets"
-msgid ""
-"Sitemap and SEO elements are Slug dependant. They will be activated for the "
-"website only if Slug is active"
-msgstr ""
-"Les parties Sitemap et SEO dépendent de l’URL. Elles seront actives "
-"seulement si l’URL est active"
+msgid "Showing {start} to {end} of {count} results"
+msgstr "De {start} à {end} sur {count} résultats"
 
 msgctxt "blackcube/admin/widgets"
 msgid "Sitemap integration"
 msgstr "Intégration Sitemap"
 
 msgctxt "blackcube/admin/widgets"
-msgid "Slug"
-msgstr "URL"
-
-msgctxt "blackcube/admin/widgets"
 msgid "Slugs"
 msgstr "URLs"
-
-msgctxt "blackcube/admin/widgets"
-msgid "Summary"
-msgstr "Sommaire"
-
-msgctxt "blackcube/admin/widgets"
-msgid "Summary large image"
-msgstr "Sommaire grande image"
 
 msgctxt "blackcube/admin/widgets"
 msgid "Tags"
@@ -917,12 +924,32 @@ msgid "URL Status"
 msgstr "Statut de l’URL"
 
 msgctxt "blackcube/admin/widgets"
+msgid "Unknown"
+msgstr "Inconnu"
+
+msgctxt "blackcube/admin/widgets"
+msgid "Upload A file"
+msgstr "Télécharger un fichier"
+
+msgctxt "blackcube/admin/widgets"
+msgid "Upload files"
+msgstr "Télécharger des fichiers"
+
+msgctxt "blackcube/admin/widgets"
 msgid "Users"
 msgstr "Utilisateurs"
 
 msgctxt "blackcube/admin/widgets"
-msgid "Website"
-msgstr "Site"
+msgid "no route"
+msgstr "pas de route"
+
+msgctxt "blackcube/admin/widgets"
+msgid "or drag and drop"
+msgstr "ou glisser déposer"
+
+msgctxt "blackcube/admin/helpers"
+msgid "Blackcube"
+msgstr "Blackcube"
 
 msgctxt "blackcube/admin/helpers"
 msgid "CMS Category"
@@ -952,6 +979,60 @@ msgctxt "blackcube/admin/helpers"
 msgid "Regular"
 msgstr "Standard"
 
+#, fuzzy
+#~| msgctxt "blackcube/admin/slug"
+#~| msgid "Found (#{code})"
+#~ msgctxt "blackcube/admin/slug"
+#~ msgid "Found (#{code})"
+#~ msgstr "Found (#{code})"
+
+#, fuzzy
+#~| msgctxt "blackcube/admin/slug"
+#~| msgid "Moved Permanently (#{code})"
+#~ msgctxt "blackcube/admin/slug"
+#~ msgid "Moved Permanently (#{code})"
+#~ msgstr "Moved Permanently (#{code})"
+
+#~ msgctxt "blackcube/admin/slug"
+#~ msgid "Select HTTP Code"
+#~ msgstr "Choisir le code HTTP"
+
+#~ msgctxt "blackcube/admin/widgets"
+#~ msgid "Image size should be 1200x630"
+#~ msgstr "La taille de l’image doit faire 1200x630"
+
+#~ msgctxt "blackcube/admin/widgets"
+#~ msgid "SEO"
+#~ msgstr "SEO"
+
+#~ msgctxt "blackcube/admin/widgets"
+#~ msgid "Sitemap"
+#~ msgstr "Sitemap"
+
+#~ msgctxt "blackcube/admin/widgets"
+#~ msgid ""
+#~ "Sitemap and SEO are Slug dependant. They will be activated for the "
+#~ "website only if Slug is active"
+#~ msgstr ""
+#~ "Le Sitemap et le SEO dépendent de l’URL. Ils seront activés seulement si "
+#~ "l’URL est active"
+
+#~ msgctxt "blackcube/admin/widgets"
+#~ msgid "Slug"
+#~ msgstr "URL"
+
+#~ msgctxt "blackcube/admin/widgets"
+#~ msgid "Summary"
+#~ msgstr "Sommaire"
+
+#~ msgctxt "blackcube/admin/widgets"
+#~ msgid "Summary large image"
+#~ msgstr "Sommaire grande image"
+
+#~ msgctxt "blackcube/admin/widgets"
+#~ msgid "Website"
+#~ msgstr "Site"
+
 #~ msgctxt "blackcube/admin/type"
-#~ msgid "Module \"{moduleId}\" does not exist."
-#~ msgstr "Le module « {moduleId} » n’existe pas."
+#~ msgid "Allowed bloc types"
+#~ msgstr "Types de blocs autorisés"

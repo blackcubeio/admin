@@ -7,14 +7,14 @@ Blackcube Admin
 Pre-requisites
 --------------
 
- * PHP 7.2+
+ * PHP 7.4+
    * Extension `dom`
    * Extension `fileinfo`
    * Extension `intl`
    * Extension `json`
    * Extension `mbstring`
  * Apache or NginX
- * Blackcube core
+ * Blackcube core 3;x
 
 Pre-flight
 ----------
@@ -35,23 +35,70 @@ Installation
 
 ```php 
 // main configuration file
-// ...
-    'bootstrap' => [
-        // ... boostrapped modules
-        'blackcube', // blackcube core
-        'bo', // blackcube admin
-    ],
-    'modules' => [
-        // ... other modules
-        'blackcube' => [
-            'class' => blackcube\core\Module::class,
-        ],
-        'bo' => [
-            'class' => blackcube\admin\Module::class,
-            'adminTemplatesAlias' => '@app/admin', // where special admin templates are stored
+   'container' => [
+      'singletons' => [
+         // local filesystem
+         blackcube\core\components\Flysystem::class => [
+            'class' => blackcube\core\components\FlysystemLocal::class,
+            'path' => getstrenv('FILESYSTEM_LOCAL_PATH'),
+         ],
+         // or s3
+         blackcube\core\components\Flysystem::class => [
+            'class' => blackcube\core\components\FlysystemAwsS3::class,
+            'key' => getstrenv('FILESYSTEM_S3_KEY'),
+            'secret' => getstrenv('FILESYSTEM_S3_SECRET'),
+            'bucket' => getstrenv('FILESYSTEM_S3_BUCKET'),
+            'region' => getstrenv('FILESYSTEM_S3_REGION'),
+            'version' => 'latest',
+            'endpoint' => getstrenv('FILESYSTEM_S3_ENDPOINT'),
+            'pathStyleEndpoint' => getboolenv('FILESYSTEM_S3_PATH_STYLE'),
+         ],
+      ]
+   ],
+   // ...
+   'bootstrap' => [
+      // ... boostrapped modules
+      'blackcube', // blackcube core
+      'bo', // blackcube admin
+   ],
+   // ...
+   'modules' => [
+      // ... other modules
+      'blackcube' => [
+         'class' => blackcube\core\Module::class,
+         'plugins' => [
+            // additional plugins
+         ],
+         'cmsEnabledmodules' => [
+            // additional modules
+         ],
+         'allowedParameterDomains' => ['],
+            // override components if needed
+            'components' => [
+               'db' => ...
+               'cache' => ...
+               'fs' => ...
             ],
-        ],
-    ],
+            /// end override
+      ],
+      'bo' => [
+         'class' => blackcube\admin\Module::class,
+         'adminTemplatesAlias' => '@app/admin',
+         'additionalAssets' => [
+            // additional modules
+         ],
+         'modules' => [
+            // additional modules
+         ],
+            // override components if needed
+            'components' => [
+               'db' => ...
+               'cache' => ...
+               'fs' => ...
+            ],
+            /// end override
+      ],
+   ],
 // ...
 ```
 
@@ -60,19 +107,21 @@ Installation
 Add needed tables in DB
 
 ```
-php yii.php badmin:migrate
+php yii.php migrate
 ```
 
 Init all RBAC Roles and permissions
 
 ```
-php yii.php badmin:rbac
+php yii.php bc:rbac
 ```
- 
+
+> the command must be run each time a new Rbac (role / permssion) is added through a module or plugin
+
 ### Create initial administrator
 
 ```
-php yii.php badmin:admin/create 
+php yii.php bc:admin/create 
 ```
 
 > Blackcube admin is now ready, you can access it through `https://host.domain/bo`

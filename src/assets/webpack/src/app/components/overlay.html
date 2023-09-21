@@ -1,0 +1,36 @@
+<template>
+    <div class="overlay-wrapper">
+        <!--
+          Background overlay, show/hide based on slide-over state.
+
+          Entering: "ease-in-out duration-500"
+            From: "opacity-0"
+            To: "opacity-100"
+          Leaving: "ease-in-out duration-500"
+            From: "opacity-100"
+            To: "opacity-0"
+        -->
+        <div ref="overlay" click.trigger="onClickClose($event)" class="overlay-overlay closed" aria-hidden="true"></div>
+
+        <div class="overlay-content">
+            <!--
+              Slide-over panel, show/hide based on slide-over state.
+
+              Entering: "transform transition ease-in-out duration-500 sm:duration-700"
+                From: "translate-x-full"
+                To: "translate-x-0"
+              Leaving: "transform transition ease-in-out duration-500 sm:duration-700"
+                From: "translate-x-0"
+                To: "translate-x-full"
+            -->
+            <div ref="panel" class="overlay-panel closed">
+                <div class="overlay-panel-wrapper"><!-- innerHTML.bind="htmlData" -->
+                    <!-- Replace with your content -->
+                    <au-compose template.bind="htmlData"></au-compose>
+
+                    <!-- /End replace -->
+                </div>
+            </div>
+        </div>
+    </div>
+</template>

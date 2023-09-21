@@ -2,10 +2,10 @@
 /**
  * CategoryController.php
  *
- * PHP version 7.2+
+ * PHP version 8.0+
  *
  * @author Philippe Gaultier <pgaultier@redcat.io>
- * @copyright 2010-2020 Redcat
+ * @copyright 2010-2022 Redcat
  * @license https://www.redcat.io/license license
  * @version XXX
  * @link https://www.redcat.io
@@ -18,20 +18,22 @@ use blackcube\admin\actions\category\CreateAction;
 use blackcube\admin\actions\category\DeleteAction;
 use blackcube\admin\actions\category\EditAction;
 use blackcube\admin\actions\category\IndexAction;
-use blackcube\admin\actions\ModalAction;
+use blackcube\admin\actions\SeoAction;
+use blackcube\admin\actions\SitemapAction;
 use blackcube\admin\actions\ToggleAction;
 use blackcube\admin\actions\BlocAction;
+use blackcube\admin\actions\ModalAction;
+use blackcube\admin\actions\SlugAction;
 use blackcube\admin\components\Rbac;
 use blackcube\core\models\Category;
 use yii\filters\AccessControl;
 use yii\filters\AjaxFilter;
-use Yii;
 
 /**
  * Class CategoryController
  *
  * @author Philippe Gaultier <pgaultier@redcat.io>
- * @copyright 2010-2020 Redcat
+ * @copyright 2010-2022 Redcat
  * @license https://www.redcat.io/license license
  * @version XXX
  * @link https://www.redcat.io
@@ -65,7 +67,7 @@ class CategoryController extends BaseElementController
                 [
                     'allow' => true,
                     'actions' => [
-                        'edit', 'toggle', 'blocs',
+                        'edit', 'toggle', 'blocs', 'slug', 'sitemap', 'seo'
                     ],
                     'roles' => [Rbac::PERMISSION_CATEGORY_UPDATE],
                 ],
@@ -87,7 +89,7 @@ class CategoryController extends BaseElementController
         ];
         $behaviors['forceAjax'] = [
             'class' => AjaxFilter::class,
-            'only' => ['modal', 'blocs', 'toggle'],
+            'only' => ['modal', 'blocs', 'toggle', 'slug', 'sitemap', 'seo'],
         ];
         return $behaviors;
     }
@@ -104,24 +106,35 @@ class CategoryController extends BaseElementController
         ];
         $actions['modal'] = [
             'class' => ModalAction::class,
-            'elementClass' => Category::class,
+            'elementClass' => Category::class
         ];
         $actions['toggle'] = [
             'class' => ToggleAction::class,
             'elementClass' => Category::class,
-            'elementName' => 'category',
+        ];
+        $actions['slug'] = [
+            'class' => SlugAction::class,
+            'elementClass' => Category::class,
+        ];
+        $actions['sitemap'] = [
+            'class' => SitemapAction::class,
+            'elementClass' => Category::class,
+        ];
+        $actions['seo'] = [
+            'class' => SeoAction::class,
+            'elementClass' => Category::class,
         ];
         $actions['index'] = [
-            'class' => IndexAction::class
+            'class' => IndexAction::class,
         ];
         $actions['create'] = [
-            'class' => CreateAction::class
+            'class' => CreateAction::class,
         ];
         $actions['edit'] = [
-            'class' => EditAction::class
+            'class' => EditAction::class,
         ];
         $actions['delete'] = [
-            'class' => DeleteAction::class
+            'class' => DeleteAction::class,
         ];
         return $actions;
     }

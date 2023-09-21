@@ -2,10 +2,10 @@
 /**
  * BlocTypeController.php
  *
- * PHP version 7.2+
+ * PHP version 8.0+
  *
  * @author Philippe Gaultier <pgaultier@redcat.io>
- * @copyright 2010-2020 Redcat
+ * @copyright 2010-2022 Redcat
  * @license https://www.redcat.io/license license
  * @version XXX
  * @link https://www.redcat.io
@@ -24,13 +24,12 @@ use blackcube\core\models\BlocType;
 use yii\filters\AccessControl;
 use yii\filters\AjaxFilter;
 use yii\web\Controller;
-use Yii;
 
 /**
  * Class BlocTypeController
  *
  * @author Philippe Gaultier <pgaultier@redcat.io>
- * @copyright 2010-2020 Redcat
+ * @copyright 2010-2022 Redcat
  * @license https://www.redcat.io/license license
  * @version XXX
  * @link https://www.redcat.io
@@ -65,7 +64,7 @@ class BlocTypeController extends Controller
                 [
                     'allow' => true,
                     'actions' => [
-                        'edit', 'toggle',
+                        'edit',
                     ],
                     'roles' => [Rbac::PERMISSION_BLOCTYPE_UPDATE],
                 ],
@@ -80,7 +79,7 @@ class BlocTypeController extends Controller
         ];
         $behaviors['forceAjax'] = [
             'class' => AjaxFilter::class,
-            'only' => ['modal'],
+            'only' => ['modal', 'delete'],
         ];
         return $behaviors;
     }

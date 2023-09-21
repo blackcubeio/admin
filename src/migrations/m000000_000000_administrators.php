@@ -2,10 +2,10 @@
 /**
  * m000000_000000_administrators.php
  *
- * PHP version 7.2+
+ * PHP version 8.0+
  *
  * @author Philippe Gaultier <pgaultier@redcat.io>
- * @copyright 2010-2020 Redcat
+ * @copyright 2010-2022 Redcat
  * @license https://www.redcat.io/license license
  * @version XXX
  * @link https://www.redcat.io
@@ -14,14 +14,13 @@
 
 namespace blackcube\admin\migrations;
 
-use yii\db\Expression;
 use yii\db\Migration;
 
 /**
  * Class m000000_000000_administrators
  *
  * @author Philippe Gaultier <pgaultier@redcat.io>
- * @copyright 2010-2020 Redcat
+ * @copyright 2010-2022 Redcat
  * @license https://www.redcat.io/license license
  * @version XXX
  * @link https://www.redcat.io

@@ -2,10 +2,10 @@
 /**
  * DeleteAction.php
  *
- * PHP version 7.2+
+ * PHP version 8.0+
  *
  * @author Philippe Gaultier <pgaultier@redcat.io>
- * @copyright 2010-2020 Redcat
+ * @copyright 2010-2022 Redcat
  * @license https://www.redcat.io/license license
  * @version XXX
  * @link https://www.redcat.io
@@ -26,7 +26,7 @@ use Yii;
  * Class DeleteAction
  *
  * @author Philippe Gaultier <pgaultier@redcat.io>
- * @copyright 2010-2020 Redcat
+ * @copyright 2010-2022 Redcat
  * @license https://www.redcat.io/license license
  * @version XXX
  * @link https://www.redcat.io
@@ -41,22 +41,22 @@ class DeleteAction extends BaseElementAction
 
     /**
      * @param string $id
+     * @param PluginsHandlerInterface $pluginsHandler
      * @return string|Response
      * @throws NotFoundHttpException
      * @throws \yii\base\InvalidConfigException
      */
-    public function run($id)
+    public function run($id, PluginsHandlerInterface $pluginsHandler)
     {
         $category = $this->getCategoryQuery()
             ->andWhere(['id' => $id])
             ->one();
+
         if ($category === null) {
             throw new NotFoundHttpException();
         }
         if (Yii::$app->request->isPost) {
-            $transaction = Module::getInstance()->db->beginTransaction();
-            $pluginsHandler = Yii::createObject(PluginsHandlerInterface::class);
-            /* @var $pluginsHandler \blackcube\core\interfaces\PluginsHandlerInterface */
+            $transaction = Module::getInstance()->get('db')->beginTransaction();
 
             try {
                 $slug = $category->getSlug()->one();
@@ -71,6 +71,13 @@ class DeleteAction extends BaseElementAction
                 $blocsQuery = $category->getBlocs();
                 foreach($blocsQuery->each() as $bloc) {
                     $bloc->delete();
+                }
+                $tagsQuery = $category->getTags()->with('blocs');
+                foreach($tagsQuery->each() as $tag) {
+                    foreach($tag->blocs as $bloc) {
+                        $bloc->delete();
+                    }
+                    $tag->delete();
                 }
                 $category->delete();
                 $transaction->commit();

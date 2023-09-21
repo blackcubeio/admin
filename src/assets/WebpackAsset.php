@@ -2,10 +2,10 @@
 /**
  * WebpackAsset.php
  *
- * PHP version 7.2+
+ * PHP version 8.0+
  *
  * @author Philippe Gaultier <pgaultier@redcat.io>
- * @copyright 2010-2020 Redcat
+ * @copyright 2010-2022 Redcat
  * @license https://www.redcat.io/license license
  * @version XXX
  * @link https://www.redcat.io
@@ -28,7 +28,7 @@ use Yii;
  * Base webpack assets
  *
  * @author Philippe Gaultier <pgaultier@redcat.io>
- * @copyright 2010-2020 Redcat
+ * @copyright 2010-2022 Redcat
  * @license https://www.redcat.io/license license
  * @version XXX
  * @link https://www.redcat.io
@@ -195,9 +195,6 @@ class WebpackAsset extends AssetBundle
      */
     private function getCache()
     {
-        if ($this->cacheEnabled === true) {
-            $this->cache = Instance::ensure($this->cache, Cache::class);
-        }
-        return $this->cacheEnabled ? $this->cache : null;
+        return $this->cacheEnabled ? $this->get('cache') : null;
     }
 }

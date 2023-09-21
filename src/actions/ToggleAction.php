@@ -2,10 +2,10 @@
 /**
  * ToggleAction.php
  *
- * PHP version 7.2+
+ * PHP version 8.0+
  *
  * @author Philippe Gaultier <pgaultier@redcat.io>
- * @copyright 2010-2020 Redcat
+ * @copyright 2010-2022 Redcat
  * @license https://www.redcat.io/license license
  * @version XXX
  * @link https://www.redcat.io
@@ -20,13 +20,12 @@ use yii\base\Action;
 use yii\base\InvalidArgumentException;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
-use Yii;
 
 /**
  * Class ToggleAction
  *
  * @author Philippe Gaultier <pgaultier@redcat.io>
- * @copyright 2010-2020 Redcat
+ * @copyright 2010-2022 Redcat
  * @license https://www.redcat.io/license license
  * @version XXX
  * @link https://www.redcat.io
@@ -68,7 +67,7 @@ class ToggleAction extends Action
         if ($element instanceof ElementInterface && $element->slug !== null) {
             $element->slug->active = $element->active;
         }
-        $transaction = Module::getInstance()->db->beginTransaction();
+        $transaction = Module::getInstance()->get('db')->beginTransaction();
         try {
             $elementStatus = $element->save(false, ['active', 'dateUpdate']);
             if ($element instanceof ElementInterface) {

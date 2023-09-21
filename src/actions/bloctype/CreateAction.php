@@ -2,10 +2,10 @@
 /**
  * CreateAction.php
  *
- * PHP version 7.2+
+ * PHP version 8.0+
  *
  * @author Philippe Gaultier <pgaultier@redcat.io>
- * @copyright 2010-2020 Redcat
+ * @copyright 2010-2022 Redcat
  * @license https://www.redcat.io/license license
  * @version XXX
  * @link https://www.redcat.io
@@ -28,7 +28,7 @@ use Yii;
  * Class CreateAction
  *
  * @author Philippe Gaultier <pgaultier@redcat.io>
- * @copyright 2010-2020 Redcat
+ * @copyright 2010-2022 Redcat
  * @license https://www.redcat.io/license license
  * @version XXX
  * @link https://www.redcat.io
@@ -47,13 +47,13 @@ class CreateAction extends Action
     public $targetAction = 'edit';
 
     /**
+     * @param BlocType $blocType
      * @return string|Response
      * @throws NotFoundHttpException
-     * @throws \yii\base\InvalidConfigException
+     * @throws \yii\base\InvalidConfigException|\yii\db\Exception
      */
-    public function run()
+    public function run(BlocType $blocType)
     {
-        $blocType = Yii::createObject(BlocType::class);
         $blocType->template = '{"type": "object", "properties": {"text": {"type": "string"}}, "required": []}';
         $typeBlocTypes = TypeHelper::getTypeBlocTypes();
         if (Yii::$app->request->isPost) {
@@ -63,7 +63,7 @@ class CreateAction extends Action
             }
             Model::loadMultiple($typeBlocTypes, Yii::$app->request->bodyParams);
             if ($blocType->validate() === true && Model::validateMultiple($typeBlocTypes)) {
-                $transaction = Module::getInstance()->db->beginTransaction();
+                $transaction = Module::getInstance()->get('db')->beginTransaction();
                 try {
                     if ($blocType->save()) {
                         foreach($typeBlocTypes as $typeBlocType) {

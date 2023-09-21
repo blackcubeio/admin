@@ -2,10 +2,10 @@
 /**
  * AuthenticationController.php
  *
- * PHP version 7.2+
+ * PHP version 8.0+
  *
  * @author Philippe Gaultier <pgaultier@redcat.io>
- * @copyright 2010-2020 Redcat
+ * @copyright 2010-2022 Redcat
  * @license https://www.redcat.io/license license
  * @version XXX
  * @link https://www.redcat.io
@@ -17,13 +17,12 @@ namespace blackcube\admin\controllers;
 use blackcube\admin\actions\authentication\LoginAction;
 use blackcube\admin\actions\authentication\LogoutAction;
 use yii\web\Controller;
-use Yii;
 
 /**
  * Class AuthenticationController
  *
  * @author Philippe Gaultier <pgaultier@redcat.io>
- * @copyright 2010-2020 Redcat
+ * @copyright 2010-2022 Redcat
  * @license https://www.redcat.io/license license
  * @version XXX
  * @link https://www.redcat.io

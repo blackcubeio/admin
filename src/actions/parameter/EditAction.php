@@ -2,10 +2,10 @@
 /**
  * EditAction.php
  *
- * PHP version 7.2+
+ * PHP version 8.0+
  *
  * @author Philippe Gaultier <pgaultier@redcat.io>
- * @copyright 2010-2020 Redcat
+ * @copyright 2010-2022 Redcat
  * @license https://www.redcat.io/license license
  * @version XXX
  * @link https://www.redcat.io
@@ -15,6 +15,7 @@
 namespace blackcube\admin\actions\parameter;
 
 use blackcube\core\models\Parameter;
+use blackcube\core\Module as CoreModule;
 use yii\base\Action;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
@@ -24,7 +25,7 @@ use Yii;
  * Class EditAction
  *
  * @author Philippe Gaultier <pgaultier@redcat.io>
- * @copyright 2010-2020 Redcat
+ * @copyright 2010-2022 Redcat
  * @license https://www.redcat.io/license license
  * @version XXX
  * @link https://www.redcat.io
@@ -63,8 +64,11 @@ class EditAction extends Action
                 }
             }
         }
+        $allowedParameterDomains = CoreModule::getInstance()->allowedParameterDomains;
+
         return $this->controller->render($this->view, [
             'parameter' => $parameter,
+            'allowedParameterDomains' => $allowedParameterDomains
         ]);
     }
 }

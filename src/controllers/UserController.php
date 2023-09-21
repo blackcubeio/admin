@@ -2,10 +2,10 @@
 /**
  * UserController.php
  *
- * PHP version 7.2+
+ * PHP version 8.0+
  *
  * @author Philippe Gaultier <pgaultier@redcat.io>
- * @copyright 2010-2020 Redcat
+ * @copyright 2010-2022 Redcat
  * @license https://www.redcat.io/license license
  * @version XXX
  * @link https://www.redcat.io
@@ -20,7 +20,8 @@ use blackcube\admin\actions\user\DeleteAction;
 use blackcube\admin\actions\user\EditAction;
 use blackcube\admin\actions\user\IndexAction;
 use blackcube\admin\actions\user\RbacAction;
-use blackcube\admin\actions\user\ToggleAction;
+use blackcube\admin\actions\user\AccountAction;
+use blackcube\admin\actions\ToggleAction;
 use blackcube\admin\components\Rbac;
 use blackcube\admin\models\Administrator;
 use yii\filters\AccessControl;
@@ -32,7 +33,7 @@ use Yii;
  * Class UserController
  *
  * @author Philippe Gaultier <pgaultier@redcat.io>
- * @copyright 2010-2020 Redcat
+ * @copyright 2010-2022 Redcat
  * @license https://www.redcat.io/license license
  * @version XXX
  * @link https://www.redcat.io
@@ -78,11 +79,18 @@ class UserController extends Controller
                     ],
                     'roles' => [Rbac::PERMISSION_USER_DELETE],
                 ],
+                [
+                    'allow' => true,
+                    'actions' => [
+                        'account',
+                    ],
+                    'roles' => ['@'],
+                ],
             ]
         ];
         $behaviors['forceAjax'] = [
             'class' => AjaxFilter::class,
-            'only' => ['modal', 'rbac', 'toggle'],
+            'only' => ['modal', 'rbac', 'toggle', 'delete'],
         ];
         return $behaviors;
     }
@@ -109,8 +117,12 @@ class UserController extends Controller
         $actions['delete'] = [
             'class' => DeleteAction::class,
         ];
+        $actions['account'] = [
+            'class' => AccountAction::class,
+        ];
         $actions['toggle'] = [
             'class' => ToggleAction::class,
+            'elementClass' => Administrator::class
         ];
         $actions['rbac'] = [
             'class' => RbacAction::class,

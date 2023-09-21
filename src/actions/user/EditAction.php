@@ -2,10 +2,10 @@
 /**
  * EditAction.php
  *
- * PHP version 7.2+
+ * PHP version 8.0+
  *
  * @author Philippe Gaultier <pgaultier@redcat.io>
- * @copyright 2010-2020 Redcat
+ * @copyright 2010-2022 Redcat
  * @license https://www.redcat.io/license license
  * @version XXX
  * @link https://www.redcat.io
@@ -25,7 +25,7 @@ use Yii;
  * Class EditAction
  *
  * @author Philippe Gaultier <pgaultier@redcat.io>
- * @copyright 2010-2020 Redcat
+ * @copyright 2010-2022 Redcat
  * @license https://www.redcat.io/license license
  * @version XXX
  * @link https://www.redcat.io
@@ -55,6 +55,7 @@ class EditAction extends Action
         if ($user === null) {
             throw new NotFoundHttpException();
         }
+        $passwordSecurity = Yii::createObject('passwordSecurity');
         if (Yii::$app->request->isPost) {
             $user->setScenario(Administrator::SCENARIO_UPDATE);
             $user->load(Yii::$app->request->bodyParams);
@@ -73,6 +74,7 @@ class EditAction extends Action
 
         return $this->controller->render('form', [
             'user' => $user,
+            'passwordSecurity' => $passwordSecurity,
             'userRolesById' => $authorizationData['userRolesById'],
             'userPermissionsById' => $authorizationData['userPermissionsById'],
             'userAssignmentsById' => $authorizationData['userAssignmentsById'],

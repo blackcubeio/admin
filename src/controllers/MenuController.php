@@ -2,10 +2,10 @@
 /**
  * MenuController.php
  *
- * PHP version 7.2+
+ * PHP version 8.0+
  *
  * @author Philippe Gaultier <pgaultier@redcat.io>
- * @copyright 2010-2020 Redcat
+ * @copyright 2010-2022 Redcat
  * @license https://www.redcat.io/license license
  * @version XXX
  * @link https://www.redcat.io
@@ -31,13 +31,12 @@ use blackcube\core\models\MenuItem;
 use yii\filters\AccessControl;
 use yii\filters\AjaxFilter;
 use yii\web\Controller;
-use Yii;
 
 /**
  * Class MenuController
  *
  * @author Philippe Gaultier <pgaultier@redcat.io>
- * @copyright 2010-2020 Redcat
+ * @copyright 2010-2022 Redcat
  * @license https://www.redcat.io/license license
  * @version XXX
  * @link https://www.redcat.io
@@ -86,7 +85,7 @@ class MenuController extends Controller
         ];
         $behaviors['forceAjax'] = [
             'class' => AjaxFilter::class,
-            'only' => ['modal', 'item-modal', 'toggle', 'up-item', 'down-item'],
+            'only' => ['modal', 'item-modal', 'toggle', 'up-item', 'down-item', 'delete', 'delete-item'],
         ];
         return $behaviors;
     }
@@ -108,7 +107,6 @@ class MenuController extends Controller
         $actions['toggle'] = [
             'class' => ToggleAction::class,
             'elementClass' => Menu::class,
-            'elementName' => 'menu',
         ];
         $actions['index'] = [
             'class' => IndexAction::class,

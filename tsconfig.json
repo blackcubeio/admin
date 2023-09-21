@@ -3,16 +3,27 @@
         "allowJs": true,
         "declaration": false,
         "experimentalDecorators": true,
+        "emitDecoratorMetadata": true,
+        "moduleResolution": "node",
+        "typeRoots": ["./node_modules/@types"],
+        "lib": ["esnext","dom"],
         "jsx": "react",
-        "module": "commonjs",
+        "module": "esnext",
         "noImplicitAny": false,
         "sourceMap": true,
-        "strictNullChecks": true,
-        "target": "es5",
+        "strictNullChecks": false,
+        "skipLibCheck": true,
+        "target": "es2017",
         "esModuleInterop": true
     },
+    "include": [
+        "src/assets/webpack/src"
+    ],
     "exclude": [
         "node_modules",
         "vendor"
+    ],
+    "files": [
+        "src/assets/webpack/src/resource.d.ts"
     ]
 }

@@ -1,0 +1,32 @@
+.profile {
+  &-btn {
+    @apply max-w-xs bg-white flex items-center text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500;
+  }
+  &-img {
+    @apply h-8 w-8 rounded-full;
+  }
+  &-initials {
+    @apply inline-flex items-center justify-center h-8 w-8 rounded-full bg-gray-500;
+    &-letters {
+      @apply font-medium leading-none text-white;
+    }
+  }
+  &-menu {
+    @apply origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none transform transition;
+    &-item {
+      @apply block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50;
+      &.active {
+        @apply bg-gray-100;
+      }
+    }
+    &.opened {
+      @apply opacity-100 scale-100 ease-out duration-100;
+    }
+    &.closed {
+      @apply opacity-0 scale-95 ease-in duration-75;
+    }
+    &.opening,
+    &.closing {
+    }
+  }
+}

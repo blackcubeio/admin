@@ -2,10 +2,10 @@
 /**
  * ToggleAction.php
  *
- * PHP version 7.2+
+ * PHP version 8.0+
  *
  * @author Philippe Gaultier <pgaultier@redcat.io>
- * @copyright 2010-2020 Redcat
+ * @copyright 2010-2022 Redcat
  * @license https://www.redcat.io/license license
  * @version XXX
  * @link https://www.redcat.io
@@ -26,7 +26,7 @@ use Yii;
  * Class ToggleAction
  *
  * @author Philippe Gaultier <pgaultier@redcat.io>
- * @copyright 2010-2020 Redcat
+ * @copyright 2010-2022 Redcat
  * @license https://www.redcat.io/license license
  * @version XXX
  * @link https://www.redcat.io
@@ -42,10 +42,11 @@ class ToggleAction extends Action
 
     /**
      * @param integer $id
+     * @param PluginsHandlerInterface $pluginsHandler
      * @return string|Response
      * @throws NotFoundHttpException
      */
-    public function run($id)
+    public function run($id, PluginsHandlerInterface $pluginsHandler)
     {
         $plugin = Plugin::find()->andWhere(['id' => $id])->one();
         if ($plugin === null) {
@@ -53,9 +54,8 @@ class ToggleAction extends Action
         }
         $plugin->active = !$plugin->active;
         $pluginStatus = $plugin->save(false, ['active', 'dateUpdate']);
-        $pluginHandler = Yii::createObject(PluginsHandlerInterface::class);
-        /* @var $pluginsHandler PluginsHandlerInterface */
-        $pluginManager = $pluginHandler->getPluginManager($id);
+
+        $pluginManager = $pluginsHandler->getPluginManager($id);
         if ($pluginManager === null) {
             throw new InvalidArgumentException();
         }

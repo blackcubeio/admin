@@ -2,10 +2,10 @@
 /**
  * form.php
  *
- * PHP version 7.2+
+ * PHP version 8.0+
  *
  * @author Philippe Gaultier <pgaultier@redcat.io>
- * @copyright 2010-2020 Redcat
+ * @copyright 2010-2022 Redcat
  * @license https://www.redcat.io/license license
  * @version XXX
  * @link https://www.redcat.io
@@ -13,158 +13,146 @@
  *
  * @var $pluginsHandler \blackcube\core\interfaces\PluginsHandlerInterface
  * @var $category \blackcube\core\models\Category
- * @var $slugForm \blackcube\admin\models\SlugForm
  * @var $typesQuery \blackcube\core\models\FilterActiveQuery
  * @var $languagesQuery \blackcube\core\models\FilterActiveQuery
- * @var $tagBlocs \blackcube\core\models\TagBloc[]
  * @var $blocs \blackcube\core\models\Bloc[]
  * @var $this \yii\web\View
  */
 
 use blackcube\admin\Module;
 use blackcube\admin\helpers\Html;
-use blackcube\admin\widgets\Sidebar;
-use blackcube\admin\widgets\SlugForm;
 use blackcube\core\interfaces\PluginsHandlerInterface;
-use blackcube\admin\interfaces\PluginAdminHookInterface;
+use blackcube\admin\interfaces\PluginManagerAdminHookInterface;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Url;
-
+use blackcube\admin\helpers\Heroicons;
+use blackcube\admin\helpers\BlackcubeHtml;
+use blackcube\admin\helpers\Aurelia;
 ?>
-    <main>
-        <?php echo Html::beginForm('', 'post', ['class' => 'form']); ?>
+<main class="application-content">
+    <?php echo Html::beginForm('', 'post', [
+        'class' => 'element-form-wrapper',
+    ]); ?>
+    <div class="page-header">
+        <?php echo Html::beginTag('a', [
+            'class' => 'text-white',
+            'href' => Url::to(['index'])
+        ]); ?>
+        <?php echo Heroicons::svg('solid/chevron-left', ['class' => 'h-5 w-5 mr-2']); ?>
+        <?php echo Html::endTag('a'); ?>
+        <h3 class="page-header-title"><?php echo Module::t('category', 'Category'); ?></h3>
+        <?php if($category->isNewRecord === false): ?>
+        <?php echo Aurelia::component('blackcube-element-toolbar', '', [
+            'slugTitle.bind' => Module::t('category', 'Slug'),
+            'slugUrl.bind' => Url::to(['slug', 'id' => $category->id]),
+            'slugActive.bind' => (($category->slug !== null) && $category->slug->active),
+            'sitemapTitle.bind' => Module::t('category', 'Sitemap'),
+            'sitemapUrl.bind' => Url::to(['sitemap', 'id' => $category->id]),
+            'sitemapActive.bind' => (($category->slug !== null) && ($category->slug->sitemap !== null) && $category->slug->sitemap->active),
+            'seoTitle.bind' => Module::t('category', 'SEO'),
+            'seoUrl.bind' => Url::to(['seo', 'id' => $category->id]),
+            'seoActive.bind' => (($category->slug !== null) && ($category->slug->seo !== null) && $category->slug->seo->active),
+            'showTags.bind' => false,
+            'slugExists.bind' => ($category->slug !== null)
+        ]); ?>
+        <?php endif; ?>
+        <!-- p class="element-form-header-abstract"><?php echo Module::t('category', 'This is the minimal information needed to create a new category'); ?></p -->
+    </div>
+    <div class="px-6 pb-6">
         <?php if ($pluginsHandler instanceof PluginsHandlerInterface): ?>
             <?php $widgets = $pluginsHandler->runWidgetHook(
-                $category->isNewRecord ? PluginAdminHookInterface::PLUGIN_HOOK_WIDGET_CATEGORY_CREATE_HEAD : PluginAdminHookInterface::PLUGIN_HOOK_WIDGET_CATEGORY_UPDATE_HEAD,
+                $category->isNewRecord ? PluginManagerAdminHookInterface::PLUGIN_HOOK_WIDGET_CATEGORY_CREATE_HEAD : PluginManagerAdminHookInterface::PLUGIN_HOOK_WIDGET_CATEGORY_UPDATE_HEAD,
                 $category
             ); ?>
             <?php foreach ($widgets as $widget): ?>
                 <?php echo $widget; ?>
             <?php endforeach; ?>
         <?php endif; ?>
-        <ul class="header">
-            <li>
-                <?php echo Html::a('<i class="fa fa-angle-left mr-2"></i> '.Module::t('category', 'Back'), ['index'], ['class' => 'button']); ?>
-            </li>
-            <li>
-                <?php echo Html::button('<i class="fa fa-check mr-2"></i> '.Module::t('category', 'Save'), ['type' => 'submit', 'class' => 'button']); ?>
-            </li>
-        </ul>
 
-            <?php echo SlugForm::widget([
-                'element' => $category,
-                'slugForm' => $slugForm,
-            ]); ?>
-            <div class="bloc">
-                <div class="bloc-title">
-                    <span class="title"><?php echo Module::t('category', 'Category'); ?></span>
-                </div>
+        <div class="element-form-bloc">
+            <div class="element-form-bloc-stacked">
+                <?php echo BlackcubeHtml::activeCheckbox($category, 'active', ['hint' => Module::t('category', 'Category status')]); ?>
             </div>
-            <div class="bloc">
-                <div class="w-full bloc-fieldset md:w-1/12">
-                    <?php echo Html::activeLabel($category, 'active', ['class' => 'label']); ?>
-                    <?php echo Html::activeCheckbox($category, 'active', ['label' => false, 'class' => 'checkbox']); ?>
-                </div>
-                <div class="w-full bloc-fieldset md:w-6/12">
-                    <?php echo Html::activeLabel($category, 'languageId', ['class' => 'label']); ?>
-                    <?php /*/ echo Html::activeDropDownList($tag, 'categoryId', ArrayHelper::map($categoriesQuery->select(['id', 'name'])->asArray()->all(), 'id', 'name'), [
-                        'blackcube-choices' => ''
-                    ]); /**/?>
-                    <div class="dropdown">
-                        <?php echo Html::activeDropDownList($category, 'languageId', ArrayHelper::map($languagesQuery->select(['id', 'name'])->asArray()->all(), 'id', 'name'), [
-                        ]); ?>
-                        <div class="arrow">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
-                        </div>
-                    </div>
-                </div>
-                <div class="w-full bloc-fieldset md:w-5/12">
-                    <?php echo Html::activeLabel($category, 'typeId', ['class' => 'label']); ?>
-                    <div class="dropdown">
-                        <?php echo Html::activeDropDownList($category, 'typeId', ArrayHelper::map($typesQuery->select(['id', 'name'])->asArray()->all(), 'id', 'name'), [
-                            'prompt' => Module::t('category', 'No type'),
-                        ]); ?>
-                        <div class="arrow">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="bloc">
-                <div class="w-full bloc-fieldset">
-                    <?php echo Html::activeLabel($category, 'name', ['class' => 'label']); ?>
-                    <?php echo Html::activeTextInput($category, 'name', ['class' => 'textfield'.($category->hasErrors('name')?' error':'')]); ?>
-                </div>
-            </div>
-
-            <?php if ($pluginsHandler instanceof PluginsHandlerInterface): ?>
-                <?php $widgets = $pluginsHandler->runWidgetHook(
-                    $category->isNewRecord ? PluginAdminHookInterface::PLUGIN_HOOK_WIDGET_CATEGORY_CREATE_BEFORE_BLOCS : PluginAdminHookInterface::PLUGIN_HOOK_WIDGET_CATEGORY_UPDATE_BEFORE_BLOCS,
-                    $category
-                ); ?>
-                <?php foreach ($widgets as $widget): ?>
-                    <?php echo $widget; ?>
-                <?php endforeach; ?>
-            <?php endif; ?>
-
-            <?php if ($category->id !== null && $category->type !== null): ?>
-                <?php echo Html::beginTag('div', ['blackcube-toggle-element' => Html::bindAureliaAttributes([
-                    'elementType' => \blackcube\core\models\Category::getElementType(),
-                    'elementId' => $category->id,
-                    'elementSubData' => 'blocs'
-                ])]); ?>
-                    <?php echo Html::beginTag('div', [
-                        'blackcube-blocs' => Url::to(['blocs', 'id' => $category->id])
+            <div class="element-form-bloc-grid-12">
+                <div class="element-form-bloc-cols-6">
+                    <?php echo BlackcubeHtml::activeDropDownList($category, 'typeId', ArrayHelper::map($typesQuery->select(['id', 'name'])->asArray()->all(), 'id', 'name'), [
+                        'prompt' => Module::t('category', 'No type'),
+                        'label' => Module::t('category', 'Type'),
                     ]); ?>
-                        <div class="bloc">
-                            <div class="bloc-title flex justify-between" data-toggle-element="source">
-                                <span class="title"><?php echo Module::t('category', 'Content'); ?></span>
-                                <i class="fa fa-chevron-down text-white mt-2"></i>
-                            </div>
-                        </div>
-                        <div data-toggle-element="target">
-                            <div data-ajax-target="">
-                                <?php echo $this->render('@blackcube/admin/views/common/_blocs', ['blocs' => $blocs, 'element' => $category]); ?>
-                            </div>
-                            <?php if ($category->type && $category->type->getBlocTypes()->count() > 0): ?>
-                            <div class="bloc bloc-tools">
-                                <div class="dropdown-tool">
-                                    <?php echo Html::dropDownList('blocTypeId', null, ArrayHelper::map($category->type->blocTypes, 'id', 'name'), []); ?>
-                                    <div class="dropdown-tool-arrow">
-                                        <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
-                                    </div>
-                                </div>
-                                <button type="button" name="blocAdd" class="button">
-                                    <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" >
-                                        <path d="M5 3h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5c0-1.1.9-2 2-2zm0 2v14h14V5H5zm8 6h2a1 1 0 0 1 0 2h-2v2a1 1 0 0 1-2 0v-2H9a1 1 0 0 1 0-2h2V9a1 1 0 0 1 2 0v2z"/>
-                                    </svg>
-                                </button>
-                            </div>
-                            <?php endif; ?>
-                        </div>
-                    <?php echo Html::endTag('div'); ?>
-                <?php echo Html::endTag('div'); ?>
-            <?php endif; ?>
-
-            <?php if ($pluginsHandler instanceof PluginsHandlerInterface): ?>
-                <?php $widgets = $pluginsHandler->runWidgetHook(
-                    $category->isNewRecord ? PluginAdminHookInterface::PLUGIN_HOOK_WIDGET_CATEGORY_CREATE_TAIL : PluginAdminHookInterface::PLUGIN_HOOK_WIDGET_CATEGORY_UPDATE_TAIL,
-                    $category
-                ); ?>
-                <?php foreach ($widgets as $widget): ?>
-                    <?php echo $widget; ?>
-                <?php endforeach; ?>
-            <?php endif; ?>
-
-            <div class="buttons">
-                <?php echo Html::a('<i class="fa fa-times mr-2"></i> '.Module::t('category', 'Cancel'), ['index'], [
-                    'class' => 'button-cancel'
-                ]); ?>
-                <?php echo Html::button('<i class="fa fa-check mr-2"></i> '.Module::t('category', 'Save'), [
-                    'type' => 'submit',
-                    'class' => 'button-submit'
-                ]); ?>
+                </div>
+                <div class="element-form-bloc-cols-6">
+                    <?php echo BlackcubeHtml::activeDropDownList($category, 'languageId', ArrayHelper::map($languagesQuery->select(['id', 'name'])->asArray()->all(), 'id', 'name'), [
+                        'label' => Module::t('category', 'Language'),
+                    ]); ?>
+                </div>
             </div>
-        <?php echo Html::endForm(); ?>
-    </main>
+            <div class="element-form-bloc-stacked">
+                <?php echo BlackcubeHtml::activeTextInput($category, 'name', []); ?>
+            </div>
+        </div>
+    </div>
+        <?php if ($pluginsHandler instanceof PluginsHandlerInterface): ?>
+            <?php $widgets = $pluginsHandler->runWidgetHook(
+                $category->isNewRecord ? PluginManagerAdminHookInterface::PLUGIN_HOOK_WIDGET_CATEGORY_CREATE_BEFORE_BLOCS : PluginManagerAdminHookInterface::PLUGIN_HOOK_WIDGET_CATEGORY_UPDATE_BEFORE_BLOCS,
+                $category
+            ); ?>
+            <?php foreach ($widgets as $widget): ?>
+                <?php echo $widget; ?>
+            <?php endforeach; ?>
+        <?php endif; ?>
+
+        <?php if (($category->isNewRecord === false) && $category->type !== null): ?>
+            <?php echo Html::beginTag('div', ['blackcube-fold' => Aurelia::bindOptions(['element-type' => $category::getElementType(), 'element-id' => $category->id, 'element-sub-data' => 'blocs'])]); ?>
+            <div class="element-form-header flex justify-between text-white" data-fold="">
+                <h3 class="element-form-header-title">
+                    <?php echo Module::t('category', 'Contents'); ?>
+                    <span class="inline-flex items-center ml-2 px-1 py-0.5 rounded-full text-xs font-medium bg-white text-indigo-800"> <?php echo $category->getBlocs()->count(); ?> </span>
+                </h3>
+                <button type="button" data-fold="down">
+                    <?php echo Heroicons::svg('outline/chevron-up', ['class' => 'h-5 w-5']); ?>
+                </button>
+                <button type="button" data-fold="up" class="hidden">
+                    <?php echo Heroicons::svg('outline/chevron-down', ['class' => 'h-5 w-5']); ?>
+                </button>
+            </div>
+            <?php echo Aurelia::component('blackcube-blocs', '', [
+                'data-target-fold' => '',
+                'class' => 'hidden',
+                'url.bind' => Url::to(['blocs', 'id' => $category->id]),
+                'view.bind' => $this->render('@blackcube/admin/views/common/_blocs', [
+                    'element' => $category,
+                    'blocs' => $blocs
+                ])
+            ]);?>
+            <?php echo Html::endTag('div'); ?>
+        <?php endif; ?>
+        <?php if ($pluginsHandler instanceof PluginsHandlerInterface): ?>
+            <?php $widgets = $pluginsHandler->runWidgetHook(
+                $category->isNewRecord ? PluginManagerAdminHookInterface::PLUGIN_HOOK_WIDGET_CATEGORY_CREATE_TAIL : PluginManagerAdminHookInterface::PLUGIN_HOOK_WIDGET_CATEGORY_UPDATE_TAIL,
+                $category
+            ); ?>
+            <?php foreach ($widgets as $widget): ?>
+                <?php echo $widget; ?>
+            <?php endforeach; ?>
+        <?php endif; ?>
+    <div class="px-6 pb-6">
+
+        <div class="element-form-buttons">
+            <?php echo Html::beginTag('a', [
+                'class' => 'element-form-buttons-button',
+                'href' => Url::to(['index'])
+            ]); ?>
+            <?php echo Heroicons::svg('solid/x', ['class' => 'element-form-buttons-button-icon']); ?>
+            <?php echo Module::t('common', 'Cancel'); ?>
+            <?php echo Html::endTag('a'); ?>
+            <?php echo Html::beginTag('button', [
+                'class' => 'element-form-buttons-button action',
+                'type' => 'submit'
+            ]); ?>
+            <?php echo Heroicons::svg('solid/check', ['class' => 'element-form-buttons-button-icon']); ?>
+            <?php echo Module::t('common', 'Save'); ?>
+            <?php echo Html::endTag('button'); ?>
+        </div>
+    </div>
+    <?php echo Html::endForm(); ?>
+</main>

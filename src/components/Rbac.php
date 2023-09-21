@@ -2,10 +2,10 @@
 /**
  * Rbac.php
  *
- * PHP version 7.2+
+ * PHP version 8.0+
  *
  * @author Philippe Gaultier <pgaultier@redcat.io>
- * @copyright 2010-2020 Redcat
+ * @copyright 2010-2022 Redcat
  * @license https://www.redcat.io/license license
  * @version XXX
  * @link https://www.redcat.io
@@ -20,7 +20,7 @@ use yii\helpers\Inflector;
  * Class Rbac
  *
  * @author Philippe Gaultier <pgaultier@redcat.io>
- * @copyright 2010-2020 Redcat
+ * @copyright 2010-2022 Redcat
  * @license https://www.redcat.io/license license
  * @version XXX
  * @link https://www.redcat.io
@@ -75,6 +75,12 @@ class Rbac
     public const PERMISSION_MENU_UPDATE = 'MENU:UPDATE';
     public const PERMISSION_MENU_VIEW = 'MENU:VIEW';
     public const ROLE_MENU_MANAGER = 'MENU:MANAGER';
+
+    public const PERMISSION_LANGUAGE_CREATE = 'LANGUAGE:CREATE';
+    public const PERMISSION_LANGUAGE_DELETE = 'LANGUAGE:DELETE';
+    public const PERMISSION_LANGUAGE_UPDATE = 'LANGUAGE:UPDATE';
+    public const PERMISSION_LANGUAGE_VIEW = 'LANGUAGE:VIEW';
+    public const ROLE_LANGUAGE_MANAGER = 'LANGUAGE:MANAGER';
 
     public const ROLE_SITE_MANAGER = 'SITE:MANAGER';
     public const PERMISSION_SITE_PREVIEW = 'SITE:PREVIEW';

@@ -2,199 +2,101 @@
 /**
  * form.php
  *
- * PHP version 7.2+
+ * PHP version 8.0+
  *
  * @author Philippe Gaultier <pgaultier@redcat.io>
- * @copyright 2010-2020 Redcat
+ * @copyright 2010-2022 Redcat
  * @license https://www.redcat.io/license license
  * @version XXX
  * @link https://www.redcat.io
- * @package blackcube\admin\views\slug
+ * @package blackcube\admin\views\form
  *
- * @var $slugForm \blackcube\admin\models\SlugForm
+ * @var $element Slug
  * @var $this \yii\web\View
  */
 
 use blackcube\admin\Module;
+use blackcube\admin\models\Administrator;
 use blackcube\admin\helpers\Html;
-use blackcube\admin\widgets\Sidebar;
-use blackcube\admin\widgets\SlugForm;
-use blackcube\core\models\Parameter;
+use blackcube\core\models\Slug;
+use blackcube\admin\helpers\BlackcubeHtml;
+use blackcube\admin\helpers\Heroicons;
 use yii\helpers\ArrayHelper;
+use blackcube\core\models\Parameter;
+use blackcube\admin\helpers\Aurelia;
 use yii\helpers\Url;
+use yii\web\Response;
 ?>
-    <main>
-        <?php echo Html::beginForm('', 'post', ['class' => 'form']); ?>
-        <ul class="header">
-            <li>
-                <?php echo Html::a('<i class="fa fa-angle-left mr-2"></i> '.Module::t('slug', 'Back'), ['index'], ['class' => 'button']); ?>
-            </li>
-            <li>
-                <?php echo Html::button('<i class="fa fa-check mr-2"></i> '.Module::t('slug', 'Save'), ['type' => 'submit', 'class' => 'button']); ?>
-            </li>
-        </ul>
-        <?php echo SlugForm::widget([
-            'element' => $slugForm->getSlug(),
-            'slugForm' => $slugForm,
+<main class="application-content">
+    <?php echo Html::beginForm('', 'post', [
+        'class' => 'element-form-wrapper',
+    ]); ?>
+    <div class="page-header">
+        <?php echo Html::beginTag('a', [
+            'class' => 'text-white',
+            'href' => Url::to(['index'])
         ]); ?>
-
-        <?php /*/ ?>
-        <div class="bloc">
-            <div class="bloc-title">
-                <span class="title"><?php echo Module::t('slug', 'Slug'); ?></span>
+        <?php echo Heroicons::svg('solid/chevron-left', ['class' => 'h-5 w-5 mr-2']); ?>
+        <?php echo Html::endTag('a'); ?>
+        <h3 class="page-header-title"><?php echo Module::t('slug', 'Slug'); ?></h3>
+    </div>
+    <div class="px-6 pb-6">
+        <div class="element-form-bloc">
+            <div class="element-form-bloc-stacked">
+                <?php echo BlackcubeHtml::activeCheckbox($element, 'active', []); ?>
             </div>
-        </div>
-        <div class="bloc">
-            <div class="w-full bloc-fieldset md:w-1/12">
-                <?php echo Html::activeLabel($slug, 'active', ['class' => 'label']); ?>
-                <?php echo Html::activeCheckbox($slug, 'active', ['label' => false, 'class' => 'checkbox']); ?>
-            </div>
-            <div class="w-full bloc-fieldset md:w-3/12">
-                <?php echo Html::activeLabel($slug, 'host', ['class' => 'label']); ?>
-                <div class="dropdown">
-                    <?php echo Html::activeDropDownList($slug, 'host', ArrayHelper::map(Parameter::getAllowedHosts(), 'id', 'value'), [
-                    ]); ?>
-                    <div class="arrow">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
-                    </div>
+            <div class="element-form-bloc-grid-12">
+                <div class="element-form-bloc-cols-3">
+                    <?php echo BlackcubeHtml::activeDropDownList($element, 'host', ArrayHelper::map(Parameter::getAllowedHosts(), 'id', 'value'), []); ?>
                 </div>
-            </div>
-            <div class="w-full bloc-fieldset md:w-8/12">
-                <?php echo Html::activeLabel($slug, 'path', ['class' => 'label']); ?>
-                <?php echo Html::activeTextInput($slug, 'path', ['class' => 'textfield'.($slug->hasErrors('path')?' error':'')]); ?>
-            </div>
-        </div>
-        <div class="bloc">
-            <div class="w-full bloc-fieldset md:w-4/12">
-                <?php echo Html::activeLabel($slug, 'httpCode', ['class' => 'label']); ?>
-                <div class="dropdown">
-                    <?php echo Html::activeDropDownList($slug, 'httpCode', [
-                        301 => Module::t('slug', 'Moved Permanently (#{code})', ['code' => 301]),
-                        302 => Module::t('slug', 'Found (#{code})', ['code' => 302])
-                    ], ['prompt' => Module::t('slug', 'Select HTTP Code'), 'class' => $slug->hasErrors('httpCode') ? 'error':'']); ?>
-                    <div class="arrow">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
-                    </div>
+                <div class="element-form-bloc-cols-9">
+                    <?php echo BlackcubeHtml::activeTextInput($element, 'path', []); ?>
                 </div>
-            </div>
-            <div class="w-full bloc-fieldset md:w-8/12">
-                <?php echo Html::activeLabel($slug, 'targetUrl', ['class' => 'label']); ?>
-                <?php echo Html::activeTextInput($slug, 'targetUrl', ['class' => 'textfield'.($slug->hasErrors('targetUrl')?' error':'')]); ?>
-            </div>
-        </div>
-        <div class="bloc">
-            <div class="w-full px-3">
-                <span class="italic text-xs text-gray-700"><?php echo Module::t('widgets', 'Sitemap and SEO elements are Slug dependant. They will be activated for the website only if Slug is active'); ?></span>
-            </div>
-        </div>
-        <div class="bloc">
-            <div class="bloc-subtitle">
-                <label class="title"><?php echo Module::t('widgets', 'Sitemap'); ?></label>
-            </div>
-            <div class="w-full bloc-fieldset md:w-1/12">
-                <?php echo Html::activeLabel($sitemap, 'active', ['class' => 'label']); ?>
-                <?php echo Html::activeCheckbox($sitemap, 'active', ['label' => false, 'class' => 'checkbox']); ?>
-            </div>
-            <div class="w-full bloc-fieldset md:w-2/12">
-                <?php echo Html::activeLabel($sitemap, 'frequency', ['class' => 'label']); ?>
-                <div class="dropdown">
-                    <?php echo Html::activeDropDownList($sitemap, 'frequency', $slugForm->getFrequencies()); ?>
-                    <div class="arrow">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
-                    </div>
-                </div>
-            </div>
-            <div class="w-full bloc-fieldset md:w-2/12">
-                <?php echo Html::activeLabel($sitemap, 'priority', ['class' => 'label']); ?>
-                <div class="dropdown">
-                    <?php echo Html::activeDropDownList($sitemap, 'priority', $slugForm->getPriorities()); ?>
-                    <div class="arrow">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="bloc">
-            <div class="bloc-subtitle">
-                <label class="title"><?php echo Module::t('widgets', 'SEO'); ?></label>
-            </div>
-            <div class="w-full bloc-fieldset md:w-1/12">
-                <?php echo Html::activeLabel($seo, 'active', ['class' => 'label']); ?>
-                <?php echo Html::activeCheckbox($seo, 'active', ['label' => false, 'class' => 'checkbox']); ?>
-            </div>
-            <div class="w-full bloc-fieldset md:w-1/12">
-                <?php echo Html::activeLabel($seo, 'noindex', ['class' => 'label']); ?>
-                <?php echo Html::activeCheckbox($seo, 'noindex', ['label' => false, 'class' => 'checkbox']); ?>
-            </div>
-            <div class="w-full bloc-fieldset md:w-1/12">
-                <?php echo Html::activeLabel($seo, 'nofollow', ['class' => 'label']); ?>
-                <?php echo Html::activeCheckbox($seo, 'nofollow', ['label' => false, 'class' => 'checkbox']); ?>
-            </div>
-            <div class="w-full bloc-fieldset md:w-9/12">
-                <?php echo Html::activeLabel($seo, 'title', ['class' => 'label']); ?>
-                <?php echo Html::activeTextInput($seo, 'title', ['class' => 'textfield'.($seo->hasErrors('title')?' error':'')]); ?>
-            </div>
-        </div>
-        <div class="bloc ml-4 justify-end">
-            <div class="w-full bloc-fieldset md:w-11/12">
-                <?php echo Html::activeLabel($seo, 'description', ['class' => 'label']); ?>
-                <?php echo Html::activeTextarea($seo, 'description', ['class' => 'textfield'.($seo->hasErrors('description')?' error':'')]); ?>
-            </div>
-        </div>
-        <div class="bloc ml-4 justify-end">
-            <div class="w-full bloc-fieldset md:w-4/12">
-                <?php echo Html::activeLabel($seo, 'image', ['class' => 'label']); ?>
-                <?php echo Html::activeUpload($seo, 'image', [
-                    'upload-url' => Url::to(['file-upload']),
-                    'preview-url' => Url::to(['file-preview', 'name' => '__name__']),
-                    'delete-url' => Url::to(['file-delete', 'name' => '__name__']),
-                    'image-width' => 1200,
-                    'image-height' => 630,
-                    'file-type' => 'jpg,png',
+                <!-- div class="element-form-bloc-cols-1 flex items-end">
+                <?php echo Html::a(Heroicons::svg('solid/refresh', ['class' => 'h-4 w-4']), '', [
+                    'class' => 'relative inline-flex items-center p-2.5 rounded-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:text-white hover:bg-indigo-600 focus:z-10 focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500',
+                    'blackcube-url-generator' => Url::toRoute('ajax/generate-slug')
                 ]); ?>
+            </div -->
             </div>
-            <div class="w-full bloc-fieldset md:w-7/12">
-                <span class="italic text-xs text-gray-700"><?php echo Module::t('widgets', 'Image size should be 1200x630'); ?></span>
-            </div>
-        </div>
-        <div class="bloc ml-4 justify-end">
-            <div class="w-full bloc-fieldset md:w-1/12">
-                <?php echo Html::activeLabel($seo, 'og', ['class' => 'label']); ?>
-                <?php echo Html::activeCheckbox($seo, 'og', ['label' => false, 'class' => 'checkbox']); ?>
-            </div>
-            <div class="w-full bloc-fieldset md:w-4/12">
-                <?php echo Html::activeLabel($seo, 'ogType', ['class' => 'label']); ?>
-                <div class="dropdown">
-                    <?php echo Html::activeDropDownList($seo, 'ogType', ['website' => Module::t('widgets', 'Website')]); ?>
-                    <div class="arrow">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
-                    </div>
+            <?php // 'httpCode', 'path', 'host', 'targetUrl', 'active' ?>
+            <?php if ($element->scenario === Slug::SCENARIO_REDIRECT):?>
+            <div class="element-form-bloc-grid-12">
+                <div class="element-form-bloc-cols-3">
+                    <?php echo BlackcubeHtml::activeDropDownList($element, 'httpCode', [
+                        '300' => '(300) '.Response::$httpStatuses[300],
+                        '301' => '(301) '.Response::$httpStatuses[301],
+                        '302' => '(302) '.Response::$httpStatuses[302],
+                        '303' => '(303) '.Response::$httpStatuses[303],
+                        '305' => '(305) '.Response::$httpStatuses[305],
+                        '307' => '(307) '.Response::$httpStatuses[307],
+                        '308' => '(308) '.Response::$httpStatuses[308],
+                    ], []); ?>
+                </div>
+                <div class="element-form-bloc-cols-9">
+                    <?php echo BlackcubeHtml::activeTextInput($element, 'targetUrl', []); ?>
                 </div>
             </div>
-            <div class="w-full bloc-fieldset md:w-1/12">
-                <?php echo Html::activeLabel($seo, 'twitter', ['class' => 'label']); ?>
-                <?php echo Html::activeCheckbox($seo, 'twitter', ['label' => false, 'class' => 'checkbox']); ?>
-            </div>
-            <div class="w-full bloc-fieldset md:w-4/12">
-                <?php echo Html::activeLabel($seo, 'twitterCard', ['class' => 'label']); ?>
-                <div class="dropdown">
-                    <?php echo Html::activeDropDownList($seo, 'twitterCard', ['summary' => Module::t('widgets', 'Summary'), 'summary_large_image' => Module::t('widgets', 'Summary large image')]); ?>
-                    <div class="arrow">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
-                    </div>
-                </div>
-            </div>
+            <?php endif; ?>
         </div>
-        <?php /**/ ?>
-        <div class="buttons">
-                <?php echo Html::a('<i class="fa fa-times mr-2"></i> '.Module::t('slug', 'Cancel'), ['index'], [
-                    'class' => 'button-cancel'
-                ]); ?>
-                <?php echo Html::button('<i class="fa fa-check mr-2"></i> '.Module::t('slug', 'Save'), [
-                    'type' => 'submit',
-                    'class' => 'button-submit'
-                ]); ?>
-            </div>
-        <?php echo Html::endForm(); ?>
-    </main>
+    </div>
+    <div class="px-6 pb-6">
+        <div class="element-form-buttons">
+            <?php echo Html::beginTag('a', [
+                'class' => 'element-form-buttons-button',
+                'href' => Url::to(['index'])
+            ]); ?>
+            <?php echo Heroicons::svg('solid/x', ['class' => 'element-form-buttons-button-icon']); ?>
+            <?php echo Module::t('common', 'Cancel'); ?>
+            <?php echo Html::endTag('a'); ?>
+            <?php echo Html::beginTag('button', [
+                'class' => 'element-form-buttons-button action',
+                'type' => 'submit'
+            ]); ?>
+            <?php echo Heroicons::svg('solid/check', ['class' => 'element-form-buttons-button-icon']); ?>
+            <?php echo Module::t('common', 'Save'); ?>
+            <?php echo Html::endTag('button'); ?>
+        </div>
+    </div>
+</main>
 

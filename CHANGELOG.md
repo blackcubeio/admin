@@ -1,6 +1,19 @@
 Blackcube Admin - CHANGELOG 
 ===========================
 
+Release 3.0.0 September, 21st 2023 <pgaultier@redcat.io>
+----------------------------------------------------
+
+ * Fix: menu system'
+ * Upd: update heroicons
+ * Upd: Prepare DI
+ * Upd: Full BO Rewrite
+ * Upd: Migrate to Aurelia 2
+ * Chg: Replace Wysiwyg editor with QuillJs
+ * Chg: Prepare new plugin system
+ * Chg: move ```db```, ```cache``` and ```fs``` to components to allow tree traversal
+ * Fix: update deps to heandle `svg`
+
 Release 2.2.3 March, 11th 2022 <pgaultier@redcat.io>
 ----------------------------------------------------
 

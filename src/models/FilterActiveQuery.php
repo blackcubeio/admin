@@ -2,10 +2,10 @@
 /**
  * FilterActiveQuery.php
  *
- * PHP version 7.2+
+ * PHP version 8.0+
  *
  * @author Philippe Gaultier <pgaultier@redcat.io>
- * @copyright 2010-2020 Redcat
+ * @copyright 2010-2022 Redcat
  * @license https://www.redcat.io/license license
  * @version XXX
  * @link https://www.redcat.io
@@ -22,7 +22,7 @@ use Yii;
  * Class FilterActiveQuery
  *
  * @author Philippe Gaultier <pgaultier@redcat.io>
- * @copyright 2010-2020 Redcat
+ * @copyright 2010-2022 Redcat
  * @license https://www.redcat.io/license license
  * @version XXX
  * @link https://www.redcat.io
@@ -47,7 +47,8 @@ class FilterActiveQuery extends ActiveQuery
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function active() {
+    public function active()
+    {
         if ($this->previewManager->check() === false) {
             $this->andWhere([
                 '[[active]]' => true,

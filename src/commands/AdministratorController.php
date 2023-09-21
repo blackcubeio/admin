@@ -2,10 +2,10 @@
 /**
  * AdministratorController.php
  *
- * PHP version 7.2+
+ * PHP version 8.0+
  *
  * @author Philippe Gaultier <pgaultier@redcat.io>
- * @copyright 2010-2020 Redcat
+ * @copyright 2010-2022 Redcat
  * @license https://www.redcat.io/license license
  * @version XXX
  * @link https://www.redcat.io
@@ -25,7 +25,7 @@ use Yii;
  * Blackcube admin Administrator manager
  *
  * @author Philippe Gaultier <pgaultier@redcat.io>
- * @copyright 2010-2020 Redcat
+ * @copyright 2010-2022 Redcat
  * @license https://www.redcat.io/license license
  * @version XXX
  * @link https://www.redcat.io
@@ -65,10 +65,14 @@ class AdministratorController extends Controller
         $this->stdout(Module::t('console', 'Create new administrator'."\n"));
         $email = $this->prompt("\t".Module::t('console', 'email').' : ');
         $password = $this->prompt("\t".Module::t('console', 'password').' : ');
+        $firstname = $this->prompt("\t".Module::t('console', 'firstname').' : ');
+        $lastname = $this->prompt("\t".Module::t('console', 'lastname').' : ');
         $administrator = Yii::createObject(Administrator::class);
         $administrator->scenario = Administrator::SCENARIO_CREATE;
         $administrator->email = $email;
         $administrator->password = $password;
+        $administrator->firstname = $firstname;
+        $administrator->lastname = $lastname;
         $administrator->active = true;
         if ($administrator->validate() === true && $administrator->save() === true) {
             $this->stdout(Module::t('console', 'Save administrator {email} {hash}', [

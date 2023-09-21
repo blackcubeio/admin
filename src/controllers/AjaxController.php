@@ -2,10 +2,10 @@
 /**
  * AjaxController.php
  *
- * PHP version 7.2+
+ * PHP version 8.0+
  *
  * @author Philippe Gaultier <pgaultier@redcat.io>
- * @copyright 2010-2020 Redcat
+ * @copyright 2010-2022 Redcat
  * @license https://www.redcat.io/license license
  * @version XXX
  * @link https://www.redcat.io
@@ -15,9 +15,13 @@
 namespace blackcube\admin\controllers;
 
 use blackcube\admin\components\Rbac;
+use blackcube\admin\helpers\Heroicons;
+use blackcube\admin\helpers\Html;
 use blackcube\admin\models\SlugGeneratorForm;
 use blackcube\admin\Module;
-use blackcube\core\components\PreviewManager;
+use blackcube\core\components\Element;
+use blackcube\core\components\RouteEncoder;
+use blackcube\core\interfaces\PreviewManagerInterface;
 use blackcube\core\interfaces\SlugGeneratorInterface;
 use yii\filters\AccessControl;
 use yii\filters\AjaxFilter;
@@ -30,7 +34,7 @@ use yii\web\UnprocessableEntityHttpException;
  * Class AjaxController
  *
  * @author Philippe Gaultier <pgaultier@redcat.io>
- * @copyright 2010-2020 Redcat
+ * @copyright 2010-2022 Redcat
  * @license https://www.redcat.io/license license
  * @version XXX
  * @link https://www.redcat.io
@@ -76,41 +80,43 @@ class AjaxController extends Controller
      * @return string|Response
      * @throws \yii\base\InvalidConfigException
      */
-    public function actionPreview()
+    public function actionPreview(PreviewManagerInterface $previewManager)
     {
-        $previewManager = Yii::createObject([
-            'class' => PreviewManager::class,
-        ]);
         if ($previewManager->check() === true) {
             $previewManager->deactivate();
         } else {
             $previewManager->activate();
         }
-        return Module::t('widgets', 'Preview {icon}', [
-            'icon' => $previewManager->check() ? '<i class="fa fa-low-vision text-red-600"></i>':'<i class="fa fa-eye-slash"></i>'
-        ]);
+        $content = Html::tag('span', Module::t('widgets', 'Preview'), ['class' => 'sr-only']);
+        $content .= "\n" . Heroicons::svg(
+    $previewManager->check() ? 'outline/eye' : 'outline/eye-off',
+            ['class' => 'preview-icon']);
+
+        return $content;
     }
 
-    public function actionGenerateSlug()
+    public function actionGenerateSlug(SlugGeneratorInterface $slugGenerator)
     {
         Yii::$app->response->format = Response::FORMAT_JSON;
-        $slugGeneratorForm = Yii::createObject(SlugGeneratorForm::class);
         if (Yii::$app->request->isPost === true) {
-            $slugGeneratorForm->load(Yii::$app->request->bodyParams, '');
+            $parameters = Yii::$app->request->bodyParams;
         } elseif (Yii::$app->request->isGet === true) {
-            $slugGeneratorForm->load(Yii::$app->request->queryParams, '');
+            $parameters = Yii::$app->request->queryParams;
         }
-        if ($slugGeneratorForm->validate() === true) {
-            $generator = Yii::createObject(SlugGeneratorInterface::class);
-            $url = $generator->getElementSlug($slugGeneratorForm->name, $slugGeneratorForm->parentElementType, $slugGeneratorForm->parentElementId);
-            return [
-                'name' => $slugGeneratorForm->name,
-                'parentElementType' => $slugGeneratorForm->parentElementType,
-                'parentElementId' => $slugGeneratorForm->parentElementId,
-                'url' => $url
-            ];
-        } else {
-            throw new UnprocessableEntityHttpException();
+        if (isset($parameters['id']) && isset($parameters['type'])) {
+            $route = RouteEncoder::encode($parameters['type'], $parameters['id']);
+            $element = Element::instanciate($route);
+            if ($element !== null) {
+                $slug = $slugGenerator->getElementSlug($element, true);
+                return [
+                    'elementType' => $parameters['type'],
+                    'elementId' => $parameters['id'],
+                    'url' => $slug
+                ];
+            }
         }
+
+        throw new UnprocessableEntityHttpException();
+
     }
 }

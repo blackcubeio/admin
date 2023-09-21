@@ -2,10 +2,10 @@
 /**
  * main.php
  *
- * PHP version 7.2+
+ * PHP version 8.0+
  *
  * @author Philippe Gaultier <pgaultier@redcat.io>
- * @copyright 2010-2019 Redcat
+ * @copyright 2010-2022 Redcat
  * @license https://www.redcat.io/license license
  * @version XXX
  * @link https://www.redcat.io
@@ -33,7 +33,7 @@ $this->beginPage(); ?><!DOCTYPE html>
         </title>
         <?php $this->head(); ?>
     </head>
-    <body class="h-screen font-sans login bg-cover">
+    <body class="login">
         <?php $this->beginBody(); ?>
             <?php echo $content; ?>
         <?php $this->endBody(); ?>

@@ -2,10 +2,10 @@
 /**
  * Html.php
  *
- * PHP version 7.2+
+ * PHP version 8.0+
  *
  * @author Philippe Gaultier <pgaultier@redcat.io>
- * @copyright 2010-2020 Redcat
+ * @copyright 2010-2022 Redcat
  * @license https://www.redcat.io/license license
  * @version XXX
  * @link https://www.redcat.io
@@ -19,14 +19,12 @@ use yii\base\InvalidArgumentException;
 use yii\base\InvalidConfigException;
 use yii\base\Model;
 use yii\base\NotSupportedException;
-use yii\helpers\Inflector;
-use yii\helpers\Json;
 
 /**
  * Class Html
  *
  * @author Philippe Gaultier <pgaultier@redcat.io>
- * @copyright 2010-2020 Redcat
+ * @copyright 2010-2022 Redcat
  * @license https://www.redcat.io/license license
  * @version XXX
  * @link https://www.redcat.io
@@ -34,87 +32,6 @@ use yii\helpers\Json;
  */
 class Html extends \blackcube\core\web\helpers\Html
 {
-    /**
-     * @var array
-     */
-    private static $icons = [
-        'plus' => [
-            'path' => 'M11 9h4v2h-4v4H9v-4H5V9h4V5h2v4zm-1 11a10 10 0 1 1 0-20 10 10 0 0 1 0 20zm0-2a8 8 0 1 0 0-16 8 8 0 0 0 0 16z',
-            'viewBox' => '0 0 20 20',
-        ],
-    ];
-
-
-    /**
-     * Prepare AureliaCustomAttribute parameters
-     *
-     * @param array $parameters
-     * @return string
-     * @since XXX
-     */
-    public static function bindAureliaAttributes($parameters = [])
-    {
-        $aureliaParameters = '';
-        foreach ($parameters as $key => $value) {
-            if (isset($value)) {
-                $key = Inflector::camel2id($key);
-                if (is_bool($value)) {
-                    $value = $value ? '1' : '0';
-                } elseif (!(is_numeric($value) || is_string($value))) {
-                    $value = Json::encode($value);
-                }
-                //ELSE VALUE IS OK
-                $aureliaParameters .= $key.'.bind: \''.$value.'\'; ';
-            }
-        }
-        return $aureliaParameters;
-
-    }
-
-    /**
-     * @param Model $model
-     * @param string $attribute
-     * @param array $options
-     * @return string
-     */
-    public static function activeSchema(Model $model, $attribute, $options = [])
-    {
-        $selfId = static::getInputId($model, $attribute);
-        $selfName = static::getInputName($model, $attribute);
-        $options = array_merge([
-            'field-id' => $selfId,
-            'field-name' => $selfName,
-            'schema' => $model->{$attribute}
-        ], $options);
-        return static::tag('blackcube-schema-editor', '', $options);
-    }
-
-    /**
-     * @param Model $model
-     * @param string $attribute
-     * @param array $options
-     * @return string
-     */
-    public static function activeEditorJs(Model $model, $attribute, $options = [])
-    {
-        $selfId = static::getInputId($model, $attribute);
-        $selfName = static::getInputName($model, $attribute);
-        if (isset($options['value']) === true) {
-            $selfValue = $options['value'];
-            unset($options['value']);
-        } else {
-            $selfValue = static::getAttributeValue($model, $attribute);
-        }
-
-        $options = array_merge([
-            'field-id' => $selfId,
-            'field-name' => $selfName,
-            'field-value' => $selfValue,
-        ], $options);
-        return static::tag('blackcube-editor-js', '', $options);
-
-    }
-
     /**
      * @param Model $model
      * @param string $attribute
@@ -133,14 +50,14 @@ class Html extends \blackcube\core\web\helpers\Html
         $options = array_merge([
             'id' => $selfId,
             'name' => $selfName,
-            'multiple' => false,
+            'multiple.bind' => false,
         ], $options);
 
         if (isset($options['value']) === false) {
             $options['value'] = static::getAttributeValue($model, $attribute);
         }
 
-        return static::tag('blackcube-file', '', $options);
+        return static::tag('blackcube-file-upload', '', $options);
     }
 
     /**
@@ -164,9 +81,9 @@ class Html extends \blackcube\core\web\helpers\Html
             }
         }
         if ($structure['field'] === 'file') {
-            $options['multiple'] = false;
+            $options['multiple.bind'] = false;
         } elseif ($structure['field'] === 'files') {
-            $options['multiple'] = true;
+            $options['multiple.bind'] = true;
         }
         return $options;
     }
@@ -213,59 +130,41 @@ class Html extends \blackcube\core\web\helpers\Html
             case 'file':
             case 'files':
                 $options['class'] = ($elastic->hasErrors($realAttibute)?' error':'');
-                $result = static::activeUpload($elastic, $attribute, $options);
+                $result = BlackcubeHtml::activeUpload($elastic, $attribute, $options);
                 break;
             case 'wysiwyg':
                 $options['class'] = ($elastic->hasErrors($realAttibute)?' error':'');
-                $result = static::activeEditorJs($elastic, $attribute, $options);
+                $result = BlackcubeHtml::activeEditor($elastic, $attribute, $options);
                 break;
             case 'dropdownlist':
                 throw new NotSupportedException();
                 break;
             case 'password':
-                $result = static::activePasswordInput($elastic, $attribute, ['class' => 'textfield'.($elastic->hasErrors($realAttibute)?' error':'')]);
+                $result = BlackcubeHtml::activePasswordInput($elastic, $attribute, ['class' => 'textfield'.($elastic->hasErrors($realAttibute)?' error':'')]);
                 break;
             case 'checkbox':
-                $result = static::activeCheckbox($elastic, $attribute, ['label' => false, 'class' => 'checkbox'.($elastic->hasErrors($realAttibute)?' error':'')]);
+                $result = BlackcubeHtml::activeCheckbox($elastic, $attribute, ['label' => false, 'class' => 'checkbox'.($elastic->hasErrors($realAttibute)?' error':'')]);
                 break;
             case 'checkboxlist':
                 $mappedField = 'activeCheckboxList';
                 throw new NotSupportedException();
                 break;
             case 'radio':
-                $result = static::activeRadio($elastic, $attribute, ['label' => false, 'class' => 'checkbox'.($elastic->hasErrors($realAttibute)?' error':'')]);
+                $result = BlackcubeHtml::activeRadio($elastic, $attribute, ['label' => false, 'class' => 'checkbox'.($elastic->hasErrors($realAttibute)?' error':'')]);
                 break;
             case 'radiolist':
                 $mappedField = 'activeRadioList';
                 throw new NotSupportedException();
                 break;
             case 'textarea':
-                $result = static::activeTextArea($elastic, $attribute, ['class' => 'textfield'.($elastic->hasErrors($realAttibute)?' error':'')]);
+                $result = BlackcubeHtml::activeTextArea($elastic, $attribute, ['class' => 'textfield'.($elastic->hasErrors($realAttibute)?' error':'')]);
                 break;
             case 'text':
             default:
-                $result = static::activeTextInput($elastic, $attribute, ['class' => 'textfield'.($elastic->hasErrors($realAttibute)?' error':'')]);
+                $result = BlackcubeHtml::activeTextInput($elastic, $attribute, ['class' => 'element-form-bloc-textfield'.($elastic->hasErrors($realAttibute)?' error':'')]);
                 break;
         }
         return $result;
     }
 
-    /**
-     * @param string $name
-     * @param array $options
-     * @return string
-     */
-    public static function svg($name, $options = [])
-    {
-        $tag = '';
-        if (isset(static::$icons[$name])) {
-            $options['viewBox'] = static::$icons[$name]['viewBox'];
-            $options['xmlns'] = 'http://www.w3.org/2000/svg';
-            $tag = static::tag('svg',
-                static::tag('path', '', ['d' => static::$icons[$name]['path']]),
-                $options
-            );
-        }
-        return $tag;
-    }
 }

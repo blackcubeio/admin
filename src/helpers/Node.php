@@ -2,10 +2,10 @@
 /**
  * Node.php
  *
- * PHP version 7.2+
+ * PHP version 8.0+
  *
  * @author Philippe Gaultier <pgaultier@redcat.io>
- * @copyright 2010-2020 Redcat
+ * @copyright 2010-2022 Redcat
  * @license https://www.redcat.io/license license
  * @version XXX
  * @link https://www.redcat.io
@@ -22,7 +22,7 @@ use Yii;
  * Class Node
  *
  * @author Philippe Gaultier <pgaultier@redcat.io>
- * @copyright 2010-2020 Redcat
+ * @copyright 2010-2022 Redcat
  * @license https://www.redcat.io/license license
  * @version XXX
  * @link https://www.redcat.io
@@ -41,7 +41,7 @@ class Node extends Element {
         $status = true;
         if (Yii::$app->request->isPost) {
             try {
-                $transaction = Module::getInstance()->db->beginTransaction();
+                $transaction = Module::getInstance()->get('db')->beginTransaction();
                 $currentAttachedNode = $nodeComposite->node;
                 $nodeComposite->load(Yii::$app->request->bodyParams);
                 $newAttachedNode = $nodeComposite->node;

@@ -2,10 +2,10 @@
 /**
  * PluginController.php
  *
- * PHP version 7.2+
+ * PHP version 8.0+
  *
  * @author Philippe Gaultier <pgaultier@redcat.io>
- * @copyright 2010-2020 Redcat
+ * @copyright 2010-2022 Redcat
  * @license https://www.redcat.io/license license
  * @version XXX
  * @link https://www.redcat.io
@@ -15,6 +15,7 @@
 namespace blackcube\admin\controllers;
 
 use blackcube\admin\actions\ModalAction;
+use blackcube\admin\actions\plugin\EditAction;
 use blackcube\admin\actions\plugin\IndexAction;
 use blackcube\admin\actions\plugin\ToggleAction;
 use blackcube\admin\actions\plugin\ToggleRegisterAction;
@@ -23,13 +24,12 @@ use blackcube\core\models\Plugin;
 use yii\filters\AccessControl;
 use yii\filters\AjaxFilter;
 use yii\web\Controller;
-use Yii;
 
 /**
  * Class PluginController
  *
  * @author Philippe Gaultier <pgaultier@redcat.io>
- * @copyright 2010-2020 Redcat
+ * @copyright 2010-2022 Redcat
  * @license https://www.redcat.io/license license
  * @version XXX
  * @link https://www.redcat.io
@@ -64,7 +64,7 @@ class PluginController extends Controller
         ];
         $behaviors['forceAjax'] = [
             'class' => AjaxFilter::class,
-            'only' => ['modal', 'actions'],
+            'only' => ['modal', 'actions', 'toggle', 'toggle-register'],
         ];
         return $behaviors;
     }
@@ -87,6 +87,9 @@ class PluginController extends Controller
         ];
         $actions['index'] = [
             'class' => IndexAction::class,
+        ];
+        $actions['edit'] = [
+            'class' => EditAction::class,
         ];
         return $actions;
     }

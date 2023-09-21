@@ -1,0 +1,251 @@
+.action-form {
+  @apply block shadow sm:rounded-md sm:overflow-hidden;
+  &-wrapper {
+    @apply px-4 py-5 bg-white space-y-6 sm:p-6;
+  }
+  &-buttons {
+    @apply mt-1 flex justify-end;
+  }
+  &-search {
+    &-wrapper {
+      @apply mt-1 flex rounded-md shadow-sm;
+    }
+    &-input {
+      @apply relative flex items-stretch flex-grow focus-within:z-10 focus:ring-indigo-500 focus:border-indigo-500 block w-full rounded-none rounded-l-md sm:text-sm border-gray-300;
+    }
+    &-button {
+      @apply -ml-px relative inline-flex items-center space-x-2 px-4 py-2 border border-gray-300 text-sm font-medium rounded-r-md text-gray-700 bg-gray-50 hover:bg-gray-100 focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500;
+      &-icon {
+        @apply h-5 w-5 text-gray-400;
+      }
+    }
+  }
+  &-button {
+    @apply inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500;
+    &:not(:first-child) {
+      @apply ml-4;
+    }
+    &-icon {
+      @apply -ml-1 mr-2 h-4 w-4;
+    }
+  }
+}
+.element-form {
+  &-wrapper {
+    @apply shadow sm:rounded-md sm:overflow-hidden bg-white;
+  }
+  &-header {
+    @apply p-5 bg-indigo-800;
+    &-title {
+      @apply text-lg leading-6 font-medium text-white;
+    }
+    &-abstract {
+      @apply mt-1 max-w-2xl text-sm text-white;
+    }
+  }
+  &-bloc {
+    &-wrapper {
+      @apply border border-indigo-800 rounded m-6;
+    }
+    &-inner {
+      @apply px-4 pt-2;
+      &.inactive {
+        background: repeating-linear-gradient(
+                        45deg,
+                        rgba(255,165,0, .05),
+                        rgba(255,165,0, .05) 10px,
+                        rgba(255,140,0, .15) 10px,
+                        rgba(255,140,0, .15) 20px
+        );
+      }
+    }
+    &-title {
+      @apply text-lg leading-6 font-medium text-white bg-indigo-800 rounded-t p-2;
+    }
+    &-abstract {
+      @apply mt-1 text-sm text-gray-500;
+    }
+    &-grid-12 {
+      @apply mt-4 grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-12;
+    }
+    &-cols-1 {
+      @apply sm:col-span-1;
+    }
+    &-cols-2 {
+      @apply sm:col-span-2;
+    }
+    &-cols-3 {
+      @apply sm:col-span-3;
+    }
+    &-cols-4 {
+      @apply sm:col-span-4;
+    }
+    &-cols-5 {
+      @apply sm:col-span-5;
+    }
+    &-cols-6 {
+      @apply sm:col-span-6;
+    }
+    &-cols-7 {
+      @apply sm:col-span-7;
+    }
+    &-cols-8 {
+      @apply sm:col-span-8;
+    }
+    &-cols-9 {
+      @apply sm:col-span-9;
+    }
+    &-cols-10 {
+      @apply sm:col-span-10;
+    }
+    &-cols-11 {
+      @apply sm:col-span-11;
+    }
+    &-cols-12 {
+      @apply sm:col-span-12;
+    }
+    &-stacked {
+      @apply mt-4 space-y-4;
+      &-wrapper {
+        @apply flex items-start;
+      }
+      &-input {
+        @apply flex items-center h-5;
+      }
+      &-label {
+        @apply ml-3 text-sm;
+      }
+    }
+    &-label {
+      @apply block text-sm font-medium text-gray-700;
+      &.error {
+        @apply text-red-900;
+      }
+    }
+    &-abstract {
+      @apply mt-2 text-sm text-gray-500;
+    }
+
+    &-checkbox, &-radio {
+      @apply focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300;
+      &:disabled {
+        @apply focus:outline-none text-gray-600;
+      }
+      &-wrapper {
+        @apply relative flex items-start mt-2;
+      }
+      &-input-wrapper {
+        @apply flex items-center h-5;
+      }
+      &.error {
+        @apply border-red-300;
+      }
+      &-label {
+        &-wrapper {
+          @apply ml-3 text-sm;
+        }
+      }
+    }
+    &-checkbox {
+      @apply rounded;
+    }
+    &-select {
+      @apply mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md;
+      &-wrapper {
+        @apply  mt-2;
+      }
+      &.error {
+        @apply border-red-300;
+      }
+    }
+    &-textfield, &-textarea {
+      @apply shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md;
+      &-wrapper {
+        @apply  mt-2;
+      }
+      &-input-wrapper {
+        @apply mt-1;
+      }
+      &.error {
+        @apply border-red-300;
+      }
+    }
+    &-schema {
+      &-wrapper {
+        @apply  mt-2;
+      }
+    }
+    &-upload {
+      &-wrapper {
+        @apply  mt-2;
+      }
+      &-input-wrapper {
+        @apply mt-1;
+      }
+      &-icon {
+        @apply mx-auto h-12 w-12 text-gray-400;
+      }
+      &-drop {
+        @apply flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md;
+        &.error {
+          @apply border-red-300;
+        }
+        &-wrapper {
+          @apply space-y-1 text-center;
+        }
+        &-input {
+          &-wrapper {
+            @apply flex text-sm text-gray-600;
+          }
+          &-label {
+            @apply relative cursor-pointer bg-white rounded-md font-medium text-indigo-600 hover:text-indigo-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500;
+          }
+          &-accessory {
+            @apply pl-1;
+          }
+        }
+      }
+    }
+
+    &-toolbar {
+      @apply text-right py-4;
+      &-buttons {
+        @apply relative z-0 inline-flex shadow-sm rounded-md;
+        &-button {
+          @apply relative inline-flex items-center px-2 py-2 border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 focus:z-10 focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 hover:text-white hover:bg-indigo-600;
+          &:first-child {
+            @apply rounded-l-md
+          }
+          &:not(:first-child) {
+            @apply -ml-px;
+          }
+          &:last-child {
+            @apply rounded-r-md
+          }
+          &.delete {
+            @apply hover:bg-red-600 hover:text-white;
+          }
+          &.disabled {
+            @apply text-gray-300 bg-gray-50 hover:bg-gray-50 hover:text-gray-300;
+          }
+        }
+      }
+
+    }
+  }
+  &-buttons {
+    @apply pt-4 text-right;
+    &-button {
+      @apply ml-4 inline-flex items-center px-3 py-2 border border-transparent shadow-sm text-sm leading-4 font-medium rounded-md text-gray-700 bg-gray-200 hover:bg-indigo-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500;
+      &-icon {
+        @apply -ml-0.5 mr-2 h-4 w-4;
+      }
+      &.action {
+        @apply text-white bg-indigo-600 hover:bg-indigo-700;
+      }
+      &.delete {
+        @apply text-white bg-red-600 hover:bg-red-700;
+      }
+    }
+  }
+}

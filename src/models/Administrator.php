@@ -2,10 +2,10 @@
 /**
  * Administrator.php
  *
- * PHP version 7.2+
+ * PHP version 8.0+
  *
  * @author Philippe Gaultier <pgaultier@redcat.io>
- * @copyright 2010-2020 Redcat
+ * @copyright 2010-2022 Redcat
  * @license https://www.redcat.io/license license
  * @version XXX
  * @link https://www.redcat.io
@@ -25,7 +25,7 @@ use Yii;
  * This is the model class for table "{{%administrators}}".
  *
  * @author Philippe Gaultier <pgaultier@redcat.io>
- * @copyright 2010-2020 Redcat
+ * @copyright 2010-2022 Redcat
  * @license https://www.redcat.io/license license
  * @version XXX
  * @link https://www.redcat.io
@@ -33,6 +33,8 @@ use Yii;
  *
  * @property int $id
  * @property string $email
+ * @property string $firstname
+ * @property string $lastname
  * @property string|null $password
  * @property boolean $active
  * @property string|null $authKey
@@ -59,17 +61,22 @@ class Administrator extends \yii\db\ActiveRecord implements IdentityInterface
     public $checkPassword;
 
     /**
+     * @var bool
+     */
+    public $rememberMe;
+
+    /**
      * {@inheritDoc}
      */
     public static function getDb()
     {
-        return Module::getInstance()->db;
+        return Module::getInstance()->get('db');
     }
 
     /**
      * {@inheritdoc}
      */
-    public function behaviors():array
+    public function behaviors() :array
     {
         $behaviors = parent::behaviors();
         $behaviors['timestamp'] = [
@@ -84,7 +91,7 @@ class Administrator extends \yii\db\ActiveRecord implements IdentityInterface
     /**
      * {@inheritdoc}
      */
-    public static function tableName():string
+    public static function tableName() :string
     {
         return '{{%administrators}}';
     }
@@ -106,43 +113,47 @@ class Administrator extends \yii\db\ActiveRecord implements IdentityInterface
     public function scenarios()
     {
         $scenarios = parent::scenarios();
-        $scenarios[static::SCENARIO_LOGIN] = ['email', 'password'];
-        $scenarios[static::SCENARIO_CREATE] = ['email', 'password'];
-        $scenarios[static::SCENARIO_CREATE_ONLINE] = ['email', 'newPassword', 'checkPassword', 'active'];
-        $scenarios[static::SCENARIO_UPDATE] = ['email', 'newPassword', 'checkPassword', 'active'];
+        $scenarios[static::SCENARIO_LOGIN] = ['email', 'password', 'rememberMe'];
+        $scenarios[static::SCENARIO_CREATE] = ['email', 'firstname', 'lastname', 'password'];
+        $scenarios[static::SCENARIO_CREATE_ONLINE] = ['email', 'firstname', 'lastname', 'newPassword', 'checkPassword', 'active'];
+        $scenarios[static::SCENARIO_UPDATE] = ['email', 'firstname', 'lastname', 'newPassword', 'checkPassword', 'active'];
         return $scenarios;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function rules():array
+    public function rules() :array
     {
         return [
-            [['email'], 'required'],
+            [['email', 'firstname', 'lastname'], 'required'],
             [['email'], 'email'],
             [['password'], 'required', 'on' => [static::SCENARIO_LOGIN, static::SCENARIO_CREATE]],
             [['newPassword', 'checkPassword'], 'required', 'on' => [static::SCENARIO_CREATE_ONLINE]],
             [['newPassword'], 'compare', 'compareAttribute' => 'checkPassword', 'on' => [static::SCENARIO_UPDATE, static::SCENARIO_CREATE_ONLINE]],
+            [['newPassword'], 'passwordSecurity', 'usernameAttribute' => 'email', 'on' => [static::SCENARIO_CREATE_ONLINE, static::SCENARIO_UPDATE]],
             [['email'], 'validateLogin', 'on' => [static::SCENARIO_LOGIN], 'params' => ['password' => 'password']],
             [['email'], 'unique', 'on' => [static::SCENARIO_CREATE, static::SCENARIO_CREATE_ONLINE, static::SCENARIO_UPDATE]],
             [['active'], 'boolean'],
             [['dateCreate', 'dateUpdate'], 'safe'],
-            [['email', 'password', 'authKey', 'token', 'tokenType'], 'string', 'max' => 190],
+            [['email', 'firstname', 'lastname', 'password', 'authKey', 'token', 'tokenType'], 'string', 'max' => 190],
         ];
     }
 
     /**
      * {@inheritdoc}
      */
-    public function attributeLabels():array
+    public function attributeLabels() :array
     {
         return [
             'id' => Module::t('models', 'ID'),
-            'email' => Module::t('models', 'Email'),
+            'email' => Module::t('models', 'E-mail'),
+            'firstname' => Module::t('models', 'Firstname'),
+            'lastname' => Module::t('models', 'Lastname'),
             'password' => Module::t('models', 'Password'),
             'newPassword' => Module::t('models', 'New Password'),
             'checkPassword' => Module::t('models', 'Password Verification'),
+            'rememberMe' => Module::t('models', 'Remember me'),
             'active' => Module::t('models', 'Active'),
             'authKey' => Module::t('models', 'Auth Key'),
             'token' => Module::t('models', 'Token'),
@@ -160,7 +171,10 @@ class Administrator extends \yii\db\ActiveRecord implements IdentityInterface
      */
     public function validateLogin($attribute, $params)
     {
-        $administrator = static::find()->where(['email' => $this->$attribute])->active()->one();
+        $administrator = static::find()
+            ->where(['email' => $this->$attribute])
+            ->active()
+            ->one();
         if ($administrator !== null) {
             $password = $this->{$params['password']};
             //$administrator->validatePassword($password);
@@ -199,6 +213,10 @@ class Administrator extends \yii\db\ActiveRecord implements IdentityInterface
         return Yii::$app->getSecurity()->generatePasswordHash($password);
     }
 
+    public function getInitials()
+    {
+        return ($this->firstname[0]??'X').($this->lastname[0]??'X');
+    }
 
     /**
      * {@inheritDoc}
@@ -213,7 +231,10 @@ class Administrator extends \yii\db\ActiveRecord implements IdentityInterface
      */
     public static function findIdentity($id)
     {
-        return static::find()->where(['id' => $id])->one();
+        return static::find()
+            ->where(['id' => $id])
+            ->active()
+            ->one();
     }
 
     /**

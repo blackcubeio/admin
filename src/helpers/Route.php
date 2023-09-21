@@ -2,10 +2,10 @@
 /**
  * Route.php
  *
- * PHP version 7.2+
+ * PHP version 8.0+
  *
  * @author Philippe Gaultier <pgaultier@redcat.io>
- * @copyright 2010-2020 Redcat
+ * @copyright 2010-2022 Redcat
  * @license https://www.redcat.io/license license
  * @version XXX
  * @link https://www.redcat.io
@@ -29,7 +29,7 @@ use Yii;
  * Class Route
  *
  * @author Philippe Gaultier <pgaultier@redcat.io>
- * @copyright 2010-2020 Redcat
+ * @copyright 2010-2022 Redcat
  * @license https://www.redcat.io/license license
  * @version XXX
  * @link https://www.redcat.io
@@ -85,7 +85,12 @@ class Route {
                                         $actionId = '';
                                     }
                                     $route = trim($info['moduleId'].'/'.$controllerId.'/'.$actionId, '/');
-                                    $routes[$route] = $route;
+                                    // $routes[$route] = $route;
+                                    $routes[] = [
+                                        'id' => '/'.$route,
+                                        'name' => $route,
+                                        'type' => Module::t('helpers', 'Blackcube')
+                                    ];
                                 }
                             }
                             if ($ref->hasMethod('actions')) {
@@ -96,7 +101,12 @@ class Route {
                                         $actionId = '';
                                     }
                                     $route = trim($info['moduleId'].'/'.$controllerId.'/'.$actionId, '/');
-                                    $routes[$route] = $route;
+                                    // $routes[$route] = $route;
+                                    $routes[] = [
+                                        'id' => '/'.$route,
+                                        'name' => $route,
+                                        'type' => Module::t('helpers', 'Blackcube')
+                                    ];
                                 }
 
                             }
@@ -106,6 +116,21 @@ class Route {
                 }
             }
         }
+        usort($routes, function($item1, $item2) {
+            if ($item1['type'] === $item2['type']) {
+                if ($item1['name'] === $item2['name']) {
+                    return 0;
+                } elseif ($item1['name'] > $item2['name']) {
+                    return 1;
+                } else {
+                    return -1;
+                }
+            } elseif ($item1['type'] > $item2['type']) {
+                return 1;
+            } else {
+                return -1;
+            }
+        });
         return $routes;
     }
 
@@ -151,16 +176,15 @@ class Route {
                         $controllerId = Inflector::camel2id($matches[2]);
                         $targetClass = $info['namespace'].'\\'.$matches[1];
                         $ref = new \ReflectionClass($targetClass);
-                        if ($ref->implementsInterface(BlackcubeControllerInterface::class) && $ref->isAbstract() === false) {
-                            // useless
-                        } elseif ($ref->isSubclassOf(Controller::class) && $ref->isAbstract() === false) {
+                        if (($ref->isSubclassOf(Controller::class) || $ref->implementsInterface(BlackcubeControllerInterface::class)) && $ref->isAbstract() === false) {
+                            // this is a "regular" or a "cms" controller
                             $defaultAction = $ref->getProperty('defaultAction')->getValue($ref->newInstanceWithoutConstructor());
                             foreach ($ref->getMethods(\ReflectionMethod::IS_PUBLIC) as $method) {
                                 if (strncmp('action', $method->name, 6) === 0 && ($method->name !== 'actions')) {
                                     $realMethod = str_replace('action', '', $method->name);
                                     $actionId = Inflector::camel2id($realMethod);
                                     if ($actionId === $defaultAction) {
-                                        $actionId = '';
+                                        $actionId = $defaultAction;
                                     }
                                     $route = trim($info['moduleId'].'/'.$controllerId.'/'.$actionId, '/');
                                     $routes[] = ['id' => $route, 'name' => $route, 'type' => Module::t('helpers', 'Regular')];
@@ -171,7 +195,7 @@ class Route {
                                 $externalActions = $currentController->actions();
                                 foreach($externalActions as $actionId => $config) {
                                     if ($actionId === $defaultAction) {
-                                        $actionId = '';
+                                        $actionId = $defaultAction;
                                     }
                                     $route = trim($info['moduleId'].'/'.$controllerId.'/'.$actionId, '/');
                                     $routes[] = ['id' => $route, 'name' => $route, 'type' =>  Module::t('helpers', 'Regular')];

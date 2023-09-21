@@ -2,10 +2,10 @@
 /**
  * CreateAction.php
  *
- * PHP version 7.2+
+ * PHP version 8.0+
  *
  * @author Philippe Gaultier <pgaultier@redcat.io>
- * @copyright 2010-2020 Redcat
+ * @copyright 2010-2022 Redcat
  * @license https://www.redcat.io/license license
  * @version XXX
  * @link https://www.redcat.io
@@ -21,10 +21,10 @@ use yii\web\Response;
 use Yii;
 
 /**
- * Class IndexAction
+ * Class CreateAction
  *
  * @author Philippe Gaultier <pgaultier@redcat.io>
- * @copyright 2010-2020 Redcat
+ * @copyright 2010-2022 Redcat
  * @license https://www.redcat.io/license license
  * @version XXX
  * @link https://www.redcat.io
@@ -43,13 +43,15 @@ class CreateAction extends Action
     public $targetAction = 'edit';
 
     /**
+     * @param Administrator $user
      * @return string|Response
      * @throws NotFoundHttpException
      * @throws \yii\base\InvalidConfigException
      */
-    public function run()
+    public function run(Administrator $user)
     {
         $user = Yii::createObject(Administrator::class);
+        $passwordSecurity = Yii::createObject('passwordSecurity');
         if (Yii::$app->request->isPost) {
             $user->setScenario(Administrator::SCENARIO_CREATE_ONLINE);
             $user->load(Yii::$app->request->bodyParams);
@@ -65,6 +67,7 @@ class CreateAction extends Action
         }
         return $this->controller->render($this->view, [
             'user' => $user,
+            'passwordSecurity' => $passwordSecurity
         ]);
     }
 }

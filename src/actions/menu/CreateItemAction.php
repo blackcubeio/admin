@@ -2,10 +2,10 @@
 /**
  * CreateItemAction.php
  *
- * PHP version 7.2+
+ * PHP version 8.0+
  *
  * @author Philippe Gaultier <pgaultier@redcat.io>
- * @copyright 2010-2020 Redcat
+ * @copyright 2010-2022 Redcat
  * @license https://www.redcat.io/license license
  * @version XXX
  * @link https://www.redcat.io
@@ -18,6 +18,7 @@ use blackcube\admin\helpers\Route as RouteHelper;
 use blackcube\core\models\Menu;
 use blackcube\core\models\MenuItem;
 use yii\base\Action;
+use yii\helpers\ArrayHelper;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
 use Yii;
@@ -26,7 +27,7 @@ use Yii;
  * Class CreateItemAction
  *
  * @author Philippe Gaultier <pgaultier@redcat.io>
- * @copyright 2010-2020 Redcat
+ * @copyright 2010-2022 Redcat
  * @license https://www.redcat.io/license license
  * @version XXX
  * @link https://www.redcat.io
@@ -46,17 +47,17 @@ class CreateItemAction extends Action
 
     /**
      * @param integer $menuId
+     * @param MenuItem $menuItem
      * @return string|Response
      * @throws NotFoundHttpException
      * @throws \yii\base\InvalidConfigException
      */
-    public function run($menuId)
+    public function run($menuId, MenuItem $menuItem)
     {
         $menu = Menu::findOne(['id' => $menuId]);
         if ($menu === null) {
             throw new NotFoundHttpException();
         }
-        $menuItem = Yii::createObject(MenuItem::class);
         $menuItem->menuId = $menuId;
         if (Yii::$app->request->isPost) {
             $menuItem->load(Yii::$app->request->bodyParams);
@@ -76,11 +77,45 @@ class CreateItemAction extends Action
                 }
             }
         }
-        $parentsQuery = MenuItem::find()->andWhere(['menuId' => $menu->id]);
+        // $parentsQuery = MenuItem::find()->andWhere(['menuId' => $menu->id]);
         return $this->controller->render($this->view, [
+            'menu' => $menu,
             'menuItem' => $menuItem,
-            'parentsQuery' => $parentsQuery,
+            'parents' => $this->getParents($menu),
             'routes' => RouteHelper::findAllRoutes(),
         ]);
+    }
+
+    private function getParents(Menu $menu)
+    {
+        $menuItems = $menu->getChildren();
+        $items = [];
+        $level = 0;
+        foreach($menuItems->each() as $menuItem) {
+            /* @var \blackcube\core\models\MenuItem $menuItem */
+            $items[] = [
+                'id' => $menuItem->id,
+                'name' => $menuItem->name
+            ];
+
+            $items = ArrayHelper::merge($items, $this->buildSubMenuItems($menuItem, $level + 1));
+
+        }
+        return $items;
+    }
+    private function buildSubMenuItems(MenuItem $menuItem, $level)
+    {
+        $items = [];
+        foreach ($menuItem->getChildren()->each() as $subMenuItem) {
+            /* @var \blackcube\core\models\MenuItem $subMenuItem */
+            $items[] = [
+                'id' => $subMenuItem->id,
+                'name' => str_pad('', 2*$level, ' ', STR_PAD_LEFT).$subMenuItem->name,
+            ];
+
+            $items =  ArrayHelper::merge($items, $this->buildSubMenuItems($subMenuItem, $level + 1));
+
+        }
+        return $items;
     }
 }

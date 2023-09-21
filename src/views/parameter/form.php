@@ -2,83 +2,85 @@
 /**
  * form.php
  *
- * PHP version 7.2+
+ * PHP version 8.0+
  *
  * @author Philippe Gaultier <pgaultier@redcat.io>
- * @copyright 2010-2020 Redcat
+ * @copyright 2010-2022 Redcat
  * @license https://www.redcat.io/license license
  * @version XXX
  * @link https://www.redcat.io
  * @package blackcube\admin\views\parameter
  *
  * @var $parameter \blackcube\core\models\Parameter
+ * @var $allowedParameterDomains array
  * @var $this \yii\web\View
  */
 
 use blackcube\admin\Module;
+use blackcube\admin\components\Rbac;
 use blackcube\admin\helpers\Html;
 use blackcube\admin\widgets\Sidebar;
-use blackcube\core\Module as CoreModule;
-use yii\helpers\ArrayHelper;
+use blackcube\admin\helpers\BlackcubeHtml;
+use blackcube\admin\helpers\Heroicons;
 use yii\helpers\Url;
+use blackcube\admin\helpers\Aurelia;
+use yii\helpers\ArrayHelper;
 
-$allowedParameterDomains = CoreModule::getInstance()->allowedParameterDomains;
+$authManager = Yii::$app->authManager;
+
 ?>
-    <main>
-        <?php echo Html::beginForm('', 'post', ['class' => 'form']); ?>
-            <ul class="header">
-                <li>
-                    <?php echo Html::a('<i class="fa fa-angle-left mr-2"></i> '.Module::t('parameter', 'Back'), ['index'], ['class' => 'button']); ?>
-                </li>
-                <li>
-                    <?php echo Html::a('<i class="fa fa-check mr-2"></i> '.Module::t('parameter', 'Save'), ['index'], ['class' => 'button']); ?>
-                </li>
-            </ul>
-            <div class="bloc">
-                <div class="bloc-title">
-                    <span class="title"><?php echo Module::t('parameter', 'Parameter'); ?></span>
-                </div>
-            </div>
-
-            <div class="bloc">
-                <div class="w-full bloc-fieldset md:w-1/2">
-                    <?php echo Html::activeLabel($parameter, 'domain', ['class' => 'label']); ?>
+<main class="application-content">
+    <?php echo Html::beginForm('', 'post', [
+        'class' => 'element-form-wrapper',
+    ]); ?>
+    <div class="page-header">
+        <?php echo Html::beginTag('a', [
+            'class' => 'text-white',
+            'href' => Url::to(['index'])
+        ]); ?>
+        <?php echo Heroicons::svg('solid/chevron-left', ['class' => 'h-5 w-5 mr-2']); ?>
+        <?php echo Html::endTag('a'); ?>
+        <h3 class="page-header-title"><?php echo Module::t('parameter', 'Parameter'); ?></h3>
+    </div>
+    <div class="px-6 pb-6">
+        <div class="element-form-bloc">
+            <div class="element-form-bloc-grid-12">
+                <div class="element-form-bloc-cols-6">
                     <?php if (empty($allowedParameterDomains) === true): ?>
-                        <?php echo Html::activeTextInput($parameter, 'domain', ['class' => 'textfield'.($parameter->hasErrors('domain')?' error':'')]); ?>
+                        <?php echo BlackcubeHtml::activeTextInput($parameter, 'domain', []); ?>
                     <?php else: ?>
-                        <div class="dropdown">
-                            <?php echo Html::activeDropDownList($parameter, 'domain', ArrayHelper::map($allowedParameterDomains, function($item) { return $item; }, function($item) { return $item; }), [
-                            ]); ?>
-                            <div class="arrow">
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
-                            </div>
-                        </div>
-
+                        <?php echo BlackcubeHtml::activeDropDownList($parameter, 'domain', ArrayHelper::map($allowedParameterDomains, function($item) { return $item; }, function($item) { return $item; }), []); ?>
                     <?php endif; ?>
                 </div>
-                <div class="w-full bloc-fieldset md:w-1/2">
-                    <?php echo Html::activeLabel($parameter, 'name', ['class' => 'label']); ?>
-                    <?php echo Html::activeTextInput($parameter, 'name', ['class' => 'textfield'.($parameter->hasErrors('name')?' error':'')]); ?>
+                <div class="element-form-bloc-cols-6">
+                    <?php echo BlackcubeHtml::activeTextInput($parameter, 'name', []); ?>
                 </div>
             </div>
-
-        <div class="bloc">
-            <div class="w-full bloc-fieldset">
-                <?php echo Html::activeLabel($parameter, 'value', ['class' => 'label']); ?>
-                <?php echo Html::activeTextarea($parameter, 'value', ['class' => 'textfield'.($parameter->hasErrors('value')?' error':'')]); ?>
+            <div class="element-form-bloc-stacked">
+                <?php echo BlackcubeHtml::activeTextarea($parameter, 'value', []); ?>
             </div>
         </div>
+    </div>
+    <div class="px-6 pb-6">
 
+        <div class="element-form-buttons">
+            <?php echo Html::beginTag('a', [
+                'class' => 'element-form-buttons-button',
+                'href' => Url::to(['index'])
+            ]); ?>
+            <?php echo Heroicons::svg('solid/x', ['class' => 'element-form-buttons-button-icon']); ?>
+            <?php echo Module::t('common', 'Cancel'); ?>
+            <?php echo Html::endTag('a'); ?>
+            <?php echo Html::beginTag('button', [
+                'class' => 'element-form-buttons-button action',
+                'type' => 'submit'
+            ]); ?>
+            <?php echo Heroicons::svg('solid/check', ['class' => 'element-form-buttons-button-icon']); ?>
+            <?php echo Module::t('common', 'Save'); ?>
+            <?php echo Html::endTag('button'); ?>
+        </div>
+    </div>
 
-            <div class="buttons">
-                <?php echo Html::a('<i class="fa fa-times mr-2"></i> '.Module::t('parameter', 'Cancel'), ['index'], [
-                    'class' => 'button-cancel'
-                ]); ?>
-                <?php echo Html::button('<i class="fa fa-check mr-2"></i> '.Module::t('parameter', 'Save'), [
-                    'type' => 'submit',
-                    'class' => 'button-submit'
-                ]); ?>
-            </div>
-        <?php echo Html::endForm(); ?>
-    </main>
+    <?php echo Html::endForm(); ?>
+</main>
 

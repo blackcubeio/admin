@@ -2,10 +2,10 @@
 /**
  * CreateAction.php
  *
- * PHP version 7.2+
+ * PHP version 8.0+
  *
  * @author Philippe Gaultier <pgaultier@redcat.io>
- * @copyright 2010-2020 Redcat
+ * @copyright 2010-2022 Redcat
  * @license https://www.redcat.io/license license
  * @version XXX
  * @link https://www.redcat.io
@@ -29,7 +29,7 @@ use Yii;
  * Class CreateAction
  *
  * @author Philippe Gaultier <pgaultier@redcat.io>
- * @copyright 2010-2020 Redcat
+ * @copyright 2010-2022 Redcat
  * @license https://www.redcat.io/license license
  * @version XXX
  * @link https://www.redcat.io
@@ -48,19 +48,19 @@ class CreateAction extends Action
     public $targetAction = 'edit';
 
     /**
+     * @param Type $type
      * @return string|Response
      * @throws NotFoundHttpException
      * @throws \yii\base\InvalidConfigException
      */
-    public function run()
+    public function run(Type $type)
     {
-        $type = Yii::createObject(Type::class);
         $typeBlocTypes = BlocTypeHelper::getTypeBlocTypes();
         if (Yii::$app->request->isPost) {
             $type->load(Yii::$app->request->bodyParams);
             Model::loadMultiple($typeBlocTypes, Yii::$app->request->bodyParams);
             if ($type->validate() === true && Model::validateMultiple($typeBlocTypes)) {
-                $transaction = Module::getInstance()->db->beginTransaction();
+                $transaction = Module::getInstance()->get('db')->beginTransaction();
                 try {
                     $typeStatus = $type->save();
                     if ($typeStatus === true) {

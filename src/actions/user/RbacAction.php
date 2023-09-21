@@ -2,10 +2,10 @@
 /**
  * RbacAction.php
  *
- * PHP version 7.2+
+ * PHP version 8.0+
  *
  * @author Philippe Gaultier <pgaultier@redcat.io>
- * @copyright 2010-2020 Redcat
+ * @copyright 2010-2022 Redcat
  * @license https://www.redcat.io/license license
  * @version XXX
  * @link https://www.redcat.io
@@ -25,7 +25,7 @@ use Yii;
  * Class RbacAction
  *
  * @author Philippe Gaultier <pgaultier@redcat.io>
- * @copyright 2010-2020 Redcat
+ * @copyright 2010-2022 Redcat
  * @license https://www.redcat.io/license license
  * @version XXX
  * @link https://www.redcat.io
@@ -50,31 +50,41 @@ class RbacAction extends Action
         if ($user === null) {
             throw new NotFoundHttpException();
         }
-        if (Yii::$app->request->isPost) {
-            $itemName = Yii::$app->request->getBodyParam('name', null);
-            $itemType = Yii::$app->request->getBodyParam('type', null);
-            $itemMode = Yii::$app->request->getBodyParam('mode', null);
-            if ($itemName !== null && $itemType !== null && $itemMode !== null) {
-                $item = null;
-                if ($itemType === 'role') {
-                    $item = Yii::$app->authManager->getRole($itemName);
-                } elseif ($itemType === 'permission') {
-                    $item = Yii::$app->authManager->getPermission($itemName);
-                }
-                if ($item !== null && $itemMode === 'add') {
-                    Yii::$app->authManager->assign($item, $user->id);
-                } else if ($item !== null && $itemMode === 'remove') {
-                    Yii::$app->authManager->revoke($item, $user->id);
+        $updated = false;
+        if (Yii::$app->user->id !== $user->id) {
+            if (Yii::$app->request->isPost) {
+
+                $itemName = Yii::$app->request->getBodyParam('name', null);
+                $itemType = Yii::$app->request->getBodyParam('type', null);
+                $itemMode = Yii::$app->request->getBodyParam('mode', null);
+                if ($itemName !== null && $itemType !== null && $itemMode !== null) {
+                    $item = null;
+                    if ($itemType === 'role') {
+                        $item = Yii::$app->authManager->getRole($itemName);
+                    } elseif ($itemType === 'permission') {
+                        $item = Yii::$app->authManager->getPermission($itemName);
+                    }
+                    if ($item !== null && $itemMode === 'add') {
+                        Yii::$app->authManager->assign($item, $user->id);
+                        $updated = true;
+                    } elseif ($item !== null && $itemMode === 'remove') {
+                        Yii::$app->authManager->revoke($item, $user->id);
+                        $updated = true;
+                    }
                 }
             }
         }
+        $loggedId = Yii::$app->user->getId();
+        $canAssign = $loggedId !== $user->id;
         $authorizationData = UserHelper::prepareAuthorizationData($user->id);
 
         return $this->controller->renderPartial($this->view, [
             'user' => $user,
+            'updated' => $updated,
             'userRolesById' => $authorizationData['userRolesById'],
             'userPermissionsById' => $authorizationData['userPermissionsById'],
             'userAssignmentsById' => $authorizationData['userAssignmentsById'],
+            'canAssign' => $canAssign,
         ]);
     }
 }

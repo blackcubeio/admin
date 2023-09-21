@@ -2,10 +2,10 @@
 /**
  * Module.php
  *
- * PHP version 7.2+
+ * PHP version 8.0+
  *
  * @author Philippe Gaultier <pgaultier@redcat.io>
- * @copyright 2010-2020 Redcat
+ * @copyright 2010-2022 Redcat
  * @license https://www.redcat.io/license license
  * @version XXX
  * @link https://www.redcat.io
@@ -15,10 +15,18 @@
 namespace blackcube\admin;
 
 use blackcube\admin\commands\AdministratorController;
+use blackcube\admin\commands\HeroiconsController;
 use blackcube\admin\commands\RbacController;
 use blackcube\admin\interfaces\MigrableInterface;
-use blackcube\admin\interfaces\PluginBootstrapInterface;
+use blackcube\admin\interfaces\PluginManagerBootstrapInterface;
 use blackcube\admin\models\Administrator;
+use blackcube\admin\models\FilterActiveQuery;
+use blackcube\admin\models\MoveNodeForm;
+use blackcube\admin\models\RbacItemForm;
+use blackcube\admin\models\SearchForm;
+use blackcube\admin\models\SlugGeneratorForm;
+use blackcube\admin\models\TagForm;
+use blackcube\core\components\PreviewManager;
 use blackcube\core\interfaces\PluginsHandlerInterface;
 use yii\base\BootstrapInterface;
 use yii\base\Module as BaseModule;
@@ -40,7 +48,7 @@ use Yii;
  * Class module
  *
  * @author Philippe Gaultier <pgaultier@redcat.io>
- * @copyright 2010-2020 Redcat
+ * @copyright 2010-2022 Redcat
  * @license https://www.redcat.io/license license
  * @version XXX
  * @link https://www.redcat.io
@@ -67,16 +75,6 @@ class Module extends BaseModule implements BootstrapInterface
     public $adminTemplatesAlias;
 
     /**
-     * @var Connection|array|string database access
-     */
-    public $db = 'db';
-
-    /**
-     * @var CacheInterface|array|string|null
-     */
-    public $cache;
-
-    /**
      * @var string command prefix
      */
     public $commandNameSpace = 'bc:';
@@ -89,6 +87,30 @@ class Module extends BaseModule implements BootstrapInterface
     public $additionalAssets = [];
 
     /**
+     * @var string version number
+     */
+    public $version = 'v3.0.0';
+
+    /**
+     * @var string[]
+     */
+    public $coreSingletons = [
+    ];
+
+    /**
+     * @var string[]
+     */
+    public $coreElements = [
+        Administrator::class => Administrator::class,
+        FilterActiveQuery::class => FilterActiveQuery::class,
+        MoveNodeForm::class => MoveNodeForm::class,
+        RbacItemForm::class => RbacItemForm::class,
+        SearchForm::class => SearchForm::class,
+        SlugGeneratorForm::class => SlugGeneratorForm::class,
+        TagForm::class => TagForm::class,
+    ];
+
+    /**
      * @inheritdoc
      */
     public function init()
@@ -96,10 +118,6 @@ class Module extends BaseModule implements BootstrapInterface
         $this->layout = 'main';
         parent::init();
         //TODO: should inherit db from Core
-        $this->db = Instance::ensure($this->db, Connection::class);
-        if ($this->cache !== null) {
-            $this->cache = Instance::ensure($this->cache, CacheInterface::class);
-        }
         $this->registerErrorHandler();
     }
 
@@ -109,11 +127,12 @@ class Module extends BaseModule implements BootstrapInterface
     public function bootstrap($app)
     {
         Yii::setAlias('@blackcube/admin', __DIR__);
+        $this->registerDi($app);
         $app->setComponents([
             'authManager' => [
                 'class' => DbManager::class,
-                'db' => $this->db,
-                'cache' => $this->cache,
+                'db' => $this->get('db'),
+                'cache' => $this->get('cache'),
             ],
         ]);
         $this->registerTranslations();
@@ -123,8 +142,28 @@ class Module extends BaseModule implements BootstrapInterface
             $this->bootstrapWeb($app);
         }
         $this->registerPlugins($app);
+        if ($app instanceof WebApplication) {
+            $this->finalizeBbootstrapWeb($app);
+        }
     }
 
+    /**
+     * @param WebApplication|ConsoleApplication $app
+     * @throws \yii\base\InvalidConfigException
+     */
+    public function registerDi($app)
+    {
+        foreach($this->coreSingletons as $class => $definition) {
+            if (Yii::$container->hasSingleton($class) === false) {
+                Yii::$container->setSingleton($class, $definition);
+            }
+        }
+        foreach($this->coreElements as $class => $definition) {
+            if (Yii::$container->has($class) === false) {
+                Yii::$container->set($class, $definition);
+            }
+        }
+    }
     public function registerPlugins($app)
     {
         if ($app instanceof WebApplication) {
@@ -132,8 +171,8 @@ class Module extends BaseModule implements BootstrapInterface
             /* @var $pluginHandler PluginsHandlerInterface */
             foreach ($pluginHandler->getRegisteredPluginManagers() as $pluginManager) {
                 // foreach($pluginHandler->getActivePluginManagers() as $pluginManager) {
-                if ($pluginManager instanceof PluginBootstrapInterface) {
-                    $pluginManager->bootstrapAdmin($this->getUniqueId(), $app);
+                if ($pluginManager instanceof PluginManagerBootstrapInterface) {
+                    $pluginManager->bootstrapAdmin($this, $app);
                 }
             }
         }
@@ -153,16 +192,12 @@ class Module extends BaseModule implements BootstrapInterface
         $app->controllerMap[$this->commandNameSpace.'rbac'] = [
             'class' => RbacController::class,
         ];
-        /*/
-        $app->controllerMap[$this->commandNameSpace.'migrate'] = [
-            'class' => MigrateController::class,
-            'migrationNamespaces' => $this->buildMigrationNamespaces(),
-            'migrationPath' => [
-                '@yii/rbac/migrations',
-            ],
-            'db' => $this->db,
-        ];
-        /*/
+        if (defined('YII_ENV') && YII_ENV === 'dev') {
+            $app->controllerMap[$this->commandNameSpace.'heroicons'] = [
+                'class' => HeroiconsController::class,
+            ];
+        }
+
         // TODO check what to do if db is not the same as the base app one
         $migrationNamespaces = $this->buildMigrationNamespaces();
         if (isset($app->controllerMap['migrate']) === true) {
@@ -187,7 +222,7 @@ class Module extends BaseModule implements BootstrapInterface
                 'migrationPath' => [
                     '@yii/rbac/migrations',
                 ],
-                'db' => $this->db,
+                'db' => $this->get('db'),
             ];
         }
         /**/
@@ -212,9 +247,19 @@ class Module extends BaseModule implements BootstrapInterface
                     ['class' => UrlRule::class, 'pattern' => '<controller:[\w\-]+>/<action:[\w\-]+>', 'route' => '<controller>/<action>'],
                 ],
             ]
-        ], false);
+        ], true);
+
+    }
+    /**
+     * Finalize Bootstrap web stuff
+     *
+     * @param WebApplication $app
+     * @since XXX
+     */
+    protected function finalizeBbootstrapWeb(WebApplication $app)
+    {
         list($route,) = $app->urlManager->parseRequest($app->request);
-        if (preg_match('#'.$this->uniqueId.'/#', $route) > 0) {
+        if ($route !== null && preg_match('#'.$this->uniqueId.'/#', $route) > 0) {
             $app->setComponents([
                 'user' => [
                     'class' => WebUser::class,
@@ -253,7 +298,7 @@ class Module extends BaseModule implements BootstrapInterface
     {
         if (Yii::$app instanceof WebApplication) {
             list($route,) = Yii::$app->urlManager->parseRequest(Yii::$app->request);
-            if (preg_match('#'.$this->uniqueId.'/#', $route) > 0) {
+            if ($route !== null && preg_match('#'.$this->uniqueId.'/#', $route) > 0) {
                 Yii::configure($this, [
                     'components' => [
                         'errorHandler' => [

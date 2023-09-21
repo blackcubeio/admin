@@ -1,0 +1,63 @@
+.alert {
+  @apply fixed z-10 inset-0 overflow-y-auto;
+  &-wrapper {
+    @apply flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0;
+  }
+  &-overlay {
+    @apply fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity;
+    &.opened {
+      @apply opacity-100 ease-out duration-300;
+    }
+    &.closed {
+      @apply opacity-0 ease-in duration-200;
+    }
+    &.opening,
+    &.closing {
+    }
+  }
+  &-fix {
+    @apply hidden sm:inline-block sm:align-middle sm:h-screen;
+  }
+  &-panel {
+    @apply inline-block align-bottom bg-white rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full sm:p-6;
+    &.opened {
+      @apply opacity-100 translate-y-0 sm:scale-100  ease-out duration-300;
+    }
+    &.closed {
+      @apply opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95 ease-in duration-200;
+    }
+    &.opening,
+    &.closing {
+    }
+    &-content {
+      @apply sm:flex sm:items-start;
+    }
+    &-actions {
+      @apply mt-5 sm:mt-4 sm:flex sm:flex-row-reverse;
+    }
+  }
+  &-btn {
+    @apply w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:w-auto sm:text-sm;
+    &.question {
+      @apply border-transparent bg-indigo-600 text-white hover:bg-indigo-700 focus:ring-indigo-500 sm:ml-3;
+    }
+    &.exclamation {
+      @apply border-transparent bg-red-600 text-white hover:bg-red-700 focus:ring-red-500 sm:ml-3;
+    }
+    &.check {
+      @apply border-transparent bg-green-600 text-white hover:bg-green-700 focus:ring-green-500 sm:ml-3;
+    }
+  }
+  &-icon {
+    @apply mx-auto flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-indigo-100 text-indigo-600 sm:mx-0 sm:h-10 sm:w-10;
+    &-img {
+      @apply h-6 w-6;
+    }
+    &.check {
+      @apply bg-green-100 text-green-600;
+    }
+    &.exclamation {
+      @apply bg-red-100 text-red-600;
+    }
+  }
+}

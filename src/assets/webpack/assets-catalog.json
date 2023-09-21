@@ -1,27 +1,15 @@
 {
   "manifest": {
-    "js": "js/manifest.7860b61c.js"
-  },
-  "app": {
-    "js": "js/app.c0608c27.js"
-  },
-  "chartist": {
-    "css": "css/chartist.cc9b5958.css",
-    "js": "js/chartist.cc9b5958.js"
-  },
-  "fontawesome": {
-    "css": "css/fontawesome.ddb1d22b.css",
-    "js": "js/fontawesome.ddb1d22b.js"
-  },
-  "jsoneditor": {
-    "css": "css/jsoneditor.6f989445.css",
-    "js": "js/jsoneditor.6f989445.js"
+    "js": "js/manifest.f877c3b4.js"
   },
   "main": {
-    "css": "css/main.cdf9b7a7.css",
-    "js": "js/main.cdf9b7a7.js"
+    "css": "css/main.9b8fe8dd.css",
+    "js": "js/main.9b8fe8dd.js"
+  },
+  "app": {
+    "js": "js/app.b0f8e8a5.js"
   },
   "vendors": {
-    "js": "js/vendors.de8b9d44.js"
+    "js": "js/vendors.8f81fc84.js"
   }
 }

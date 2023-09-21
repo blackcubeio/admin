@@ -2,16 +2,19 @@
 /**
  * _list.php
  *
- * PHP version 7.2+
+ * PHP version 8.0+
  *
  * @author Philippe Gaultier <pgaultier@redcat.io>
- * @copyright 2010-2020 Redcat
+ * @copyright 2010-2022 Redcat
  * @license https://www.redcat.io/license license
  * @version XXX
  * @link https://www.redcat.io
  * @package blackcube\admin\views\type
  *
  * @var $pluginManagers \blackcube\core\interfaces\PluginManagerInterface[]
+ * @var $icon string
+ * @var $title string
+ * @var $additionalLinkOptions array
  * @var $this \yii\web\View
  */
 
@@ -20,27 +23,20 @@ use blackcube\admin\components\Rbac;
 use blackcube\admin\helpers\Html;
 use blackcube\admin\widgets\Sidebar;
 use yii\helpers\Url;
+use blackcube\admin\widgets\ElementListHeader;
 
 $pathAlias = Module::getInstance()->adminTemplatesAlias;
 $formatter = Yii::$app->formatter;
 ?>
-<table>
-    <thead>
-        <tr>
-            <th>
-                <?php echo Module::t('plugin', 'Name'); ?>
-            </th>
-            <th class="tools">
-                <?php echo Module::t('plugin', 'Action'); ?>
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-        <?php foreach ($pluginManagers as $pluginId => $pluginManager): ?>
-        <?php /* @var \blackcube\core\interfaces\PluginManagerInterface $pluginManager */ ?>
-        <?php echo Html::beginTag('tr', ['data-ajaxify-target' => 'plugin-toggle-active-'.$pluginId]); ?>
+<div role="list" class="elements-list">
+    <?php echo ElementListHeader::widget([
+        'icon' => $icon,
+        'title' => $title,
+    ]); ?>
+    <?php foreach ($pluginManagers as $pluginId => $pluginManager): ?>
+        <?php echo Html::beginTag('div', ['data-ajaxify-target' => 'plugin-toggle-'.$pluginId]); ?>
             <?php echo $this->render('_line', ['pluginManager' => $pluginManager]); ?>
-        <?php echo Html::endTag('tr'); ?>
-        <?php endforeach; ?>
-    </tbody>
-</table>
+        <?php echo Html::endTag('div'); ?>
+    <?php endforeach; ?>
+</div>
+

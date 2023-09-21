@@ -2,10 +2,10 @@
 /**
  * Publication.php
  *
- * PHP version 7.2+
+ * PHP version 8.0+
  *
  * @author Philippe Gaultier <pgaultier@redcat.io>
- * @copyright 2010-2020 Redcat
+ * @copyright 2010-2022 Redcat
  * @license https://www.redcat.io/license license
  * @version XXX
  * @link https://www.redcat.io
@@ -24,7 +24,7 @@ use yii\base\Widget;
  * Widget Publication
  *
  * @author Philippe Gaultier <pgaultier@redcat.io>
- * @copyright 2010-2020 Redcat
+ * @copyright 2010-2022 Redcat
  * @license https://www.redcat.io/license license
  * @version XXX
  * @link https://www.redcat.io
@@ -45,7 +45,7 @@ class Publication extends Widget
     public function init()
     {
         parent::init();
-        if ($this->cacheId === null && Module::getInstance()->cache !== null) {
+        if ($this->cacheId === null && Module::getInstance()->get('cache') !== null) {
             $className = get_class($this->element);
             $this->cacheId = Module::getInstance()->uniqueId.':widgets:publication:'. $className::getElementType().'-'.$this->element->id;
         }
@@ -56,7 +56,8 @@ class Publication extends Widget
      */
     public function run()
     {
-        $cache = Module::getInstance()->cache;
+        $cache = Module::getInstance()->get('cache');
+        $cache = null;
         $content = false;
         /* @var $cache \yii\caching\Cache */
         if ($cache !== null && $this->cacheId !== null) {
@@ -101,7 +102,7 @@ class Publication extends Widget
                 'seoStatus' => $seoStatus,
             ]);
             if ($cache !== null && $this->cacheId !== null) {
-                $cache->set($this->cacheId, $content, 3600, QueryCache::getCmsDependencies());
+                $cache->set($this->cacheId, $content, null, QueryCache::getCmsDependencies());
             }
         }
         return $content;

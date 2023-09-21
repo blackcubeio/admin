@@ -1,0 +1,96 @@
+
+.elements {
+  @apply my-6 bg-white shadow overflow-hidden sm:rounded-md;
+  &-list {
+    @apply divide-y divide-gray-200;
+    & .header {
+      @apply block bg-indigo-800;
+      &-wrapper {
+        @apply px-4 py-4 sm:px-6 flex items-center font-bold text-lg text-white;
+      }
+      &-image {
+        @apply flex-shrink-0 p-2 block rounded-full text-indigo-800 bg-white;
+      }
+      &-icon {
+        @apply h-8 w-8;
+      }
+      &-title {
+        @apply ml-5 w-0 flex-1;
+      }
+    }
+    & .card {
+      @apply block hover:bg-gray-50;
+      &-wrapper {
+        @apply px-4 py-4 sm:px-6;
+      }
+      &-title {
+        &-block {
+          @apply flex items-center justify-between;
+        }
+        &-publication {
+          @apply ml-2 flex-shrink-0 flex;
+        }
+        @apply text-sm font-medium text-indigo-600 truncate;
+        &-id {
+          @apply text-xs font-normal text-gray-600 italic;
+        }
+      }
+      &-body {
+        @apply mt-2 sm:flex sm:justify-between;
+        &-info {
+          &-wrapper {
+            @apply sm:flex;
+          }
+          &-icon {
+            @apply flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400;
+          }
+          &-type {
+            @apply flex items-center text-sm text-gray-500;
+
+          }
+
+          @apply mt-2 flex items-center text-sm text-gray-500 sm:mt-0 sm:ml-6;
+
+        }
+        &-actions {
+          &-wrapper {
+            @apply mt-2 flex items-center text-sm text-gray-500 sm:mt-0;
+          }
+          @apply relative z-0 inline-flex shadow-sm rounded-md;
+          &-button {
+            @apply relative inline-flex items-center px-1 py-1 border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 focus:z-10 focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 hover:text-white hover:bg-indigo-600;
+            &:first-child {
+              @apply rounded-l-md;
+            }
+            &:last-child {
+              @apply rounded-r-md;
+            }
+            &.delete {
+              @apply hover:bg-red-600;
+            }
+            &.active {
+              @apply hover:bg-red-600 text-green-600 hover:text-white;
+            }
+            &.inactive {
+              @apply hover:bg-green-600 text-red-600 hover:text-white;
+            }
+            &.disabled {
+              @apply text-gray-200 hover:bg-gray-50 hover:text-gray-200;
+            }
+            &-icon {
+              @apply h-4 w-4;
+            }
+          }
+
+        }
+        &-url {
+          @apply mt-2 flex items-center text-xs text-gray-500;
+          &-icon {
+            @apply flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400;
+          }
+        }
+      }
+    }
+  }
+}
+

@@ -2,10 +2,10 @@
 /**
  * EditAction.php
  *
- * PHP version 7.2+
+ * PHP version 8.0+
  *
  * @author Philippe Gaultier <pgaultier@redcat.io>
- * @copyright 2010-2020 Redcat
+ * @copyright 2010-2022 Redcat
  * @license https://www.redcat.io/license license
  * @version XXX
  * @link https://www.redcat.io
@@ -14,7 +14,6 @@
 
 namespace blackcube\admin\actions\slug;
 
-use blackcube\admin\models\SlugForm;
 use blackcube\core\models\Slug;
 use yii\base\Action;
 use yii\web\NotFoundHttpException;
@@ -25,7 +24,7 @@ use Yii;
  * Class EditAction
  *
  * @author Philippe Gaultier <pgaultier@redcat.io>
- * @copyright 2010-2020 Redcat
+ * @copyright 2010-2022 Redcat
  * @license https://www.redcat.io/license license
  * @version XXX
  * @link https://www.redcat.io
@@ -58,21 +57,15 @@ class EditAction extends Action
         if ($slug->element === null) {
             $slug->setScenario(Slug::SCENARIO_REDIRECT);
         }
-        $slugForm = Yii::createObject([
-            'class' => SlugForm::class,
-            'element' => $slug,
-        ]);
 
         if (Yii::$app->request->isPost) {
-            $slugForm->multiLoad(Yii::$app->request->bodyParams);
-            if ($slugForm->preValidate()) {
-                if ($slugForm->save()) {
-                    return $this->controller->redirect([$this->targetAction, 'id' => $slug->id]);
-                }
+            $slug->load(Yii::$app->request->bodyParams);
+            if ($slug->save()) {
+                return $this->controller->redirect([$this->targetAction, 'id' => $slug->id]);
             }
         }
         return $this->controller->render($this->view, [
-            'slugForm' => $slugForm,
+            'element' => $slug,
         ]);
     }
 }

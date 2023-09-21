@@ -2,10 +2,10 @@
 /**
  * IndexAction.php
  *
- * PHP version 7.2+
+ * PHP version 8.0+
  *
  * @author Philippe Gaultier <pgaultier@redcat.io>
- * @copyright 2010-2020 Redcat
+ * @copyright 2010-2022 Redcat
  * @license https://www.redcat.io/license license
  * @version XXX
  * @link https://www.redcat.io
@@ -14,6 +14,7 @@
 
 namespace blackcube\admin\actions\slug;
 
+use blackcube\admin\Module;
 use blackcube\core\models\Slug;
 use yii\base\Action;
 use yii\data\ActiveDataProvider;
@@ -25,7 +26,7 @@ use Yii;
  * Class IndexAction
  *
  * @author Philippe Gaultier <pgaultier@redcat.io>
- * @copyright 2010-2020 Redcat
+ * @copyright 2010-2022 Redcat
  * @license https://www.redcat.io/license license
  * @version XXX
  * @link https://www.redcat.io
@@ -39,6 +40,11 @@ class IndexAction extends Action
     public $view = 'index';
 
     /**
+     * @var string view
+     */
+    public $ajaxView = '_list';
+
+    /**
      * @return string|Response
      * @throws NotFoundHttpException
      * @throws \yii\base\InvalidConfigException
@@ -46,8 +52,10 @@ class IndexAction extends Action
     public function run()
     {
         $slugsQuery = Slug::find()
-            ->joinWith('seo', true)
-            ->joinWith('sitemap', true);
+            ->andWhere(['is not', 'targetUrl', null])
+            ->andWhere(['is not', 'httpCode', null]);
+            // ->joinWith('seo', true)
+            // ->joinWith('sitemap', true);
         $search = Yii::$app->request->getQueryParam('search', null);
         if ($search !== null) {
             $slugsQuery->andWhere(['or',
@@ -70,6 +78,16 @@ class IndexAction extends Action
                 ]
             ],
         ]);
+        if (Yii::$app->request->isAjax) {
+            return $this->controller->renderPartial($this->ajaxView, [
+                'icon' => 'outline/link',
+                'title' => Module::t('slug', 'Slugs'),
+                'elementsProvider' => $slugsProvider,
+                'additionalLinkOptions' => [
+                    'data-ajaxify-source' => 'slugs-search'
+                ]
+            ]);
+        }
 
         return $this->controller->render($this->view, [
             'slugsProvider' => $slugsProvider

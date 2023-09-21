@@ -2,10 +2,10 @@
 /**
  * DeleteAction.php
  *
- * PHP version 7.2+
+ * PHP version 8.0+
  *
  * @author Philippe Gaultier <pgaultier@redcat.io>
- * @copyright 2010-2020 Redcat
+ * @copyright 2010-2022 Redcat
  * @license https://www.redcat.io/license license
  * @version XXX
  * @link https://www.redcat.io
@@ -24,7 +24,7 @@ use Yii;
  * Class DeleteAction
  *
  * @author Philippe Gaultier <pgaultier@redcat.io>
- * @copyright 2010-2020 Redcat
+ * @copyright 2010-2022 Redcat
  * @license https://www.redcat.io/license license
  * @version XXX
  * @link https://www.redcat.io
@@ -50,7 +50,12 @@ class DeleteAction extends Action
             throw new NotFoundHttpException();
         }
         if (Yii::$app->request->isPost) {
-            $slug->delete();
+            $element = $slug->element;
+            if ($element !== null) {
+                $element->detachSlug();
+            } else {
+                $slug->delete();
+            }
         }
         return $this->controller->redirect([$this->targetAction]);
     }

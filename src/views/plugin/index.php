@@ -2,10 +2,10 @@
 /**
  * index.php
  *
- * PHP version 7.2+
+ * PHP version 8.0+
  *
  * @author Philippe Gaultier <pgaultier@redcat.io>
- * @copyright 2010-2020 Redcat
+ * @copyright 2010-2022 Redcat
  * @license https://www.redcat.io/license license
  * @version XXX
  * @link https://www.redcat.io
@@ -23,10 +23,15 @@ use yii\helpers\Url;
 
 $formatter = Yii::$app->formatter;
 ?>
-    <main class="overflow-hidden">
-        <div class="table-container" >
-            <div blackcube-ajaxify="click" >
-                <?php echo $this->render('_list', ['pluginManagers' => $pluginManagers]); ?>
-            </div>
-        </div>
-    </main>
+<main class="application-content">
+    <div class="elements" data-ajaxify-target="plugins-search">
+        <?php echo $this->render('_list', [
+            'icon' => 'outline/beaker',
+            'title' => Module::t('plugin', 'Plugins'),
+            'pluginManagers' => $pluginManagers,
+            'additionalLinkOptions' => [
+                'data-ajaxify-source' => 'plugins-search'
+            ]
+        ]); ?>
+    </div>
+</main>
