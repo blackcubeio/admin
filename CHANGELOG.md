@@ -1,6 +1,9 @@
 Blackcube Admin - CHANGELOG 
 ===========================
 
+Release 3.0.0 September, 21st 2023 <pgaultier@redcat.io>
+----------------------------------------------------
+
  * Fix: menu system'
  * Upd: update heroicons
  * Upd: Prepare DI
