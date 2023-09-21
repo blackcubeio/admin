@@ -2,7 +2,7 @@
 /**
  * Route.php
  *
- * PHP version 7.4+
+ * PHP version 8.0+
  *
  * @author Philippe Gaultier <pgaultier@redcat.io>
  * @copyright 2010-2022 Redcat
@@ -87,7 +87,7 @@ class Route {
                                     $route = trim($info['moduleId'].'/'.$controllerId.'/'.$actionId, '/');
                                     // $routes[$route] = $route;
                                     $routes[] = [
-                                        'id' => $route,
+                                        'id' => '/'.$route,
                                         'name' => $route,
                                         'type' => Module::t('helpers', 'Blackcube')
                                     ];
@@ -103,7 +103,7 @@ class Route {
                                     $route = trim($info['moduleId'].'/'.$controllerId.'/'.$actionId, '/');
                                     // $routes[$route] = $route;
                                     $routes[] = [
-                                        'id' => $route,
+                                        'id' => '/'.$route,
                                         'name' => $route,
                                         'type' => Module::t('helpers', 'Blackcube')
                                     ];
@@ -184,7 +184,7 @@ class Route {
                                     $realMethod = str_replace('action', '', $method->name);
                                     $actionId = Inflector::camel2id($realMethod);
                                     if ($actionId === $defaultAction) {
-                                        $actionId = '';
+                                        $actionId = $defaultAction;
                                     }
                                     $route = trim($info['moduleId'].'/'.$controllerId.'/'.$actionId, '/');
                                     $routes[] = ['id' => $route, 'name' => $route, 'type' => Module::t('helpers', 'Regular')];
@@ -195,7 +195,7 @@ class Route {
                                 $externalActions = $currentController->actions();
                                 foreach($externalActions as $actionId => $config) {
                                     if ($actionId === $defaultAction) {
-                                        $actionId = '';
+                                        $actionId = $defaultAction;
                                     }
                                     $route = trim($info['moduleId'].'/'.$controllerId.'/'.$actionId, '/');
                                     $routes[] = ['id' => $route, 'name' => $route, 'type' =>  Module::t('helpers', 'Regular')];
