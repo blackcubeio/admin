@@ -78,6 +78,7 @@ use blackcube\core\models\Tag;
             <div class="element-form-bloc-stacked">
                 <?php echo BlackcubeHtml::activeCheckbox($node, 'active', ['hint' => Module::t('node', 'Node status')]); ?>
             </div>
+            <?php if($node->isNewRecord === true): ?>
             <div class="element-form-bloc-grid-12">
                 <div class="element-form-bloc-cols-3">
                     <?php echo BlackcubeHtml::activeDateInput($node, 'activeDateStart', ['realAttribute' => 'dateStart']); ?>
@@ -137,6 +138,106 @@ use blackcube\core\models\Tag;
                     ]); ?>
                 </div>
             </div>
+            <?php else: ?>
+            <div blackcube-view-edit="">
+                <div class="element-form-bloc-grid-12">
+                    <div class="element-form-bloc-cols-3 hidden" data-view-edit="edit">
+                        <?php echo BlackcubeHtml::activeDateInput($node, 'activeDateStart', ['realAttribute' => 'dateStart']); ?>
+                    </div>
+                    <div class="element-form-bloc-cols-3" data-view-edit="view">
+                        <div class="element-form-bloc-textfield-wrapper">
+                            <label class="element-form-bloc-label"><?php echo $node->getAttributeLabel('dateStart'); ?></label>
+                            <div class="element-form-bloc-abstract">
+                                <?php echo Yii::$app->formatter->asDate($node->dateStart); ?>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="element-form-bloc-cols-3 hidden" data-view-edit="edit">
+                        <?php echo BlackcubeHtml::activeDateInput($node, 'activeDateEnd', ['realAttribute' => 'dateEnd']); ?>
+                    </div>
+                    <div class="element-form-bloc-cols-3" data-view-edit="view">
+                        <div class="element-form-bloc-textfield-wrapper">
+                            <label class="element-form-bloc-label"><?php echo $node->getAttributeLabel('dateEnd'); ?></label>
+                            <div class="element-form-bloc-abstract">
+                                <?php echo Yii::$app->formatter->asDate($node->dateEnd); ?>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="element-form-bloc-cols-3 hidden" data-view-edit="edit">
+                        <?php echo BlackcubeHtml::activeDropDownList($node, 'typeId', ArrayHelper::map($typesQuery->select(['id', 'name'])->asArray()->all(), 'id', 'name'), [
+                            'prompt' => Module::t('node', 'No type'),
+                            'label' => Module::t('node', 'Type'),
+                        ]); ?>
+                    </div>
+                    <div class="element-form-bloc-cols-3" data-view-edit="view">
+                        <div class="element-form-bloc-textfield-wrapper">
+                            <label class="element-form-bloc-label"><?php echo Module::t('node', 'Type'); ?></label>
+                            <div class="element-form-bloc-abstract">
+                                <?php echo $node->type?->name ?>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="element-form-bloc-cols-3 hidden" data-view-edit="edit">
+                        <?php echo BlackcubeHtml::activeDropDownList($node, 'languageId', ArrayHelper::map($languagesQuery->select(['id', 'name'])->asArray()->all(), 'id', 'name'), [
+                            'label' => Module::t('node', 'Language'),
+                        ]); ?>
+                    </div>
+                    <div class="element-form-bloc-cols-2" data-view-edit="view">
+                        <div class="element-form-bloc-textfield-wrapper">
+                            <label class="element-form-bloc-label"><?php echo Module::t('node', 'Language'); ?></label>
+                            <div class="element-form-bloc-abstract">
+                                <?php echo $node->language?->name ?>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="element-form-bloc-cols-1" data-view-edit="toggle">
+                        <button type="button" class="relative inline-flex items-center p-2.5 rounded-md bg-white text-sm font-medium text-gray-500 hover:text-white hover:bg-indigo-600 focus:z-10 focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500">
+                            <?php echo Heroicons::svg('solid/pencil-square', ['class' => 'h-4 w-4']); ?>
+                        </button>
+                    </div>
+                </div>
+                <div class="element-form-bloc-grid-12 hidden" blackcube-toggle-dependencies=""  data-view-edit="edit">
+                    <div class="element-form-bloc-cols-3">
+                        <?php
+                        $options = ['data-dependency-source' => ''];
+                        if($node->isNewRecord) {
+                            $moveNodeForm->move = 1;
+                            $options['disabled'] = 'disabled';
+                        }
+                        ?>
+                        <?php echo BlackcubeHtml::activeCheckbox($moveNodeForm, 'move', $options); ?>
+                    </div>
+                    <div class="element-form-bloc-cols-6" data-dependency="">
+                        <?php echo BlackcubeHtml::activeDropDownList($moveNodeForm, 'mode', [
+                            'into' => Module::t('node', 'Into'),
+                            'before' => Module::t('node', 'Before'),
+                            'after' => Module::t('node', 'After'),
+                        ]); ?>
+                    </div>
+                    <div class="element-form-bloc-cols-3" data-dependency="">
+                        <?php echo BlackcubeHtml::activeDropDownList($moveNodeForm, 'target', $mapNodes = ArrayHelper::map(
+                            $targetNodesQuery->select(['id', 'name', 'level', 'left', 'right'])->asArray()->all(),
+                            'id',
+                            function($item) {
+                                return str_repeat('-', ($item['level'] - 1)).' '.$item['name'];
+                            }), [
+                            'options' =>ArrayHelper::map($targetNodesQuery->select(['id', 'name', 'level', 'left', 'right'])->asArray()->all(),
+                                'id',
+                                function($item) use ($node) {
+                                    $option = [
+                                        'label' => str_repeat('-', ($item['level'] - 1)).' '.$item['name'],
+                                    ];
+                                    if (empty($node->left) === false && $item['left'] >= $node->left && empty($node->right) === false && $item['right'] <= $node->right ) {
+                                        $option['disabled'] = 'disabled';
+                                    }
+                                    return $option;
+                                }),
+                            'prompt' => Module::t('node', 'Target node'),
+                        ]); ?>
+                    </div>
+                </div>
+            </div>
+            <?php endif; ?>
             <div class="element-form-bloc-grid-12">
                 <div class="element-form-bloc-cols-9">
                     <?php echo BlackcubeHtml::activeTextInput($node, 'name'); ?>

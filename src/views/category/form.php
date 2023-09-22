@@ -73,6 +73,7 @@ use blackcube\admin\helpers\Aurelia;
             <div class="element-form-bloc-stacked">
                 <?php echo BlackcubeHtml::activeCheckbox($category, 'active', ['hint' => Module::t('category', 'Category status')]); ?>
             </div>
+            <?php if($category->isNewRecord === true): ?>
             <div class="element-form-bloc-grid-12">
                 <div class="element-form-bloc-cols-6">
                     <?php echo BlackcubeHtml::activeDropDownList($category, 'typeId', ArrayHelper::map($typesQuery->select(['id', 'name'])->asArray()->all(), 'id', 'name'), [
@@ -86,6 +87,42 @@ use blackcube\admin\helpers\Aurelia;
                     ]); ?>
                 </div>
             </div>
+            <?php else: ?>
+                <div class="element-form-bloc-grid-12"  blackcube-view-edit="">
+                    <div class="element-form-bloc-cols-6 hidden" data-view-edit="edit">
+                        <?php echo BlackcubeHtml::activeDropDownList($category, 'typeId', ArrayHelper::map($typesQuery->select(['id', 'name'])->asArray()->all(), 'id', 'name'), [
+                            'prompt' => Module::t('category', 'No type'),
+                            'label' => Module::t('category', 'Type'),
+                        ]); ?>
+                    </div>
+                    <div class="element-form-bloc-cols-6" data-view-edit="view">
+                        <div class="element-form-bloc-textfield-wrapper">
+                            <label class="element-form-bloc-label"><?php echo Module::t('category', 'Type'); ?></label>
+                            <div class="element-form-bloc-abstract">
+                                <?php echo $category->type?->name ?>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="element-form-bloc-cols-6 hidden" data-view-edit="edit">
+                        <?php echo BlackcubeHtml::activeDropDownList($category, 'languageId', ArrayHelper::map($languagesQuery->select(['id', 'name'])->asArray()->all(), 'id', 'name'), [
+                            'label' => Module::t('category', 'Language'),
+                        ]); ?>
+                    </div>
+                    <div class="element-form-bloc-cols-5" data-view-edit="view">
+                        <div class="element-form-bloc-textfield-wrapper">
+                            <label class="element-form-bloc-label"><?php echo Module::t('category', 'Language'); ?></label>
+                            <div class="element-form-bloc-abstract">
+                                <?php echo $category->language?->name ?>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="element-form-bloc-cols-1" data-view-edit="toggle">
+                        <button type="button" class="relative inline-flex items-center p-2.5 rounded-md bg-white text-sm font-medium text-gray-500 hover:text-white hover:bg-indigo-600 focus:z-10 focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500">
+                            <?php echo Heroicons::svg('solid/pencil-square', ['class' => 'h-4 w-4']); ?>
+                        </button>
+                    </div>
+                </div>
+            <?php endif; ?>
             <div class="element-form-bloc-stacked">
                 <?php echo BlackcubeHtml::activeTextInput($category, 'name', []); ?>
             </div>
