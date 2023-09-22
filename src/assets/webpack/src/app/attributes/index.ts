@@ -9,3 +9,4 @@ export * from './broadcast-element';
 export * from './toggle-dependencies';
 export * from './fold';
 export * from './url-generator';
+export * from './view-edit';
