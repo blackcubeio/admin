@@ -1,6 +1,7 @@
 Blackcube Admin - CHANGELOG 
 ===========================
 
+ * Fix: Fix search tags
  * Upd: Add view/edit system
  * Upd: Add inner bloc add
 
