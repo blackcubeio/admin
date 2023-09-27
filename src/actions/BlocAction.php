@@ -15,7 +15,12 @@
 namespace blackcube\admin\actions;
 
 use blackcube\admin\Module;
+use blackcube\core\interfaces\ElementInterface;
 use blackcube\core\models\Bloc;
+use blackcube\core\models\Category;
+use blackcube\core\models\Composite;
+use blackcube\core\models\Node;
+use blackcube\core\models\Tag;
 use yii\base\Action;
 use yii\base\InvalidArgumentException;
 use yii\base\Model;
@@ -58,6 +63,7 @@ class BlocAction extends Action
         }
         $elementClass = $this->elementClass;
         if ($id !== null) {
+            /** @var Node|Composite|Category|Tag $element */
             $element = $elementClass::findOne(['id' => $id]);
             if ($element === null) {
                 throw new NotFoundHttpException();
@@ -74,6 +80,22 @@ class BlocAction extends Action
                 $bloc->blocTypeId = Yii::$app->request->bodyParams['blocTypeId'];
                 $bloc->save(false);
                 $element->attachBloc($bloc, -1);
+                $blocId = Yii::$app->request->bodyParams['blocAdd'];
+                $blocId = (int) $blocId;
+                if ($blocId > 0) {
+                    $previousBloc = Bloc::find()->andWhere(['id' => $blocId])->one();
+                    if ($previousBloc !== null) {
+                        /** @var Bloc $previousBloc */
+                        foreach($element->getBlocs()->each() as $idx => $attachedBloc) {
+                            if ($attachedBloc->id == $previousBloc->id) {
+                                $element->moveBloc($bloc, $idx + 2);
+                                break;
+                            }
+                        }
+                        // $element->moveBloc($bloc, $previousBloc);
+                    }
+                }
+                // $element->moveBloc($bloc, Yii::$app->request->bodyParams['blocAdd']);
             } elseif (isset(Yii::$app->request->bodyParams['blocDelete'])) {
                 $bloc = Bloc::find()->andWhere(['id' => Yii::$app->request->bodyParams['blocDelete']])->one();
                 if ($bloc !== null) {

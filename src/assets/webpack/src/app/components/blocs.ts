@@ -40,6 +40,14 @@ export class Blocs
                 this.logger.debug('delegateClick');
                 if (currentButton.name) {
                     const body = new FormData(this.form);
+                    body.delete('blocTypeId');
+                    if (currentButton.name === 'blocAdd') {
+                        const selectElement: HTMLSelectElement = currentButton.previousElementSibling as HTMLSelectElement;
+                        if (selectElement.tagName === 'SELECT') {
+                            body.append('blocTypeId', selectElement.value);
+                        }
+                    }
+
                     const method = 'post';
                     body.append(currentButton.name, currentButton.value);
                     this.httpService.fetch(this.url, {body, method} )

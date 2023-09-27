@@ -6374,6 +6374,9 @@ div.jsoneditor-statusbar>.jsoneditor-curserinfo-label,div.jsoneditor-statusbar>.
   --tw-ring-opacity: 1;
   --tw-ring-color: rgb(255 255 255 / var(--tw-ring-opacity));
 }
+.focus\:ring-offset-0:focus {
+  --tw-ring-offset-width: 0px;
+}
 .focus\:ring-offset-2:focus {
   --tw-ring-offset-width: 2px;
 }

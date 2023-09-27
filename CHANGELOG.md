@@ -1,6 +1,13 @@
 Blackcube Admin - CHANGELOG 
 ===========================
 
+Release 3.0.1 September, 27th 2023 <pgaultier@redcat.io>
+----------------------------------------------------
+
+ * Fix: Fix search tags
+ * Upd: Add view/edit system
+ * Upd: Add inner bloc add
+
 Release 3.0.0 September, 21st 2023 <pgaultier@redcat.io>
 ----------------------------------------------------
 

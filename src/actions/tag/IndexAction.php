@@ -64,7 +64,9 @@ class IndexAction extends BaseElementAction
         $tagsQuery
             ->joinWith('type', true)
             ->joinWith('slug', true)
-            ->with('category.language')
+            ->joinWith('category', true)
+            ->joinWith('category.language', true)
+            // ->with('category.language')
             ->with('slug.seo')
             ->with('slug.sitemap');
         $search = Yii::$app->request->getQueryParam('search', null);
