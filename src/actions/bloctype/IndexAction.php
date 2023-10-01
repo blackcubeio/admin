@@ -55,7 +55,7 @@ class IndexAction extends Action
         $search = Yii::$app->request->getQueryParam('search', null);
         if ($search !== null) {
             $blocTypesQuery->andWhere(['or',
-                ['id', 'name', $search, true],
+                ['like', 'id', $search, false],
                 ['like', 'name', $search],
             ]);
         }
