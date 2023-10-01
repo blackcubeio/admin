@@ -1,7 +1,7 @@
 Blackcube Admin - CHANGELOG 
 ===========================
 
-Release 3.0.1 September, 27th 2023 <pgaultier@redcat.io>
+Release 3.0.2 October, 1st 2023 <pgaultier@redcat.io>
 ----------------------------------------------------
 
 * Fix: Fix search bloc types
