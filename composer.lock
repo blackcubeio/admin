@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d7e113f2952440b195bd391d8b02cc40",
+    "content-hash": "12739eaa96a3a7d2b92c134637700550",
     "packages": [
         {
             "name": "blackcube/core",
-            "version": "3.0.2",
+            "version": "3.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/blackcubeio/core.git",
-                "reference": "e8ba143f49f26a4b674fcf15a3235cf752445111"
+                "reference": "00c4cd5f1f87cb4a3b317dde94c3cd282121dd9f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/blackcubeio/core/zipball/e8ba143f49f26a4b674fcf15a3235cf752445111",
-                "reference": "e8ba143f49f26a4b674fcf15a3235cf752445111",
+                "url": "https://api.github.com/repos/blackcubeio/core/zipball/00c4cd5f1f87cb4a3b317dde94c3cd282121dd9f",
+                "reference": "00c4cd5f1f87cb4a3b317dde94c3cd282121dd9f",
                 "shasum": ""
             },
             "require": {
@@ -83,14 +83,14 @@
                 "source": "https://code.redcat.io/blackcube/core/tree/devel",
                 "wiki": "https://code.redcat.io/blackcube/core/wikis/home"
             },
-            "time": "2023-10-01T15:00:27+00:00"
+            "time": "2023-10-04T09:28:59+00:00"
         },
         {
             "name": "bower-asset/inputmask",
             "version": "3.3.11",
             "source": {
                 "type": "git",
-                "url": "https://github.com/RobinHerbots/Inputmask.git",
+                "url": "git@github.com:RobinHerbots/Inputmask.git",
                 "reference": "5e670ad62f50c738388d4dcec78d2888505ad77b"
             },
             "dist": {
