@@ -81,9 +81,6 @@ class SeoAction extends Action
         if (Yii::$app->request->isPost) {
             $seo->scenario = Seo::SCENARIO_PRE_VALIDATE;
             $seo->load(Yii::$app->request->bodyParams);
-            if ($seo->canonicalSlugId === -1) {
-                $seo->canonicalSlugId = null;
-            }
             $transaction = Module::getInstance()->get('db')->beginTransaction();
             if ($seo->save()) {
                 $transaction->commit();
