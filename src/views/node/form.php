@@ -192,7 +192,7 @@ use blackcube\core\models\Tag;
                     </div>
                     <div class="element-form-bloc-cols-1" data-view-edit="toggle">
                         <button type="button" class="relative inline-flex items-center p-2.5 rounded-md bg-white text-sm font-medium text-gray-500 hover:text-white hover:bg-indigo-600 focus:z-10 focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500">
-                            <?php echo Heroicons::svg('solid/pencil-square', ['class' => 'h-4 w-4']); ?>
+                            <?php echo Heroicons::svg('solid/pencil-square', ['class' => 'h-5 w-4']); ?>
                         </button>
                     </div>
                 </div>
