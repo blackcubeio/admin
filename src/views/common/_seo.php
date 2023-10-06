@@ -83,6 +83,11 @@ if ($saved === true) {
                 <?php echo BlackcubeHtml::activeCheckbox($seo, 'nofollow', []); ?>
             </div>
         </div>
+        <div class="element-form-bloc-grid-12">
+            <div class="element-form-bloc-cols-12">
+                <?php echo BlackcubeHtml::activeDropDownList($seo, 'canonicalSlugId', ArrayHelper::map($availableSlugs, 'id', 'path'), ['label' => Module::t('common', 'Canonical Slug')]); ?>
+            </div>
+        </div>
         <div class="element-form-bloc-stacked">
             <?php echo BlackcubeHtml::activeTextInput($seo, 'title', []); ?>
             <?php echo BlackcubeHtml::activeTextarea($seo, 'description', ['rows' => 4]); ?>

@@ -17,8 +17,10 @@ namespace blackcube\admin\actions;
 use blackcube\admin\Module;
 use blackcube\core\interfaces\ElementInterface;
 use blackcube\core\models\Seo;
+use blackcube\core\models\Slug;
 use yii\base\Action;
 use yii\base\InvalidArgumentException;
+use yii\helpers\ArrayHelper;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
 use Yii;
@@ -79,6 +81,9 @@ class SeoAction extends Action
         if (Yii::$app->request->isPost) {
             $seo->scenario = Seo::SCENARIO_PRE_VALIDATE;
             $seo->load(Yii::$app->request->bodyParams);
+            if ($seo->canonicalSlugId === -1) {
+                $seo->canonicalSlugId = null;
+            }
             $transaction = Module::getInstance()->get('db')->beginTransaction();
             if ($seo->save()) {
                 $transaction->commit();
@@ -88,11 +93,33 @@ class SeoAction extends Action
                 $saved = false;
             }
         }
+        $slugs = Slug::find()
+            ->active()
+            ->andWhere(['targetUrl' => null])
+            ->andWhere(['httpCode' => null])
+            ->andWhere(['!=', 'id', $element->slug->id])
+            ->orderBy(['path' => SORT_ASC])
+            ->all();
+        $availableSlugs = ArrayHelper::toArray($slugs, [
+            Slug::class => [
+                'id',
+                'path'
+            ]
+        ]);
+        array_unshift($availableSlugs, [
+            'id' => $element->slug->id,
+            'path' => Module::t('common', 'Self Canonical'),
+        ]);
+        array_unshift($availableSlugs, [
+            'id' => null,
+            'path' => Module::t('common', 'No Canonical'),
+        ]);
 
         return $this->controller->renderPartial($this->view, [
             'element' => $element,
             'seo' => $seo,
             'saved' => $saved,
+            'availableSlugs' => $availableSlugs,
         ]);
 
     }
