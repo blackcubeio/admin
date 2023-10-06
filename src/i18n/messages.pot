@@ -83,6 +83,10 @@ msgid "Cancel"
 msgstr ""
 
 msgctxt "blackcube/admin/common"
+msgid "Canonical Slug"
+msgstr ""
+
+msgctxt "blackcube/admin/common"
 msgid "Close panel"
 msgstr ""
 
@@ -123,6 +127,10 @@ msgid "Next"
 msgstr ""
 
 msgctxt "blackcube/admin/common"
+msgid "No Canonical"
+msgstr ""
+
+msgctxt "blackcube/admin/common"
 msgid "Previous"
 msgstr ""
 
@@ -148,6 +156,10 @@ msgstr ""
 
 msgctxt "blackcube/admin/common"
 msgid "Search"
+msgstr ""
+
+msgctxt "blackcube/admin/common"
+msgid "Self Canonical"
 msgstr ""
 
 msgctxt "blackcube/admin/common"
@@ -544,6 +556,10 @@ msgstr ""
 
 msgctxt "blackcube/admin/node"
 msgid "Move Node"
+msgstr ""
+
+msgctxt "blackcube/admin/node"
+msgid "No type"
 msgstr ""
 
 msgctxt "blackcube/admin/node"
