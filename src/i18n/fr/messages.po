@@ -165,7 +165,7 @@ msgstr "Rechercher"
 
 msgctxt "blackcube/admin/common"
 msgid "Self Canonical"
-msgstr "URL canonique vers soi-même"
+msgstr "Soi-même"
 
 msgctxt "blackcube/admin/common"
 msgid ""
@@ -567,9 +567,6 @@ msgctxt "blackcube/admin/node"
 msgid "Move Node"
 msgstr "Déplacer la rubrique"
 
-#, fuzzy
-#| msgctxt "blackcube/admin/category"
-#| msgid "No type"
 msgctxt "blackcube/admin/node"
 msgid "No type"
 msgstr "Pas de type"
