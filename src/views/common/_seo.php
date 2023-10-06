@@ -13,6 +13,7 @@
  *
  * @var $element \blackcube\core\models\Node|\blackcube\core\models\Composite|\blackcube\core\models\Category|\blackcube\core\models\Tag
  * @var $seo \blackcube\core\models\Seo
+ * @var $availableSlugs array
  * @var $saved bool|null
  * @var $this \yii\web\View
  */
