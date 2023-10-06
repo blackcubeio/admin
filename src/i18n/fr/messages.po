@@ -10,7 +10,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Poedit 3.3.2\n"
+"X-Generator: Poedit 3.4\n"
 
 msgctxt "blackcube/admin/actions"
 msgid "Property \"elementClass\" must be defined"
@@ -85,6 +85,10 @@ msgid "Cancel"
 msgstr "Annuler"
 
 msgctxt "blackcube/admin/common"
+msgid "Canonical Slug"
+msgstr "URL Canonique"
+
+msgctxt "blackcube/admin/common"
 msgid "Close panel"
 msgstr "Fermer"
 
@@ -125,6 +129,10 @@ msgid "Next"
 msgstr "Suivant"
 
 msgctxt "blackcube/admin/common"
+msgid "No Canonical"
+msgstr "Pas d’URL canonique"
+
+msgctxt "blackcube/admin/common"
 msgid "Previous"
 msgstr "Précédent"
 
@@ -154,6 +162,10 @@ msgstr "Enregistrer"
 msgctxt "blackcube/admin/common"
 msgid "Search"
 msgstr "Rechercher"
+
+msgctxt "blackcube/admin/common"
+msgid "Self Canonical"
+msgstr "Soi-même"
 
 msgctxt "blackcube/admin/common"
 msgid ""
@@ -554,6 +566,10 @@ msgstr "Mode"
 msgctxt "blackcube/admin/node"
 msgid "Move Node"
 msgstr "Déplacer la rubrique"
+
+msgctxt "blackcube/admin/node"
+msgid "No type"
+msgstr "Pas de type"
 
 msgctxt "blackcube/admin/node"
 msgid "Node"
