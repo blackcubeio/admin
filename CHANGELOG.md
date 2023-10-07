@@ -1,6 +1,8 @@
 Blackcube Admin - CHANGELOG 
 ===========================
 
+ * Upd: Update dependencies
+ * Upd: Handle canonical URL
 
 Release 3.0.3 October, 4th 2023 <pgaultier@redcat.io>
 ----------------------------------------------------

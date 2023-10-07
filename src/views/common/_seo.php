@@ -13,6 +13,7 @@
  *
  * @var $element \blackcube\core\models\Node|\blackcube\core\models\Composite|\blackcube\core\models\Category|\blackcube\core\models\Tag
  * @var $seo \blackcube\core\models\Seo
+ * @var $availableSlugs array
  * @var $saved bool|null
  * @var $this \yii\web\View
  */
@@ -81,6 +82,11 @@ if ($saved === true) {
             </div>
             <div class="element-form-bloc-cols-6">
                 <?php echo BlackcubeHtml::activeCheckbox($seo, 'nofollow', []); ?>
+            </div>
+        </div>
+        <div class="element-form-bloc-grid-12">
+            <div class="element-form-bloc-cols-12">
+                <?php echo BlackcubeHtml::activeDropDownList($seo, 'canonicalSlugId', ArrayHelper::map($availableSlugs, 'id', 'path'), ['label' => Module::t('common', 'Canonical Slug')]); ?>
             </div>
         </div>
         <div class="element-form-bloc-stacked">
