@@ -221,7 +221,9 @@ class ExportAction extends Action
     {
         $elementData = null;
         if ($element !== null) {
-            $elementData = $element->toArray();
+            $elementData['elementType'] = $element::getElementType();
+            $elementData = array_merge($elementData, $element->toArray());
+
             unset($elementData['id']);
 
             unset ($elementData['slugId']);
