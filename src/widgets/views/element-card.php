@@ -157,6 +157,16 @@ if ($tree && $element instanceof Node) {
                             <?php echo Heroicons::svg($element->active ? 'outline/play' : 'outline/pause', ['class' => 'card-body-actions-button-icon']); ?>
                         <?php echo Html::endTag('a'); ?>
                     <?php endif; ?>
+                    <?php if ($element instanceof Node || $element instanceof Composite || $element instanceof Category || $element instanceof Tag): ?>
+                        <?php echo Html::beginTag('a', [
+                            'href' => Url::to([$controller.'/export', 'id' => $element->id]),
+                            'class' => 'card-body-actions-button',
+                            'target' => '_blank',
+                        ]); ?>
+                            <span class="sr-only"><?php echo Module::t('common', 'Export'); ?></span>
+                            <?php echo Heroicons::svg('outline/arrow-down-tray', ['class' => 'card-body-actions-button-icon']); ?>
+                        <?php echo Html::endTag('a'); ?>
+                    <?php endif; ?>
                     <?php if (($element instanceof Node || $element instanceof Composite || $element instanceof Category) && $element->slug !== null): ?>
                         <?php echo Html::beginTag('a', [
                             'href' => Url::to([$element->getRoute()]),
