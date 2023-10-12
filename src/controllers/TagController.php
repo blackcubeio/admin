@@ -14,6 +14,7 @@
 
 namespace blackcube\admin\controllers;
 
+use blackcube\admin\actions\ExportAction;
 use blackcube\admin\actions\tag\CompositeAction;
 use blackcube\admin\actions\tag\CreateAction;
 use blackcube\admin\actions\tag\DeleteAction;
@@ -54,7 +55,7 @@ class TagController extends BaseElementController
                 [
                     'allow' => true,
                     'actions' => [
-                        'modal', 'index',
+                        'modal', 'index', 'export',
                     ],
                     'roles' => [Rbac::PERMISSION_TAG_VIEW],
                 ],
@@ -140,6 +141,10 @@ class TagController extends BaseElementController
         ];
         $actions['delete'] = [
             'class' => DeleteAction::class,
+        ];
+        $actions['export'] = [
+            'class' => ExportAction::class,
+            'elementClass' => Tag::class,
         ];
         return $actions;
     }

@@ -14,6 +14,7 @@
 
 namespace blackcube\admin\controllers;
 
+use blackcube\admin\actions\ExportAction;
 use blackcube\admin\actions\node\CompositeAction;
 use blackcube\admin\actions\node\CreateAction;
 use blackcube\admin\actions\node\DeleteAction;
@@ -55,7 +56,7 @@ class NodeController extends BaseElementController
                 [
                     'allow' => true,
                     'actions' => [
-                        'modal', 'index',
+                        'modal', 'index', 'export',
                     ],
                     'roles' => [Rbac::PERMISSION_NODE_VIEW],
                 ],
@@ -145,6 +146,10 @@ class NodeController extends BaseElementController
         ];
         $actions['delete'] = [
             'class' => DeleteAction::class,
+        ];
+        $actions['export'] = [
+            'class' => ExportAction::class,
+            'elementClass' => Node::class,
         ];
         return $actions;
     }
