@@ -57,6 +57,7 @@ class ElementCard extends Widget
             $name = $this->element->name;
             $updatePermission = Rbac::PERMISSION_NODE_UPDATE;
             $deletePermission = Rbac::PERMISSION_NODE_DELETE;
+            $exportPermission = Rbac::PERMISSION_NODE_EXPORT;
         } elseif ($this->element instanceof Composite) {
             $type = Module::t('widgets', 'Composites');
             $controller = 'composite';
@@ -64,6 +65,7 @@ class ElementCard extends Widget
             $name = $this->element->name;
             $updatePermission = Rbac::PERMISSION_COMPOSITE_UPDATE;
             $deletePermission = Rbac::PERMISSION_COMPOSITE_DELETE;
+            $exportPermission = Rbac::PERMISSION_COMPOSITE_EXPORT;
         } elseif ($this->element instanceof Category) {
             $type = Module::t('widgets', 'Categories');
             $controller = 'category';
@@ -71,6 +73,7 @@ class ElementCard extends Widget
             $name = $this->element->name;
             $updatePermission = Rbac::PERMISSION_CATEGORY_UPDATE;
             $deletePermission = Rbac::PERMISSION_CATEGORY_DELETE;
+            $exportPermission = Rbac::PERMISSION_CATEGORY_EXPORT;
         } elseif ($this->element instanceof Tag) {
             $type = Module::t('widgets', 'Tags');
             $controller = 'tag';
@@ -78,6 +81,7 @@ class ElementCard extends Widget
             $name = $this->element->name;
             $updatePermission = Rbac::PERMISSION_TAG_UPDATE;
             $deletePermission = Rbac::PERMISSION_TAG_DELETE;
+            $exportPermission = Rbac::PERMISSION_TAG_EXPORT;
         } elseif ($this->element instanceof Slug) {
             $type = Module::t('widgets', 'Slugs');
             $controller = 'slug';
@@ -85,6 +89,7 @@ class ElementCard extends Widget
             $name = $this->element->path;
             $updatePermission = Rbac::PERMISSION_SLUG_UPDATE;
             $deletePermission = Rbac::PERMISSION_SLUG_DELETE;
+            $exportPermission = null;
         }
         return $this->render('element-card', [
             'name' => $name,
@@ -93,6 +98,7 @@ class ElementCard extends Widget
             'icon' => $icon,
             'updatePermission' => $updatePermission,
             'deletePermission' => $deletePermission,
+            'exportPermission' => $exportPermission,
             'element' => $this->element,
             'tree' => $this->tree,
         ]);

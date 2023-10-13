@@ -221,6 +221,27 @@ use blackcube\admin\helpers\Aurelia;
                 </span -->
                 <?php echo Html::endTag('a'); ?>
             <?php endif; ?>
+            <?php  if (Yii::$app->user->can(Rbac::PERMISSION_CATEGORY_CREATE)
+                || Yii::$app->user->can(Rbac::PERMISSION_CATEGORY_UPDATE)
+                || Yii::$app->user->can(Rbac::PERMISSION_TAG_CREATE)
+                || Yii::$app->user->can(Rbac::PERMISSION_TAG_UPDATE)
+                || Yii::$app->user->can(Rbac::PERMISSION_NODE_CREATE)
+                || Yii::$app->user->can(Rbac::PERMISSION_NODE_UPDATE)
+                || Yii::$app->user->can(Rbac::PERMISSION_COMPOSITE_CREATE)
+                || Yii::$app->user->can(Rbac::PERMISSION_COMPOSITE_UPDATE)): ?>
+                <?php echo Html::beginTag('a', [
+                    'href' => Url::to(['/'.$adminUid.'/import/index']),
+                    'class' => 'navbar-subitems-link'.($controllerUid === $adminUid.'/import' ? ' active':''),
+                ]); ?>
+                <?php echo Heroicons::svg('outline/cloud-arrow-up', ['class' => 'navbar-item-img']); ?>
+                <span class="navbar-subitems-title">
+                        <?php echo Module::t('widgets', 'Import'); ?>
+                    </span>
+                <!-- span class="navbar-subitems-badge exclamation">
+                    20+
+                </span -->
+                <?php echo Html::endTag('a'); ?>
+            <?php endif; ?>
         </div>
     </div>
     <?php endif; ?>
