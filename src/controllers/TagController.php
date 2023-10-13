@@ -55,7 +55,7 @@ class TagController extends BaseElementController
                 [
                     'allow' => true,
                     'actions' => [
-                        'modal', 'index', 'export',
+                        'modal', 'index',
                     ],
                     'roles' => [Rbac::PERMISSION_TAG_VIEW],
                 ],
@@ -86,7 +86,14 @@ class TagController extends BaseElementController
                         'file-preview', 'file-upload', 'file-delete',
                     ],
                     'roles' => ['@'],
-                ]
+                ],
+                [
+                    'allow' => true,
+                    'actions' => [
+                        'export',
+                    ],
+                    'roles' => [Rbac::PERMISSION_TAG_EXPORT],
+                ],
             ]
         ];
         $behaviors['forceAjax'] = [

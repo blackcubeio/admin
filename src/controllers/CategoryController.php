@@ -54,7 +54,7 @@ class CategoryController extends BaseElementController
                 [
                     'allow' => true,
                     'actions' => [
-                        'modal', 'index', 'export',
+                        'modal', 'index',
                     ],
                     'roles' => [Rbac::PERMISSION_CATEGORY_VIEW],
                 ],
@@ -85,7 +85,14 @@ class CategoryController extends BaseElementController
                         'file-preview', 'file-upload', 'file-delete',
                     ],
                     'roles' => ['@'],
-                ]
+                ],
+                [
+                    'allow' => true,
+                    'actions' => [
+                        'export',
+                    ],
+                    'roles' => [Rbac::PERMISSION_CATEGORY_EXPORT],
+                ],
             ]
         ];
         $behaviors['forceAjax'] = [

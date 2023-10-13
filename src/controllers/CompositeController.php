@@ -55,7 +55,7 @@ class CompositeController extends BaseElementController
                 [
                     'allow' => true,
                     'actions' => [
-                        'modal', 'index', 'export',
+                        'modal', 'index',
                     ],
                     'roles' => [Rbac::PERMISSION_COMPOSITE_VIEW],
                 ],
@@ -86,7 +86,14 @@ class CompositeController extends BaseElementController
                         'file-preview', 'file-upload', 'file-delete',
                     ],
                     'roles' => ['@'],
-                ]
+                ],
+                [
+                    'allow' => true,
+                    'actions' => [
+                        'export',
+                    ],
+                    'roles' => [Rbac::PERMISSION_COMPOSITE_EXPORT],
+                ],
             ]
         ];
         $behaviors['forceAjax'] = [

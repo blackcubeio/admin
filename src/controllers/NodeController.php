@@ -56,7 +56,7 @@ class NodeController extends BaseElementController
                 [
                     'allow' => true,
                     'actions' => [
-                        'modal', 'index', 'export',
+                        'modal', 'index',
                     ],
                     'roles' => [Rbac::PERMISSION_NODE_VIEW],
                 ],
@@ -87,7 +87,14 @@ class NodeController extends BaseElementController
                         'file-preview', 'file-upload', 'file-delete',
                     ],
                     'roles' => ['@'],
-                ]
+                ],
+                [
+                    'allow' => true,
+                    'actions' => [
+                        'export',
+                    ],
+                    'roles' => [Rbac::PERMISSION_NODE_EXPORT],
+                ],
             ]
         ];
         $behaviors['forceAjax'] = [
