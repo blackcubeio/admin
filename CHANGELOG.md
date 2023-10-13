@@ -1,6 +1,8 @@
 Blackcube Admin - CHANGELOG 
 ===========================
 
+ * Upd: Adding export system
+
 Release 3.0.6 October, 8th 2023 <pgaultier@redcat.io>
 ----------------------------------------------------
 
