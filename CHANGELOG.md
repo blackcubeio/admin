@@ -2,6 +2,9 @@ Blackcube Admin - CHANGELOG
 ===========================
 
  * Upd: Adding export system
+ * Upd: Update dependencies
+ * Fix: Fix `radiolist` and `dropdownlist` typo `radioList` and `dropdownList`
+ * Upd: cleanup `Html` helper
 
 Release 3.0.6 October, 8th 2023 <pgaultier@redcat.io>
 ----------------------------------------------------

@@ -484,6 +484,7 @@ EOT;
             case 'wysiwyg':
                 $result = static::activeEditor($elastic, $attribute, $options);
                 break;
+            case 'dropdownList':
             case 'dropdownlist':
                 $result = static::activeDropDownList($elastic, $attribute, ArrayHelper::map($structure['items'], 'value', 'title'), $options);
                 break;
@@ -494,6 +495,7 @@ EOT;
                 $result = static::activeCheckbox($elastic, $attribute, $options);
                 break;
             case 'checkboxList':
+            case 'checkboxlist':
                 $mappedField = 'activeCheckboxList';
                 throw new NotSupportedException();
                 break;
