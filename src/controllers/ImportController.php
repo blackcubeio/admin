@@ -15,15 +15,22 @@
 namespace blackcube\admin\controllers;
 
 use blackcube\admin\components\Rbac;
+use blackcube\admin\helpers\Composite as CompositeHelper;
 use blackcube\admin\models\ImportForm;
+use blackcube\admin\Module;
+use blackcube\core\components\Flysystem;
+use blackcube\core\interfaces\ElementInterface;
+use blackcube\core\models\Bloc;
 use blackcube\core\models\Category;
 use blackcube\core\models\Composite;
 use blackcube\core\models\Language;
 use blackcube\core\models\Node;
+use blackcube\core\models\NodeComposite;
+use blackcube\core\models\Seo;
 use blackcube\core\models\Sitemap;
+use blackcube\core\models\Slug;
 use blackcube\core\models\Tag;
 use blackcube\core\models\Type;
-use blackcube\core\Module;
 use blackcube\core\Module as CoreModule;
 use blackcube\core\web\actions\ResumableDeleteAction;
 use blackcube\core\web\actions\ResumablePreviewAction;
@@ -267,8 +274,9 @@ class ImportController extends Controller
         $jsonData = $this->getJsonData(Composite::getElementType());
         $jsonData['active'] = false;
         if (Yii::$app->request->isPost) {
-            if ($this->importComposite($jsonData) === true) {
-                return $this->redirect(['index']);
+            $compositeId = $this->importComposite($jsonData);
+            if ($compositeId !== false) {
+                return $this->redirect(['/'.Module::getInstance()->getUniqueId().'/composite/edit', 'id' => $compositeId]);
             } else {
                 throw new UnprocessableEntityHttpException('Unable to import composite');
             }
@@ -302,8 +310,9 @@ class ImportController extends Controller
         $jsonData = $this->getJsonData(Node::getElementType());
         $jsonData['active'] = false;
         if (Yii::$app->request->isPost) {
-            if ($this->importNode($jsonData) === true) {
-                return $this->redirect(['index']);
+            $nodeId = $this->importNode($jsonData);
+            if ($nodeId !== false) {
+                return $this->redirect(['/'.Module::getInstance()->getUniqueId().'/node/edit', 'id' => $nodeId]);
             } else {
                 throw new UnprocessableEntityHttpException('Unable to import node');
             }
@@ -334,8 +343,9 @@ class ImportController extends Controller
         $jsonData = $this->getJsonData(Tag::getElementType());
         $jsonData['active'] = false;
         if (Yii::$app->request->isPost) {
-            if ($this->importTag($jsonData) === true) {
-                return $this->redirect(['index']);
+            $tagId = $this->importTag($jsonData);
+            if ($tagId !== false) {
+                return $this->redirect(['/'.Module::getInstance()->getUniqueId().'/tag/edit', 'id' => $tagId]);
             } else {
                 throw new UnprocessableEntityHttpException('Unable to import tag');
             }
@@ -375,8 +385,9 @@ class ImportController extends Controller
         $jsonData = $this->getJsonData(Category::getElementType());
         $jsonData['active'] = false;
         if (Yii::$app->request->isPost) {
-            if ($this->importCategory($jsonData) === true) {
-                return $this->redirect(['index']);
+            $categoryId = $this->importCategory($jsonData);
+            if ($categoryId !== false) {
+                return $this->redirect(['/'.Module::getInstance()->getUniqueId().'/category/edit', 'id' => $categoryId]);
             } else {
                 throw new UnprocessableEntityHttpException('Unable to import category');
             }
@@ -438,53 +449,281 @@ class ImportController extends Controller
                 Yii::error($e->getMessage());
                 throw $e;
             }
+            if (isset($jsonData['slug']['path']) === true) {
+                $slugPath = $jsonData['slug']['path'];
+                $slug = Slug::find()->andWhere(['path' => $slugPath])->one();
+                if ($slug !== null) {
+                    $i = 0;
+                    do {
+                        $i++;
+                        $slug = Slug::find()->andWhere(['path' => $slugPath.'-'.str_pad($i, 3, '0', STR_PAD_LEFT)])->one();
+                    } while ($slug !== null);
+                    $jsonData['slug']['path'] = $slugPath.'-'.str_pad($i, 3, '0', STR_PAD_LEFT);
+                    $data = Json::encode($jsonData, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+                    file_put_contents($realFilename, $data);
+                }
+            }
             unset($jsonData['elementType']);
             return $jsonData;
         }
     }
 
+    private function saveSlug($data)
+    {
+        if ($data !== null)
+        {
+            $slug = new Slug();
+            $slug->host = $data['host'] ?? null;
+            $slug->path = $data['path'];
+            $slug->active = $data['active'];
+            $slug->dateCreate = $data['dateCreate'];
+            $slug->dateUpdate = $data['dateUpdate'];
+            if ($slug->save(false)) {
+                if (isset($data['seo'])) {
+                    $seo = new Seo();
+                    $seo->slugId = $slug->id;
+                    $seo->active = $data['seo']['active'] ?? false;
+                    $seo->title = $data['seo']['title'] ?? null;
+                    $seo->description = $data['seo']['description'] ?? null;
+                    $seo->nofollow = $data['seo']['nofollow'] ?? false;
+                    $seo->noindex = $data['seo']['noindex'] ?? false;
+                    if ($data['seo']['canonical'] === true) {
+                        $seo->canonicalSlugId = $slug->id;
+                    } else if (is_string($data['seo']['canonical']) === true) {
+                        $canonicalSlug = Slug::find()->andWhere(['path' => $data['seo']['canonical']])->one();
+                        if ($canonicalSlug !== null) {
+                            $seo->canonicalSlugId = $canonicalSlug->id;
+                        }
+                    }
+                    $seo->og = $data['seo']['og'] ?? false;
+                    $seo->ogType = $data['seo']['ogType'] ?? null;
+                    $seo->twitter = $data['seo']['twitter'] ?? false;
+                    $seo->twitterCard = $data['seo']['twitterCard'] ?? null;
+                    $seo->dateCreate = $data['seo']['dateCreate'];
+                    $seo->dateUpdate = $data['seo']['dateUpdate'];
+                    $seo->save(false);
+                    $imageBase64 = $data['seo']['image'] ?? null;
+                    if (empty($imageBase64) === false) {
+                        [$type, $encoding, $name, $content] = preg_split('/\s*:\s*/', $imageBase64, -1, PREG_SPLIT_NO_EMPTY);
+                        if ($encoding === 'base64') {
+                            $data = base64_decode($content);
+                            $prefix = trim(CoreModule::getInstance()->uploadFsPrefix, '/') . '/';
+                            $fs = CoreModule::getInstance()->get('fs');
+                            /* @var $fs Flysystem */
+                            $targetFilename = '/seo/'.$seo->id.'/'.trim($name, '/');
+                            $fs->write($targetFilename, $data);
+                            $seo->image = $prefix.$targetFilename;
+                            $seo->save(false);
+                            //todo upload image
+                        }
+                    }
+                }
+                if (isset($data['sitemap'])) {
+                    $sitemap = new Sitemap();
+                    $sitemap->slugId = $slug->id;
+                    $sitemap->active = $data['sitemap']['active'] ?? false;
+                    $sitemap->frequency = $data['sitemap']['frequency'] ?? 'daily';
+                    $sitemap->priority = $data['sitemap']['priority'] ?? 0.5;
+                    $sitemap->dateCreate = $data['sitemap']['dateCreate'];
+                    $sitemap->dateUpdate = $data['sitemap']['dateUpdate'];
+                    $sitemap->save(false);
+                }
+                return $slug;
+            } else {
+                return null;
+            }
+        }
+        return null;
+    }
+
+    private function saveBlocs(ElementInterface $element, $data) {
+        if (is_array($data)) {
+            foreach ($data as $dataBloc) {
+                $bloc = new Bloc();
+                $bloc->blocTypeId = $dataBloc['blocTypeId'] ?? null;
+                $bloc->save(false);
+                $element->attachBloc($bloc, -1);
+
+                foreach ($dataBloc as $attribute => $importValue) {
+
+                    if( empty($importValue) === false && strpos($importValue, 'data:') === 0) {
+                        $dataFile = $importValue;
+                        $dataFiles = preg_split('/\s*,\s*/', $dataFile, -1, PREG_SPLIT_NO_EMPTY);
+                        $prefix = trim(CoreModule::getInstance()->uploadFsPrefix, '/') . '/';
+                        $fs = CoreModule::getInstance()->get('fs');
+                        /* @var $fs Flysystem */
+                        $uploadedFiles = [];
+                        foreach ($dataFiles as $dataFile) {
+                            if(empty($dataFiles) === false) {
+                                [$type, $encoding, $name, $content] = preg_split('/\s*:\s*/', $dataFile, -1, PREG_SPLIT_NO_EMPTY);
+                                if ($encoding === 'base64') {
+                                    $dataContent = base64_decode($content);
+                                    $targetFilename = '/bloc/'.$bloc->id.'/'.trim($name, '/');
+                                    $fs->write($targetFilename, $dataContent);
+                                    $uploadedFiles[] = $prefix.$targetFilename;
+                                }
+                            }
+                        }
+                        $value = implode(', ', $uploadedFiles);
+                        $bloc->setAttribute($attribute, $value);
+                    } else {
+                        $value =  $importValue ?? null;
+                        $bloc->setAttribute($attribute, $value);
+                    }
+
+                }
+                $bloc->save(false);
+            }
+        }
+    }
     private function importComposite($data) {
-        $transaction = Module::getInstance()->db->beginTransaction();
+        $transaction = CoreModule::getInstance()->db->beginTransaction();
         try {
+            $slugData = $data['slug'] ?? null;
+            $slug = $this->saveSlug($slugData);
+            $composite = new Composite();
+            $composite->name = $data['name'] ?? null;
+            $composite->typeId = $data['typeId'] ?? null;
+            $composite->slugId = $slug?->id;
+            $composite->languageId = $data['languageId'] ?? 'en';
+            $composite->active = $data['active'] ?? false;
+            $composite->dateStart = $data['dateStart'] ?? null;
+            $composite->dateEnd = $data['dateEnd'] ?? null;
+            $composite->dateCreate = $data['dateCreate'] ?? null;
+            $composite->dateUpdate = $data['dateUpdate'] ?? null;
+            if ($composite->save(false)) {
+                $blocs = $data['blocs'] ?? null;
+                $this->saveBlocs($composite, $blocs);
+                $tags = $data['tags'] ?? [];
+                foreach ($tags as $tagId) {
+                    $tag = Tag::find()->andWhere(['id' => $tagId])->one();
+                    if ($tag !== null) {
+                        $composite->attachTag($tag);
+                    }
+                }
+                if (isset($data['nodes'][0])) {
+                    $node = Node::find()->andWhere(['id' => $data['nodes'][0]])->one();
+                    if ($node !== null) {
+                        $nodeComposite = new NodeComposite();
+                        $nodeComposite->compositeId = $composite->id;
+                        CompositeHelper::handleNodes($composite, $nodeComposite);
+                    }
+                }
+            }
 
             $transaction->commit();
         } catch (\Exception $e) {
             $transaction->rollBack();
             return false;
         }
-        return true;
+        return $composite->id;
     }
     private function importNode($data) {
-        $transaction = Module::getInstance()->db->beginTransaction();
+        $transaction = CoreModule::getInstance()->db->beginTransaction();
         try {
-
+            $slugData = $data['slug'] ?? null;
+            $slug = $this->saveSlug($slugData);
+            $node = new Node();
+            $node->name = $data['name'] ?? null;
+            $node->typeId = $data['typeId'] ?? null;
+            $node->slugId = $slug?->id;
+            $node->languageId = $data['languageId'] ?? 'en';
+            $node->active = $data['active'] ?? false;
+            $node->dateStart = $data['dateStart'] ?? null;
+            $node->dateEnd = $data['dateEnd'] ?? null;
+            $node->dateCreate = $data['dateCreate'] ?? null;
+            $node->dateUpdate = $data['dateUpdate'] ?? null;
+            $parentId = $data['parentId'];
+            $parentNode = Node::find()->andWhere(['id' => $parentId])->one();
+            if ($parentNode === null) {
+                $parentNode = Node::find()->orderBy(['left' => SORT_ASC])->one();
+            }
+            if ($node->saveInto($parentNode, false)) {
+                $blocs = $data['blocs'] ?? null;
+                $this->saveBlocs($node, $blocs);
+                $tags = $data['tags'] ?? [];
+                foreach ($tags as $tagId) {
+                    $tag = Tag::find()->andWhere(['id' => $tagId])->one();
+                    if ($tag !== null) {
+                        $node->attachTag($tag);
+                    }
+                }
+            }
             $transaction->commit();
         } catch (\Exception $e) {
             $transaction->rollBack();
             return false;
         }
-        return true;
+        return $tag->id;
     }
     private function importTag($data) {
-        $transaction = Module::getInstance()->db->beginTransaction();
+        $transaction = CoreModule::getInstance()->db->beginTransaction();
         try {
-
+            $slugData = $data['slug'] ?? null;
+            $slug = $this->saveSlug($slugData);
+            $tag = new Tag();
+            $tag->name = $data['name'] ?? null;
+            $tag->typeId = $data['typeId'] ?? null;
+            $tag->slugId = $slug?->id;;
+            $tag->active = $data['active'] ?? false;
+            $tag->dateCreate = $data['dateCreate'] ?? null;
+            $tag->dateUpdate = $data['dateUpdate'] ?? null;
+            $categoryId = $data['categoryId'] ?? null;
+            if ($categoryId !== null) {
+                $category = Category::find()->andWhere(['id' => $categoryId])->one();
+            }
+            if ($categoryId === null || $category === null) {
+                throw new UnprocessableEntityHttpException('Unable to find category');
+            }
+            $tag->categoryId = $categoryId;
+            if ($tag->save(false)) {
+                $blocs = $data['blocs'] ?? null;
+                $this->saveBlocs($tag, $blocs);
+                $composites = $data['composites'] ?? [];
+                foreach ($composites as $compositeId) {
+                    $composite = Composite::find()->andWhere(['id' => $compositeId])->one();
+                    if ($composite !== null) {
+                        $composite->attachTag($tag);
+                    }
+                }
+                $nodes = $data['nodes'] ?? [];
+                foreach ($nodes as $nodeId) {
+                    $node = Node::find()->andWhere(['id' => $nodeId])->one();
+                    if ($node !== null) {
+                        $node->attachTag($tag);
+                    }
+                }
+            }
             $transaction->commit();
         } catch (\Exception $e) {
             $transaction->rollBack();
-            return false;
+            return $node->id;
         }
         return true;
     }
     private function importCategory($data) {
-        $transaction = Module::getInstance()->db->beginTransaction();
+        $transaction = CoreModule::getInstance()->db->beginTransaction();
         try {
+            $slugData = $data['slug'] ?? null;
+            $slug = $this->saveSlug($slugData);
+            $category = new Category();
+            $category->name = $data['name'] ?? null;
+            $category->typeId = $data['typeId'] ?? null;
+            $category->slugId = $slug?->id;
+            $category->languageId = $data['languageId'] ?? 'en';
+            $category->active = $data['active'] ?? false;
+            $category->dateCreate = $data['dateCreate'] ?? null;
+            $category->dateUpdate = $data['dateUpdate'] ?? null;
 
+            if ($category->save(false)) {
+                $blocs = $data['blocs'] ?? null;
+                $this->saveBlocs($category, $blocs);
+            }
             $transaction->commit();
         } catch (\Exception $e) {
             $transaction->rollBack();
             return false;
         }
-        return true;
+        return $category->id;
     }
 }

@@ -223,6 +223,12 @@ class ExportAction extends Action
         if ($element !== null) {
             $elementData['elementType'] = $element::getElementType();
             $elementData = array_merge($elementData, $element->toArray());
+            if ($element instanceof Node) {
+                $parent = $element->getParent()->one();
+                if ($parent !== null) {
+                    $elementData['parentId'] = $parent->id;
+                }
+            }
 
             unset($elementData['id']);
 
