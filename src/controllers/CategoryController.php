@@ -18,6 +18,7 @@ use blackcube\admin\actions\category\CreateAction;
 use blackcube\admin\actions\category\DeleteAction;
 use blackcube\admin\actions\category\EditAction;
 use blackcube\admin\actions\category\IndexAction;
+use blackcube\admin\actions\ExportAction;
 use blackcube\admin\actions\SeoAction;
 use blackcube\admin\actions\SitemapAction;
 use blackcube\admin\actions\ToggleAction;
@@ -84,7 +85,14 @@ class CategoryController extends BaseElementController
                         'file-preview', 'file-upload', 'file-delete',
                     ],
                     'roles' => ['@'],
-                ]
+                ],
+                [
+                    'allow' => true,
+                    'actions' => [
+                        'export',
+                    ],
+                    'roles' => [Rbac::PERMISSION_CATEGORY_EXPORT],
+                ],
             ]
         ];
         $behaviors['forceAjax'] = [
@@ -135,6 +143,10 @@ class CategoryController extends BaseElementController
         ];
         $actions['delete'] = [
             'class' => DeleteAction::class,
+        ];
+        $actions['export'] = [
+            'class' => ExportAction::class,
+            'elementClass' => Category::class,
         ];
         return $actions;
     }

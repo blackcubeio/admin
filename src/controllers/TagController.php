@@ -14,6 +14,7 @@
 
 namespace blackcube\admin\controllers;
 
+use blackcube\admin\actions\ExportAction;
 use blackcube\admin\actions\tag\CompositeAction;
 use blackcube\admin\actions\tag\CreateAction;
 use blackcube\admin\actions\tag\DeleteAction;
@@ -85,7 +86,14 @@ class TagController extends BaseElementController
                         'file-preview', 'file-upload', 'file-delete',
                     ],
                     'roles' => ['@'],
-                ]
+                ],
+                [
+                    'allow' => true,
+                    'actions' => [
+                        'export',
+                    ],
+                    'roles' => [Rbac::PERMISSION_TAG_EXPORT],
+                ],
             ]
         ];
         $behaviors['forceAjax'] = [
@@ -140,6 +148,10 @@ class TagController extends BaseElementController
         ];
         $actions['delete'] = [
             'class' => DeleteAction::class,
+        ];
+        $actions['export'] = [
+            'class' => ExportAction::class,
+            'elementClass' => Tag::class,
         ];
         return $actions;
     }

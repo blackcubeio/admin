@@ -1,6 +1,7 @@
 Blackcube Admin - CHANGELOG 
 ===========================
 
+ * Upd: Adding export system
  * Upd: Update dependencies
  * Fix: Fix `radiolist` and `dropdownlist` typo `radioList` and `dropdownList`
  * Upd: cleanup `Html` helper

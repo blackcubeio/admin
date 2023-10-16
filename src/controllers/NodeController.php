@@ -14,6 +14,7 @@
 
 namespace blackcube\admin\controllers;
 
+use blackcube\admin\actions\ExportAction;
 use blackcube\admin\actions\node\CompositeAction;
 use blackcube\admin\actions\node\CreateAction;
 use blackcube\admin\actions\node\DeleteAction;
@@ -86,7 +87,14 @@ class NodeController extends BaseElementController
                         'file-preview', 'file-upload', 'file-delete',
                     ],
                     'roles' => ['@'],
-                ]
+                ],
+                [
+                    'allow' => true,
+                    'actions' => [
+                        'export',
+                    ],
+                    'roles' => [Rbac::PERMISSION_NODE_EXPORT],
+                ],
             ]
         ];
         $behaviors['forceAjax'] = [
@@ -145,6 +153,10 @@ class NodeController extends BaseElementController
         ];
         $actions['delete'] = [
             'class' => DeleteAction::class,
+        ];
+        $actions['export'] = [
+            'class' => ExportAction::class,
+            'elementClass' => Node::class,
         ];
         return $actions;
     }
