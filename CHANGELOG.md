@@ -1,6 +1,9 @@
 Blackcube Admin - CHANGELOG 
 ===========================
 
+ * Upd: Update dependencies
+ * Upd: Update js dependencies
+
 Release 3.0.7 October, 16th 2023 <pgaultier@redcat.io>
 ----------------------------------------------------
 
