@@ -123,6 +123,10 @@ msgid "Error"
 msgstr ""
 
 msgctxt "blackcube/admin/common"
+msgid "Export"
+msgstr ""
+
+msgctxt "blackcube/admin/common"
 msgid "Next"
 msgstr ""
 
@@ -390,6 +394,190 @@ msgctxt "blackcube/admin/dashboard"
 msgid "Tags"
 msgstr ""
 
+msgctxt "blackcube/admin/import"
+msgid "Blocs"
+msgstr ""
+
+msgctxt "blackcube/admin/import"
+msgid "Category active"
+msgstr ""
+
+msgctxt "blackcube/admin/import"
+msgid "Category status"
+msgstr ""
+
+msgctxt "blackcube/admin/import"
+msgid "Composite"
+msgstr ""
+
+msgctxt "blackcube/admin/import"
+msgid "Composite active"
+msgstr ""
+
+msgctxt "blackcube/admin/import"
+msgid "Composite status"
+msgstr ""
+
+msgctxt "blackcube/admin/import"
+msgid "Composite which will be tagged"
+msgstr ""
+
+msgctxt "blackcube/admin/import"
+msgid "Date end"
+msgstr ""
+
+msgctxt "blackcube/admin/import"
+msgid "Date start"
+msgstr ""
+
+msgctxt "blackcube/admin/import"
+msgid "Description"
+msgstr ""
+
+msgctxt "blackcube/admin/import"
+msgid "Frequency"
+msgstr ""
+
+msgctxt "blackcube/admin/import"
+msgid "Host"
+msgstr ""
+
+msgctxt "blackcube/admin/import"
+msgid "Import"
+msgstr ""
+
+msgctxt "blackcube/admin/import"
+msgid "Language"
+msgstr ""
+
+msgctxt "blackcube/admin/import"
+msgid "Name"
+msgstr ""
+
+msgctxt "blackcube/admin/import"
+msgid "No follow"
+msgstr ""
+
+msgctxt "blackcube/admin/import"
+msgid "No index"
+msgstr ""
+
+msgctxt "blackcube/admin/import"
+msgid "No type"
+msgstr ""
+
+msgctxt "blackcube/admin/import"
+msgid "Node"
+msgstr ""
+
+msgctxt "blackcube/admin/import"
+msgid "Node active"
+msgstr ""
+
+msgctxt "blackcube/admin/import"
+msgid "Node status"
+msgstr ""
+
+msgctxt "blackcube/admin/import"
+msgid "Node which will be tagged"
+msgstr ""
+
+msgctxt "blackcube/admin/import"
+msgid "Number of blocs which will be imported"
+msgstr ""
+
+msgctxt "blackcube/admin/import"
+msgid "OG"
+msgstr ""
+
+msgctxt "blackcube/admin/import"
+msgid "OG Type"
+msgstr ""
+
+msgctxt "blackcube/admin/import"
+msgid "Orphan"
+msgstr ""
+
+msgctxt "blackcube/admin/import"
+msgid "Path"
+msgstr ""
+
+msgctxt "blackcube/admin/import"
+msgid "Priority"
+msgstr ""
+
+msgctxt "blackcube/admin/import"
+msgid "Seo active"
+msgstr ""
+
+msgctxt "blackcube/admin/import"
+msgid "Seo status"
+msgstr ""
+
+msgctxt "blackcube/admin/import"
+msgid "Sitemap active"
+msgstr ""
+
+msgctxt "blackcube/admin/import"
+msgid "Sitemap status"
+msgstr ""
+
+msgctxt "blackcube/admin/import"
+msgid "Slug active"
+msgstr ""
+
+msgctxt "blackcube/admin/import"
+msgid "Slug status"
+msgstr ""
+
+msgctxt "blackcube/admin/import"
+msgid "Tag"
+msgstr ""
+
+msgctxt "blackcube/admin/import"
+msgid "Tag active"
+msgstr ""
+
+msgctxt "blackcube/admin/import"
+msgid "Tag status"
+msgstr ""
+
+msgctxt "blackcube/admin/import"
+msgid "Tag which will be attached to the composite"
+msgstr ""
+
+msgctxt "blackcube/admin/import"
+msgid "This is the category which will be imported"
+msgstr ""
+
+msgctxt "blackcube/admin/import"
+msgid "This is the composite which will be imported"
+msgstr ""
+
+msgctxt "blackcube/admin/import"
+msgid "This is the node which will be imported"
+msgstr ""
+
+msgctxt "blackcube/admin/import"
+msgid "This is the tag which will be imported"
+msgstr ""
+
+msgctxt "blackcube/admin/import"
+msgid "Title"
+msgstr ""
+
+msgctxt "blackcube/admin/import"
+msgid "Twitter"
+msgstr ""
+
+msgctxt "blackcube/admin/import"
+msgid "Twitter Card"
+msgstr ""
+
+msgctxt "blackcube/admin/import"
+msgid "Type"
+msgstr ""
+
 msgctxt "blackcube/admin/language"
 msgid "Language"
 msgstr ""
@@ -480,6 +668,10 @@ msgstr ""
 
 msgctxt "blackcube/admin/models"
 msgid "ID"
+msgstr ""
+
+msgctxt "blackcube/admin/models"
+msgid "Import file"
 msgstr ""
 
 msgctxt "blackcube/admin/models"
@@ -840,6 +1032,10 @@ msgstr ""
 
 msgctxt "blackcube/admin/widgets"
 msgid "Dashboard"
+msgstr ""
+
+msgctxt "blackcube/admin/widgets"
+msgid "Import"
 msgstr ""
 
 msgctxt "blackcube/admin/widgets"

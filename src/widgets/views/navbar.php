@@ -221,6 +221,23 @@ use blackcube\admin\helpers\Aurelia;
                 </span -->
                 <?php echo Html::endTag('a'); ?>
             <?php endif; ?>
+            <?php  if (Yii::$app->user->can(Rbac::PERMISSION_CATEGORY_IMPORT)
+                || Yii::$app->user->can(Rbac::PERMISSION_TAG_IMPORT)
+                || Yii::$app->user->can(Rbac::PERMISSION_NODE_IMPORT)
+                || Yii::$app->user->can(Rbac::PERMISSION_COMPOSITE_IMPORT)): ?>
+                <?php echo Html::beginTag('a', [
+                    'href' => Url::to(['/'.$adminUid.'/import/index']),
+                    'class' => 'navbar-subitems-link'.($controllerUid === $adminUid.'/import' ? ' active':''),
+                ]); ?>
+                <?php echo Heroicons::svg('outline/cloud-arrow-up', ['class' => 'navbar-item-img']); ?>
+                <span class="navbar-subitems-title">
+                        <?php echo Module::t('widgets', 'Import'); ?>
+                    </span>
+                <!-- span class="navbar-subitems-badge exclamation">
+                    20+
+                </span -->
+                <?php echo Html::endTag('a'); ?>
+            <?php endif; ?>
         </div>
     </div>
     <?php endif; ?>
