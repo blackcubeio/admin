@@ -221,14 +221,10 @@ use blackcube\admin\helpers\Aurelia;
                 </span -->
                 <?php echo Html::endTag('a'); ?>
             <?php endif; ?>
-            <?php  if (Yii::$app->user->can(Rbac::PERMISSION_CATEGORY_CREATE)
-                || Yii::$app->user->can(Rbac::PERMISSION_CATEGORY_UPDATE)
-                || Yii::$app->user->can(Rbac::PERMISSION_TAG_CREATE)
-                || Yii::$app->user->can(Rbac::PERMISSION_TAG_UPDATE)
-                || Yii::$app->user->can(Rbac::PERMISSION_NODE_CREATE)
-                || Yii::$app->user->can(Rbac::PERMISSION_NODE_UPDATE)
-                || Yii::$app->user->can(Rbac::PERMISSION_COMPOSITE_CREATE)
-                || Yii::$app->user->can(Rbac::PERMISSION_COMPOSITE_UPDATE)): ?>
+            <?php  if (Yii::$app->user->can(Rbac::PERMISSION_CATEGORY_IMPORT)
+                || Yii::$app->user->can(Rbac::PERMISSION_TAG_IMPORT)
+                || Yii::$app->user->can(Rbac::PERMISSION_NODE_IMPORT)
+                || Yii::$app->user->can(Rbac::PERMISSION_COMPOSITE_IMPORT)): ?>
                 <?php echo Html::beginTag('a', [
                     'href' => Url::to(['/'.$adminUid.'/import/index']),
                     'class' => 'navbar-subitems-link'.($controllerUid === $adminUid.'/import' ? ' active':''),
