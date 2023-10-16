@@ -1,8 +1,12 @@
 Blackcube Admin - CHANGELOG 
 ===========================
 
+Release 3.0.9 October, 16th 2023 <pgaultier@redcat.io>
+----------------------------------------------------
+
  * Upd: Update dependencies
  * Upd: Update js dependencies
+ * Upd: Activate beta version of import/export
 
 Release 3.0.7 October, 16th 2023 <pgaultier@redcat.io>
 ----------------------------------------------------
