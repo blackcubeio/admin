@@ -89,7 +89,7 @@ class Module extends BaseModule implements BootstrapInterface
     /**
      * @var string version number
      */
-    public $version = 'v3.0.9';
+    public $version = 'v3.0.10';
 
     /**
      * @var string[]
