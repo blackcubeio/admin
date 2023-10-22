@@ -62,6 +62,20 @@ $authManager = Yii::$app->authManager;
                     <?php echo BlackcubeHtml::activeTextInput($type, 'maxBlocs', []); ?>
                 </div>
             </div>
+            <div class="element-form-bloc-grid-12">
+                <div class="element-form-bloc-cols-3">
+                    <?php echo BlackcubeHtml::activeCheckbox($type, 'nodeAllowed'); ?>
+                </div>
+                <div class="element-form-bloc-cols-3">
+                    <?php echo BlackcubeHtml::activeCheckbox($type, 'compositeAllowed'); ?>
+                </div>
+                <div class="element-form-bloc-cols-3">
+                    <?php echo BlackcubeHtml::activeCheckbox($type, 'categoryAllowed'); ?>
+                </div>
+                <div class="element-form-bloc-cols-3">
+                    <?php echo BlackcubeHtml::activeCheckbox($type, 'tagAllowed'); ?>
+                </div>
+            </div>
         </div>
     </div>
     <div class="element-form-header">
