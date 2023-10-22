@@ -60,20 +60,10 @@ export class SchemaEditor
                     field: 'text',
                     value: {
                         type: 'string',
-                        title: 'Text',
-                        minLength: 6,
-                        description: 'Field description'
-                    }
-                },
-                {
-                    text: 'Textarea',
-                    title: 'Insert Textarea property',
-                    className: 'jsoneditor-type-object',
-                    field: "textarea",
-                    value: {
-                        type: 'string',
-                        format: 'textarea',
-                        description: 'Field description'
+                        title: 'Field title',
+                        description: 'Field description',
+                        minLength: 1,
+                        maxLength: 255
                     }
                 },
                 {
@@ -99,7 +89,71 @@ export class SchemaEditor
                             },
                             formats: ["bold", "italic", "link", "underline", "list"]
                         },
-                        description: 'Wysiwyg Editor'
+                        title: 'Field title',
+                        description: 'Field description'
+                    }
+                },
+                {
+                    text: 'Checkbox',
+                    title: 'Insert Checkbox property',
+                    className: 'jsoneditor-type-object',
+                    field: 'checkbox',
+                    value: {
+                        type: 'string',
+                        format: 'checkbox',
+                        title: 'Field title',
+                        description: 'Field description'
+                    }
+                },
+                {
+                    text: 'Dropdown',
+                    title: 'Insert Dropdown property',
+                    className: 'jsoneditor-type-object',
+                    field: 'dropdown',
+                    value: {
+                        type: 'string',
+                        multiple: false,
+                        format: 'dropdownlist',
+                        items: [
+                            {
+                                title: 'Item 1',
+                                value: 'item1'
+                            },
+                            {
+                                title: 'Item 2',
+                                value: 'item2'
+                            }
+                        ],
+                        title: 'Field title',
+                        description: 'Field description'
+                    }
+                },
+                {
+                    text: 'Image',
+                    title: 'Insert Image property',
+                    className: 'jsoneditor-type-object',
+                    field: "image",
+                    value: {
+                        type: 'string',
+                        format: 'file',
+                        fileType: 'png,jpg',
+                        imageWidth: 600,
+                        imageHeight: 200,
+                        title: 'Field title',
+                        description: 'Field description'
+                    }
+                },
+                {
+                    text: 'File',
+                    title: 'Insert File property',
+                    className: 'jsoneditor-type-object',
+                    field: "file",
+                    value: {
+                        type: 'string',
+                        format: 'file',
+                        fileType: 'pdf',
+                        title: 'Field title',
+                        description: 'Field description'
                     }
                 },
                 {
@@ -109,9 +163,44 @@ export class SchemaEditor
                     field: 'email',
                     value: {
                         type: 'string',
-                        title: 'E-mail',
                         format: 'email',
-                        minLength: 6,
+                        minLength: 1,
+                        maxLength: 255,
+                        title: 'Field title',
+                        description: 'Field description'
+                    }
+                },
+                {
+                    text: 'Textarea',
+                    title: 'Insert Textarea property',
+                    className: 'jsoneditor-type-object',
+                    field: "textarea",
+                    value: {
+                        type: 'string',
+                        format: 'textarea',
+                        title: 'Field title',
+                        description: 'Field description'
+                    }
+                },
+                {
+                    text: 'Radios',
+                    title: 'Insert Radios property',
+                    className: 'jsoneditor-type-object',
+                    field: 'radiolist',
+                    value: {
+                        type: 'string',
+                        format: 'radiolist',
+                        items: [
+                            {
+                                title: 'Item 1',
+                                value: 'item1'
+                            },
+                            {
+                                title: 'Item 2',
+                                value: 'item2'
+                            }
+                        ],
+                        title: 'Field title',
                         description: 'Field description'
                     }
                 },
@@ -123,14 +212,15 @@ export class SchemaEditor
                     value: {
                         type: 'string',
                         pattern: '^[a-z0-9]+$',
-                        minLength: 6,
-                        title: "Regep",
+                        minLength: 1,
+                        maxLength: 255,
+                        title: 'Field title',
                         description: 'Field description'
                     }
                 },
                 {
                     text: 'Images',
-                    title: 'Insert Image property',
+                    title: 'Insert Images property',
                     className: 'jsoneditor-type-object',
                     field: "image",
                     value: {
@@ -139,33 +229,21 @@ export class SchemaEditor
                         fileType: 'png,jpg',
                         imageWidth: 600,
                         imageHeight: 200,
-                        title: "images",
-                        description: 'Images size should be 600x200'
-                    }
-                },
-                {
-                    text: 'File',
-                    title: 'Insert Image property',
-                    className: 'jsoneditor-type-object',
-                    field: "file",
-                    value: {
-                        type: 'string',
-                        format: 'file',
-                        fileType: 'pdf',
-                        title: "file",
+                        title: 'Field title',
                         description: 'Field description'
                     }
                 },
+
                 {
                     text: 'Files',
-                    title: 'Insert Image property',
+                    title: 'Insert Files property',
                     className: 'jsoneditor-type-object',
                     field: "files",
                     value: {
                         type: 'string',
                         format: 'files',
                         fileType: 'pdf',
-                        title: "files",
+                        title: 'Field title',
                         description: 'Field description'
                     }
                 }
