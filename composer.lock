@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e85255c0e9288162d292439950ec9bd6",
+    "content-hash": "eb9ac0c39f76afc56640675e86605f34",
     "packages": [
         {
             "name": "blackcube/core",
@@ -12,12 +12,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/blackcubeio/core.git",
-                "reference": "0ed66865cfdf9636527065a4fa53f833de930085"
+                "reference": "3118f163e8cc1e1414c8b835327cf1f2036fcbe2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/blackcubeio/core/zipball/0ed66865cfdf9636527065a4fa53f833de930085",
-                "reference": "0ed66865cfdf9636527065a4fa53f833de930085",
+                "url": "https://api.github.com/repos/blackcubeio/core/zipball/3118f163e8cc1e1414c8b835327cf1f2036fcbe2",
+                "reference": "3118f163e8cc1e1414c8b835327cf1f2036fcbe2",
                 "shasum": ""
             },
             "require": {
@@ -50,7 +50,7 @@
             "type": "yii2-extension",
             "extra": {
                 "branch-alias": {
-                    "dev-devel-3.x": "3.0.x-dev"
+                    "dev-devel-3.x": "3.x-dev"
                 }
             },
             "autoload": {
@@ -83,7 +83,7 @@
                 "source": "https://code.redcat.io/blackcube/core/tree/devel",
                 "wiki": "https://code.redcat.io/blackcube/core/wikis/home"
             },
-            "time": "2023-10-22T18:10:40+00:00"
+            "time": "2023-10-23T12:37:40+00:00"
         },
         {
             "name": "bower-asset/inputmask",
