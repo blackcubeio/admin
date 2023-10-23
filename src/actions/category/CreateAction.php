@@ -23,6 +23,8 @@ use blackcube\core\interfaces\SlugGeneratorInterface;
 use blackcube\core\models\Category;
 use blackcube\core\models\Language;
 use blackcube\core\models\Slug;
+use blackcube\core\models\Type;
+use yii\db\ActiveQuery;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
 use Yii;
@@ -48,7 +50,21 @@ class CreateAction extends BaseElementAction
      * @var string where to redirect
      */
     public $targetAction = 'edit';
-
+    /**
+     * {@inheritDoc}
+     */
+    public function getTypesQuery()
+    {
+        $typesQuery = null;
+        if (is_callable($this->typesQuery) === true) {
+            $typesQuery = call_user_func($this->typesQuery);
+        }
+        if ($typesQuery === null || (($typesQuery instanceof ActiveQuery) === false)) {
+            $typesQuery = Type::find()
+                ->andWhere(['categoryAllowed' => true]);
+        }
+        return $typesQuery;
+    }
     /**
      * @param Category $category
      * @param Slug $slug

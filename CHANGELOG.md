@@ -1,6 +1,10 @@
 Blackcube Admin - CHANGELOG 
 ===========================
 
+ * Upd: Add type filtering
+ * Upd: update dependencies
+ * Upd: Update json schemas editor
+
 Release 3.0.10 October, 20th 2023 <pgaultier@redcat.io>
 ----------------------------------------------------
 
