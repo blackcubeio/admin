@@ -468,7 +468,10 @@ EOT;
         $realAttibute = Html::getAttributeName($attribute);
         $structure = $elastic->structure[$realAttibute];
         $options = static::filterElasticOptions($structure, $options);
-        $options['hint'] = $elastic->attributeHints[$realAttibute] ?? null;
+        $hint = $elastic->attributeHints[$realAttibute] ?? null;
+        if ($hint !== null) {
+            $options['hint'] = $hint;
+        }
         switch ($structure['field']) {
             //TODO: make better stuff using schemas properties min / max
             case 'file':
