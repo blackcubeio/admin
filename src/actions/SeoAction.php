@@ -100,7 +100,9 @@ class SeoAction extends Action
         $availableSlugs = ArrayHelper::toArray($slugs, [
             Slug::class => [
                 'id',
-                'path'
+                'path' => function($slug) {
+                    return '/'.$slug->path;
+                }
             ]
         ]);
         array_unshift($availableSlugs, [
