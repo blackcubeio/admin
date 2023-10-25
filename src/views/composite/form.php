@@ -58,7 +58,9 @@ use blackcube\core\models\Tag;
             'tagsTitle.bind' => Module::t('composite', 'Tags'),
             'tagsUrl.bind' => Url::to(['tag', 'id' => $composite->id]),
             'showTags.bind' => (Tag::find()->count() > 0),
-            'slugExists.bind' => ($composite->slug !== null)
+            'slugExists.bind' => ($composite->slug !== null),
+            'linkUrl.bind' => Url::to([$composite->getRoute()], true),
+            'linkTitle.bind' => Module::t('common', 'View'),
         ]); ?>
         <?php endif; ?>
         <!-- p class="element-form-header-abstract"><?php echo Module::t('composite', 'This is the minimal information needed to create a new composite'); ?></p -->

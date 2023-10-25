@@ -53,7 +53,9 @@ use blackcube\admin\helpers\Aurelia;
             'seoUrl.bind' => Url::to(['seo', 'id' => $category->id]),
             'seoActive.bind' => (($category->slug !== null) && ($category->slug->seo !== null) && $category->slug->seo->active),
             'showTags.bind' => false,
-            'slugExists.bind' => ($category->slug !== null)
+            'slugExists.bind' => ($category->slug !== null),
+            'linkUrl.bind' => Url::to([$category->getRoute()], true),
+            'linkTitle.bind' => Module::t('common', 'View'),
         ]); ?>
         <?php endif; ?>
         <!-- p class="element-form-header-abstract"><?php echo Module::t('category', 'This is the minimal information needed to create a new category'); ?></p -->
