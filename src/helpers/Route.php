@@ -207,31 +207,6 @@ class Route {
                 }
             }
         }
-        $nodeQuery = Node::find()->joinWith(['slug'])->orderBy(['left' => SORT_ASC]);
-        foreach ($nodeQuery->each() as $node) {
-            if ($node->slug !== null) {
-                $routes[] = ['id' => $node->getRoute(), 'name' => $node->name, 'type' => Module::t('helpers', 'CMS Node')];
-            }
-        }
-        $compositeQuery = Composite::find()->joinWith(['slug'])->orderBy(['name' => SORT_ASC]);
-        foreach ($compositeQuery->each() as $composite) {
-            if ($composite->slug !== null) {
-                $routes[] = ['id' => $composite->getRoute(), 'name' => $composite->name, 'type' => Module::t('helpers', 'CMS Composite')];
-            }
-        }
-        $categoryQuery = Category::find()->joinWith(['slug'])->orderBy(['name' => SORT_ASC]);
-        foreach ($categoryQuery->each() as $category) {
-            if ($node->slug !== null) {
-                $routes[] = ['id' => $category->getRoute(), 'name' => $category->name, 'type' => Module::t('helpers', 'CMS Category')];
-            }
-        }
-        $tagQuery = Tag::find()->joinWith(['slug'])->orderBy(['name' => SORT_ASC]);
-        foreach ($tagQuery->each() as $tag) {
-            if ($tag->slug !== null) {
-                $routes[] = ['id' => $tag->getRoute(), 'name' => $tag->name, 'type' => Module::t('helpers', 'CMS Tag')];
-            }
-        }
-
         usort($routes, function($item1, $item2) {
             if ($item1['type'] === $item2['type']) {
                 if ($item1['name'] === $item2['name']) {
@@ -247,6 +222,68 @@ class Route {
                 return -1;
             }
         });
+        $compositeRoutes = [];
+        $nodeQuery = Node::find()
+            ->joinWith(['slug'])
+            ->orderBy(['left' => SORT_ASC]);
+        foreach ($nodeQuery->each() as $node) {
+            if ($node->slug !== null) {
+                $routes[] = [
+                    'id' => $node->getRoute(),
+                    'name' => str_repeat('  ', $node->level - 1).' '.$node->name,
+                    'type' => Module::t('helpers', 'CMS Node')
+                ];
+            }
+            foreach ($node->getComposites()->each() as $composite) {
+                if ($composite->slug !== null) {
+                    $compositeRoutes[] = [
+                        'id' => $composite->getRoute(),
+                        'name' => $node->name.' / '.$composite->name,
+                        'type' => Module::t('helpers', 'CMS Composite')
+                    ];
+                }
+            }
+        }
+        $routes = array_merge($routes, $compositeRoutes);
+        /*/
+        $compositeQuery = Composite::find()
+            ->joinWith(['slug'])
+            ->orderBy(['name' => SORT_ASC]);
+        foreach ($compositeQuery->each() as $composite) {
+            if ($composite->slug !== null) {
+                $routes[] = [
+                    'id' => $composite->getRoute(),
+                    'name' => $composite->name,
+                    'type' => Module::t('helpers', 'CMS Composite')
+                ];
+            }
+        }
+        /**/
+        $categoryQuery = Category::find()
+            ->joinWith(['slug'])
+            ->orderBy(['name' => SORT_ASC]);
+        foreach ($categoryQuery->each() as $category) {
+            if ($node->slug !== null) {
+                $routes[] = [
+                    'id' => $category->getRoute(),
+                    'name' => $category->name,
+                    'type' => Module::t('helpers', 'CMS Category')
+                ];
+            }
+        }
+        $tagQuery = Tag::find()
+            ->joinWith(['slug'])
+            ->orderBy(['name' => SORT_ASC]);
+        foreach ($tagQuery->each() as $tag) {
+            if ($tag->slug !== null) {
+                $routes[] = [
+                    'id' => $tag->getRoute(),
+                    'name' => $tag->name,
+                    'type' => Module::t('helpers', 'CMS Tag')];
+            }
+        }
+
+
         return $routes;
 
     }
