@@ -22,6 +22,8 @@ export class ElementToolbar
     @bindable() public showTags: boolean = true;
     @bindable() public tagsTitle: string = 'Tags';
     @bindable() public tagsUrl: string;
+    @bindable() public linkUrl: string = '';
+    @bindable() public linkTitle: string = 'View';
     private eventListener: IDisposable;
 
     public constructor(

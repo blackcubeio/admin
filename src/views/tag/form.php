@@ -53,7 +53,9 @@ use blackcube\admin\helpers\Aurelia;
             'seoUrl.bind' => Url::to(['seo', 'id' => $tag->id]),
             'seoActive.bind' => (($tag->slug !== null) && ($tag->slug->seo !== null) && $tag->slug->seo->active),
             'showTags.bind' => false,
-            'slugExists.bind' => ($tag->slug !== null)
+            'slugExists.bind' => ($tag->slug !== null),
+            'linkUrl.bind' => Url::to([$tag->getRoute()], true),
+            'linkTitle.bind' => Module::t('common', 'View'),
         ]); ?>
         <?php endif; ?>
         <!-- p class="element-form-header-abstract"><?php echo Module::t('tag', 'This is the minimal information needed to create a new tag'); ?></p -->

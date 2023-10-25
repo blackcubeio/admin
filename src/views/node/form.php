@@ -59,7 +59,9 @@ use blackcube\core\models\Tag;
                 'tagsTitle.bind' => Module::t('node', 'Tags'),
                 'tagsUrl.bind' => Url::to(['tag', 'id' => $node->id]),
                 'showTags.bind' => (Tag::find()->count() > 0),
-                'slugExists.bind' => ($node->slug !== null)
+                'slugExists.bind' => ($node->slug !== null),
+                'linkUrl.bind' => Url::to([$node->getRoute()], true),
+                'linkTitle.bind' => Module::t('common', 'View'),
             ]); ?>
         <?php endif; ?>
         <!-- p class="element-form-header-abstract"><?php echo Module::t('node', 'This is the minimal information needed to create a new node'); ?></p -->
