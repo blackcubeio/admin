@@ -15,6 +15,7 @@
 namespace blackcube\admin\widgets;
 
 use blackcube\admin\Module;
+use blackcube\core\Module as CoreModule;
 use blackcube\core\helpers\QueryCache;
 use blackcube\core\interfaces\ElementInterface;
 use blackcube\core\models\Slug;
@@ -102,7 +103,7 @@ class Publication extends Widget
                 'seoStatus' => $seoStatus,
             ]);
             if ($cache !== null && $this->cacheId !== null) {
-                $cache->set($this->cacheId, $content, null, QueryCache::getCmsDependencies());
+                $cache->set($this->cacheId, $content, CoreModule::getInstance()->cacheDuration, QueryCache::getCmsDependencies());
             }
         }
         return $content;

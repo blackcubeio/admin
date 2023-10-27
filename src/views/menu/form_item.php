@@ -52,6 +52,7 @@ $formatter = Yii::$app->formatter;
             <div class="element-form-bloc-cols-6">
                 <?php echo BlackcubeHtml::activeDropDownList($menuItem, 'route', ArrayHelper::map($routes, 'id', 'name', 'type'), [
                     'prompt' => Module::t('menu', 'Select a route'),
+                    'encodeSpaces' => true,
                 ]); ?>
             </div>
             <div class="element-form-bloc-cols-6">

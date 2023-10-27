@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "19211e9bfe327b97e8eba812b0513251",
+    "content-hash": "eb9ac0c39f76afc56640675e86605f34",
     "packages": [
         {
             "name": "blackcube/core",
-            "version": "3.1.0",
+            "version": "dev-devel-3.x",
             "source": {
                 "type": "git",
                 "url": "https://github.com/blackcubeio/core.git",
-                "reference": "ae58f897d705209dd0cceb54c36c4cfed9a3bdb4"
+                "reference": "0691c526a05d465f259a52f1225cef61679db262"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/blackcubeio/core/zipball/ae58f897d705209dd0cceb54c36c4cfed9a3bdb4",
-                "reference": "ae58f897d705209dd0cceb54c36c4cfed9a3bdb4",
+                "url": "https://api.github.com/repos/blackcubeio/core/zipball/0691c526a05d465f259a52f1225cef61679db262",
+                "reference": "0691c526a05d465f259a52f1225cef61679db262",
                 "shasum": ""
             },
             "require": {
@@ -50,7 +50,7 @@
             "type": "yii2-extension",
             "extra": {
                 "branch-alias": {
-                    "dev-devel-3.x": "3.0.x-dev"
+                    "dev-devel-3.x": "3.x-dev"
                 }
             },
             "autoload": {
@@ -83,14 +83,14 @@
                 "source": "https://code.redcat.io/blackcube/core/tree/devel",
                 "wiki": "https://code.redcat.io/blackcube/core/wikis/home"
             },
-            "time": "2023-10-23T12:33:29+00:00"
+            "time": "2023-10-27T14:22:40+00:00"
         },
         {
             "name": "bower-asset/inputmask",
             "version": "5.0.8",
             "source": {
                 "type": "git",
-                "url": "https://github.com/RobinHerbots/Inputmask.git",
+                "url": "git@github.com:RobinHerbots/Inputmask.git",
                 "reference": "e0f39e0c93569c6b494c3a57edef2c59313a6b64"
             },
             "dist": {
@@ -2779,16 +2779,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "10.4.1",
+            "version": "10.4.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "62bd7af13d282deeb95650077d28ba3600ca321c"
+                "reference": "cacd8b9dd224efa8eb28beb69004126c7ca1a1a1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/62bd7af13d282deeb95650077d28ba3600ca321c",
-                "reference": "62bd7af13d282deeb95650077d28ba3600ca321c",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/cacd8b9dd224efa8eb28beb69004126c7ca1a1a1",
+                "reference": "cacd8b9dd224efa8eb28beb69004126c7ca1a1a1",
                 "shasum": ""
             },
             "require": {
@@ -2860,7 +2860,7 @@
             "support": {
                 "issues": "https://github.com/sebastianbergmann/phpunit/issues",
                 "security": "https://github.com/sebastianbergmann/phpunit/security/policy",
-                "source": "https://github.com/sebastianbergmann/phpunit/tree/10.4.1"
+                "source": "https://github.com/sebastianbergmann/phpunit/tree/10.4.2"
             },
             "funding": [
                 {
@@ -2876,7 +2876,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2023-10-08T05:01:11+00:00"
+            "time": "2023-10-26T07:21:45+00:00"
         },
         {
             "name": "psr/container",
@@ -5424,7 +5424,9 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "blackcube/core": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
