@@ -1,10 +1,15 @@
 Blackcube Admin - CHANGELOG 
 ===========================
 
+
+Release 3.1.1 October, 27th 2023 <pgaultier@redcat.io>
+----------------------------------------------------
+
  * Upd: Better route selector
  * Upd: Add link to view target page
+ * Upd: update dependencies
 
-Release 3.1.0 October, 27th 2023 <pgaultier@redcat.io>
+Release 3.1.0 October, 22th 2023 <pgaultier@redcat.io>
 ----------------------------------------------------
 
  * Upd: Add type filtering
