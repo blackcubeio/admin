@@ -1,6 +1,8 @@
 Blackcube Admin - CHANGELOG 
 ===========================
 
+ * Fix: Fix type blocs
+ * Upd: Update dependencies
 
 Release 3.1.1 October, 27th 2023 <pgaultier@redcat.io>
 ----------------------------------------------------
