@@ -112,7 +112,7 @@ use blackcube\admin\helpers\Aurelia;
                     </div>
                     <div class="element-form-bloc-cols-5" data-view-edit="view">
                         <div class="element-form-bloc-textfield-wrapper">
-                            <label class="element-form-bloc-label"><?php echo Module::t('category', 'Language'); ?></label>
+                            <label class="element-form-bloc-label"><?php echo Module::t('tag', 'Category'); ?></label>
                             <div class="element-form-bloc-abstract">
                                 <?php echo $tag->category->name. '('.$tag->category->language?->id.')'; ?>
                             </div>
