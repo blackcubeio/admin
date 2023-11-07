@@ -1,6 +1,9 @@
 Blackcube Admin - CHANGELOG 
 ===========================
 
+Release 3.1.3 November, 7th 2023 <pgaultier@redcat.io>
+----------------------------------------------------
+
  * Fix: Fix typo in tags
  * Upd: Update dependencies
 
