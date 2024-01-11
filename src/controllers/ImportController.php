@@ -560,7 +560,7 @@ class ImportController extends Controller
                                     $dataContent = base64_decode($content);
                                     $targetFilename = '/bloc/'.$bloc->id.'/'.trim($name, '/');
                                     $fs->write($targetFilename, $dataContent);
-                                    $uploadedFiles[] = $prefix.$targetFilename;
+                                    $uploadedFiles[] = $prefix.'/'.ltrim($targetFilename, '/');
                                 }
                             }
                         }

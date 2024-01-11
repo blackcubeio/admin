@@ -153,12 +153,13 @@ export class File
         let fieldValue = this.getFilesValue();
         this.hiddenField.value = fieldValue;
 
-    };
+    }
 
     public attached() :void
     {
         this.setUp();
     }
+
     private setUp(): void {
         this.parentForm = <HTMLFormElement>this.element.closest('form');
         this.logger.debug('Multiple', this.multiple);

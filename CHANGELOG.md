@@ -1,11 +1,14 @@
 Blackcube Admin - CHANGELOG 
 ===========================
 
+ * Fix: Fix import files in elements
+ * Upd: Update dependencies
+ * Upd: Update file preview system
 
 Release 3.1.4 November, 8th 2023 <pgaultier@redcat.io>
 ----------------------------------------------------
 
-* Upd: Update dependencies
+ * Upd: Update dependencies
 
 Release 3.1.3 November, 7th 2023 <pgaultier@redcat.io>
 ----------------------------------------------------

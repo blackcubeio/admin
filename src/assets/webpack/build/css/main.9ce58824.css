@@ -953,7 +953,7 @@
 .ql-container.ql-snow {
   border: 1px solid #ccc;
 }
-/*! tailwindcss v3.3.3 | MIT License | https://tailwindcss.com
+/*! tailwindcss v3.3.5 | MIT License | https://tailwindcss.com
  */
 /*
 1. Prevent padding and border from affecting element width. (https://github.com/mozdevs/cssremedy/issues/4)
@@ -5849,6 +5849,9 @@ div.jsoneditor-statusbar>.jsoneditor-curserinfo-label,div.jsoneditor-statusbar>.
 .animate-ping {
   -webkit-animation: ping 1s cubic-bezier(0, 0, 0.2, 1) infinite;
           animation: ping 1s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+.cursor-pointer {
+  cursor: pointer;
 }
 .select-none {
   -webkit-user-select: none;
