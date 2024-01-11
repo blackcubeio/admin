@@ -1,6 +1,10 @@
 Blackcube Admin - CHANGELOG 
 ===========================
 
+
+Release 3.2.0 January, 11th 2024 <pgaultier@redcat.io>
+---------------------------------
+
  * Fix: Fix import files in elements
  * Upd: Update dependencies
  * Upd: Update file preview system
