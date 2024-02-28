@@ -1159,7 +1159,11 @@ msgid "CMS Category"
 msgstr ""
 
 msgctxt "blackcube/admin/helpers"
-msgid "CMS Composite"
+msgid "CMS Composite - Orphans"
+msgstr ""
+
+msgctxt "blackcube/admin/helpers"
+msgid "CMS Composite - {node}"
 msgstr ""
 
 msgctxt "blackcube/admin/helpers"

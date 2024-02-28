@@ -1,6 +1,11 @@
 Blackcube Admin - CHANGELOG 
 ===========================
 
+ * Upd: Update i18n
+ * Upd: Allow composites management in node if node/tag has no type
+ * Upd: Update findAllRoutes
+ * Upd: Update dependencies
+ * Upd: Update js
 
 Release 3.2.0 January, 11th 2024 <pgaultier@redcat.io>
 ---------------------------------
