@@ -15,6 +15,7 @@
 namespace blackcube\admin\helpers;
 
 use blackcube\admin\Module;
+use blackcube\core\models\NodeComposite;
 use blackcube\core\Module as CoreModule;
 use blackcube\core\interfaces\BlackcubeControllerInterface;
 use blackcube\core\models\Category;
@@ -222,6 +223,7 @@ class Route {
                 return -1;
             }
         });
+
         $compositeRoutes = [];
         $nodeQuery = Node::find()
             ->joinWith(['slug'])
@@ -238,15 +240,17 @@ class Route {
                 if ($composite->slug !== null) {
                     $compositeRoutes[] = [
                         'id' => $composite->getRoute(),
-                        'name' => $node->name.' / '.$composite->name,
-                        'type' => Module::t('helpers', 'CMS Composite')
+                        'name' => $composite->name,
+                        'type' => Module::t('helpers', 'CMS Composite - {node}', ['node' => $node->name])
                     ];
                 }
             }
         }
         $routes = array_merge($routes, $compositeRoutes);
-        /*/
+        unset($compositeRoutes);
+
         $compositeQuery = Composite::find()
+            ->orphan()
             ->joinWith(['slug'])
             ->orderBy(['name' => SORT_ASC]);
         foreach ($compositeQuery->each() as $composite) {
@@ -254,11 +258,11 @@ class Route {
                 $routes[] = [
                     'id' => $composite->getRoute(),
                     'name' => $composite->name,
-                    'type' => Module::t('helpers', 'CMS Composite')
+                    'type' => Module::t('helpers', 'CMS Composite - Orphans')
                 ];
             }
         }
-        /**/
+
         $categoryQuery = Category::find()
             ->joinWith(['slug'])
             ->orderBy(['name' => SORT_ASC]);

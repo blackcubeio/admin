@@ -285,6 +285,8 @@ use blackcube\core\models\Tag;
                 ])
             ]);?>
         <?php echo Html::endTag('div'); ?>
+    <?php endif; ?>
+    <?php if ($node->isNewRecord === false): ?>
         <?php echo Html::beginTag('div', ['blackcube-fold' => Aurelia::bindOptions(['element-type' => $node::getElementType(), 'element-id' => $node->id, 'element-sub-data' => 'composites'])]); ?>
             <div class="element-form-header mt-6 flex justify-between text-white" data-fold="">
 
