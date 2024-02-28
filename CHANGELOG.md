@@ -1,6 +1,9 @@
 Blackcube Admin - CHANGELOG 
 ===========================
 
+Release 3.2.1 February, 28th 2024 <pgaultier@redcat.io>
+-------------------------------------------------------
+
  * Upd: Update i18n
  * Upd: Allow composites management in node if node/tag has no type
  * Upd: Update findAllRoutes
@@ -8,57 +11,57 @@ Blackcube Admin - CHANGELOG
  * Upd: Update js
 
 Release 3.2.0 January, 11th 2024 <pgaultier@redcat.io>
----------------------------------
+------------------------------------------------------
 
  * Fix: Fix import files in elements
  * Upd: Update dependencies
  * Upd: Update file preview system
 
 Release 3.1.4 November, 8th 2023 <pgaultier@redcat.io>
-----------------------------------------------------
+------------------------------------------------------
 
  * Upd: Update dependencies
 
 Release 3.1.3 November, 7th 2023 <pgaultier@redcat.io>
-----------------------------------------------------
+------------------------------------------------------
 
  * Fix: Fix typo in tags
  * Upd: Update dependencies
 
 Release 3.1.2 November, 6th 2023 <pgaultier@redcat.io>
-----------------------------------------------------
+------------------------------------------------------
 
  * Fix: Fix type blocs
  * Upd: Update dependencies
 
 Release 3.1.1 October, 27th 2023 <pgaultier@redcat.io>
-----------------------------------------------------
+------------------------------------------------------
 
  * Upd: Better route selector
  * Upd: Add link to view target page
  * Upd: update dependencies
 
 Release 3.1.0 October, 22th 2023 <pgaultier@redcat.io>
-----------------------------------------------------
+------------------------------------------------------
 
  * Upd: Add type filtering
  * Upd: update dependencies
  * Upd: Update json schemas editor
 
 Release 3.0.10 October, 20th 2023 <pgaultier@redcat.io>
-----------------------------------------------------
+-------------------------------------------------------
 
  * Upd: Update dependencies
 
 Release 3.0.9 October, 16th 2023 <pgaultier@redcat.io>
-----------------------------------------------------
+------------------------------------------------------
 
  * Upd: Update dependencies
  * Upd: Update js dependencies
  * Upd: Activate beta version of import/export
 
 Release 3.0.7 October, 16th 2023 <pgaultier@redcat.io>
-----------------------------------------------------
+------------------------------------------------------
 
  * Upd: Update dependencies
  * Upd: Add virtual columns for filtering in BLoc
@@ -66,41 +69,41 @@ Release 3.0.7 October, 16th 2023 <pgaultier@redcat.io>
  * Fix: Fix `radiolist` and `dropdownlist` typo `radioList` and `dropdownList`
 
 Release 3.0.6 October, 8th 2023 <pgaultier@redcat.io>
-----------------------------------------------------
+-----------------------------------------------------
 
  * Upd: Update dependencies
 
 Release 3.0.5 October, 8th 2023 <pgaultier@redcat.io>
-----------------------------------------------------
+-----------------------------------------------------
 
  * Upd: Update dependencies
 
 Release 3.0.4 October, 7th 2023 <pgaultier@redcat.io>
-----------------------------------------------------
+-----------------------------------------------------
 
  * Upd: Update dependencies
  * Upd: Handle canonical URL
 
 Release 3.0.3 October, 4th 2023 <pgaultier@redcat.io>
-----------------------------------------------------
+-----------------------------------------------------
 
  * Upd: Update dependencies
 
 Release 3.0.2 October, 1st 2023 <pgaultier@redcat.io>
-----------------------------------------------------
+-----------------------------------------------------
 
  * Fix: Fix search bloc types
  * Upd: dependencies
 
 Release 3.0.1 September, 27th 2023 <pgaultier@redcat.io>
-----------------------------------------------------
+--------------------------------------------------------
 
  * Fix: Fix search tags
  * Upd: Add view/edit system
  * Upd: Add inner bloc add
 
 Release 3.0.0 September, 21st 2023 <pgaultier@redcat.io>
-----------------------------------------------------
+--------------------------------------------------------
 
  * Fix: menu system'
  * Upd: update heroicons
