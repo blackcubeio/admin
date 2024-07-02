@@ -1,6 +1,7 @@
 Blackcube Admin - CHANGELOG 
 ===========================
 
+ * Upd: Update Menus to handle `host`
  * Upd: Update i18n
  * Upd: Allow composites management in node if node/tag has no type
  * Upd: Update findAllRoutes
