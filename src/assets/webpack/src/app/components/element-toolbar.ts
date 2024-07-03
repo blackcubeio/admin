@@ -46,7 +46,8 @@ export class ElementToolbar
         if (this.host && this.linkUrl) {
             this.realUrl = '//' + this.host + this.linkUrl;
         } else {
-            this.realUrl = this.linkUrl;
+
+            this.realUrl = '//' + this.platform.document.location.host + this.linkUrl;
         }
     }
 

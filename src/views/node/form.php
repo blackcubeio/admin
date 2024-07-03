@@ -61,7 +61,7 @@ use blackcube\core\models\Tag;
                 'showTags.bind' => (Tag::find()->count() > 0),
                 'slugExists.bind' => ($node->slug !== null),
                 'host.bind' => (($node->slug !== null) && (empty($node->slug->host) === false)) ? $node->slug->host : '',
-                'linkUrl.bind' => Url::to([$node->getRoute()], true),
+                'linkUrl.bind' => Url::to([$node->getRoute()]),
                 'linkTitle.bind' => Module::t('common', 'View'),
             ]); ?>
         <?php endif; ?>
