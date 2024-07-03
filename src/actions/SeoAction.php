@@ -95,13 +95,17 @@ class SeoAction extends Action
             ->andWhere(['targetUrl' => null])
             ->andWhere(['httpCode' => null])
             ->andWhere(['!=', 'id', $element->slug->id])
-            ->orderBy(['path' => SORT_ASC])
+            ->orderBy(['host' => SORT_ASC, 'path' => SORT_ASC])
             ->all();
         $availableSlugs = ArrayHelper::toArray($slugs, [
             Slug::class => [
                 'id',
                 'path' => function($slug) {
-                    return '/'.$slug->path;
+                    $prefix = '//*/';
+                    if ($slug->host !== null) {
+                        $prefix = '//'.$slug->host.'/';
+                    }
+                    return $prefix.$slug->path;
                 }
             ]
         ]);
