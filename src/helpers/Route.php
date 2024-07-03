@@ -232,7 +232,7 @@ class Route {
             if ($node->slug !== null) {
                 $routes[] = [
                     'id' => $node->getRoute(),
-                    'name' => str_repeat('  ', $node->level - 1).' '.$node->name,
+                    'name' => str_repeat('  ', $node->level - 1).' '.$node->name.' ('.$node->languageId.')',
                     'type' => Module::t('helpers', 'CMS Node')
                 ];
             }
@@ -240,8 +240,8 @@ class Route {
                 if ($composite->slug !== null) {
                     $compositeRoutes[] = [
                         'id' => $composite->getRoute(),
-                        'name' => $composite->name,
-                        'type' => Module::t('helpers', 'CMS Composite - {node}', ['node' => $node->name])
+                        'name' => $composite->name.' ('.$composite->languageId.')',
+                        'type' => Module::t('helpers', 'CMS Composite - {node}', ['node' => $node->name.' ('.$node->languageId.')'])
                     ];
                 }
             }
@@ -257,7 +257,7 @@ class Route {
             if ($composite->slug !== null) {
                 $routes[] = [
                     'id' => $composite->getRoute(),
-                    'name' => $composite->name,
+                    'name' => $composite->name.' ('.$composite->languageId.')',
                     'type' => Module::t('helpers', 'CMS Composite - Orphans')
                 ];
             }
@@ -270,7 +270,7 @@ class Route {
             if ($node->slug !== null) {
                 $routes[] = [
                     'id' => $category->getRoute(),
-                    'name' => $category->name,
+                    'name' => $category->name.' ('.$category->languageId.')',
                     'type' => Module::t('helpers', 'CMS Category')
                 ];
             }
@@ -282,7 +282,7 @@ class Route {
             if ($tag->slug !== null) {
                 $routes[] = [
                     'id' => $tag->getRoute(),
-                    'name' => $tag->name,
+                    'name' => $tag->name.' ('.$tag->languageId.')',
                     'type' => Module::t('helpers', 'CMS Tag')];
             }
         }
