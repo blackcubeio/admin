@@ -54,6 +54,7 @@ use blackcube\admin\helpers\Aurelia;
             'seoActive.bind' => (($category->slug !== null) && ($category->slug->seo !== null) && $category->slug->seo->active),
             'showTags.bind' => false,
             'slugExists.bind' => ($category->slug !== null),
+            'host.bind' => (($category->slug !== null) && (empty($category->slug->host) === false)) ? $category->slug->host : '',
             'linkUrl.bind' => Url::to([$category->getRoute()], true),
             'linkTitle.bind' => Module::t('common', 'View'),
         ]); ?>

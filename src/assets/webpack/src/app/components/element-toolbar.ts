@@ -22,8 +22,10 @@ export class ElementToolbar
     @bindable() public showTags: boolean = true;
     @bindable() public tagsTitle: string = 'Tags';
     @bindable() public tagsUrl: string;
+    @bindable() public host: string = '';
     @bindable() public linkUrl: string = '';
     @bindable() public linkTitle: string = 'View';
+    public realUrl: string = '';
     private eventListener: IDisposable;
 
     public constructor(
@@ -41,7 +43,11 @@ export class ElementToolbar
     }
     public attached(): void {
         this.logger.debug('Attached');
-
+        if (this.host && this.linkUrl) {
+            this.realUrl = '//' + this.host + this.linkUrl;
+        } else {
+            this.realUrl = this.linkUrl;
+        }
     }
 
     public detaching(): void {
