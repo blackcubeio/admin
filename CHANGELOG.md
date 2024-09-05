@@ -7,6 +7,7 @@ Blackcube Admin - CHANGELOG
  * Upd: Update findAllRoutes
  * Upd: Update dependencies
  * Upd: Update js
+ * Upd: Update heroicons to v2.1.5
  * Backport plugin system from 2.x
 
 Release 3.2.0 January, 11th 2024 <pgaultier@redcat.io>
