@@ -32,7 +32,6 @@ class Navbar extends Widget
     public $adminUid;
     public $controllerUid;
     public $widgets;
-    public $modulesWidgets;
     /**
      * {@inheritDoc}
      */
@@ -43,7 +42,6 @@ class Navbar extends Widget
             'adminUid' => $this->adminUid,
             'controllerUid' => $this->controllerUid,
             'widgets' => $this->widgets,
-            'modulesWidgets' => $this->modulesWidgets,
         ]);
     }
 }

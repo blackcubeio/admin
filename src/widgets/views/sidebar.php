@@ -15,7 +15,6 @@
  * @var string $adminUid
  * @var string|null $version
  * @var array $widgets
- * @var array $modulesWidgets
  */
 
 use blackcube\admin\Module;
@@ -80,7 +79,6 @@ use blackcube\admin\widgets\Navbar;
                 'adminUid' => $adminUid,
                 'controllerUid' => $controllerUid,
                 'widgets' => $widgets,
-                'modulesWidgets' => $modulesWidgets,
             ])?>
         </div>
     </div>
@@ -107,7 +105,6 @@ use blackcube\admin\widgets\Navbar;
                     'adminUid' => $adminUid,
                     'controllerUid' => $controllerUid,
                     'widgets' => $widgets,
-                    'modulesWidgets' => $modulesWidgets,
                 ])?>
             </div>
         </div>
