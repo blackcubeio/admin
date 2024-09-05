@@ -282,7 +282,7 @@ class Route {
             if ($tag->slug !== null) {
                 $routes[] = [
                     'id' => $tag->getRoute(),
-                    'name' => $tag->name.' ('.$tag->languageId.')',
+                    'name' => $tag->name.' ('.$tag->category->languageId.')',
                     'type' => Module::t('helpers', 'CMS Tag')];
             }
         }
