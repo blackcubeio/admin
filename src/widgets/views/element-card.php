@@ -204,7 +204,7 @@ if ($tree && $element instanceof Node) {
             <?php if ($element instanceof Node || $element instanceof Composite || $element instanceof Category || $element instanceof Tag): ?>
                 <?php if ($element->slug !== null): ?>
                     <?php echo Heroicons::svg('outline/link', ['class' => 'card-body-url-icon']); ?>
-                    <?php echo $element->slug->path; ?>
+                    <?php echo '//'.($element->slug->host ? $element->slug->host : '*').'/'.$element->slug->path; ?>
                 <?php endif; ?>
             <?php endif; ?>
         </div>

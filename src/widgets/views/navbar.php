@@ -14,7 +14,6 @@
  * @var string $controllerUid
  * @var string $adminUid
  * @var array $widgets
- * @var array $modulesWidgets
  */
 
 use blackcube\admin\Module;
@@ -241,6 +240,11 @@ use blackcube\admin\helpers\Aurelia;
         </div>
     </div>
     <?php endif; ?>
+    <?php foreach ($widgets as $widgetConfig) {
+        $widgetClass = $widgetConfig['class'];
+        unset($widgetConfig['class']);
+        echo $widgetClass::widget($widgetConfig);
+    } ?>
     <?php if (Yii::$app->user->can(Rbac::PERMISSION_PLUGIN_VIEW)): ?>
     <div class="navbar-item" data-blackcube-section="plugin">
         <button type="button" class="navbar-item-btn" aria-expanded="false">
@@ -266,5 +270,4 @@ use blackcube\admin\helpers\Aurelia;
         </div>
     </div>
     <?php endif; ?>
-
 </nav>

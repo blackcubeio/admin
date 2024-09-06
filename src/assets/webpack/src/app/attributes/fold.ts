@@ -1,9 +1,6 @@
-import {customAttribute, INode} from '@aurelia/runtime-html';
-import { IEventAggregator, ILogger, IDisposable } from '@aurelia/kernel';
-import { MenuEvent, MenuEventType, MenuStatus } from '../interfaces/menu';
-import {IPlatform, bindable} from "aurelia";
-import {HttpService} from "../services/http-service";
-import {StorageService} from "../services/StorageService";
+import {IPlatform, bindable, customAttribute, INode, IEventAggregator, ILogger, IDisposable, resolve} from 'aurelia';
+import {IHttpService} from "../services/http-service";
+import {IStorageService} from "../services/storage-service";
 
 @customAttribute('blackcube-fold')
 export class Fold
@@ -16,14 +13,13 @@ export class Fold
     @bindable() elementSubData: string;
 
     public constructor(
-        @ILogger private readonly logger: ILogger,
-        @IPlatform private readonly platform: IPlatform,
-        private readonly httpService: HttpService,
-        private readonly storageService: StorageService,
-        @INode private readonly element: HTMLElement
+        private readonly logger: ILogger = resolve(ILogger).scopeTo('Fold'),
+        private readonly platform: IPlatform = resolve(IPlatform),
+        private readonly httpService: IHttpService = resolve(IHttpService),
+        private readonly storageService: IStorageService = resolve(IStorageService),
+        private readonly element: HTMLElement = resolve(INode) as HTMLElement,
     )
     {
-        this.logger = logger.scopeTo('Fold');
     }
     public attaching()
     {

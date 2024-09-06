@@ -1,9 +1,6 @@
-import {customAttribute, INode} from '@aurelia/runtime-html';
-import { IEventAggregator, ILogger, IDisposable } from '@aurelia/kernel';
-import { MenuEvent, MenuEventType, MenuStatus } from '../interfaces/menu';
-import {IPlatform, bindable} from "aurelia";
-import {HttpService} from "../services/http-service";
-import {StorageService} from "../services/StorageService";
+import {customAttribute, INode, IEventAggregator, ILogger, IDisposable, IPlatform, bindable, resolve} from 'aurelia';
+import {IHttpService} from "../services/http-service";
+import {IStorageService} from "../services/storage-service";
 
 @customAttribute('blackcube-view-edit')
 export class ViewEdit
@@ -13,12 +10,11 @@ export class ViewEdit
     private toggleButton: HTMLElement;
 
     public constructor(
-        @ILogger private readonly logger: ILogger,
-        @IPlatform private readonly platform: IPlatform,
-        @INode private readonly element: HTMLElement
+        private readonly logger: ILogger = resolve(ILogger).scopeTo('ViewEdit'),
+        private readonly platform: IPlatform = resolve(IPlatform),
+        private readonly element: HTMLElement = resolve(INode) as HTMLElement,
     )
     {
-        this.logger = logger.scopeTo('ViewEdit');
     }
     public attaching()
     {

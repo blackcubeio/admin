@@ -1,21 +1,13 @@
-import { ILogger, IEventAggregator } from "@aurelia/kernel";
-import {
-    Alert, NotificationCenter, Overlay
-} from '../components';
-import { Menu } from './menu';
-import { NotificationType, NotificationCenterEventType } from '../interfaces/notification';
-import { MenuEventType } from '../interfaces/menu';
-import { AlertEventType, AlertType } from '../interfaces/alert';
-import { OverlayEventType } from '../interfaces/overlay';
-import {INode} from "@aurelia/runtime-html";
+import {ILogger, INode, IEventAggregator, resolve} from "aurelia";
+import {} from '@aurelia/runtime-html';
 
 export class BcTestCustomAttribute
 {
     private openMenuBtn: HTMLButtonElement;
     constructor(
-        @ILogger private readonly logger: ILogger,
-        @IEventAggregator private readonly ea: IEventAggregator,
-        @INode private readonly element: HTMLElement
+        private readonly logger: ILogger = resolve(ILogger).scopeTo('BcTestCustomAttribute'),
+        private readonly ea: IEventAggregator = resolve(IEventAggregator),
+        private readonly element: HTMLElement = resolve(INode) as HTMLElement,
     ) {
         this.logger = logger.scopeTo('BcTestCustomAttribute');
     }

@@ -599,6 +599,10 @@ msgid "Add item"
 msgstr ""
 
 msgctxt "blackcube/admin/menu"
+msgid "Host"
+msgstr ""
+
+msgctxt "blackcube/admin/menu"
 msgid "Items"
 msgstr ""
 

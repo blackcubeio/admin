@@ -1,8 +1,16 @@
-import {customElement, bindable, INode} from '@aurelia/runtime-html';
-import { IEventAggregator, ILogger, IDisposable } from '@aurelia/kernel';
+import {
+    customElement,
+    bindable,
+    ICustomElementViewModel,
+    IPlatform,
+    INode,
+    IEventAggregator,
+    ILogger,
+    IDisposable,
+    resolve
+} from 'aurelia';
 import { NotificationStatus, NotificationType } from '../interfaces/notification';
 import { transitionWithPromise } from '../helpers/transition';
-import {ICustomElementViewModel, IPlatform} from "aurelia";
 
 
 @customElement('blackcube-notification')
@@ -23,12 +31,11 @@ export class Notification implements ICustomElementViewModel
     private closePromise: Promise<boolean>;
 
     constructor(
-        @ILogger private readonly logger: ILogger,
-        @IEventAggregator private readonly ea: IEventAggregator,
-        @IPlatform private readonly platform: IPlatform,
-        @INode private readonly element: HTMLElement
+        private readonly logger: ILogger = resolve(ILogger).scopeTo('Notification'),
+        private readonly ea: IEventAggregator = resolve(IEventAggregator),
+        private readonly platform: IPlatform = resolve(IPlatform),
+        private readonly element: HTMLElement = resolve(INode) as HTMLElement,
     ) {
-        this.logger = logger.scopeTo('Notification');
     }
 
     public attaching()

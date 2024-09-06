@@ -1,9 +1,15 @@
-import { customAttribute, INode, bindable } from '@aurelia/runtime-html';
-import { IEventAggregator, ILogger, IDisposable } from '@aurelia/kernel';
-import { MenuEvent, MenuEventType, MenuStatus } from '../interfaces/menu';
+import {
+    customAttribute,
+    ICustomAttributeViewModel,
+    INode,
+    IEventAggregator,
+    ILogger,
+    IDisposable,
+    bindable,
+    resolve
+} from 'aurelia';
 import {Overlay} from "../components";
 import {OverlayEventType} from "../interfaces/overlay";
-import {ICustomAttributeViewModel} from "aurelia";
 
 @customAttribute('blackcube-overlay-trigger')
 export class OverlayTrigger implements ICustomAttributeViewModel
@@ -15,12 +21,11 @@ export class OverlayTrigger implements ICustomAttributeViewModel
     @bindable() cancelTitle: string;
 
     public constructor(
-        @ILogger private readonly logger: ILogger,
-        @IEventAggregator private readonly ea: IEventAggregator,
-        @INode private readonly element: HTMLElement
+        private readonly logger: ILogger = resolve(ILogger).scopeTo('OverlayTrigger'),
+        private readonly ea: IEventAggregator = resolve(IEventAggregator),
+        private readonly element: HTMLElement = resolve(INode) as HTMLElement,
     )
     {
-        this.logger = logger.scopeTo('OverlayTrigger');
     }
     public attaching()
     {

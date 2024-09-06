@@ -1,14 +1,20 @@
 import { HttpClientConfiguration, IHttpClient } from '@aurelia/fetch-client';
+import {DI, resolve} from 'aurelia';
 
 export interface Csrf {
     name:string,
     value:string
 }
 
+export const IHttpService =
+    DI.createInterface<IHttpService>('IHttpService', (x) =>
+        x.singleton(HttpService)
+    );
+export interface IHttpService extends HttpService {}
 export class HttpService {
 
     public constructor(
-        @IHttpClient private readonly httpClient: IHttpClient
+        private readonly httpClient: IHttpClient = resolve(IHttpClient),
     )
     {
         this.httpClient.configure((config: HttpClientConfiguration) => {

@@ -1,11 +1,16 @@
-import { customAttribute, INode, bindable } from '@aurelia/runtime-html';
-import { IEventAggregator, ILogger, IDisposable } from '@aurelia/kernel';
-import { MenuEvent, MenuEventType, MenuStatus } from '../interfaces/menu';
+import {
+    customAttribute,
+    ICustomAttributeViewModel,
+    INode,
+    IEventAggregator,
+    ILogger,
+    IDisposable,
+    bindable,
+    resolve
+} from 'aurelia';
 import {Alert, Overlay} from "../components";
-import {OverlayEventType} from "../interfaces/overlay";
-import {ICustomAttributeViewModel} from "aurelia";
 import {AlertEventType, AlertType} from "../interfaces/alert";
-import {Csrf, HttpService} from "../services/http-service";
+import {IHttpService} from "../services/http-service";
 
 @customAttribute('blackcube-alert-delete')
 export class AlertDelete implements ICustomAttributeViewModel
@@ -14,13 +19,12 @@ export class AlertDelete implements ICustomAttributeViewModel
     @bindable() public cancel: string = 'Cancel';
 
     public constructor(
-        @ILogger private readonly logger: ILogger,
-        @IEventAggregator private readonly ea: IEventAggregator,
-        private httpService: HttpService,
-        @INode private readonly element: HTMLElement
+        private readonly logger: ILogger = resolve(ILogger).scopeTo('AlertDelete'),
+        private readonly ea: IEventAggregator = resolve(IEventAggregator),
+        private httpService: IHttpService = resolve(IHttpService),
+        private readonly element: HTMLElement = resolve(INode) as HTMLElement,
     )
     {
-        this.logger = logger.scopeTo('ModalAlert');
     }
     public attaching()
     {

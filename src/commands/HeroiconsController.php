@@ -104,13 +104,13 @@ class Heroicons {
             'xmlns' => 'http://www.w3.org/2000/svg',
             'fill' => 'none',
             'viewBox' => '0 0 24 24',
-            'stroke-width' => '2',
+            'stroke-width' => '1.5',
             'stroke' => 'currentColor',
             'aria-hidden' => 'true',
         ],
         'solid' => [
             'xmlns' => 'http://www.w3.org/2000/svg',
-            'viewBox' => '0 0 20 20',
+            'viewBox' => '0 0 24 24',
             'fill' => 'currentColor',
             'aria-hidden' => 'true',
         ]

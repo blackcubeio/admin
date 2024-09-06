@@ -1,9 +1,5 @@
-
-
-import {ILogger} from "@aurelia/kernel";
-import {IPlatform} from "aurelia";
-import {HttpService} from "../services/http-service";
-import {bindable, customElement, INode} from "@aurelia/runtime-html";
+import {bindable, customElement, INode, ILogger, IPlatform, resolve} from "aurelia";
+import {IHttpService} from "../services/http-service";
 
 @customElement('blackcube-blocs')
 export class Blocs
@@ -13,12 +9,11 @@ export class Blocs
     @bindable() public view: string = '';
 
     public constructor(
-        @ILogger private readonly logger: ILogger,
-        @IPlatform private readonly platform: IPlatform,
-        private readonly httpService: HttpService,
-        @INode private readonly element: HTMLElement
+        private readonly logger: ILogger = resolve(ILogger).scopeTo('Blocs'),
+        private readonly platform: IPlatform = resolve(IPlatform),
+        private readonly httpService: IHttpService = resolve(IHttpService),
+        private readonly element: HTMLElement = resolve(INode) as HTMLElement,
     ) {
-        this.logger = logger.scopeTo('Blocs');
     }
 
 

@@ -1,9 +1,16 @@
-import {IEventAggregator, ILogger} from "@aurelia/kernel";
+import {
+    ICustomAttributeViewModel,
+    IPlatform,
+    bindable,
+    customAttribute,
+    INode,
+    IEventAggregator,
+    ILogger,
+    resolve
+} from "aurelia";
 import {NotificationCenter, Overlay} from '../components';
 import {NotificationCenterEventType, NotificationType} from '../interfaces/notification';
-import {bindable, customAttribute, INode} from "@aurelia/runtime-html";
 import {OverlayEventType} from "../interfaces/overlay";
-import {ICustomAttributeViewModel, IPlatform} from "aurelia";
 
 // @customAttribute({name: 'blackcube-notification-trigger', aliases:['bc-nt']})
 @customAttribute('blackcube-notification-trigger')
@@ -16,12 +23,11 @@ export class NotificationTrigger implements ICustomAttributeViewModel
     @bindable() public closeOverlay: boolean = false;
 
     constructor(
-        @ILogger private readonly logger: ILogger,
-        @IEventAggregator private readonly ea: IEventAggregator,
-        @IPlatform private readonly platform: IPlatform,
-        @INode private readonly element: HTMLElement
+        private readonly logger: ILogger = resolve(ILogger).scopeTo('NotificationTrigger'),
+        private readonly ea: IEventAggregator = resolve(IEventAggregator),
+        private readonly platform: IPlatform = resolve(IPlatform),
+        private readonly element: HTMLElement = resolve(INode) as HTMLElement,
     ) {
-        this.logger = logger.scopeTo('NotificationTrigger');
         this.logger.trace('constructor');
     }
 

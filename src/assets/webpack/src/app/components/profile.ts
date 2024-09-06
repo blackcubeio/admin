@@ -1,7 +1,17 @@
-import {customElement, bindable, watch, BindingMode, INode} from '@aurelia/runtime-html';
-import { IEventAggregator, ILogger, IDisposable } from '@aurelia/kernel';
+import {
+    customElement,
+    bindable,
+    watch,
+    ICustomElementViewModel,
+    IPlatform,
+    IEventAggregator,
+    ILogger,
+    IDisposable,
+    BindingMode,
+    INode,
+    resolve
+} from 'aurelia';
 import { ProfileMenuItem, ProfileStatus } from '../interfaces/profile';
-import {ICustomElementViewModel, IPlatform} from "aurelia";
 
 @customElement('blackcube-profile')
 export class Profile implements ICustomElementViewModel
@@ -17,12 +27,11 @@ export class Profile implements ICustomElementViewModel
     private hasListener = false;
 
     constructor(
-        @ILogger private readonly logger: ILogger,
-        @IEventAggregator private readonly ea: IEventAggregator,
-        @IPlatform private readonly platform: IPlatform,
-        @INode private readonly element: HTMLElement
+        private readonly logger: ILogger = resolve(ILogger).scopeTo('Profile'),
+        private readonly ea: IEventAggregator = resolve(IEventAggregator),
+        private readonly platform: IPlatform = resolve(IPlatform),
+        private readonly element: HTMLElement = resolve(INode) as HTMLElement,
     ) {
-        this.logger = logger.scopeTo('Profile');
     }
 
     public attaching()
@@ -84,7 +93,7 @@ export class Profile implements ICustomElementViewModel
     }
 
     @watch((profile: Profile) => profile.items.length)
-    public handleTransitionMenu(newValue, oldValue)
+    public handleTransitionMenu(newValue: any, oldValue: any)
     {
         this.logger.debug('onChangeItems', newValue, oldValue);
         if (newValue > 0 && oldValue === 0) {

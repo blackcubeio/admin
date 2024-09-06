@@ -1,3 +1,10 @@
+import {DI} from 'aurelia';
+
+export const IStorageService =
+    DI.createInterface<IStorageService>('IStorageService', (x) =>
+        x.singleton(StorageService)
+    );
+export interface IStorageService extends StorageService {}
 class StorageService
 {
     public getElementOpened(elementType:string, elementSubData:string, elementId: string): boolean

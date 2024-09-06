@@ -1,18 +1,25 @@
-import { customAttribute, INode, bindable } from '@aurelia/runtime-html';
-import { IEventAggregator, ILogger, IDisposable } from '@aurelia/kernel';
-import { MenuEvent, MenuEventType, MenuStatus } from '../interfaces/menu';
+import {
+    customAttribute,
+    ICustomElementViewModel,
+    ILifecycleHooks,
+    INode,
+    bindable,
+    IEventAggregator,
+    ILogger,
+    IDisposable,
+    resolve
+} from 'aurelia';
 import {Overlay} from "../components";
 import {OverlayEventType} from "../interfaces/overlay";
-import {ICustomElementViewModel, ILifecycleHooks} from "aurelia";
 
 @customAttribute('blackcube-overlay-close')
 export class OverlayClose implements ICustomElementViewModel
 {
 
     public constructor(
-        @ILogger private readonly logger: ILogger,
-        @IEventAggregator private readonly ea: IEventAggregator,
-        @INode private readonly element: HTMLElement
+        private readonly logger: ILogger = resolve(ILogger).scopeTo('OverlayClose'),
+        private readonly ea: IEventAggregator = resolve(IEventAggregator),
+        private readonly element: HTMLElement = resolve(INode) as HTMLElement,
     )
     {
         this.logger = logger.scopeTo('OverlayClose');

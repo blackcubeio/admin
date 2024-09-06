@@ -1,7 +1,5 @@
-import {IDisposable, IEventAggregator, ILogger} from "@aurelia/kernel";
-import {IPlatform} from "aurelia";
-import {HttpService} from "../services/http-service";
-import {bindable, customElement, INode} from "@aurelia/runtime-html";
+import {IDisposable, bindable, customElement, INode, IPlatform, IEventAggregator, ILogger, resolve} from "aurelia";
+import {IHttpService} from "../services/http-service";
 import {Overlay} from "./overlay";
 import {OverlayEventType} from "../interfaces/overlay";
 import {Broadcast, BroadcastElementEvent, BroadcastElementEventType} from "../interfaces/broadcast";
@@ -22,18 +20,19 @@ export class ElementToolbar
     @bindable() public showTags: boolean = true;
     @bindable() public tagsTitle: string = 'Tags';
     @bindable() public tagsUrl: string;
+    @bindable() public host: string = '';
     @bindable() public linkUrl: string = '';
     @bindable() public linkTitle: string = 'View';
+    public realUrl: string = '';
     private eventListener: IDisposable;
 
     public constructor(
-        @ILogger private readonly logger: ILogger,
-        @IEventAggregator private readonly ea: IEventAggregator,
-        @IPlatform private readonly platform: IPlatform,
-        private readonly httpService: HttpService,
-        @INode private readonly element: HTMLElement
+        private readonly logger: ILogger = resolve(ILogger).scopeTo('ElementToolbar'),
+        private readonly ea: IEventAggregator = resolve(IEventAggregator),
+        private readonly platform: IPlatform = resolve(IPlatform),
+        private readonly httpService: IHttpService = resolve(IHttpService),
+        private readonly element: HTMLElement = resolve(INode) as HTMLElement,
     ) {
-        this.logger = logger.scopeTo('ElementToolbar');
     }
 
     public attaching() {
@@ -41,7 +40,12 @@ export class ElementToolbar
     }
     public attached(): void {
         this.logger.debug('Attached');
+        if (this.host && this.linkUrl) {
+            this.realUrl = '//' + this.host + this.linkUrl;
+        } else {
 
+            this.realUrl = '//' + this.platform.document.location.host + this.linkUrl;
+        }
     }
 
     public detaching(): void {

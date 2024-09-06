@@ -94,7 +94,8 @@ class SimpleElementCard extends Widget
             $type = Module::t('widgets', 'Menus');
             $icon = 'outline/view-list';
             $title = $this->element->name;
-            $info = '';
+            $info = (empty($this->element->host) ? '' : $this->element->host.' - ').$this->element->language->name;'';
+
             $updatePermission = Rbac::PERMISSION_MENU_UPDATE;
             $deletePermission = Rbac::PERMISSION_MENU_DELETE;
         } elseif ($this->element instanceof Language) {

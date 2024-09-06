@@ -19,6 +19,7 @@
 
 use blackcube\admin\Module;
 use blackcube\admin\helpers\Html;
+use blackcube\core\models\Parameter;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Url;
 use blackcube\admin\helpers\BlackcubeHtml;
@@ -47,8 +48,13 @@ use blackcube\admin\helpers\Aurelia;
             </div>
         </div>
         <div class="element-form-bloc-grid-12">
-            <div class="element-form-bloc-cols-9">
+            <div class="element-form-bloc-cols-6">
                 <?php echo BlackcubeHtml::activeTextInput($menu, 'name', []); ?>
+            </div>
+            <div class="element-form-bloc-cols-3">
+                <?php echo BlackcubeHtml::activeDropDownList($menu, 'host', ArrayHelper::map(Parameter::getAllowedHosts(), 'id', 'value'), [
+                    'label' => Module::t('menu', 'Host'),
+                ]); ?>
             </div>
             <div class="element-form-bloc-cols-3">
                 <?php echo BlackcubeHtml::activeDropDownList($menu, 'languageId', ArrayHelper::map($languagesQuery->select(['id', 'name'])->asArray()->all(), 'id', 'name'), [
