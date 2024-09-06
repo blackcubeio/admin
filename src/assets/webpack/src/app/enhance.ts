@@ -1,13 +1,10 @@
-import {IEventAggregator, ILogger} from '@aurelia/kernel';
-import {INode} from "@aurelia/runtime-html";
+import {ILogger, resolve} from 'aurelia';
+
 
 export class Enhance {
     constructor(
-        @ILogger private readonly logger: ILogger,
-        @IEventAggregator private readonly ea: IEventAggregator,
-        @INode private readonly element: HTMLElement
+        private readonly logger: ILogger = resolve(ILogger).scopeTo('Enhance'),
     ) {
-        this.logger = logger.scopeTo('Enhance');
     }
 
     public attaching()

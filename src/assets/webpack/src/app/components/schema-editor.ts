@@ -1,9 +1,5 @@
-
-
-import {ILogger} from "@aurelia/kernel";
-import {IPlatform} from "aurelia";
-import {HttpService} from "../services/http-service";
-import {bindable, customElement, INode} from "@aurelia/runtime-html";
+import {IPlatform, ILogger, bindable, customElement, INode, resolve} from "aurelia";
+import {IHttpService} from "../services/http-service";
 import JSONEditor, {JSONEditorOptions} from 'jsoneditor';
 
 @customElement('blackcube-schema-editor')
@@ -18,11 +14,10 @@ export class SchemaEditor
     @bindable() public language: string;
 
     public constructor(
-        @ILogger private readonly logger: ILogger,
-        @IPlatform private readonly platform: IPlatform,
-        @INode private readonly element: HTMLElement
+        private readonly logger: ILogger = resolve(ILogger).scopeTo('SchemaEditor'),
+        private readonly platform: IPlatform = resolve(IPlatform),
+        private readonly element: HTMLElement = resolve(INode) as HTMLElement,
     ) {
-        this.logger = logger.scopeTo('SchemaEditor');
     }
 
 

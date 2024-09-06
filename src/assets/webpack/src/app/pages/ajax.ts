@@ -1,5 +1,5 @@
-import {IEventAggregator, ILogger} from '@aurelia/kernel';
-import {HttpService} from "../services/http-service";
+import {IEventAggregator, ILogger, resolve} from 'aurelia';
+import {IHttpService} from "../services/http-service";
 
 export class Ajax
 {
@@ -7,11 +7,10 @@ export class Ajax
     public data: string = 'slotted';
 
     constructor(
-        @ILogger private readonly logger: ILogger,
-        @IEventAggregator private readonly ea: IEventAggregator,
-        private readonly httpService: HttpService,
+        private readonly logger: ILogger = resolve(ILogger).scopeTo('Ajax'),
+        private readonly ea: IEventAggregator = resolve(IEventAggregator),
+        private readonly httpService: IHttpService = resolve(IHttpService),
     ) {
-        this.logger = logger.scopeTo('Ajax');
     }
 
     canLoad()

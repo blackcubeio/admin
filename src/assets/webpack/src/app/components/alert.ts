@@ -1,9 +1,16 @@
-import {customElement, bindable, INode} from '@aurelia/runtime-html';
-import { IEventAggregator, ILogger, IDisposable } from '@aurelia/kernel';
+import {
+    customElement,
+    bindable,
+    ICustomElementViewModel,
+    INode,
+    IEventAggregator,
+    ILogger,
+    IDisposable,
+    resolve
+} from 'aurelia';
 import { AlertEvent, AlertEventType, AlertStatus, AlertType } from '../interfaces/alert';
 import { transitionWithPromise } from '../helpers/transition';
-import {ICustomAttributeViewModel, ICustomElementViewModel} from "aurelia";
-import {HttpService} from "../services/http-service";
+import {IHttpService} from "../services/http-service";
 
 
 @customElement('blackcube-alert')
@@ -30,12 +37,11 @@ export class Alert implements ICustomElementViewModel
     private alertShown: boolean = false;
 
     constructor(
-        @ILogger private readonly logger: ILogger,
-        @IEventAggregator private readonly ea: IEventAggregator,
-        private httpService: HttpService,
-        @INode private readonly element: HTMLElement
+        private readonly logger: ILogger = resolve(ILogger).scopeTo('Alert'),
+        private readonly ea: IEventAggregator = resolve(IEventAggregator),
+        private httpService: IHttpService = resolve(IHttpService),
+        private readonly element: HTMLElement = resolve(INode) as HTMLElement,
     ) {
-        this.logger = logger.scopeTo('Alert');
     }
 
     public attaching()

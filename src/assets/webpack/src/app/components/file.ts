@@ -1,9 +1,18 @@
-import {customElement, bindable, INode, BindingMode} from '@aurelia/runtime-html';
-import { IEventAggregator, ILogger, IDisposable } from '@aurelia/kernel';
+import {
+    ICustomElementViewModel,
+    IPlatform,
+    customElement,
+    bindable,
+    INode,
+    BindingMode,
+    IEventAggregator,
+    ILogger,
+    IDisposable,
+    resolve
+} from 'aurelia';
 import Resumable from "resumablejs"
 import URI from 'urijs';
-import {ICustomElementViewModel, IPlatform} from "aurelia";
-import {Csrf, HttpService} from "../services/http-service";
+import {Csrf, IHttpService} from "../services/http-service";
 
 interface UploadedFile {
     name:string,
@@ -42,10 +51,10 @@ export class File
     @bindable() public error: boolean = false;
 
     public constructor(
-        @ILogger private readonly logger: ILogger,
-        private readonly httpService:HttpService,
-        @IPlatform private readonly platform: IPlatform,
-        @INode private readonly element: Element
+        private readonly logger: ILogger = resolve(ILogger).scopeTo('File'),
+        private readonly httpService:IHttpService = resolve(IHttpService),
+        private readonly platform: IPlatform = resolve(IPlatform),
+        private readonly element: Element = resolve(INode) as Element,
     ) {
         this.logger = logger.scopeTo('File');
     }
@@ -179,6 +188,7 @@ export class File
                 value: csrfField.value
             };
             resumableConfig.query = {};
+            // @ts-ignore
             resumableConfig.query[this.csfr.name] = this.csfr.value;
             this.logger.debug('CSRF : ', csrfField.value);
         }

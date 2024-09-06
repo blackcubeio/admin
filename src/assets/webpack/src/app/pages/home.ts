@@ -1,12 +1,11 @@
-import {IEventAggregator, ILogger} from '@aurelia/kernel';
+import {IEventAggregator, ILogger, resolve} from 'aurelia';
 
 export class Home
 {
     constructor(
-        @ILogger private readonly logger: ILogger,
-        @IEventAggregator private readonly ea: IEventAggregator
+        private readonly logger: ILogger = resolve(ILogger).scopeTo('Home'),
+        private readonly ea: IEventAggregator = resolve(IEventAggregator),
     ) {
-        this.logger = logger.scopeTo('Home');
     }
 
     canLoad()

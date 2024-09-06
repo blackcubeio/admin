@@ -1,10 +1,4 @@
-import { customAttribute, INode, bindable } from '@aurelia/runtime-html';
-import { IEventAggregator, ILogger, IDisposable } from '@aurelia/kernel';
-import { MenuEvent, MenuEventType, MenuStatus } from '../interfaces/menu';
-import {Overlay} from "../components";
-import {OverlayEventType} from "../interfaces/overlay";
-import {ICustomElementViewModel, ILifecycleHooks} from "aurelia";
-import {Broadcast, BroadcastElementEventType} from "../interfaces/broadcast";
+import {customAttribute, INode, IEventAggregator, ILogger, IDisposable, bindable, resolve} from 'aurelia';
 
 @customAttribute('blackcube-toggle-dependencies')
 export class ToggleDependencies
@@ -14,12 +8,11 @@ export class ToggleDependencies
     private toggleElement :HTMLInputElement|null;
     private toggleTargets: NodeListOf<HTMLElement>;
     public constructor(
-        @ILogger private readonly logger: ILogger,
-        @IEventAggregator private readonly ea: IEventAggregator,
-        @INode private readonly element: HTMLElement
+        private readonly logger: ILogger = resolve(ILogger).scopeTo('ToggleDependencies'),
+        private readonly ea: IEventAggregator = resolve(IEventAggregator),
+        private readonly element: HTMLElement = resolve(INode) as HTMLElement,
     )
     {
-        this.logger = logger.scopeTo('ToggleDependencies');
     }
     public attached()
     {

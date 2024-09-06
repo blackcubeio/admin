@@ -1,8 +1,16 @@
-import {customAttribute, INode} from '@aurelia/runtime-html';
-import { IEventAggregator, ILogger, IDisposable } from '@aurelia/kernel';
+import {
+    customAttribute,
+    IEventAggregator,
+    ILogger,
+    ICustomAttributeViewModel,
+    ICustomElementViewModel,
+    IPlatform,
+    IDisposable,
+    INode,
+    resolve
+} from 'aurelia';
 import { MenuEvent, MenuEventType, MenuStatus } from '../interfaces/menu';
-import {ICustomAttributeViewModel, ICustomElementViewModel, IPlatform} from "aurelia";
-import {StorageService} from "../services/StorageService";
+import {IStorageService} from "../services/storage-service";
 
 @customAttribute('blackcube-menu')
 export class Menu implements ICustomAttributeViewModel
@@ -24,14 +32,13 @@ export class Menu implements ICustomAttributeViewModel
     public static channel = 'Menu';
 
     public constructor(
-        @ILogger private readonly logger: ILogger,
-        @IEventAggregator private readonly ea: IEventAggregator,
-        @IPlatform private readonly platform: IPlatform,
-        private readonly storageService: StorageService,
-        @INode private readonly element: HTMLElement
+        private readonly logger: ILogger = resolve(ILogger).scopeTo('Menu'),
+        private readonly ea: IEventAggregator = resolve(IEventAggregator),
+        private readonly platform: IPlatform = resolve(IPlatform),
+        private readonly storageService: IStorageService = resolve(IStorageService),
+        private readonly element: HTMLElement = resolve(INode) as HTMLElement,
     )
     {
-        this.logger = logger.scopeTo('Menu');
     }
     public attaching()
     {

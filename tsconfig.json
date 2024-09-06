@@ -2,8 +2,8 @@
     "compilerOptions": {
         "allowJs": true,
         "declaration": false,
-        "experimentalDecorators": true,
-        "emitDecoratorMetadata": true,
+        "experimentalDecorators": false,
+        "emitDecoratorMetadata": false,
         "moduleResolution": "node",
         "typeRoots": ["./node_modules/@types"],
         "lib": ["esnext","dom"],

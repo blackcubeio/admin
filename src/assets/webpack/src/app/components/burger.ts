@@ -1,10 +1,16 @@
-import {customElement, bindable, INode} from '@aurelia/runtime-html';
-import { IEventAggregator, ILogger, IDisposable } from '@aurelia/kernel';
-import { AlertEvent, AlertEventType, AlertStatus, AlertType } from '../interfaces/alert';
-import { transitionWithPromise } from '../helpers/transition';
+import {
+    customElement,
+    containerless,
+    ICustomElementViewModel,
+    bindable,
+    INode,
+    IEventAggregator,
+    ILogger,
+    IDisposable,
+    resolve
+} from 'aurelia';
 import {Menu} from "../attributes";
 import {MenuEventType} from "../interfaces/menu";
-import {containerless, ICustomElementViewModel} from "aurelia";
 
 
 @customElement('blackcube-burger')
@@ -13,11 +19,10 @@ export class Burger implements ICustomElementViewModel
 {
     private openMenuBtn: HTMLButtonElement;
     constructor(
-        @ILogger private readonly logger: ILogger,
-        @IEventAggregator private readonly ea: IEventAggregator,
-        @INode private readonly element: HTMLElement
+        private readonly logger: ILogger = resolve(ILogger).scopeTo('Burger'),
+        private readonly ea: IEventAggregator = resolve(IEventAggregator),
+        private readonly element: HTMLElement = resolve(INode) as HTMLElement,
     ) {
-        this.logger = logger.scopeTo('Burger');
     }
 
     public attaching()

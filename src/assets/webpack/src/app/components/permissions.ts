@@ -1,9 +1,5 @@
-
-
-import {ILogger} from "@aurelia/kernel";
-import {IPlatform} from "aurelia";
-import {Csrf, HttpService} from "../services/http-service";
-import {bindable, customElement, INode} from "@aurelia/runtime-html";
+import {bindable, customElement, INode, ILogger, IPlatform, resolve} from "aurelia";
+import {Csrf, IHttpService} from "../services/http-service";
 
 @customElement('blackcube-permissions')
 export class Permissions
@@ -14,12 +10,11 @@ export class Permissions
     private csrf:Csrf;
 
     public constructor(
-        @ILogger private readonly logger: ILogger,
-        @IPlatform private readonly platform: IPlatform,
-        private readonly httpService: HttpService,
-        @INode private readonly element: HTMLElement
+        private readonly logger: ILogger = resolve(ILogger).scopeTo('Permissions'),
+        private readonly platform: IPlatform = resolve(IPlatform),
+        private readonly httpService: IHttpService = resolve(IHttpService),
+        private readonly element: HTMLElement = resolve(INode) as HTMLElement,
     ) {
-        this.logger = logger.scopeTo('Permissions');
     }
 
 

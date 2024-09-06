@@ -1,7 +1,14 @@
-import {customElement, bindable, watch, INode} from '@aurelia/runtime-html';
-import { IEventAggregator, ILogger, IDisposable } from '@aurelia/kernel';
-import { ProfileMenuItem, ProfileStatus } from '../interfaces/profile';
-import {IPlatform} from "aurelia";
+import {
+    customElement,
+    bindable,
+    watch,
+    INode,
+    IEventAggregator,
+    ILogger,
+    IDisposable,
+    IPlatform,
+    resolve
+} from "aurelia";
 import {AlertEventType, AlertType} from "../interfaces/alert";
 import {Alert} from "./alert";
 
@@ -11,10 +18,9 @@ export class Test
 
 
     constructor(
-        @ILogger private readonly logger: ILogger,
-        @IEventAggregator private readonly ea: IEventAggregator
+        private readonly logger: ILogger = resolve(ILogger).scopeTo('Test'),
+        private readonly ea: IEventAggregator = resolve(IEventAggregator),
     ) {
-        this.logger = logger.scopeTo('Profile');
     }
 
     public attaching()
