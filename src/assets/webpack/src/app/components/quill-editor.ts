@@ -1,11 +1,10 @@
-import {customElement, bindable, INode} from '@aurelia/runtime-html';
-import { IEventAggregator, ILogger, IDisposable } from '@aurelia/kernel';
-import {HttpService} from "../services/http-service";
+import {customElement, bindable, IEventAggregator, ILogger, IDisposable, INode, resolve} from 'aurelia';
+import {IHttpService} from "../services/http-service";
 import Quill, {QuillOptionsStatic} from "quill";
 
 const Link = Quill.import('formats/link');
 class BlackcubeLink extends Link {
-    static create(value) {
+    static create(value: any) {
         let node = super.create(value);
         value = this.sanitize(value);
         node.setAttribute('href', value);
@@ -40,10 +39,10 @@ export class QuillEditor
     private hiddenField:HTMLInputElement;
     private quill: Quill;
     constructor(
-        @ILogger private readonly logger: ILogger,
-        @IEventAggregator private readonly ea: IEventAggregator,
-        private httpService: HttpService,
-        @INode private readonly element: HTMLElement
+        private readonly logger: ILogger = resolve(ILogger).scopeTo('QuillEditor'),
+        private readonly ea: IEventAggregator = resolve(IEventAggregator),
+        private httpService: IHttpService = resolve(IHttpService),
+        private readonly element: HTMLElement = resolve(INode) as HTMLElement,
     ) {
         this.logger = logger.scopeTo('QuillEditor');
     }

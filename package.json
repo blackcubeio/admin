@@ -16,14 +16,16 @@
     "author": "Philippe Gaultier <pgaultier@redcat.io",
     "license": "BSD-3-Clause",
     "devDependencies": {
-        "@aurelia/webpack-loader": "^2.0.0-beta.10",
+        "@aurelia/router": "^2.0.0-beta.21",
+        "@aurelia/webpack-loader": "^2.0.0-beta.21",
         "@tailwindcss/forms": "^0.5.7",
         "@types/jsoneditor": "^9.9.1",
         "@types/node": "^20.5.9",
         "@types/quill": "^2.0.11",
+        "@types/urijs": "^1.19.25",
         "@types/webpack-env": "^1.18.1",
         "assets-webpack-plugin": "^7.1.1",
-        "aurelia": "^2.0.0-beta.10",
+        "aurelia": "^2.0.0-beta.21",
         "autoprefixer": "^10.4.4",
         "caniuse-lite": "^1.0.30001319",
         "clean-webpack-plugin": "^4.0.0",
@@ -58,8 +60,5 @@
     "browserslist": [
         "> 1%",
         "last 2 versions"
-    ],
-    "dependencies": {
-        "@aurelia/router": "^2.0.0-beta.8"
-    }
+    ]
 }

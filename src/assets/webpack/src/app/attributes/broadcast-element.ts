@@ -1,9 +1,4 @@
-import { customAttribute, INode, bindable } from '@aurelia/runtime-html';
-import { IEventAggregator, ILogger, IDisposable } from '@aurelia/kernel';
-import { MenuEvent, MenuEventType, MenuStatus } from '../interfaces/menu';
-import {Overlay} from "../components";
-import {OverlayEventType} from "../interfaces/overlay";
-import {ICustomElementViewModel, ILifecycleHooks} from "aurelia";
+import {customAttribute, INode, IEventAggregator, ILogger, IDisposable, bindable, resolve} from 'aurelia';
 import {Broadcast, BroadcastElementEventType} from "../interfaces/broadcast";
 
 @customAttribute('blackcube-broadcast-element')
@@ -15,12 +10,11 @@ export class BroadcastElement
     @bindable() public id: string|number;
 
     public constructor(
-        @ILogger private readonly logger: ILogger,
-        @IEventAggregator private readonly ea: IEventAggregator,
-        @INode private readonly element: HTMLElement
+        private readonly logger: ILogger = resolve(ILogger).scopeTo('BroadcastElement'),
+        private readonly ea: IEventAggregator = resolve(IEventAggregator),
+        private readonly element: HTMLElement = resolve(INode) as HTMLElement,
     )
     {
-        this.logger = logger.scopeTo('BroadcastElement');
     }
     public attached()
     {

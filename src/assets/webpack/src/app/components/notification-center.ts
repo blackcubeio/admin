@@ -1,5 +1,13 @@
-import {customElement, bindable, INode} from '@aurelia/runtime-html';
-import { IEventAggregator, ILogger, IDisposable } from '@aurelia/kernel';
+import {
+    customElement,
+    ICustomElementViewModel,
+    IEventAggregator,
+    ILogger,
+    IDisposable,
+    bindable,
+    INode,
+    resolve
+} from 'aurelia';
 import { Notification } from './notification';
 import {
     NotificationCenterEvent, NotificationCenterEventType,
@@ -7,7 +15,6 @@ import {
     NotificationEvent,
     NotificationStatus
 } from '../interfaces/notification';
-import {ICustomElementViewModel} from "aurelia";
 
 @customElement('blackcube-notification-center')
 export class NotificationCenter implements ICustomElementViewModel
@@ -20,11 +27,10 @@ export class NotificationCenter implements ICustomElementViewModel
     private subscriberNotification: IDisposable;
 
     constructor(
-        @ILogger private readonly logger: ILogger,
-        @IEventAggregator private readonly ea: IEventAggregator,
-        @INode private readonly element: HTMLElement
+        private readonly logger: ILogger = resolve(ILogger).scopeTo('NotificationCenter'),
+        private readonly ea: IEventAggregator = resolve(IEventAggregator),
+        private readonly element: HTMLElement = resolve(INode) as HTMLElement,
     ) {
-        this.logger = logger.scopeTo('NotificationCenter');
     }
 
     public attaching()

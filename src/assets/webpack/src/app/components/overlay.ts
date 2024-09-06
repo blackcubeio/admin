@@ -1,12 +1,17 @@
-import {customElement, bindable, INode, IAurelia} from '@aurelia/runtime-html';
-import { IEventAggregator, ILogger, IDisposable } from '@aurelia/kernel';
-import { HttpService } from '../services/http-service';
+import {
+    customElement,
+    ICustomElementViewModel,
+    IPlatform,
+    bindable,
+    INode,
+    IEventAggregator,
+    ILogger,
+    IDisposable,
+    resolve
+} from 'aurelia';
+import { IHttpService } from '../services/http-service';
 import { OverlayEvent, OverlayEventType, OverlayStatus } from '../interfaces/overlay';
 import { transitionWithPromise } from '../helpers/transition';
-import { NotificationStatus } from '../interfaces/notification';
-import Aurelia, {CustomElement, ICustomElementViewModel, IPlatform} from "aurelia";
-import {App} from "../app";
-import {Enhance} from "../enhance";
 
 @customElement('blackcube-overlay')
 // @templateCompilerHooks()
@@ -31,14 +36,12 @@ export class Overlay implements ICustomElementViewModel
 
 
     constructor(
-        @ILogger private readonly logger: ILogger,
-        @IEventAggregator private readonly ea: IEventAggregator,
-        @IPlatform private readonly platform: IPlatform,
-        @IAurelia private readonly aurelia: IAurelia,
-        private httpService: HttpService,
-        @INode private readonly element: HTMLElement
+        private readonly logger: ILogger = resolve(ILogger).scopeTo('Overlay'),
+        private readonly ea: IEventAggregator = resolve(IEventAggregator),
+        private readonly platform: IPlatform = resolve(IPlatform),
+        private httpService: IHttpService = resolve(IHttpService),
+        private readonly element: HTMLElement = resolve(INode) as HTMLElement,
     ) {
-        this.logger = logger.scopeTo('Overlay');
     }
 
     public attaching()

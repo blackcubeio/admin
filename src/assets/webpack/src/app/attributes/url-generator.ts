@@ -1,8 +1,5 @@
-import {customAttribute, INode} from '@aurelia/runtime-html';
-import { IEventAggregator, ILogger, IDisposable } from '@aurelia/kernel';
-import { MenuEvent, MenuEventType, MenuStatus } from '../interfaces/menu';
-import {bindable, IPlatform} from "aurelia";
-import {HttpService} from "../services/http-service";
+import {bindable, IPlatform, customAttribute, INode, IEventAggregator, ILogger, IDisposable, resolve} from 'aurelia';
+import {IHttpService} from "../services/http-service";
 
 @customAttribute('blackcube-url-generator')
 export class UrlGenerator
@@ -12,13 +9,12 @@ export class UrlGenerator
     @bindable({primary:true})private url:string = null;
 
     public constructor(
-        @ILogger private readonly logger: ILogger,
-        @IPlatform private readonly platform: IPlatform,
-        private readonly httpService: HttpService,
-        @INode private readonly element: HTMLElement
+        private readonly logger: ILogger = resolve(ILogger).scopeTo('UrlGenerator'),
+        private readonly platform: IPlatform = resolve(IPlatform),
+        private readonly httpService: IHttpService = resolve(IHttpService),
+        private readonly element: HTMLElement = resolve(INode) as HTMLElement,
     )
     {
-        this.logger = logger.scopeTo('UrlGenerator');
     }
     public attaching()
     {
