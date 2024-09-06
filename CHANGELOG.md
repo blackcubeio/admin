@@ -6,7 +6,7 @@ Blackcube Admin - CHANGELOG
  * Upd: Allow composites management in node if node/tag has no type
  * Upd: Update findAllRoutes
  * Upd: Update dependencies
- * Upd: Update js
+ * Upd: Update js, migrate aurelia to 21
  * Upd: Update heroicons to v2.1.5
  * Backport plugin system from 2.x
 
