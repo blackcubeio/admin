@@ -37,7 +37,8 @@
         "swaggest/json-schema": "~0.12",
         "vlucas/phpdotenv": "~5.4",
         "yiisoft/yii2-imagine": "~2.3",
-        "yiisoft/yii2": "~2.0.13"
+        "yiisoft/yii2": "~2.0.13",
+        "web-auth/webauthn-lib": "^5.0"
     },
     "require-dev" : {
         "codeception/codeception": "~5.0",
@@ -54,7 +55,8 @@
     },
     "autoload": {
         "psr-4": {
-            "blackcube\\admin\\": "src/"
+            "blackcube\\admin\\": "src/",
+            "blackcube\\webauthn\\": "src/webauthn/"
         }
     },
     "autoload-dev": {
