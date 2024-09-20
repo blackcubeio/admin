@@ -1,6 +1,8 @@
 Blackcube Admin - CHANGELOG 
 ===========================
 
+Release 3.3.0 September, 20th 2024 <pgaultier@redcat.io>
+-------------------------------------------------------
 
  * Upd: Update dependencies
 
@@ -17,11 +19,11 @@ Release 3.3.0 September, 6th 2024 <pgaultier@redcat.io>
 Release 3.2.1 February, 28th 2024 <pgaultier@redcat.io>
 -------------------------------------------------------
 
-* Upd: Update i18n
-* Upd: Allow composites management in node if node/tag has no type
-* Upd: Update findAllRoutes
-* Upd: Update dependencies
-* Upd: Update js
+ * Upd: Update i18n
+ * Upd: Allow composites management in node if node/tag has no type
+ * Upd: Update findAllRoutes
+ * Upd: Update dependencies
+ * Upd: Update js
 
 Release 3.2.0 January, 11th 2024 <pgaultier@redcat.io>
 ------------------------------------------------------
