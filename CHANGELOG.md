@@ -1,6 +1,8 @@
 Blackcube Admin - CHANGELOG 
 ===========================
 
+ * Fix: fix i18n (missing translations)
+
 Release 3.4.0 September, 29th 2024 <pgaultier@redcat.io>
 -------------------------------------------------------
 
