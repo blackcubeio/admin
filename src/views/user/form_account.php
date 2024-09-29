@@ -13,6 +13,7 @@
  *
  * @var $user \blackcube\admin\models\Administrator
  * @var $passwordSecurity \blackcube\core\validators\PasswordStrengthValidator
+ * @var $passkeysQuery \yii\db\ActiveQuery
  * @var $this \yii\web\View
  */
 
@@ -29,8 +30,9 @@ $authManager = Yii::$app->authManager;
 
 ?>
 <main class="application-content">
+    <div class="element-form-wrapper">
     <?php echo Html::beginForm('', 'post', [
-        'class' => 'element-form-wrapper',
+        // 'class' => 'element-form-wrapper',
     ]); ?>
     <div class="page-header">
 
@@ -38,9 +40,11 @@ $authManager = Yii::$app->authManager;
     </div>
     <div class="px-6 pb-6">
         <div class="element-form-bloc">
+            <?php /*/ ?>
             <div class="element-form-bloc-stacked">
                 <?php echo BlackcubeHtml::activeCheckbox($user, 'active', ['hint' => Module::t('user', 'User status')]); ?>
             </div>
+            <?php /**/ ?>
             <div class="element-form-bloc-grid-12">
                 <div class="element-form-bloc-cols-4">
                     <?php echo BlackcubeHtml::activeTextInput($user, 'email', []); ?>
@@ -88,5 +92,57 @@ $authManager = Yii::$app->authManager;
     </div>
 
     <?php echo Html::endForm(); ?>
+
+    <div class="mt-4">
+        <div class="element-form-bloc-wrapper">
+            <div class="element-form-bloc">
+                <h3 class="element-form-bloc-title">
+                    <?php echo Module::t('user', 'Passkeys'); ?>
+                </h3>
+                <div class="element-form-bloc-inner">
+                    <?php if(isset($passkeysQuery)): ?>
+                    <div class="element-form-bloc-stacked">
+                        <?php foreach($passkeysQuery->each() as $passkey): ?>
+                            <?php echo Html::beginForm(['delete-passkey', 'id' => $passkey->id], 'post', [
+                            ]); ?>
+                        <div class="flex justify-between">
+                            <span>
+                                <?php echo empty($passkey->name) ? $passkey->id : $passkey->name; ?>
+                                <span class="text-xs italic">
+                                    (<?php echo Yii::$app->formatter->asDatetime($passkey->dateCreate); ?>)
+                                </span>
+                            </span>
+                            <span>
+                                <?php echo Html::beginTag('button', [
+                                    'type' => 'submit',
+                                    'class' => 'element-form-bloc-toolbar-buttons-button delete'
+                                ]); ?>
+                                    <span class="sr-only"><?php echo Module::t('common', 'Delete'); ?></span>
+                                    <?php echo Heroicons::svg('outline/trash', ['class' => 'h-4 w-4']); ?>
+                                <?php echo Html::endTag('button'); ?>
+                            </span>
+                        </div>
+                            <?php echo Html::endForm(); ?>
+                        <?php endforeach; ?>
+                    </div>
+                    <?php endif; ?>
+                    <div class="element-form-bloc-toolbar">
+                        <span class="element-form-bloc-toolbar-buttons">
+                            <?php echo Html::beginTag('button', [
+                                'type' => 'button',
+                                'name' => 'attachDevice',
+                                'blackcube-attach-device' => '',
+                                'class' => 'element-form-bloc-toolbar-buttons-button'
+                            ]); ?>
+                                <span class="sr-only"><?php echo Module::t('user', 'Create passkey'); ?></span>
+                                <?php echo Heroicons::svg('outline/finger-print', ['class' => 'h-4 w-4']); ?>
+                            <?php echo Html::endTag('button'); ?>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
 </main>
 

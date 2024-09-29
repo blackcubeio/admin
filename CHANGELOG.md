@@ -1,6 +1,9 @@
 Blackcube Admin - CHANGELOG 
 ===========================
 
+ * Upd: Update dependencies
+ * Upd: add passkeys (webauthn)
+
 Release 3.3.0 September, 20th 2024 <pgaultier@redcat.io>
 -------------------------------------------------------
 

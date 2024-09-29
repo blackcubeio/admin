@@ -15,6 +15,7 @@
 namespace blackcube\admin\models;
 
 use blackcube\admin\Module;
+use Webauthn\PublicKeyCredentialUserEntity;
 use yii\base\NotSupportedException;
 use yii\behaviors\TimestampBehavior;
 use yii\db\Expression;
@@ -49,6 +50,8 @@ class Administrator extends \yii\db\ActiveRecord implements IdentityInterface
     public const SCENARIO_CREATE = 'create';
     public const SCENARIO_CREATE_ONLINE = 'create_online';
     public const SCENARIO_UPDATE = 'update';
+    public const SCENARIO_PASSKEY_REGISTER = 'passkey_register';
+    public const SCENARIO_PASSKEY_LOGIN = 'passkey_login';
 
     /**
      * @var string
@@ -117,6 +120,8 @@ class Administrator extends \yii\db\ActiveRecord implements IdentityInterface
         $scenarios[static::SCENARIO_CREATE] = ['email', 'firstname', 'lastname', 'password'];
         $scenarios[static::SCENARIO_CREATE_ONLINE] = ['email', 'firstname', 'lastname', 'newPassword', 'checkPassword', 'active'];
         $scenarios[static::SCENARIO_UPDATE] = ['email', 'firstname', 'lastname', 'newPassword', 'checkPassword', 'active'];
+        $scenarios[static::SCENARIO_PASSKEY_REGISTER] = ['email', 'firstname', 'lastname'];
+        $scenarios[static::SCENARIO_PASSKEY_LOGIN] = ['email'];
         return $scenarios;
     }
 
@@ -133,7 +138,7 @@ class Administrator extends \yii\db\ActiveRecord implements IdentityInterface
             [['newPassword'], 'compare', 'compareAttribute' => 'checkPassword', 'on' => [static::SCENARIO_UPDATE, static::SCENARIO_CREATE_ONLINE]],
             [['newPassword'], 'passwordSecurity', 'usernameAttribute' => 'email', 'on' => [static::SCENARIO_CREATE_ONLINE, static::SCENARIO_UPDATE]],
             [['email'], 'validateLogin', 'on' => [static::SCENARIO_LOGIN], 'params' => ['password' => 'password']],
-            [['email'], 'unique', 'on' => [static::SCENARIO_CREATE, static::SCENARIO_CREATE_ONLINE, static::SCENARIO_UPDATE]],
+            [['email'], 'unique', 'on' => [static::SCENARIO_CREATE, static::SCENARIO_CREATE_ONLINE, static::SCENARIO_UPDATE, static::SCENARIO_PASSKEY_REGISTER]],
             [['active'], 'boolean'],
             [['dateCreate', 'dateUpdate'], 'safe'],
             [['email', 'firstname', 'lastname', 'password', 'authKey', 'token', 'tokenType'], 'string', 'max' => 190],
@@ -277,5 +282,34 @@ class Administrator extends \yii\db\ActiveRecord implements IdentityInterface
             $this->authKey = Yii::$app->getSecurity()->generateRandomString();
         }
         return parent::beforeSave($insert);
+    }
+
+    public function getDisplayName()
+    {
+        $fullname = $this->firstname.' '.$this->lastname;
+        if (trim($fullname) === '') {
+            return $this->email;
+        }
+        return $this->firstname.' '.$this->lastname;
+    }
+
+    public function setDisplayName($value)
+    {
+        $parts = explode(' ', $value);
+        $this->firstname = array_shift($parts);
+        $this->lastname = implode(' ', $parts);
+    }
+
+    public function getPasskeys()
+    {
+        return $this->hasMany(Passkey::class, ['administratorId' => 'id']);
+    }
+
+    public function getPublicKeyCredentialUserEntity() :PublicKeyCredentialUserEntity
+    {
+        if (!$this->validate()) {
+            throw new \Exception('Invalid data');
+        }
+        return PublicKeyCredentialUserEntity::create($this->email, $this->id, $this->getDisplayName());
     }
 }

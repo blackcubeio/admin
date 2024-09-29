@@ -9,7 +9,6 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 3.4.4\n"
 
 msgctxt "blackcube/admin/actions"
 msgid "Property \"elementClass\" must be defined"
@@ -140,9 +139,7 @@ msgid "Previous"
 msgstr ""
 
 msgctxt "blackcube/admin/common"
-msgid ""
-"SEO is Slug dependant. It will be activated for the website only if Slug is "
-"active"
+msgid "SEO is Slug dependant. It will be activated for the website only if Slug is active"
 msgstr ""
 
 msgctxt "blackcube/admin/common"
@@ -170,9 +167,7 @@ msgid "Self Canonical"
 msgstr ""
 
 msgctxt "blackcube/admin/common"
-msgid ""
-"Sitemap is Slug dependant. It will be activated for the website only if Slug "
-"is active"
+msgid "Sitemap is Slug dependant. It will be activated for the website only if Slug is active"
 msgstr ""
 
 msgctxt "blackcube/admin/common"
@@ -727,6 +722,66 @@ msgctxt "blackcube/admin/models"
 msgid "Token Type"
 msgstr ""
 
+msgctxt "blackcube/admin/models/passkey"
+msgid "Aaguid"
+msgstr ""
+
+msgctxt "blackcube/admin/models/passkey"
+msgid "Administrator Id"
+msgstr ""
+
+msgctxt "blackcube/admin/models/passkey"
+msgid "Attestation Type"
+msgstr ""
+
+msgctxt "blackcube/admin/models/passkey"
+msgid "Counter"
+msgstr ""
+
+msgctxt "blackcube/admin/models/passkey"
+msgid "Credential Public Key"
+msgstr ""
+
+msgctxt "blackcube/admin/models/passkey"
+msgid "Date Create"
+msgstr ""
+
+msgctxt "blackcube/admin/models/passkey"
+msgid "Date Update"
+msgstr ""
+
+msgctxt "blackcube/admin/models/passkey"
+msgid "Id"
+msgstr ""
+
+msgctxt "blackcube/admin/models/passkey"
+msgid "Json Data"
+msgstr ""
+
+msgctxt "blackcube/admin/models/passkey"
+msgid "Name"
+msgstr ""
+
+msgctxt "blackcube/admin/models/passkey"
+msgid "Type"
+msgstr ""
+
+msgctxt "blackcube/admin/models/passkey"
+msgid "User Handle"
+msgstr ""
+
+msgctxt "blackcube/admin/models/passkeyRp"
+msgid "ID"
+msgstr ""
+
+msgctxt "blackcube/admin/models/passkeyRp"
+msgid "Icon"
+msgstr ""
+
+msgctxt "blackcube/admin/models/passkeyRp"
+msgid "Name"
+msgstr ""
+
 msgctxt "blackcube/admin/node"
 msgid "After"
 msgstr ""
@@ -968,6 +1023,14 @@ msgid "Account"
 msgstr ""
 
 msgctxt "blackcube/admin/user"
+msgid "Create passkey"
+msgstr ""
+
+msgctxt "blackcube/admin/user"
+msgid "Passkeys"
+msgstr ""
+
+msgctxt "blackcube/admin/user"
 msgid "Permission were updated"
 msgstr ""
 
@@ -1194,3 +1257,4 @@ msgstr ""
 msgctxt "blackcube/admin/helpers"
 msgid "Regular"
 msgstr ""
+
