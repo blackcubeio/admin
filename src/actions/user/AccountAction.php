@@ -51,6 +51,7 @@ class AccountAction extends Action
     public function run()
     {
         $user = Yii::$app->user->identity;
+        /* @var Administrator $user */
         if ($user === null) {
             throw new NotFoundHttpException();
         }
@@ -69,10 +70,12 @@ class AccountAction extends Action
             }
             $user->checkPassword = '';
         }
+        $passkeysQuery = $user->getPasskeys();
 
         return $this->controller->render($this->view, [
             'user' => $user,
             'passwordSecurity' => $passwordSecurity,
+            'passkeysQuery' => $passkeysQuery,
         ]);
     }
 }

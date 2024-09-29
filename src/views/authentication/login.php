@@ -90,6 +90,20 @@ use blackcube\admin\helpers\BlackcubeHtml;
                         Sign in
                     </button>
                 </div>
+            <div>
+                <?php echo Html::button(
+                        Heroicons::svg('outline/finger-print', [
+                            'class' => 'h-5 w-5',
+                        ]),
+                        [
+                                'type' => 'button',
+                                'class' => 'login-button hidden',
+                                'blackcube-login-device' => \blackcube\admin\helpers\Aurelia::bindOptions([
+                                        'target-url' => \yii\helpers\Url::to(['dashboard/']),
+                                ]),
+                        ]
+                ); ?>
+            </div>
             <?php echo Html::endForm(); ?>
 
         </div>

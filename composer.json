@@ -38,7 +38,8 @@
         "vlucas/phpdotenv": "~5.4",
         "yiisoft/yii2-imagine": "~2.3",
         "yiisoft/yii2": "~2.0.13",
-        "web-auth/webauthn-lib": "^5.0"
+        "web-auth/webauthn-lib": "^5.0",
+        "wolfcast/browser-detection": "^2.9"
     },
     "require-dev" : {
         "codeception/codeception": "~5.0",
@@ -55,8 +56,6 @@
     },
     "autoload": {
         "psr-4": {
-            "blackcube\\admin\\": "src/",
-            "blackcube\\webauthn\\": "src/webauthn/"
         }
     },
     "autoload-dev": {
