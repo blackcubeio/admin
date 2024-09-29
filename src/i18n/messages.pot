@@ -14,6 +14,10 @@ msgctxt "blackcube/admin/actions"
 msgid "Property \"elementClass\" must be defined"
 msgstr ""
 
+msgctxt "blackcube/admin/authentication"
+msgid "Sign in"
+msgstr ""
+
 msgctxt "blackcube/admin/bloc-type"
 msgid "Associated types"
 msgstr ""

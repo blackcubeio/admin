@@ -87,7 +87,7 @@ use blackcube\admin\helpers\BlackcubeHtml;
 
                 <div>
                     <button type="submit" class="login-button">
-                        Sign in
+                        <?php echo Module::t('authentication', 'Sign in'); ?>
                     </button>
                 </div>
             <div>
