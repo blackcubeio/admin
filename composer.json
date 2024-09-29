@@ -32,7 +32,7 @@
         "ext-json": "*",
         "ext-fileinfo": "*",
         "ext-dom": "*",
-        "blackcube/core": "v3.4.0",
+        "blackcube/core": "v3.x-dev",
         "hashids/hashids": "~4.1",
         "swaggest/json-schema": "~0.12",
         "vlucas/phpdotenv": "~5.4",
