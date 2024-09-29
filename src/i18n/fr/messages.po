@@ -10,7 +10,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Poedit 3.4.4\n"
+"X-Generator: Poedit 3.5\n"
 
 msgctxt "blackcube/admin/actions"
 msgid "Property \"elementClass\" must be defined"
@@ -731,6 +731,66 @@ msgctxt "blackcube/admin/models"
 msgid "Token Type"
 msgstr "Type de jeton"
 
+msgctxt "blackcube/admin/models/passkey"
+msgid "Aaguid"
+msgstr "Aaguid"
+
+msgctxt "blackcube/admin/models/passkey"
+msgid "Administrator Id"
+msgstr "ID administrateur"
+
+msgctxt "blackcube/admin/models/passkey"
+msgid "Attestation Type"
+msgstr "Type d’attestation"
+
+msgctxt "blackcube/admin/models/passkey"
+msgid "Counter"
+msgstr "Compteur"
+
+msgctxt "blackcube/admin/models/passkey"
+msgid "Credential Public Key"
+msgstr "Clef publique"
+
+msgctxt "blackcube/admin/models/passkey"
+msgid "Date Create"
+msgstr "Date de création"
+
+msgctxt "blackcube/admin/models/passkey"
+msgid "Date Update"
+msgstr "Date de mise à jour"
+
+msgctxt "blackcube/admin/models/passkey"
+msgid "Id"
+msgstr "ID"
+
+msgctxt "blackcube/admin/models/passkey"
+msgid "Json Data"
+msgstr "Données Json"
+
+msgctxt "blackcube/admin/models/passkey"
+msgid "Name"
+msgstr "Nom"
+
+msgctxt "blackcube/admin/models/passkey"
+msgid "Type"
+msgstr "Type"
+
+msgctxt "blackcube/admin/models/passkey"
+msgid "User Handle"
+msgstr "Identifiant utilisateur"
+
+msgctxt "blackcube/admin/models/passkeyRp"
+msgid "ID"
+msgstr "ID"
+
+msgctxt "blackcube/admin/models/passkeyRp"
+msgid "Icon"
+msgstr "Icône"
+
+msgctxt "blackcube/admin/models/passkeyRp"
+msgid "Name"
+msgstr "Nom"
+
 msgctxt "blackcube/admin/node"
 msgid "After"
 msgstr "Après"
@@ -970,6 +1030,14 @@ msgstr "Types"
 msgctxt "blackcube/admin/user"
 msgid "Account"
 msgstr "Compte"
+
+msgctxt "blackcube/admin/user"
+msgid "Create passkey"
+msgstr "Créer une passiez"
+
+msgctxt "blackcube/admin/user"
+msgid "Passkeys"
+msgstr "Passkeys"
 
 msgctxt "blackcube/admin/user"
 msgid "Permission were updated"

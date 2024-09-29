@@ -83,6 +83,7 @@ class UserController extends Controller
                     'allow' => true,
                     'actions' => [
                         'account',
+                        'delete-passkey',
                     ],
                     'roles' => ['@'],
                 ],
@@ -126,6 +127,9 @@ class UserController extends Controller
         ];
         $actions['rbac'] = [
             'class' => RbacAction::class,
+        ];
+        $actions['delete-passkey'] = [
+            'class' => \blackcube\admin\actions\passkey\DeleteAction::class,
         ];
         return $actions;
     }

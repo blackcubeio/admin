@@ -14,10 +14,15 @@
 
 namespace blackcube\admin\controllers;
 
+use blackcube\admin\actions\passkey\PrepareAttachDevice;
+use blackcube\admin\actions\passkey\PrepareLogin;
+use blackcube\admin\actions\passkey\PrepareLoginDevice;
+use blackcube\admin\actions\passkey\PrepareRegisterDevice;
+use blackcube\admin\actions\passkey\ValidateLogin;
+use blackcube\admin\actions\passkey\ValidateRegister;
 use blackcube\admin\components\Rbac;
 use blackcube\admin\helpers\Heroicons;
 use blackcube\admin\helpers\Html;
-use blackcube\admin\models\SlugGeneratorForm;
 use blackcube\admin\Module;
 use blackcube\core\components\Element;
 use blackcube\core\components\RouteEncoder;
@@ -43,6 +48,19 @@ use yii\web\UnprocessableEntityHttpException;
 class AjaxController extends Controller
 {
     public $enableCsrfValidation = false;
+
+    public function actions()
+    {
+        $actions = parent::actions();
+        $actions['prepare-attach-device'] = PrepareAttachDevice::class;
+        // $actions['prepare-register-device'] = PrepareRegisterDevice::class;
+        $actions['validate-register'] = ValidateRegister::class;
+        $actions['prepare-login'] = PrepareLogin::class;
+        $actions['prepare-login-device'] = PrepareLoginDevice::class;
+        $actions['validate-login'] = ValidateLogin::class;
+        return $actions;
+    }
+
     /**
      * {@inheritDoc}
      */
@@ -62,15 +80,37 @@ class AjaxController extends Controller
                 [
                     'allow' => true,
                     'actions' => [
-                        'generate-slug'
+                        'generate-slug',
+                        'prepare-attach-device',
+                        'validate-register',
                     ],
                     'roles' => ['@']
+                ],
+                [
+                    'allow' => true,
+                    'actions' => [
+                        // not allowed to register with a device
+                        // 'prepare-register-device',
+                        // 'validate-register',
+                        'prepare-login',
+                        'prepare-login-device',
+                        'validate-login',
+                    ],
+                    'roles' => ['?']
                 ]
             ]
         ];
         $behaviors['forceAjax'] = [
             'class' => AjaxFilter::class,
-            'only' => ['preview'],
+            'only' => [
+                'preview',
+                'prepare-attach-device',
+                // 'prepare-register-device',
+                'validate-register',
+                'prepare-login',
+                'prepare-login-device',
+                'validate-login'
+            ],
         ];
 
         return $behaviors;

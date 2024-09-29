@@ -722,6 +722,66 @@ msgctxt "blackcube/admin/models"
 msgid "Token Type"
 msgstr ""
 
+msgctxt "blackcube/admin/models/passkey"
+msgid "Aaguid"
+msgstr ""
+
+msgctxt "blackcube/admin/models/passkey"
+msgid "Administrator Id"
+msgstr ""
+
+msgctxt "blackcube/admin/models/passkey"
+msgid "Attestation Type"
+msgstr ""
+
+msgctxt "blackcube/admin/models/passkey"
+msgid "Counter"
+msgstr ""
+
+msgctxt "blackcube/admin/models/passkey"
+msgid "Credential Public Key"
+msgstr ""
+
+msgctxt "blackcube/admin/models/passkey"
+msgid "Date Create"
+msgstr ""
+
+msgctxt "blackcube/admin/models/passkey"
+msgid "Date Update"
+msgstr ""
+
+msgctxt "blackcube/admin/models/passkey"
+msgid "Id"
+msgstr ""
+
+msgctxt "blackcube/admin/models/passkey"
+msgid "Json Data"
+msgstr ""
+
+msgctxt "blackcube/admin/models/passkey"
+msgid "Name"
+msgstr ""
+
+msgctxt "blackcube/admin/models/passkey"
+msgid "Type"
+msgstr ""
+
+msgctxt "blackcube/admin/models/passkey"
+msgid "User Handle"
+msgstr ""
+
+msgctxt "blackcube/admin/models/passkeyRp"
+msgid "ID"
+msgstr ""
+
+msgctxt "blackcube/admin/models/passkeyRp"
+msgid "Icon"
+msgstr ""
+
+msgctxt "blackcube/admin/models/passkeyRp"
+msgid "Name"
+msgstr ""
+
 msgctxt "blackcube/admin/node"
 msgid "After"
 msgstr ""
@@ -960,6 +1020,14 @@ msgstr ""
 
 msgctxt "blackcube/admin/user"
 msgid "Account"
+msgstr ""
+
+msgctxt "blackcube/admin/user"
+msgid "Create passkey"
+msgstr ""
+
+msgctxt "blackcube/admin/user"
+msgid "Passkeys"
 msgstr ""
 
 msgctxt "blackcube/admin/user"
