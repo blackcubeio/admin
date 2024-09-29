@@ -19,6 +19,10 @@ msgctxt "blackcube/admin/authentication"
 msgid "Sign in"
 msgstr ""
 
+msgctxt "blackcube/admin/authentication"
+msgid "Sign in with a passkey"
+msgstr ""
+
 msgctxt "blackcube/admin/bloc-type"
 msgid "Associated types"
 msgstr ""

@@ -20,6 +20,10 @@ msgctxt "blackcube/admin/authentication"
 msgid "Sign in"
 msgstr "S’identifier"
 
+msgctxt "blackcube/admin/authentication"
+msgid "Sign in with a passkey"
+msgstr "S’identifier avec une clef d'accès"
+
 msgctxt "blackcube/admin/bloc-type"
 msgid "Associated types"
 msgstr "Types associés"
@@ -1037,11 +1041,11 @@ msgstr "Compte"
 
 msgctxt "blackcube/admin/user"
 msgid "Create passkey"
-msgstr "Créer une passiez"
+msgstr "Créer une clef d’accès"
 
 msgctxt "blackcube/admin/user"
 msgid "Passkeys"
-msgstr "Passkeys"
+msgstr "Clefs d’accès"
 
 msgctxt "blackcube/admin/user"
 msgid "Permission were updated"
