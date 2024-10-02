@@ -1,6 +1,11 @@
 Blackcube Admin - CHANGELOG 
 ===========================
 
+Release 3.4.1 October, 2nd 2024 <pgaultier@redcat.io>
+-------------------------------------------------------
+
+ * Upd: upd core for fixed event
+
 Release 3.4.0 September, 29th 2024 <pgaultier@redcat.io>
 -------------------------------------------------------
 
