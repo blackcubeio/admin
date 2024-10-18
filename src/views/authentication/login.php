@@ -87,22 +87,22 @@ use blackcube\admin\helpers\BlackcubeHtml;
 
                 <div>
                     <button type="submit" class="login-button">
-                        Sign in
+                        <?php echo Module::t('authentication', 'Sign in'); ?>
                     </button>
                 </div>
             <div>
-                <?php echo Html::button(
-                        Heroicons::svg('outline/finger-print', [
+                <?php echo Html::beginTag('buttont', [
+                    'class' => 'login-button',
+                    'type' => 'button',
+                    'blackcube-login-device' => \blackcube\admin\helpers\Aurelia::bindOptions([
+                        'target-url' => \yii\helpers\Url::to(['dashboard/']),
+                    ]),
+                ]); ?>
+                <span class="sr-only"><?php echo Module::t('authentication', 'Sign in with a passkey'); ?></span>
+                <?php echo Heroicons::svg('outline/finger-print', [
                             'class' => 'h-5 w-5',
-                        ]),
-                        [
-                                'type' => 'button',
-                                'class' => 'login-button hidden',
-                                'blackcube-login-device' => \blackcube\admin\helpers\Aurelia::bindOptions([
-                                        'target-url' => \yii\helpers\Url::to(['dashboard/']),
-                                ]),
-                        ]
-                ); ?>
+                        ]); ?>
+                <?php echo Html::endTag('button'); ?>
             </div>
             <?php echo Html::endForm(); ?>
 

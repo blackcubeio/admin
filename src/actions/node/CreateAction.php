@@ -91,9 +91,11 @@ class CreateAction extends BaseElementAction
         if (Yii::$app->request->isPost) {
             $transaction = Module::getInstance()->get('db')->beginTransaction();
             $moveNodeForm->load(Yii::$app->request->bodyParams);
-            if ($moveNodeForm->move) {
+            $node->load(Yii::$app->request->bodyParams);
+            $validateNode = $node->validate();
+            $validateNodeMove = $moveNodeForm->validate();
+            if ($moveNodeForm->move && $validateNodeMove === true && $validateNode === true) {
                 $targetNode = Node::findOne(['id' => $moveNodeForm->target]);
-                $node->load(Yii::$app->request->bodyParams);
                 switch ($moveNodeForm->mode) {
                     case 'into':
                         $node->saveInto($targetNode);
@@ -106,18 +108,23 @@ class CreateAction extends BaseElementAction
                         break;
                 }
             }
-            $result = NodeHelper::saveElement($node, $blocs);
-            $slug->path = $slugGenerator->getElementSlug($node);
-            $slug->active = true;
-            $result = $result && $slug->save();
-            if ($result) {
-                $node->attachSlug($slug);
+            if ($validateNodeMove === true && $validateNode) {
+                $result = NodeHelper::saveElement($node, $blocs);
+                $slug->path = $slugGenerator->getElementSlug($node);
+                $slug->active = true;
+                $result = $result && $slug->save();
+                if ($result) {
+                    $node->attachSlug($slug);
+                }
+                $validatePlugins = $pluginsHandler->runHook(PluginHookInterface::PLUGIN_HOOK_VALIDATE, $node);
+                $validatePlugins = array_reduce($validatePlugins, function ($accumulator, $item) {
+                    return $accumulator && $item;
+                }, true);
+            } else {
+                $result = false;
+                $validatePlugins = false;
             }
-            $validatePlugins = $pluginsHandler->runHook(PluginHookInterface::PLUGIN_HOOK_VALIDATE, $node);
-            $validatePlugins = array_reduce($validatePlugins, function($accumulator, $item) {
-                return $accumulator && $item;
-            }, true);
-            if ($result === true && $validatePlugins === true) {
+            if ($validateNodeMove === true && $validateNode && $result === true && $validatePlugins === true) {
 
                 $savePlugins = $pluginsHandler->runHook(PluginHookInterface::PLUGIN_HOOK_SAVE, $node);
                 $savePlugins = array_reduce($savePlugins, function($accumulator, $item) {

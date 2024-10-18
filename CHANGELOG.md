@@ -1,10 +1,14 @@
 Blackcube Admin - CHANGELOG 
 ===========================
 
+ * Upd: Update dependencies
+ * fix `Node` validation during `create` and `update`
+
 Release 3.4.1 October, 2nd 2024 <pgaultier@redcat.io>
 -------------------------------------------------------
 
  * Upd: upd core for fixed event
+ * Fix: fix i18n (missing translations)
 
 Release 3.4.0 September, 29th 2024 <pgaultier@redcat.io>
 -------------------------------------------------------
