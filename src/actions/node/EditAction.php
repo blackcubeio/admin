@@ -96,13 +96,14 @@ class EditAction extends BaseElementAction
         if (Yii::$app->request->isPost) {
             $transaction = Module::getInstance()->get('db')->beginTransaction();
             $moveNodeForm->load(Yii::$app->request->bodyParams);
+            $validateNodeMove = $moveNodeForm->validate();
             $result = NodeHelper::saveElement($node, $blocs);
             $validatePlugins = $pluginsHandler->runHook(PluginHookInterface::PLUGIN_HOOK_VALIDATE, $node);
             $validatePlugins = array_reduce($validatePlugins, function($accumulator, $item) {
                 return $accumulator && $item;
             }, true);
             if ($result === true && $validatePlugins === true) {
-                if ($moveNodeForm->move) {
+                if ($moveNodeForm->move && $validateNodeMove === true) {
                     $targetNode = Node::findOne(['id' => $moveNodeForm->target]);
                     switch ($moveNodeForm->mode) {
                         case 'into':
