@@ -1,6 +1,8 @@
 Blackcube Admin - CHANGELOG 
 ===========================
 
+ * Upd: Update dependencies
+ * fix `Node` validation during `create` and `update`
 
 Release 3.4.1 October, 2nd 2024 <pgaultier@redcat.io>
 -------------------------------------------------------
