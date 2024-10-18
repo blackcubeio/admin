@@ -15,6 +15,7 @@
 namespace blackcube\admin\models;
 
 use blackcube\admin\Module;
+use blackcube\core\models\Node;
 use yii\base\Model;
 
 /**
@@ -48,6 +49,10 @@ class MoveNodeForm extends Model
         return [
             [['move', 'target'], 'number'],
             [['mode'], 'string'],
+            [['mode', 'target'], 'required', 'when' => function($model) {
+                return $model->move == 1;
+            }],
+            [['target'], 'exist', 'targetAttribute' => 'id', 'targetClass' => Node::class],
         ];
     }
 

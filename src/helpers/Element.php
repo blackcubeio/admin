@@ -60,7 +60,7 @@ class Element {
                     $saveStatus = true;
                 } else {
                     $transaction->rollBack();
-                    throw new ErrorException();
+                    $saveStatus = false;
                 }
             }
         }
