@@ -1,8 +1,11 @@
 Blackcube Admin - CHANGELOG 
 ===========================
 
+Release 3.5.1 Octrober, 30th 2024 <pgaultier@redcat.io>
+-------------------------------------------------------
+
 * Upd: Update dependencies
-* 
+
 Release 3.5.0 Octrober, 18th 2024 <pgaultier@redcat.io>
 -------------------------------------------------------
 
