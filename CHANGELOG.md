@@ -1,12 +1,16 @@
 Blackcube Admin - CHANGELOG 
 ===========================
 
-Release 3.5.1 Octrober, 30th 2024 <pgaultier@redcat.io>
+
+ * Upd: Update dependencies
+ * Fix: fix host view buttons
+
+Release 3.5.1 October, 30th 2024 <pgaultier@redcat.io>
 -------------------------------------------------------
 
-* Upd: Update dependencies
+ * Upd: Update dependencies
 
-Release 3.5.0 Octrober, 18th 2024 <pgaultier@redcat.io>
+Release 3.5.0 October, 18th 2024 <pgaultier@redcat.io>
 -------------------------------------------------------
 
  * Upd: Update dependencies
