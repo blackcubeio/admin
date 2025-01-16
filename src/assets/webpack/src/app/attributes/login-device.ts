@@ -1,5 +1,4 @@
-import {bindable, IPlatform, customAttribute, INode, IEventAggregator, ILogger, IDisposable, resolve} from 'aurelia';
-import {IHttpService} from "../services/http-service";
+import {bindable, IPlatform, customAttribute, INode, ILogger, resolve} from 'aurelia';
 import { IWebauthnService } from '@blackcube/aurelia2-webauthn';
 
 @customAttribute('blackcube-login-device')
