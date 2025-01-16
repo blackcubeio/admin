@@ -80,8 +80,8 @@
  * Copyright (c) 2011-2023 Jos de Jong, http://jsoneditoronline.org
  *
  * @author  Jos de Jong, <wjosdejong@gmail.com>
- * @version 9.10.3
- * @date    2023-09-21
+ * @version 9.10.5
+ * @date    2023-12-21
  */
 
 /*! @license
