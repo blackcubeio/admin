@@ -54,7 +54,6 @@ use blackcube\admin\helpers\Aurelia;
             'seoActive.bind' => (($tag->slug !== null) && ($tag->slug->seo !== null) && $tag->slug->seo->active),
             'showTags.bind' => false,
             'slugExists.bind' => ($tag->slug !== null),
-            'host.bind' => (($tag->slug !== null) && (empty($tag->slug->host) === false)) ? $tag->slug->host : '',
             'linkUrl.bind' => Url::to([$tag->getRoute()]),
             'linkTitle.bind' => Module::t('common', 'View'),
         ]); ?>
