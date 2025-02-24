@@ -1,6 +1,8 @@
 Blackcube Admin - CHANGELOG 
 ===========================
 
+ * Upd: Update dependencies
+
 Release 3.5.3 January, 16th 2025 <pgaultier@gmail.com>
 -------------------------------------------------------
 
