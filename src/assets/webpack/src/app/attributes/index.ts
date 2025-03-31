@@ -12,3 +12,4 @@ export * from './url-generator';
 export * from './view-edit';
 export * from './attach-device';
 export * from './login-device';
+export * from './deactivate-submit';
