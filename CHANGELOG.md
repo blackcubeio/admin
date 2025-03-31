@@ -1,6 +1,9 @@
 Blackcube Admin - CHANGELOG 
 ===========================
 
+Release 3.5.5 March, 31st 2025 <pgaultier@gmail.com>
+----------------------------------------------------
+
  * Upd: disable submit button on submit to avoid double submit
  * Upd: Update dependencies
 
