@@ -35,6 +35,7 @@ use blackcube\core\models\Tag;
 <main class="application-content">
     <?php echo Html::beginForm('', 'post', [
         'class' => 'element-form-wrapper',
+        'blackcube-deactivate-submit' => '',
     ]); ?>
     <div class="page-header">
         <?php echo Html::beginTag('a', [
