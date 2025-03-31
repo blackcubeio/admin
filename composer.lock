@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "412d11f6f8fa0204797f151c89a23c1a",
+    "content-hash": "fc7a15a8c1cafb5858278d8ad431e5ef",
     "packages": [
         {
             "name": "blackcube/core",
-            "version": "3.5.5",
+            "version": "dev-devel-3.x",
             "source": {
                 "type": "git",
                 "url": "https://github.com/blackcubeio/core.git",
-                "reference": "7d3d146e3fa16d37e8a7f75d72b9a31f9716fb15"
+                "reference": "21f74a5e4a4b880cd232572a5472125c06b41260"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/blackcubeio/core/zipball/7d3d146e3fa16d37e8a7f75d72b9a31f9716fb15",
-                "reference": "7d3d146e3fa16d37e8a7f75d72b9a31f9716fb15",
+                "url": "https://api.github.com/repos/blackcubeio/core/zipball/21f74a5e4a4b880cd232572a5472125c06b41260",
+                "reference": "21f74a5e4a4b880cd232572a5472125c06b41260",
                 "shasum": ""
             },
             "require": {
@@ -83,7 +83,7 @@
                 "source": "https://code.redcat.io/blackcube/core/tree/devel",
                 "wiki": "https://code.redcat.io/blackcube/core/wikis/home"
             },
-            "time": "2025-03-31T14:05:39+00:00"
+            "time": "2025-03-31T14:07:52+00:00"
         },
         {
             "name": "bower-asset/inputmask",
@@ -6930,7 +6930,9 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {},
+    "stability-flags": {
+        "blackcube/core": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
