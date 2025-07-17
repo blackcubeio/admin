@@ -13,3 +13,4 @@ export * from './view-edit';
 export * from './attach-device';
 export * from './login-device';
 export * from './deactivate-submit';
+export * from './form-dropdown';
