@@ -1,8 +1,8 @@
 import {customElement, bindable, IEventAggregator, ILogger, IDisposable, INode, resolve} from 'aurelia';
 import {IHttpService} from "../services/http-service";
-import Quill, {QuillOptionsStatic} from "quill";
+import Quill, {QuillOptions} from "quill";
 
-const Link = Quill.import('formats/link');
+const Link: any = Quill.import('formats/link');
 class BlackcubeLink extends Link {
     static create(value: any) {
         let node = super.create(value);
@@ -24,7 +24,7 @@ export class QuillEditor
     @bindable() public fieldId: string;
     @bindable() public fieldName: string;
     @bindable() public content: string = '';
-    @bindable() public options: QuillOptionsStatic = {
+    @bindable() public options: QuillOptions = {
         theme: 'snow',
         modules: {
             toolbar:[
