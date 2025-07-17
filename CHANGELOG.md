@@ -1,6 +1,11 @@
 Blackcube Admin - CHANGELOG 
 ===========================
 
+
+ * Fix: fix view button in navbar
+ * Upd: Adding tailwind dropdown
+ * Upd: update Aurelia 2
+
 Release 3.5.5 March, 31st 2025 <pgaultier@gmail.com>
 ----------------------------------------------------
 
