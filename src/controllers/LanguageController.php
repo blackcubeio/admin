@@ -2,14 +2,12 @@
 /**
  * LanguageController.php
  *
- * PHP version 8.0+
+ * PHP version 8.2+
  *
- * @author Philippe Gaultier <pgaultier@redcat.io>
- * @copyright 2010-2022 Redcat
- * @license https://www.redcat.io/license license
- * @version XXX
- * @link https://www.redcat.io
- * @package blackcube\admin\controllers
+ * @author Philippe Gaultier <pgaultier@gmail.com>
+ * @copyright 2010-2025 Philippe Gaultier
+ * @license https://www.blackcube.io/license
+ * @link https://www.blackcube.io
  */
 
 namespace blackcube\admin\controllers;
@@ -29,12 +27,10 @@ use yii\web\Controller;
 /**
  * Class LanguageController
  *
- * @author Philippe Gaultier <pgaultier@redcat.io>
- * @copyright 2010-2022 Redcat
- * @license https://www.redcat.io/license license
- * @version XXX
- * @link https://www.redcat.io
- * @package blackcube\admin\controllers
+ * @author Philippe Gaultier <pgaultier@gmail.com>
+ * @copyright 2010-2025 Philippe Gaultier
+ * @license https://www.blackcube.io/license
+ * @link https://www.blackcube.io
  */
 class LanguageController extends Controller
 {

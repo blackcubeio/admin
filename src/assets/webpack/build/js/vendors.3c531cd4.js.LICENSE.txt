@@ -1,7 +1,7 @@
 /*
  * based on code from:
  *
- * @license RequireJS text 0.25.0 Copyright (c) 2010-2011, The Dojo Foundation All Rights Reserved.
+ * @license https://www.blackcube.io/license
  * Available via the MIT or new BSD license.
  * see: http://github.com/jrburke/requirejs for details
  */
@@ -64,7 +64,7 @@
  *
  * Supported browsers: Chrome, Firefox, Safari, Opera, Internet Explorer 8+
  *
- * @license
+ * @license https://www.blackcube.io/license
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy
  * of the License at
@@ -80,7 +80,6 @@
  * Copyright (c) 2011-2023 Jos de Jong, http://jsoneditoronline.org
  *
  * @author  Jos de Jong, <wjosdejong@gmail.com>
- * @version 9.10.5
  * @date    2023-12-21
  */
 
