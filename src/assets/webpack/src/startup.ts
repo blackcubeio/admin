@@ -4,6 +4,7 @@ import * as globalAttributes from './app/attributes/index';
 import * as globalComponents from './app/components/index';
 import {Enhance} from "./app/enhance";
 import {WebauthnConfiguration} from '@blackcube/aurelia2-webauthn';
+import { AriaConfiguration } from "@blackcube/aurelia2-aria";
 
 declare var webpackBaseUrl: string;
 declare var __webpack_public_path__: string;
@@ -18,6 +19,8 @@ declare var PRODUCTION:boolean;
 const page = document.querySelector('body') as HTMLElement;
 const au = Aurelia.register(globalAttributes)
     .register(globalComponents)
+
+    .register(AriaConfiguration)
     .register(WebauthnConfiguration.configure({
         prepareAttachDeviceUrl: ajaxBaseUrl+'/prepare-attach-device',
         prepareRegisterDeviceUrl: ajaxBaseUrl+'/prepare-register-device',

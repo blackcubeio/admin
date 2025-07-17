@@ -27,12 +27,12 @@
         }
     ],
     "require": {
-        "php": ">=8.0",
+        "php": ">=8.2",
         "ext-intl": "*",
         "ext-json": "*",
         "ext-fileinfo": "*",
         "ext-dom": "*",
-        "blackcube/core": "^3.5.5",
+        "blackcube/core": "^3.6.0",
         "hashids/hashids": "~4.1",
         "swaggest/json-schema": "~0.12",
         "vlucas/phpdotenv": "~5.4",

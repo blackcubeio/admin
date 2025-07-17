@@ -1,6 +1,6 @@
 {
     "name": "blackcube-cms-admin",
-    "version": "0.0.1",
+    "version": "3.5.x",
     "description": "Blackcube CMS Admin",
     "keywords": [
         "Blackcube",
@@ -16,9 +16,10 @@
     "author": "Philippe Gaultier <pgaultier@redcat.io",
     "license": "BSD-3-Clause",
     "devDependencies": {
-        "@aurelia/router": "^2.0.0-beta.21",
-        "@aurelia/webpack-loader": "^2.0.0-beta.21",
-        "@blackcube/aurelia2-webauthn": "^2.1.0",
+        "@aurelia/router": "^2.0.0-beta.25",
+        "@aurelia/webpack-loader": "^2.0.0-beta.25",
+        "@blackcube/aurelia2-webauthn": "^2.3.1",
+        "@blackcube/aurelia2-aria": "^2.3.1",
         "@tailwindcss/forms": "^0.5.7",
         "@types/jsoneditor": "^9.9.1",
         "@types/node": "^20.5.9",
@@ -26,7 +27,7 @@
         "@types/urijs": "^1.19.25",
         "@types/webpack-env": "^1.18.1",
         "assets-webpack-plugin": "^7.1.1",
-        "aurelia": "^2.0.0-beta.21",
+        "aurelia": "^2.0.0-beta.25",
         "autoprefixer": "^10.4.4",
         "caniuse-lite": "^1.0.30001319",
         "clean-webpack-plugin": "^4.0.0",
